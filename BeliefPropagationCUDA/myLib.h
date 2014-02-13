@@ -194,7 +194,7 @@ inline int gpuGetMaxGflopsDeviceId()
     return max_perf_device;
 }
 
-inline int findCudaDevice(int argc, const char **argv)
+inline int findCudaDevice()
 {
     cudaDeviceProp deviceProp;
     int devID = 0;

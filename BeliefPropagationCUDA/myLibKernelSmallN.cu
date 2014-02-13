@@ -379,13 +379,7 @@ void selectGPU()
 	    deviceProp.minor = 3;
 	    int minimumComputeVersion = 13;
 
-	    int dev;
-
-		//ALE
-		int argc = 1;
-		char **argv = NULL;
-		
-	    dev = findCudaDevice(argc, (const char **)argv);
+	    int dev = findCudaDevice();
 
 	    cudaGetDeviceProperties(&deviceProp, dev);
 
