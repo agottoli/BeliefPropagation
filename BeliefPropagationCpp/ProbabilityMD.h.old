@@ -1,0 +1,180 @@
+#pragma once
+
+#ifndef PROBABILITYMD_H
+#define PROBABILITYMD_H
+
+#include <array>
+#include <vector>
+#include <map>
+//#include <boost/lexical_cast.hpp>
+#include <cmath> // per std::abs
+#include "Variable.h"
+#include "VecMap.h"
+
+#define epsilon 0.0000000001 //L // 10^-9 per il confronto dei valori delle probabilità, può esserci una leggera differenza per arrotondamenti vari
+#define zero 0.0 //L // per gestire il fatto della divisione 0/0 che da 0 invece di NaN
+
+
+class ProbabilityMD
+{
+	// variabili in ordine in cui compaiono nella tabella
+	VecMap* variables;
+	// vettore che contiene tutte le probabilità delle varie configurazioni
+	//std::vector<double>* table;
+
+	//std::vector<void*>* multidimTable;
+	void* multidimTable;
+
+	std::size_t tableSize;
+
+	// contiene la somma dei valori della tabella (se = 1 ok, altrumenti andrebbe normalizzata)
+	double sommaTabella;
+	
+	//bool conditional;
+
+	std::vector<std::size_t*>* confDaInserire;
+	
+	//bool unoPerTutti;
+
+public:
+	// costruisco una nuova probabilità date le variabili coinvolte (ordinate secondo la tabella) e la tabella con le probabilità effettive
+	//ProbabilityMD(VecMap*, std::vector<void*>*); // quando non so la somma della tabella
+	ProbabilityMD(VecMap*); // default costruisco la tabella e poi la riempio
+	//ProbabilityMD(VecMap*, std::vector<void*>*, double sommaTab); // per il copy!!!
+	ProbabilityMD(VecMap*, void*, double sommaTab); // per il copy!!!
+	ProbabilityMD(VecMap*, double initValue); // temporaneo per l'inizializzazione
+	~ProbabilityMD();
+
+	//
+	//void push_back(double* elemento);
+	void push_back(double elemento);
+
+
+
+	// restituisce le variabili
+	VecMap* getVariables();
+	// restituisce la tabella delle probabilità
+	//std::vector<void*>* getTable();
+	void* getTable();
+	//void setTable(std::vector<void*>*);
+	void setTable(void*);
+
+	// copia della probabilità
+	ProbabilityMD* copy();
+
+	bool isNormalized() {
+		//std::cout << sommaTabella << '\t';
+		return std::abs(sommaTabella - 1) <= epsilon;
+	}
+
+	// normalizza la tabella della probabilità attuale e tengo la somma dentro il parametro sommaTabella quando la costruisco???
+	void normalizza();
+	//double normalizzaRicorsivo(std::vector<void*>* vectorAttuale, std::size_t livello, bool* primo);
+	double normalizzaRicorsivo(void* vectorAttuale, std::size_t livello); //, bool* primo);
+
+	// slice per le evidence (metodo utilizzabile solo sulle conditional probability!!!)
+	ProbabilityMD* sliceOn(Variable* v); //, int indice);
+
+	// calcola la nuova probabilità sommando sulla variabile passata
+	ProbabilityMD* sumOn(Variable*);
+
+	// calcola la nuova probabilità dividendo la probabilità per quella passata
+	ProbabilityMD* div(ProbabilityMD*);
+	// calcola la nuova probabilità moltiplicando la probabilità per quella passata
+	ProbabilityMD* mul(ProbabilityMD*);
+
+	// restituisce true se e solo se i valori di ogni probabilità con la stessa configurazione differiscono di < epsilon (10^-9)
+	bool confronta(ProbabilityMD*);
+
+	//
+	std::string toString();
+	std::string toStringConf(std::vector<std::size_t*>* conf);
+
+	// TODO bisognerebbe stampare ogni elemento a capo con la configurazione corrispondente
+	//std::string toStringMDVRicorsiva();
+	//std::string toStringMDVRicorsiva(std::vector<void*>* vec, std::size_t livello);
+
+	
+
+
+
+	
+
+	std::size_t getTableSize() {
+		/*if (tableSize == 0) {
+			calcolaTableSize();
+		}*/
+		return tableSize;
+	}
+
+	void calcolaTableSize() {
+		tableSize = 1;
+		for (std::vector<Variable*>::iterator it = variables->begin(); it != variables->end(); it++) {
+			tableSize *= (*it)->getNStates();
+		}
+	}
+
+	
+
+private:
+	// crea il multi dim vector inizializzato al valore di el
+	//std::vector<void*>* createMDTRicorsiva(std::size_t livello); //, double el);
+	void* createMDTRicorsiva(std::size_t livello);
+
+	//std::vector<void*>* createMDTRicorsivaAndInit(std::size_t livello, double* initValue);
+	void* createMDTRicorsivaAndInit(std::size_t livello, double* initValue);
+
+	// per il distruttore, elimina tutti gli elementi della tabella
+	// gli passo il vettore con l'informazione del livello a cui si trova, così richiamo ricorsiva fino a che non arrivo all'ultimo livello dove cancello effettivamente gli elementi
+	//void eraseTableRicorsiva(std::vector<void*>* v, std::size_t livello, bool* primo);
+	void eraseTableRicorsiva(void* v, std::size_t livello, bool* primo);
+
+	// per push_back devo avere un riferimento a dove inserire l'elemento che mi passeranno
+	void costruisciConfDaInserire(); 
+	void resetConfDaInserire();
+	//void aumentaConf();
+
+	// operazioni su configurazioni
+	static bool nextConf(std::vector<std::size_t*>* conf, VecMap* vars);
+	static void eraseConf(std::vector<std::size_t*>* conf);
+
+	//double* getElementFromConf(std::vector<std::size_t*>* conf);
+	double getElementFromConf(std::vector<std::size_t*>* conf);
+	//void setElementInConf(std::vector<std::size_t*>* conf, double* el);
+	void setElementInConf(std::vector<std::size_t*>* conf, double el);
+
+	// per il copy, copia la tabella
+	//std::vector<void*>* copyMDTRicorsiva(std::vector<void*>* v, std::size_t livello);
+	void* copyMDTRicorsiva(void* v, std::size_t livello);
+	
+
+	// per lo sliceOn
+	//std::vector<void*>* sliceOnRicorsivo(std::vector<void*>* v, std::size_t indiceVar, std::size_t indiceEvidenceVar, std::size_t livello, bool isEvidence);
+	void* sliceOnRicorsivo(void* v, std::size_t indiceVar, std::size_t indiceEvidenceVar, std::size_t livello, bool isEvidence);
+
+
+	// crea una configurazione iniziale (tutti le variabili hanno stato 0)
+	//std::vector<int>* createConfigurazione();
+	
+	// stampa i valori corrispondenti degli stati data una configurazione
+	//std::string configurazioneToString(std::vector<int>*);
+
+	// normalizza la tabella passata dividendo tutti i valori per la somma
+	//void normalizza(std::vector<double>* tabellaDaNormalizzare, double somma);
+	
+
+	double getSommaTabella() {
+		//if (sommaTabella == NULL)
+		//	calcolaSommaTabella();
+		return sommaTabella;
+	}
+
+	//void setSommaTabella(double st) {
+	//	sommaTabella = st;
+	//}
+
+	
+	
+};
+
+#endif /* PROBABILITY_H */

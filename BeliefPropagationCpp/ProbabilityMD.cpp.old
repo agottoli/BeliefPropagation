@@ -1,0 +1,838 @@
+#include <array>
+#include <algorithm>
+#include <iostream>
+#include <stdlib.h>
+#include <string> // per il cast std::to_string
+#include "ProbabilityMD.h"
+#include "States.h"
+
+
+ProbabilityMD::ProbabilityMD(VecMap* vars)
+{
+	// DEBUG
+	//std::cout << "creata ProbabilityMD: " << vars->toString() << std::endl;
+	//
+	
+	// se num è 0 non l'ho gestito perché suppongo che almeno una dimensione ci sia!!!
+	//n = num - 1;
+	variables = vars;
+	multidimTable = createMDTRicorsiva(0); // CREA LA TABELLA!!!
+	sommaTabella = 0;
+	confDaInserire = NULL;
+	calcolaTableSize();
+	//unoPerTutti = false;
+}
+
+//ProbabilityMD::ProbabilityMD(VecMap* vars, std::vector<void*>* pot)
+//{
+//	variables  = vars;
+//	multidimTable = pot;
+//	sommaTabella = -1; // VUOL DIRE CHE NON SO LA SOMMA
+//}
+
+ProbabilityMD::ProbabilityMD(VecMap* vars, void* pot, double sommaTab)
+{
+	variables  = vars;
+	multidimTable = pot;
+	sommaTabella = sommaTab;
+	confDaInserire = NULL;
+	calcolaTableSize();
+	//unoPerTutti = false;
+}
+
+ProbabilityMD::ProbabilityMD(VecMap* vars, double initValue)
+{
+	// se num è 0 non l'ho gestito perché suppongo che almeno una dimensione ci sia!!!
+	//n = num - 1;
+	variables = vars;
+
+	// DEBUG
+	/*std::cout << "nVars: " << variables->size() << std::endl;
+	for (std::size_t i = 0; i < variables->size(); i++) {
+		std::cout << "states = " << variables->get(i)->getNStates() << std::endl;
+	}*/
+
+	sommaTabella = 0;
+	multidimTable = createMDTRicorsivaAndInit(0, &initValue); // CREA LA TABELLA!!!
+	confDaInserire = NULL;
+	calcolaTableSize();
+	//unoPerTutti = true;
+
+	// DEBUG
+	//std::cout << toString() << std::endl;
+	//
+}
+
+void* ProbabilityMD::createMDTRicorsiva(std::size_t livello)
+{
+	//std::vector<void*>* nuovo = new std::vector<void*>;
+	std::size_t dimensione = variables->get(livello)->getNStates();
+	//nuovo->reserve(dimensione);
+	if (livello == variables->size() - 1) {
+		// sono arrivato in fondo allora costruisco solo il vettore std::vector<double> e lo restituisco
+		std::vector<double>* nuovo = new std::vector<double>;
+		for (std::size_t i = 0; i < dimensione; i++) {
+			nuovo->push_back(NULL);
+			// DEBUG
+			//std::cout << "ProbabilityMD push_back di NULL" << std::endl;
+			//
+		}
+		return nuovo;
+	}
+	else {
+		std::vector<void*>* nuovo = new std::vector<void*>;
+		for (std::size_t i = 0; i < dimensione; i++) {
+			nuovo->push_back(createMDTRicorsiva(livello + 1));
+		}
+		return nuovo;
+	}	
+}
+
+void* ProbabilityMD::createMDTRicorsivaAndInit(std::size_t livello, double* initValue)
+{
+	//std::vector<void*>* nuovo = new std::vector<void*>;
+	std::size_t dimensione = variables->get(livello)->getNStates();
+	//nuovo->reserve(dimensione);
+	if (livello == variables->size() - 1) {
+		// sono arrivato in fondo allora costruisco solo il vettore std::vector<double> e lo restituisco
+		std::vector<double>* nuovo = new std::vector<double>;
+		nuovo->reserve(dimensione);
+		for (std::size_t i = 0; i < dimensione; i++) {
+			//nuovo->push_back(new double(initValue));
+			nuovo->push_back(*initValue);
+			sommaTabella += *initValue;
+ 		}
+		return nuovo;
+	}
+	else {
+		std::vector<void*>* nuovo = new std::vector<void*>;
+		for (std::size_t i = 0; i < dimensione; i++) {
+			nuovo->push_back(createMDTRicorsivaAndInit(livello + 1, initValue));
+		}
+		return nuovo;
+	}
+}
+
+
+ProbabilityMD::~ProbabilityMD()
+{
+	bool primo = true;
+	eraseTableRicorsiva(multidimTable, 0, &primo);
+	delete multidimTable;
+
+	delete variables;
+
+	if (confDaInserire != NULL) {
+		for (std::vector<std::size_t*>::iterator it = confDaInserire->begin(); it != confDaInserire->end(); it++) {
+			delete *it;
+		}
+		delete confDaInserire;
+	}
+	//variables->~VecMap();
+	//delete table;
+	//table->~vector();
+}
+
+void ProbabilityMD::eraseTableRicorsiva(void* v, std::size_t livello, bool* primo)
+{
+	//if (livello == variables->size() - 1) {
+	//	// siamo già arrivati al livello di uccidere tutti i double*
+	//	//if (unoPerTutti) {
+	//	//	// cancello un solo elemento perché gli altri puntano a lui
+	//	//	if (*primo) {
+	//	//		delete (double*) v->at(0);
+	//	//		std::cout << "cancellato un elemento" <<std::endl;
+	//	//		*primo = false;
+	//	//	}
+	//	//} else {
+	//	//	// li cancello tutti
+	//	//	for (std::size_t i = 0; i < variables->get(livello)->getNStates(); i++) {
+	//	//		delete (double*) v->at(i);
+	//	//	}
+	//	//}
+	//	// sono arrivato al livello in cui mi fermo
+	//}
+	//else {
+	if (livello < variables->size() - 1) {
+		for (std::size_t i = 0; i < variables->get(livello)->getNStates(); i++) {
+			void* v2 = (((std::vector<void*>*) v)->at(i));
+			eraseTableRicorsiva(v2, livello + 1, primo);
+			delete v2; // TODO siamo sicuri che cancelli essendo un vector* ma passandoci un void*
+		}
+	}
+}
+
+void ProbabilityMD::push_back(double elemento)
+{
+	if (confDaInserire == NULL) {
+		// devo costruire la configurazione
+		costruisciConfDaInserire();
+	}
+
+	void* vec = multidimTable;
+	std::size_t i = 0;
+	confDaInserire->size();
+
+	for (; i < confDaInserire->size() - 1; i++) {
+		vec = ((std::vector<void*>*) vec)->at(*confDaInserire->at(i));
+	}
+	((std::vector<double>*) vec)->at(*confDaInserire->at(i)) = elemento;
+	sommaTabella += elemento;
+	ProbabilityMD::nextConf(confDaInserire, variables);//aumentaConf();
+}
+
+void ProbabilityMD::costruisciConfDaInserire()
+{
+	// devo costruire la configurazione
+	std::size_t dim = variables->size();
+	confDaInserire = new std::vector<std::size_t*>;
+	confDaInserire->reserve(dim);
+	for (std::size_t i = 0; i < dim; i++) {
+		confDaInserire->push_back(new std::size_t(0));
+	}
+}
+
+void ProbabilityMD::resetConfDaInserire()
+{
+	for (std::vector<std::size_t*>::iterator it = confDaInserire->begin(); it != confDaInserire->end(); it++) {
+		**it = 0;
+	}
+}
+
+//void ProbabilityMD::aumentaConf()
+//{
+//	std::size_t i = confDaInserire.size() - 1;
+//	do {
+//		if (confDaInserire.at(i) == variables->get(i)->getNStates() - 1) {
+//			confDaInserire.at(i) = 0;
+//		} else {
+//			confDaInserire.at(i) = confDaInserire.at(i) + 1;
+//			break;
+//		}
+//	} while(i-- != 0);
+//}
+
+bool ProbabilityMD::nextConf(std::vector<std::size_t*>* conf, VecMap* vars)
+{
+	std::size_t i = conf->size() - 1;
+	do {
+		if (*conf->at(i) == vars->get(i)->getNStates() - 1) {
+			*conf->at(i) = 0;
+		} else {
+			*conf->at(i) = *conf->at(i) + 1;
+			return true; //break;
+		}
+	} while(i-- != 0);
+
+	// sono tornato alla conf 0
+	return false;
+}
+
+void ProbabilityMD::eraseConf(std::vector<std::size_t*>* conf)
+{
+	for (std::vector<std::size_t*>::iterator it = conf->begin(); it != conf->end(); it++) {
+		delete *it;
+	}
+}
+
+double ProbabilityMD::getElementFromConf(std::vector<std::size_t*>* conf)
+{
+	// suppongo che le posizioni siano giuste perché altrimenti da index out of bound
+	std::vector<std::size_t*>::iterator it = conf->begin();
+	void* el = multidimTable; //->at(**it);
+	while (*it != conf->back()) {
+		el = ((std::vector<void*>*) el)->at(**it);
+		it++;
+	}
+	// DEBUG
+	//if (*(double*) el > 300 || *(double*) el < 0) {
+	//	// valore strano di un elemento
+	//	std::cout << "ProbabilityMD.getElement da valore strano: " << *(double*) el << std::endl;
+	//	std::string s;
+	//	std::cin >> s;
+	//}
+	//
+
+	return ((std::vector<double>*) el)->at(**it);
+}
+
+void ProbabilityMD::setElementInConf(std::vector<std::size_t*>* conf, double elemento)
+{
+	// DEBUG
+	//if (*elemento > 300 || *(double*) elemento < 0) {
+	//	// valore strano di un elemento
+	//	std::cout << "ProbabilityMD.setElement setto un valore strano: " << *elemento << std::endl;
+	//	std::string s;
+	//	std::cin >> s;
+	//}
+	//
+
+	// suppongo che le posizioni siano giuste perché altrimenti da index out of bound
+	if (conf->size() > 1) {
+		void* el = multidimTable;
+		std::size_t i = 0;
+		for (; i < conf->size() - 1; i++) {
+			el = ((std::vector<void*>*) el)->at(*conf->at(i));
+		}
+		((std::vector<double>*) el)->at(*conf->at(i)) = elemento;
+	} else {
+		// ha solo una dimenzione allora inserisco elemento direttamente in
+		((std::vector<double>*) multidimTable)->at(*conf->at(0)) = elemento;
+	}
+	sommaTabella += elemento;
+}
+
+VecMap* ProbabilityMD::getVariables()
+{
+	return variables;
+}
+
+void* ProbabilityMD::getTable()
+{
+	return multidimTable;
+}
+
+void ProbabilityMD::setTable(void* t)
+{
+	multidimTable = t;
+}
+
+ProbabilityMD* ProbabilityMD::copy()
+{
+	return new ProbabilityMD(variables->copy(), copyMDTRicorsiva(multidimTable, 0), sommaTabella);
+}
+
+void* ProbabilityMD::copyMDTRicorsiva(void* v, std::size_t livello)
+{
+	//std::vector<void*>* nuovo = new std::vector<void*>;
+	std::size_t dimensione = variables->get(livello)->getNStates();
+	//nuovo->reserve(dimensione);
+	if (livello == variables->size() - 1) {
+		// sono arrivato in fondo allora costruisco solo il vettore std::vector<double> e lo restituisco
+		std::vector<double>* nuovo = new std::vector<double>;
+		nuovo->reserve(dimensione);
+		for (std::size_t i = 0; i < dimensione; i++) {
+			nuovo->push_back(((std::vector<double>*) v)->at(i));
+		}
+		return nuovo;
+	}
+	else {
+		std::vector<void*>* nuovo = new std::vector<void*>;
+		for (std::size_t i = 0; i < dimensione; i++) {
+			nuovo->push_back(copyMDTRicorsiva(((std::vector<void*>*) v)->at(i), livello + 1));
+		}
+		return nuovo;
+	}
+}
+
+ProbabilityMD* ProbabilityMD::sliceOn(Variable* v) //, int indiceStatoEvidenza)
+{
+	std::size_t indiceVar = variables->indexOf(v);
+	std::cout << "indicevar = " << indiceVar;
+	if (indiceVar == SIZE_MAX || !v->isEvidence()) {
+		// la variabile non c'è quindi restituisco la copia della probabilità
+		// o la variabile non ha evidenze
+		return this->copy();
+	}
+
+	// altrimenti posso fare il vero slice :)
+	std::size_t indiceStatoEvidenza = v->getEvidence();
+
+	ProbabilityMD* nuovaP = new ProbabilityMD(variables->copy());
+
+	nuovaP->setTable(nuovaP->sliceOnRicorsivo(multidimTable, indiceVar, indiceStatoEvidenza, 0, false)); // brutto da vedere ma funziona
+
+	//nuovaP->setSommaTabella(sommaTabella);
+	// nota: è inevitabile che sia da normalizzare
+	return nuovaP;
+}
+
+void* ProbabilityMD::sliceOnRicorsivo(void* vectorAttuale, std::size_t indiceVar, std::size_t indiceEvidenceVar, std::size_t livello, bool isEvidence) 
+{
+	//std::vector<void*>* nuovo = new std::vector<void*>;
+	std::size_t dimensione = variables->get(livello)->getNStates();
+	//nuovo->reserve(dimensione);
+	if (livello == variables->size() - 1) {
+		// sono arrivato in fondo allora costruisco solo il vettore std::vector<double> e lo restituisco
+		std::vector<double>* nuovo = new std::vector<double>;
+		nuovo->reserve(dimensione);
+		if (indiceVar == livello) { //variables->size() - 1) {
+			for (std::size_t i = 0; i < dimensione; i++) {
+				if (i != indiceEvidenceVar)
+					nuovo->push_back(0);
+				else {
+					double el = ((std::vector<double>*) vectorAttuale)->at(i); // CAST mi auguro di arrivare veramente ad un double :)
+					nuovo->push_back(el);
+					sommaTabella += el;
+				}
+			}
+		}
+		else {
+			// la variabile su cui faccio lo slice è in un livello precedente allora uso il booleano isEvidence
+			if (!isEvidence) {
+				for (std::size_t i = 0; i < dimensione; i++) {
+					nuovo->push_back(0);
+				}
+			}
+			else {
+				for (std::size_t i = 0; i < dimensione; i++) {
+					double el = ((std::vector<double>*) vectorAttuale)->at(i);
+					nuovo->push_back(el);
+					sommaTabella += el;
+				}
+			}
+		}
+		return nuovo;
+	}
+	else {
+		std::vector<void*>* nuovo = new std::vector<void*>;
+		nuovo->reserve(dimensione);
+		if (indiceVar == livello) {
+			// questo è il livello su cui decido di mettere il isEvidence per i successivi
+			for (std::size_t i = 0; i < dimensione; i++) {
+				if (i == indiceEvidenceVar) {
+					nuovo->push_back(sliceOnRicorsivo(((std::vector<void*>*) vectorAttuale)->at(i), indiceVar, indiceEvidenceVar, livello + 1, true));
+				} else {
+					nuovo->push_back(sliceOnRicorsivo(((std::vector<void*>*) vectorAttuale)->at(i), indiceVar, indiceEvidenceVar, livello + 1, false));
+				}
+			}
+		}
+		else {
+			for (std::size_t i = 0; i < dimensione; i++) {
+				nuovo->push_back(sliceOnRicorsivo(((std::vector<void*>*) vectorAttuale)->at(i), indiceVar, indiceEvidenceVar, livello + 1, isEvidence));
+			}
+		}
+		return nuovo;
+	}
+}
+
+void ProbabilityMD::normalizza()
+{
+	//bool primo = true;
+	
+	//std::cout << "faccio una normalizzazione per somma = " << sommaTabella;
+	// controllo la normalizzazione
+	double sommaNormalizzata = 0;
+	if (variables->size() == 1) {
+		// c'è solo un livello quindi
+		//if (unoPerTutti) {
+		//	// divido solo il primo
+		//	std::vector<void*>::iterator elemento = multidimTable->begin();
+		//	double el = *((double*) *elemento) / sommaTabella;
+		//	*(double*) *elemento = el;
+		//	sommaTabella = el * multidimTable->size();
+		//} else {
+			// li faccio tutti
+			for (std::vector<double>::iterator elemento = ((std::vector<double>*) multidimTable)->begin(); elemento != ((std::vector<double>*) multidimTable)->end(); ++elemento) {
+				double el = *elemento / sommaTabella;
+				*elemento = el;
+				sommaNormalizzata += el;
+			}
+			sommaTabella = sommaNormalizzata;
+		//}
+	} else {
+		for (std::vector<void*>::iterator elemento = ((std::vector<void*>*) multidimTable)->begin(); elemento != ((std::vector<void*>*) multidimTable)->end(); ++elemento) {
+			sommaNormalizzata += normalizzaRicorsivo(*elemento, 1); //, &primo);
+		}
+		sommaTabella = sommaNormalizzata;
+	}
+
+	//std::cout << " che diventa = " << sommaNormalizzata;
+	//std::string s;
+	//std::cin >> s;
+}
+
+double ProbabilityMD::normalizzaRicorsivo(void* vectorAttuale, std::size_t livello) //, bool* primo)
+{
+	double sommaNormalizzataParziale = 0;
+	if (variables->size() == ++livello) {
+		// c'è solo un livello quindi
+		//if (unoPerTutti) {
+		//	// uno solo
+		//	if (*primo) {
+		//		std::vector<void*>::iterator elemento = vectorAttuale->begin();
+		//		double el = *((double*) *elemento) / sommaTabella;
+		//		*(double*) *elemento = el;
+		//		sommaNormalizzataParziale = el * vectorAttuale->size();
+		//		*primo = false;
+		//	}
+		//} else {
+			// tutti
+			for (std::vector<double>::iterator elemento = ((std::vector<double>*) vectorAttuale)->begin(); elemento != ((std::vector<double>*) vectorAttuale)->end(); ++elemento) {
+				double el = *elemento / sommaTabella;
+				*elemento = el;
+				sommaNormalizzataParziale += el;
+			}
+		//}
+		return sommaNormalizzataParziale;
+	} else {
+		for (std::vector<void*>::iterator elemento = ((std::vector<void*>*) vectorAttuale)->begin(); elemento != ((std::vector<void*>*) vectorAttuale)->end(); ++elemento) {
+			sommaNormalizzataParziale += normalizzaRicorsivo(*elemento, livello); //, primo);
+		}
+		return sommaNormalizzataParziale;
+	}
+}
+
+
+
+//void Probability::normalizza(std::vector<double>* tabellaDaNormalizzare, double somma)
+//{
+//	//std::cout << "faccio una normalizzazione per somma = " << somma;
+//	// controllo la normalizzazione
+//	double sommaNormalizzata = 0;
+//	for (std::vector<double>::iterator elemento = tabellaDaNormalizzare->begin(); elemento != tabellaDaNormalizzare->end(); ++elemento) {
+//		*elemento /= somma;
+//		sommaNormalizzata += *elemento;
+//	}
+//	//std::cout << " che diventa = " << sommaNormalizzata;
+//	//std::string s;
+//	//std::cin >> s;
+//}
+
+ProbabilityMD* ProbabilityMD::sumOn(Variable* var) {
+	//	std::vector<Variable*>::iterator it = std::find(variables->begin(), variables->end(), var);
+	//	// (it == variables->end()) {
+	std::size_t index = variables->indexOf(var);
+	if (index == SIZE_MAX) { //< 0) {
+		// la variabile non è in variables quindi rimane tutto uguale
+		// restituisco una copia
+		return this->copy();
+	}
+
+	std::vector<std::size_t*> confThis;
+	confThis.reserve(variables->size());
+	for (std::size_t i = 0; i < variables->size(); i++)
+		confThis.push_back(new std::size_t(0));
+
+	std::vector<std::size_t*> confNuovaP;
+	confNuovaP.reserve(variables->size() - 1); // faccio puntare agli elementi dell'altra configurazione della stessa variabile a cui si riferiscono in modo da avere sempre lo stesso valore
+
+	// altrimenti faccio proprio l'operazione di somma su variabili
+	// creo una nuova tabella con la giusta dimensione
+	VecMap* nuovaVars = new VecMap(variables->size() - 1);
+	for (std::size_t i = 0; i < index; i++) {
+		nuovaVars->push_back(variables->get(i));
+		confNuovaP.push_back(confThis.at(i));
+	}
+	for (std::size_t i = index + 1; i < variables->size(); i++) {
+		nuovaVars->push_back(variables->get(i));
+		confNuovaP.push_back(confThis.at(i));
+	}
+
+	ProbabilityMD* nuovaP = new ProbabilityMD(nuovaVars);
+
+	//std::vector<void*>* tableResult;
+
+	double somma;
+
+	do {
+		somma = 0;
+		std::size_t nStatesIndex = variables->get(index)->getNStates();
+		for (std::size_t j = 0; j < nStatesIndex; j++) {
+			somma += getElementFromConf(&confThis); //&confVecchia);
+			(*confThis.at(index))++;
+		}
+		*confThis.at(index) = 0;
+		nuovaP->setElementInConf(&confNuovaP, somma);
+
+	} while (ProbabilityMD::nextConf(&confNuovaP, nuovaVars)); // ripeto fino a che posso trovare una configurazione successiva
+
+	ProbabilityMD::eraseConf(&confThis);
+
+	return nuovaP;
+}
+
+ProbabilityMD* ProbabilityMD::div(ProbabilityMD* other) {
+	ProbabilityMD* v1P = this;
+	VecMap* v1 = variables;
+	ProbabilityMD* v2P = other;
+	VecMap* v2 = other->variables;
+
+	//	// TODO decommentare intanto così mi è più facile da debuggare guardando nell'ordine giusto come i miei esempi
+	//	// occhio che se è divisione non posso cambiare l'ordine
+	//	//if (!isDivisione && table->size() < other->table->size()) {
+	//	//	v1P = other;
+	//	//	v1 = other->variables;
+	//	//	v1P = this;
+	//	//	v2 = this->variables;
+	//	//}
+	//
+	//	// TODO considera il fatto che se aggiungo anche una sola variabile mi rifa il vettore in vars
+	//	//      quando moltiplico Psi e Fi non dovrebbe accadere perché il Fi è sottoinsieme di Psi
+	//	//      quindi il caso capita quando faccio initPotenziale nelle cricche
+	//	//      intanto lascio così
+	VecMap* vars = new VecMap(v1->size()+v2->size()); // stima per eccesso per non dover ricrearlo.
+	std::vector<std::size_t*> conf;
+	conf.reserve(v1->size()+v2->size());
+	std::vector<std::size_t*> confV1;
+	confV1.reserve(v1->size());
+
+	std::size_t* elTemp;
+	for (std::vector<Variable*>::iterator itVars = v1->begin(); itVars != v1->end(); itVars++) {
+		vars->push_back(*itVars);
+		elTemp = new std::size_t(0);
+		conf.push_back(elTemp);
+		confV1.push_back(elTemp);
+	}
+
+	std::size_t temp;
+	std::vector<std::size_t*> confV2;
+	confV2.reserve(v2->size());
+	for (std::vector<Variable*>::iterator it = v2->begin(); it != v2->end(); it++) {
+		temp = variables->indexOf(*it);
+		if (temp == SIZE_MAX) {
+			// vuol dire che la variabile non c'è allora la aggiungo
+			vars->push_back(*it);
+			elTemp = new std::size_t(0);
+			conf.push_back(elTemp);
+			confV2.push_back(elTemp);
+		} else {
+			// la variabile già c'è allora non devo aggiungerla ma solo associarle la conf
+			confV2.push_back(conf.at(temp));
+		}
+	}
+
+	ProbabilityMD* nuovaP = new ProbabilityMD(vars);
+
+	double d1;
+	double d2;
+
+	do {
+		d1 = v1P->getElementFromConf(&confV1);
+		d2 = v2P->getElementFromConf(&confV2);
+		//std::cout << *v1P->getElementFromConf(&confV1) << " / " << *v2P->getElementFromConf(&confV2) << std::endl;
+
+		// DEBUG
+		//if (d1 < zero || d2 < zero || d1 > 300 || d2 > 300) {
+		//	std::cout << "valori degli elementi in divisione non tornano: " << d1 << " / " << d2 << std::endl;
+		//	std::cout << v1P->toString() << std::endl << v2P->toString() << std::endl;
+		//}
+		//
+
+
+		if (d1 <= zero && d2 <= zero) 
+			nuovaP->setElementInConf(&conf, 0);
+		else if (d2 > zero)
+			nuovaP->setElementInConf(&conf, d1 / d2); 
+		else {
+			// significa numero/0 ed è un bel problema
+			std::cout << "caso non previsto di divisione (numero>0)/0: " << d1 << " / " << d2 << std::endl;
+			std::cout << v1P->toString() << std::endl << v2P->toString() << std::endl;
+			std::string s;
+			std::cin >> s;
+		}
+
+	} while (ProbabilityMD::nextConf(&conf, vars));
+
+	ProbabilityMD::eraseConf(&conf);
+
+	return nuovaP;
+}
+
+
+ProbabilityMD* ProbabilityMD::mul(ProbabilityMD* other) {
+	ProbabilityMD* v1P = this;
+	VecMap* v1 = variables;
+	//	std::vector<double>* v1Table = table;
+	ProbabilityMD* v2P = other;
+	VecMap* v2 = other->variables;
+	//	std::vector<double>* v2Table = other->table;
+	//
+	//	// TODO modificato serve per sapere se aggiungo variabili nelle variabili della nuova probabilità
+	//	//bool modificato = false;
+	//	// TODO decommentare intanto così mi è più facile da debuggare guardando nell'ordine giusto come i miei esempi
+	//	// occhio che se è divisione non posso cambiare l'ordine
+	//	//if (!isDivisione && table->size() < other->table->size()) {
+	//	//	v1P = other;
+	//	//	v1 = other->variables;
+	//	//	v1Table = other->table;
+	//	//	v2 = this->variables;
+	//	//	v2Table = this->table;
+	//	//}
+	//
+	//	// TODO considera il fatto che se aggiungo anche una sola variabile mi rifa il vettore in vars
+	//	//      quando moltiplico Psi e Fi non dovrebbe accadere perché il Fi è sottoinsieme di Psi
+	//	//      quindi il caso capita quando faccio initPotenziale nelle cricche
+	//	//      intanto lascio così
+	VecMap* vars = new VecMap(v1->size()+v2->size()); // stima per eccesso per non dover ricrearlo.
+	std::vector<std::size_t*> conf;
+	conf.reserve(v1->size()+v2->size());
+	std::vector<std::size_t*> confV1;
+	confV1.reserve(v1->size());
+
+	std::size_t* elTemp;
+	for (std::vector<Variable*>::iterator itVars = v1->begin(); itVars != v1->end(); itVars++) {
+		vars->push_back(*itVars);
+		elTemp = new std::size_t(0);
+		conf.push_back(elTemp);
+		confV1.push_back(elTemp);
+	}
+
+	std::size_t temp;
+	std::vector<std::size_t*> confV2;
+	confV2.reserve(v2->size());
+	for (std::vector<Variable*>::iterator it = v2->begin(); it != v2->end(); it++) {
+		temp = variables->indexOf(*it);
+		if (temp == SIZE_MAX) {
+			// vuol dire che la variabile non c'è allora la aggiungo
+			vars->push_back(*it);
+			elTemp = new std::size_t(0);
+			conf.push_back(elTemp);
+			confV2.push_back(elTemp);
+		} else {
+			// la variabile già c'è allora non devo aggiungerla ma solo associarle la conf
+			confV2.push_back(conf.at(temp));
+		}
+	}
+
+	ProbabilityMD* nuovaP = new ProbabilityMD(vars);
+
+	// DEBUG stampo le tabelle
+	//std::cout << "v1:\n" << v1->toString() << std::endl;
+	//std::cout << v1P->toString() << std::endl;
+	//std::cout << "v2:\n" << v2->toString() << std::endl;
+	//std::cout << v2P->toString() << std::endl;
+	// DEBUG fine
+
+	do {
+		// DEBUG
+		//double d1 = v1P->getElementFromConf(&confV1);
+		//double d2 = v2P->getElementFromConf(&confV2);
+		////nuovaP->setElementInConf(&conf, new double(*d1 * *d2));
+		//
+		//if (d1 < zero || d2 < zero || d1 > 300 || d2 > 300) {
+		//	std::cout << "valori degli elementi in moltiplicazione non tornano: " << d1 << " * " << d2 << std::endl;
+		//	std::cout << v1P->toString() << std::endl << v2P->toString() << std::endl;
+		//}
+		//
+
+		nuovaP->setElementInConf(&conf, v1P->getElementFromConf(&confV1) * v2P->getElementFromConf(&confV2));
+	} while (ProbabilityMD::nextConf(&conf, vars));
+
+	ProbabilityMD::eraseConf(&conf);
+
+	return nuovaP;
+}
+
+bool ProbabilityMD::confronta(ProbabilityMD* other)
+{
+	bool esito = true;
+
+	// devono avere la stessa dimensione, altrimenti sono diverse per forza
+	if (variables->size() != other->variables->size())
+		return false;
+
+	std::vector<std::size_t*> confThis;
+	confThis.reserve(variables->size());
+	for (std::size_t i = 0; i < variables->size(); i++) {
+		confThis.push_back(new std::size_t(0));
+	}
+
+	std::vector<std::size_t*> confOther;
+	confOther.reserve(variables->size());
+
+	// controllo che tutte le variabili sono uguali
+	std::size_t temp;
+	for (std::vector<Variable*>::iterator it = other->getVariables()->begin(); it != other->getVariables()->end(); it++) {
+		//for (std::size_t i = 0; i < variables->size(); i++) {
+		//temp = variables->indexOfMD(other->getVariables()->get(i));
+		temp = variables->indexOf(*it);
+		if (temp == SIZE_MAX) {
+			//if (!other->variables->exists(variables->get(i))) // GUADAGNO li scorro in ordine per cui avrebbe senso anche una lista
+			// una variabile non esiste allora
+			// cancello la conf
+			ProbabilityMD::eraseConf(&confThis);
+			// e do risultato negativo
+			return false;
+		} else {
+			// se c'è allora prendo l'elemento corrispondente dalla confThis
+			confOther.push_back(confThis.at(temp));
+		}
+	}
+
+	// so che tutte le variabili sono uguali quindi passo al confronto elemento per elemento
+	// e ho già le configurazioni
+	// posso passare tutte le conf di this
+	std::string s = getVariables()->toString();
+	do {
+		s.append("\n");
+		s.append(toStringConf(&confThis));
+		s.append(": ");
+		if (std::abs(this->getElementFromConf(&confThis) - other->getElementFromConf(&confOther)) > epsilon) {
+			//return false;
+			esito = false;
+			s.append("\tERROR\t");
+		} else {
+			s.append("\tOK\t");
+		}
+		s.append("=\t");
+		s.append(std::to_string(this->getElementFromConf(&confThis)));
+		s.append(" - ");
+		s.append(std::to_string(other->getElementFromConf(&confOther)));
+
+	} while (ProbabilityMD::nextConf(&confThis, variables));
+
+	std::cout << s;
+	return esito;
+
+}
+
+
+//std::string ProbabilityMD::toString()
+//{
+//	return getVariables()->toString()+"\n"+toStringMDVRicorsiva(multidimTable, 0);
+//}
+//
+//std::string ProbabilityMD::toStringMDVRicorsiva(std::vector<void*>* vec, std::size_t livello)
+//{
+//	std::string s;
+//	if (++livello == variables->size()) {
+//		for (std::vector<void*>::iterator itElement = vec->begin(); itElement != vec->end(); itElement++) {
+//			s.append(std::to_string(*((double*)(*itElement)))).append("\n");
+//		}
+//	}
+//	else {
+//		for (std::vector<void*>::iterator itElement = vec->begin(); itElement != vec->end(); itElement++) {
+//			s.append(toStringMDVRicorsiva((std::vector<void*>*)(*itElement), livello));
+//		}
+//	}
+//
+//	return s;
+//}
+
+std::string ProbabilityMD::toString()
+{
+	std::string s = getVariables()->toString();
+	s.append("\n");
+	if (confDaInserire == NULL) {
+		costruisciConfDaInserire();
+	} else {
+		resetConfDaInserire();
+	}
+
+	//s.append(toStringMDVRicorsiva(multidimTable, 0));
+	std::vector<std::size_t*> conf;
+	conf.reserve(variables->size());
+	for (std::size_t i = 0; i < variables->size(); i++) {
+		conf.push_back(new std::size_t(0));
+	}
+
+	do {
+		s.append("\n");
+		s.append(toStringConf(&conf));
+		s.append("=\t");
+		s.append(std::to_string(getElementFromConf(&conf)));
+	} while (ProbabilityMD::nextConf(&conf, variables));
+
+	return s;
+}
+
+std::string ProbabilityMD::toStringConf(std::vector<std::size_t*>* conf)
+{
+	std::string s;
+	for (std::size_t i = 0; i < variables->size(); i++) {
+		s.append(variables->get(i)->getStates()->get(*conf->at(i)));
+		s.append(",\t");
+	}
+	return s;
+}

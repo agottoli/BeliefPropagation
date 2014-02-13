@@ -1,0 +1,245 @@
+options {
+JAVA_UNICODE_ESCAPE = true;
+OUTPUT_LANGUAGE = "c++";
+NAMESPACE = "hugin_parser";
+//OUTPUT_DIRECTORY = "huginParser";
+//STATIC = false; // ignored by c++
+PARSER_INCLUDES = "iostream\"\n#include \"../BayesianNetwork.h\"\n#include \"../States.h\"\n#include \"stdio.h\"\n#include \"stdlib.h\"\n#include \"sstream"; // NON FUNZIONA METTENDO PIU' INCLUSIONI QUINDI BISOGNA ARRANGIARSI
+}
+
+// ignored by c++ version
+
+PARSER_BEGIN(HuginParser)
+
+// campi privati
+BayesianNetwork* net;
+std::unordered_map<std::string, Variable*> vs;
+States* states;
+Variable* var;
+VecMap* vcp;
+//std::vector<double>* cpTable;
+//double* cpTable;
+
+	
+BayesianNetwork* getBayesianNetwork() {
+	BayesianNetwork* currentNet = net;
+	net = new BayesianNetwork();
+	vs.clear();
+	return currentNet;
+}
+
+PARSER_END(HuginParser)
+
+// define the lexical analyzer
+
+SKIP:
+{ <" ">
+| <"\n">
+| <"\r">
+| <"\t">
+| <"%" (~["\n","\r"])* ("\n" | "\r" | "\r\n")?>  // comment
+| <"HR" (~["\n","\r"])* ("\n" | "\r" | "\r\n")?>  // comment
+}
+
+TOKEN:
+{ <NET: "net">
+| <LPARG: "{">
+| <NODESIZE: "node_size">
+| <EQUAL: "=">
+| <LPAR: "(">
+| <INTEGER: (["0"-"9"])+>
+| <DOUBLE: (["0"-"9"])+"."(["0"-"9"])+>
+| <DOUBLEE: (["0"-"9"])+"."(["0"-"9"])+(["E"])(["-"])(["0"-"9"])+>
+| <RPAR: ")">
+| <SEMICOLON: ";"> 
+| <LABEL: "label">
+| <DOUBLEQUOTE: "\""> : stato_anything
+| <NAME: "name">
+| <NODE: "node"> : stato_namenode //anything // con { come uscita però e i vari SKIP
+| <POSITION: "position">
+| <STATES: "states">
+| <POTENTIAL: "potential"> : stato_potential
+| <DATA: "data">
+| <RPARG: "}">
+}
+
+<stato_anything> TOKEN:
+{ <DOUBLEQUOTE_EXIT: "\""> : DEFAULT
+| <ANYTHING: (~["\n","\r","\t","\""])+> // ammetto spazi ma non il "
+}
+
+<stato_namenode> SKIP:
+{ <" ">
+| <"\n">
+| <"\r">
+| <"\t">
+| <"%" (~["\n","\r"])* ("\n" | "\r" | "\r\n")?>  // comment
+| <"HR" (~["\n","\r"])* ("\n" | "\r" | "\r\n")?>  // comment
+}
+
+<stato_namenode> TOKEN:
+{ <ANYTHING_EXIT: (~["\n","\r","|","(",")","\""," ","\t"])+> : DEFAULT
+}
+
+<stato_potential> SKIP:
+{ <" ">
+| <"\n">
+| <"\r">
+| <"\t">
+| <"%" (~["\n","\r"])* ("\n" | "\r" | "\r\n")?>  // comment
+}
+
+<stato_potential> TOKEN:
+{ <LPAR_P: "(">
+| <ANYTHING_P: (~["\n","\r","|","(",")","\""," ","\t"])+> 
+| <PIPE_P: "|">
+| <RPAR_P_EXIT: ")"> : DEFAULT
+}
+
+
+
+
+// define the parser
+
+/*
+* Productions
+*/
+void Start():
+{
+
+}
+{
+Net()
+/*	
+	<NET>
+	<LPARG>
+		<NODESIZE> <EQUAL_NUMERI> <LPAR> <INTEGER> <INTEGER> <RPAR> <SEMICOLON_NUMERI>
+		<LABEL> <EQUAL_NOMI> <DOUBLEQUOTE> <NOMI> <DOUBLEQUOTE> <SEMICOLON_NOMI>
+		<NAME> <EQUAL_NOMI> <DOUBLEQUOTE> <NOMI> <DOUBLEQUOTE> <SEMICOLON_NOMI>
+	<RPARG>
+*/	
+( Node() )+
+/*
+	(<NODE> <NOMENODE>
+	<LPARG>
+		<LABEL> <EQUAL_NOMI> <DOUBLEQUOTE> <NOMI> <DOUBLEQUOTE> <SEMICOLON_NOMI>
+		<POSITION> <EQUAL_NUMERI> <LPAR> <INTEGER> <INTEGER> <RPAR> <SEMICOLON_NUMERI>
+		<STATES> <EQUAL_NOMI> <LPAR_NOMI> (<DOUBLEQUOTE> <NOMI> <DOUBLEQUOTE>)+ <RPAR_NOMI> <SEMICOLON_NOMI>
+	<RPARG>)+
+*/
+( Potential() )+
+/*	
+	(<POTENTIAL> <LPAR_POTENTIAL> <NOMI_POTENTIAL> <PIPE> (<NOMI_POTENTIAL>)* <RPAR_POTENTIAL>
+	<LPARG>
+		<DATA> <EQUAL_NUMERI> ((<LPAR>)+ (<INTEGER> | <DOUBLE>)+  (<RPAR>)+)+ <SEMICOLON_NUMERI> // non controllo corrispondenza parentesi, li butto dentro in ordine (da migliorare in seguito)
+	<RPARG>)+
+*/
+<EOF> 
+{ 
+	// provo a stampare tutte le variabili create
+	//for (std::unordered_map<std::string, Variable*>::iterator v = vs.begin(); v != vs.end(); v++) {
+	//	std::cout << "v: " << v->second->toString() << std::endl;
+	//}
+}
+}
+
+void Net(): 
+{
+}
+{
+	<NET>
+	<LPARG>
+		[ <NODESIZE> <EQUAL> <LPAR> <INTEGER> <INTEGER> <RPAR> <SEMICOLON> ]
+		[ <LABEL> <EQUAL> <DOUBLEQUOTE> <ANYTHING> <DOUBLEQUOTE_EXIT> <SEMICOLON> ]
+		[ <NAME> <EQUAL> <DOUBLEQUOTE> <ANYTHING> <DOUBLEQUOTE_EXIT> <SEMICOLON> ]
+	<RPARG>
+
+	{ net = new BayesianNetwork(); }
+}
+
+void Node():
+{
+	Token* node;
+	Token* state;
+}
+{
+	<NODE> node = <ANYTHING_EXIT>
+	<LPARG>
+		[ <LABEL> <EQUAL> <DOUBLEQUOTE> <ANYTHING> <DOUBLEQUOTE_EXIT> <SEMICOLON> ]
+		[ <POSITION> <EQUAL> <LPAR> <INTEGER> <INTEGER> <RPAR> <SEMICOLON> ]
+		<STATES> { states = new States(5); } <EQUAL> <LPAR> (<DOUBLEQUOTE> state = <ANYTHING> { states->push_back(state->toString()); } <DOUBLEQUOTE_EXIT>)+ <RPAR> <SEMICOLON>
+	<RPARG>
+
+	{ var = new Variable(node->toString(), states); net->addVariable(var); vs[node->toString()] = var; }
+}
+
+void Potential():
+{
+	Token* t;
+	Variable* var;
+	Variable* father;
+	vcp = new VecMap(1); // da dare una dimensione
+	std::size_t dim = 1;
+	//std::vector<double>* cpTable;
+	double* cpTable;
+	Probability* prob;
+	//ProbabilityMD* prob;
+	std::size_t i = 0;
+	
+}
+{
+	<POTENTIAL> <LPAR_P> t = <ANYTHING_P>
+	{ 
+		var = vs[t->toString()]; 
+		dim *= var->getStates()->size(); 
+	} 
+	[ <PIPE_P> ( t = <ANYTHING_P> 
+	{ 
+		father = vs[t->toString()]; 
+		dim *= father->getStates()->size(); 
+		vcp->push_back(father); 
+		Variable::linkFatherToSon(father, var); 
+	} 
+	)* ] <RPAR_P_EXIT>
+	{ 
+		vcp->push_back(var); // la variabile a cui ci si riferisce è sempre l'ultima che inserisco
+
+		// Probability
+		//cpTable = new std::vector<double>();
+		//cpTable->reserve(dim);
+		cpTable = new double[dim];
+		// ProbabilityMD
+		//prob = new ProbabilityMD(vcp);
+		//
+	}
+	<LPARG>
+		<DATA> <EQUAL> ((<LPAR>)+ (( t = <INTEGER> | t = <DOUBLE> | t = <DOUBLEE>) { 
+
+			std::stringstream ss (t->toString()); 
+			double d; 
+			ss >> d; 
+			
+			// Probability
+			//cpTable->push_back(d);
+			cpTable[i++] = d;
+			// ProbabilityMD
+			//prob->push_back(d);
+			//
+
+		} )+  (<RPAR>)+)+ <SEMICOLON> // non controllo corrispondenza parentesi, li butto dentro in ordine (da migliorare in seguito)
+	<RPARG>
+
+	{ 
+		 
+		// setto la probabilità condizionale
+		// Probability
+		prob = new Probability(vcp, cpTable, dim);
+		//
+
+		var->setConditionalProbability(prob);
+		//std::cout << "tabella: " << p->toString();
+
+		//std::string stringa;
+		//std::cin >> stringa;
+	}
+}

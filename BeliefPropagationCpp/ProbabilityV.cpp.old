@@ -1,0 +1,731 @@
+#include <array>
+#include <algorithm>
+#include <iostream>
+#include <stdlib.h>
+#include <string> // per il cast std::to_string
+#include "ProbabilityV.h"
+#include "States.h"
+
+
+
+ProbabilityV::ProbabilityV(VecMap* vars, std::vector<double>* pot)
+{
+	variables  = vars;
+	table = pot;
+	sommaTabella = 0;
+	for (std::vector<double>::iterator el = pot->begin(); el != pot->end(); ++el) {
+		sommaTabella += *el;
+	}
+}
+
+ProbabilityV::ProbabilityV(VecMap* vars, std::vector<double>* pot, double sommaTab)
+{
+	variables  = vars;
+	table = pot;
+	sommaTabella = sommaTab;
+}
+
+
+ProbabilityV::~ProbabilityV()
+{
+	delete variables;
+	//variables->~VecMap();
+	delete table;
+	//table->~vector();
+}
+
+VecMap* ProbabilityV::getVariables()
+{
+	return variables;
+}
+
+std::vector<double>* ProbabilityV::getTable()
+{
+	return table;
+}
+
+ProbabilityV* ProbabilityV::copy()
+{
+	return new ProbabilityV(variables->copy(), new std::vector<double>(*table), sommaTabella);
+}
+
+ProbabilityV* ProbabilityV::sliceOn(Variable* v) //, int indiceStatoEvidenza)
+{
+	// ASSOMIGLIA LA SUMON quindi lo baso su quel metodo :)
+
+	std::size_t indiceVar = variables->indexOf(v);
+	if (indiceVar == SIZE_MAX || !v->isEvidence()) {
+		// la variabile non c'è quindi restituisco la copia della probabilità
+		// o la variabile non ha evidenze
+		return this->copy();
+	}
+
+	// altrimenti posso fare il vero slice :)
+	std::size_t indiceStatoEvidenza = v->getEvidence();
+
+	// altrimenti 
+	// creo una nuova tabella con la giusta dimensione
+	std::vector<double>* tableNew = new std::vector<double>();
+	tableNew->reserve(table->size());
+
+	// calcolo per le variabili che compaiono dopo, il numero di stati
+	std::size_t salto = 1;
+	for (std::size_t i = indiceVar + 1; i < variables->size(); ++i) {
+		salto *= variables->get(i)->getStates()->size();
+	}
+
+	double somma = 0;
+
+	// adesso compilo la nuova tabella prendendo i dati della tabella originale in ordine
+	// inserisco solo quelli con indice 
+	for (std::size_t i = 0, indice = 0, consecutive = 0; i < table->size(); i++, consecutive++) {
+		if (consecutive == salto) {
+			consecutive = 0;
+			if (++indice == v->getStates()->size()) {
+				indice = 0;
+			}
+		}
+
+		//std::cout << "indice = " << indice << " indiceVar = " << indiceVar << '\n';
+
+		if (indice == indiceStatoEvidenza) {
+			double p = table->at(i);
+			somma = p;
+
+			tableNew->push_back(p);
+		} else
+			tableNew->push_back(0);
+	}
+
+	VecMap* varsCopy = variables->copy();
+	
+	// nota: è inevitabile che sia da normalizzare
+	return new ProbabilityV(varsCopy, tableNew, somma);
+}
+
+void ProbabilityV::normalizza()
+{
+	//std::cout << "faccio una normalizzazione per somma = " << sommaTabella;
+	// controllo la normalizzazione
+	double sommaNormalizzata = 0;
+	for (std::vector<double>::iterator elemento = table->begin(); elemento != table->end(); ++elemento) {
+		*elemento /= sommaTabella;
+		sommaNormalizzata += *elemento;
+	}
+	//std::cout << " che diventa = " << sommaNormalizzata;
+	//std::string s;
+	//std::cin >> s;
+}
+
+//void Probability::normalizza(std::vector<long double>* tabellaDaNormalizzare, long double somma)
+//{
+//	//std::cout << "faccio una normalizzazione per somma = " << somma;
+//	// controllo la normalizzazione
+//	long double sommaNormalizzata = 0;
+//	for (std::vector<long double>::iterator elemento = tabellaDaNormalizzare->begin(); elemento != tabellaDaNormalizzare->end(); ++elemento) {
+//		*elemento /= somma;
+//		sommaNormalizzata += *elemento;
+//	}
+//	//std::cout << " che diventa = " << sommaNormalizzata;
+//	//std::string s;
+//	//std::cin >> s;
+//}
+
+ProbabilityV* ProbabilityV::sumOn(Variable* var) {
+	std::vector<Variable*>::iterator it = std::find(variables->begin(), variables->end(), var);
+	// (it == variables->end()) {
+	std::size_t index = variables->indexOf(var);
+	if (index == SIZE_MAX) {
+		// la variabile non è in variables quindi rimane tutto uguale
+		// restituisco una copia
+		//VecMap* vars = new VecMap(variables->size());
+		//*vars = *variables; // COPIA
+		//std::vector<long double>* tableNew = new std::vector<long double>(table->size());
+		//*tableNew = *table; // COPIA
+		//return new Probability(vars, tableNew);
+		return this->copy(); // copy funziona???
+	}
+	// altrimenti faccio proprio l'operazione di somma su variabili
+	// creo una nuova tabella con la giusta dimensione
+	std::size_t dimTableNew = table->size()/var->getStates()->size();
+	std::vector<double>* tableNew = new std::vector<double>(dimTableNew);
+	for (std::size_t i = 0; i < dimTableNew; i++) {
+		tableNew->at(i) = 0;
+	}
+
+	// calcolo per le variabili che compaiono dopo, il numero di stati
+	std::size_t salto = 1;
+	for (std::vector<Variable*>::iterator I = it + 1; I != variables->end(); ++I) {
+		salto *= (*I)->getStates()->size();
+	}
+	// adesso compilo la nuova tabella prendendo i dati della tabella originale in ordine
+	// l'indice della nuova tabella sono consecutivi per "salto" volte, dopo di che lo faccio da capo per un numero di volte pari al numero di stati della variabile
+	// dopo di che l'indice comincia aggiungendo il "salto".
+	for (std::size_t i = 0, indice = 0, consecutive = 0, somme = 0; i < table->size(); i++, consecutive++) {
+		if (consecutive == salto) {
+			consecutive = 0;
+			if (++somme == var->getStates()->size()) {
+				indice += salto;
+				somme = 0;
+			}
+		}
+
+		//std::cout << "cons= " << indice + consecutive << ", i= " << i << std::endl;
+
+		tableNew->at(indice + consecutive) += table->at(i);
+	}
+
+	// creo la nuova VecMap con le variabili senza quella su cui faccio la somma
+	VecMap* varsSenzaVarSuSomma = new VecMap(variables->size() - 1);
+	//int i = 0;
+	for (std::vector<Variable*>::iterator I = variables->begin(); I != it; ++I) {
+		varsSenzaVarSuSomma->push_back(*I);
+	}
+	for (std::vector<Variable*>::iterator I = it + 1; I != variables->end(); ++I) {
+		varsSenzaVarSuSomma->push_back(*I);
+	}
+
+
+	return new ProbabilityV(varsSenzaVarSuSomma, tableNew, sommaTabella);
+}
+
+ProbabilityV* ProbabilityV::div(ProbabilityV* other) {
+	// controllo se hanno la stessa dimensione può essere che abbiano lo stesso ordine
+	if (this->variables->size() == other->variables->size()) {
+		bool flag = true;
+		// controllo per ogni indice se ogni variabile è uguale
+		for (std::size_t i = 0; i < this->variables->size(); i++) {
+			if (variables->get(i) != other->variables->get(i)) { // li scorro in ordine per cui lista
+				flag = false; // vuol dire che qualche variabile è diversa
+				break;
+			}
+		}
+
+		if (flag) {
+			// moltiplico valori dello stesso posto perché le tabelle sono uguali
+			//VecMap* vars = new VecMap(variables->size());
+			//*vars = *variables;
+			VecMap* vars = variables->copy();
+			
+			// somma di tutti i valori per vedere se bisogna bisogna normalizzare (somma != 1 +- epsilon)
+			double somma = 0;
+
+			std::vector<double>* tableNew = new std::vector<double>();
+			tableNew->reserve(table->size());
+
+			for (std::size_t i = 0; i < table->size(); i++) {
+
+				// gestisce il fatto che possono essere ZERO!!! 
+				// TODO occhio che se capita una divisione per ZERO viene fuoni un bel NAN (da gestire? può capitare?)
+				if (table->at(i) <= epsilon && other->table->at(i) <= epsilon) {
+					// per qualunque numero io divido, se il numeratore lo considero sotto la soglia dello zero, il risultato da 0
+					//tableNew->at(i) = 0;
+					tableNew->push_back(0);
+				// DEBUG inizio
+				} else if (other->table->at(i) <= epsilon) {
+					// caso in cui il numeratore non è 0, ma lo è il denominatore
+					// NON DOVREBBE MAI SUCCEDERE, ma metto il controllo per vedere se cè qualche problema
+					std::cout << "divido per 0 un non 0!!! (" << table->at(i) << " / " << other->table->at(i) << '\n';
+					double operazione = table->at(i) / other->table->at(i);
+					somma += operazione;
+
+					//tableNew->at(i) = operazione;
+					tableNew->push_back(operazione);
+				// DEBUG fine
+				}
+				else {
+					double operazione = table->at(i) / other->table->at(i);
+					somma += operazione;
+
+					//tableNew->at(i) = operazione;
+					tableNew->push_back(operazione);
+				}
+			}
+
+			//if (std::abs(somma - 1) > epsilon) {
+			//	// non fa 1 la somma quindi devo normalizzare???
+			//	// TODO
+			//	normalizza(tableNew, somma);
+			//}
+
+			return new ProbabilityV(vars, tableNew, somma);
+		}
+	}
+
+	// mal che vada uso il metodo completo per la moltiplicazione di tabelle diverse
+	return mul(other, true); // true per indicare la divisione
+}
+
+ProbabilityV* ProbabilityV::mul(ProbabilityV* other)
+{
+	// controllo se hanno la stessa dimensione può essere che abbiano lo stesso ordine
+	if (this->variables->size() == other->variables->size()) {
+		bool flag = true;
+		// controllo per ogni indice se ogni variabile è uguale
+		for (std::size_t i = 0; i < this->variables->size(); i++) {
+			if (variables->get(i) != other->variables->get(i)) { // li scorro in ordine per cui lista
+				flag = false;// vuol dire che qualche variabile è diversa
+				break;
+			}
+		}
+
+		if (flag) {
+			// moltiplico valori dello stesso posto perché le tabelle sono uguali
+			VecMap* vars = new VecMap(variables->size());
+			*vars = *variables;
+			// somma di tutti i valori per vedere se bisogna bisogna normalizzare (somma != 1 +- epsilon)
+			long double somma = 0;
+			std::vector<double>* tableNew = new std::vector<double>(table->size());
+			for (std::size_t i = 0; i < table->size(); i++) {
+
+				// TODO mettere anche qui i confronti per vedere se un elemento è zero???
+
+				double operazione = table->at(i) * other->table->at(i);
+				tableNew->at(i) = operazione;
+				somma += operazione;
+			}
+
+			//if (std::abs(somma - 1) > epsilon) {
+			//	// non fa 1 la somma quindi devo normalizzare???
+			//	// TODO
+			//	normalizza(tableNew, somma);
+			//}
+
+			return new ProbabilityV(vars, tableNew, somma);
+		}
+	}
+
+	// mal che vada uso il metodo completo per la moltiplicazione di tabelle diverse
+	return mul(other, false);
+}
+
+ProbabilityV* ProbabilityV::mul(ProbabilityV* other, bool isDivisione)
+{
+
+	/*if (isDivisione) {
+		std::cout << "DIVISIONE:\n";
+		std::cout << this->toString() << " vs " << other->toString() << '\n';
+	} else {
+		std::cout << "MOLTIPLICAZIONE:\n";
+		std::cout << this->toString() << " vs " << other->toString() << '\n';
+	}*/
+
+	ProbabilityV* v1P = this;
+	VecMap* v1 = variables;
+	std::vector<double>* v1Table = table;
+	VecMap* v2 = other->variables;
+	std::vector<double>* v2Table = other->table;
+
+	// TODO modificato serve per sapere se aggiungo variabili nelle variabili della nuova probabilità
+	//bool modificato = false;
+	// TODO decommentare intanto così mi è più facile da debuggare guardando nell'ordine giusto come i miei esempi
+	// occhio che se è divisione non posso cambiare l'ordine
+	//if (!isDivisione && table->size() < other->table->size()) {
+	//	v1P = other;
+	//	v1 = other->variables;
+	//	v1Table = other->table;
+	//	v2 = this->variables;
+	//	v2Table = this->table;
+	//}
+
+	// TODO considera il fatto che se aggiungo anche una sola variabile mi rifa il vettore in vars
+	//      quando moltiplico Psi e Fi non dovrebbe accadere perché il Fi è sottoinsieme di Psi
+	//      quindi il caso capita quando faccio initPotenziale nelle cricche
+	//      intanto lascio così
+	VecMap* vars = new VecMap(v1->size()+v2->size()); // stima per eccesso per non dover ricrearlo.
+	for (std::vector<Variable*>::iterator itVars = v1->begin(); itVars != v1->end(); itVars++)
+		vars->push_back(*itVars);
+
+	//std::cout << "v1 : " << v1 << " vs vars : " << &vars;
+		
+	std::size_t size = v2->size();
+	std::vector<std::size_t> statistichePerLeVarsV2_pos(size);
+	std::vector<std::size_t> statistichePerLeVarsV2_nStates(size);
+
+	//int indice = 0;
+	std::size_t temp;
+	std::size_t ultimoIndice = vars->size();
+	//std::vector<Variable*>::iterator ultimoIndice = vars.end();
+	//std::vector<Variable*>::iterator inizio = vars->begin();
+	//std::vector<Variable*>::iterator fine = vars->end();
+	//int indiceV2Corrente = 0;
+
+	//for (std::vector<Variable*>::iterator I = v2->begin(); I != v2->end(); ++I) {
+	for (std::size_t i = 0; i < v2->size(); i++) {
+		//temp = std::find(inizio, fine, *I); // TODO ALE AIUTO la complessità è proporzionale all'indice in cui si trova l'elemento!!! No problema uso le map in VecMap :D
+		//temp = std::find(inizio, fine, v2->at(i));
+		temp = variables->indexOf(v2->get(i)); // li scorro in ordine per cui lista, ma c'è indexOf (forse potrei restituire l'iteratore a quella variabile dall'indexOf)
+		if (temp == SIZE_MAX) {
+			// non trovato
+			//modificato = true;
+			//vars.push_back(*I);
+			vars->push_back(v2->get(i)); // qua ci sarebbe l'aggiunta in fondo quindi la lista avrebbe senso senza rischiare di dover rifare il vector
+			temp = ultimoIndice++;
+		}
+
+		statistichePerLeVarsV2_pos[i] = temp;
+		statistichePerLeVarsV2_nStates[i] = v2->get(i)->getStates()->size(); // li scorro in ordine
+
+	}	
+
+	std::vector<std::size_t> nStatiVars (vars->size());
+	std::size_t dimenzioneTableNew = 1;
+	//for (std::vector<Variable*>::iterator I = vars.begin(); I != vars.end(); ++I) {
+	for (std::size_t i = 0; i < nStatiVars.size(); i++) {
+		//int siza = (*I)->getStates()->size();
+		std::size_t siza = vars->get(i)->getStates()->size(); // li scorro in ordine
+		//nStatiVars.push_back(siza);
+		nStatiVars[i] = siza; // compilo un supporto per dire quanti stati ha la variabile a quell'indice
+		dimenzioneTableNew *= siza; // calcolo le dimensioni della nuova tabella moltiplcando il numero di stati di ogni variabile
+	}
+		
+	// nuova tabella della probabilità
+	std::cout << "dimTabNew: " << dimenzioneTableNew << std::endl;
+	std::vector<double>* tableNew = new std::vector<double>(dimenzioneTableNew);
+
+	// FASE 1: inserisco i dati della tabella v1Table!!!
+	if (v1Table->size() > 0) {
+		std::size_t statiAggiuntiviPerOgniRigaOriginale = 1;
+		for (std::size_t i = v1->size(); i < vars->size(); i++) {
+			statiAggiuntiviPerOgniRigaOriginale *= vars->get(i)->getStates()->size(); // li scorro in ordine per cui avrebbe senso anche una lista 
+		}
+		// nella nuova tabella riempio con i valori di v1
+		// con il valore della stessa riga per statiAggiuntiviPerOgniRigaOriginale volte
+		for (std::size_t i = 0; i < dimenzioneTableNew/statiAggiuntiviPerOgniRigaOriginale; i++) {
+			for (std::size_t j = 0; j < statiAggiuntiviPerOgniRigaOriginale; j++) {
+				//int ttt = (i * statiAggiuntiviPerOgniRigaOriginale) + j;
+				//std::cout << "i = " << i << " j = " << j << " totale = " << ttt << " v1T j : " << (*v1Table)[i] << std::endl;
+				(*tableNew)[(i * statiAggiuntiviPerOgniRigaOriginale) + j] = (*v1Table)[i];
+			}
+		}
+	} else {
+		// devo riempirla con qualcosa altrimenti ma darà sempre 0 
+		// NOTA NON NECESSARIO SE PARTO DALLA TABELLA + GRANDE (però se faccio la divisione viene il contrario...
+		for (std::size_t i = 0; i < tableNew->size(); i++)
+			tableNew->at(i) = 1;
+	}
+	// FASE 1: fine
+
+
+	// FASE 2: inserimento dei dati dalla tabella v2Table!!!
+	if (v2Table->size() > 0) {
+
+		// configurazione!!!
+		std::vector<std::size_t> configurazione(vars->size());
+		for (std::size_t i = 0; i < vars->size(); i++) {
+			configurazione[i] = 0;
+		}	
+
+		// somma di tutti i valori per vedere se bisogna bisogna normalizzare (somma != 1 +- epsilon)
+		double somma = 0;
+
+
+		// all'inizio sono tutti 0 quindi la prima riga di tableNew coincide sempre con la prima riga di v2Table
+		if (isDivisione) {
+			if ((*tableNew)[0] <= zero && (*v2Table)[0] <= zero) { // sono sempre maggiori o uguali a 0
+				// per qualunque numero io divido, se il numeratore lo considero sotto la soglia dello zero, il risultato da 0
+				//std::cout << tableNew->at(0) << " / " << (*v2Table)[0] << " = "; 
+				(*tableNew)[0] = 0;
+				//std::cout << tableNew->at(0) << '\n';
+			// DEBUG inizio	
+			} else if ((*v2Table)[0] <= zero) {
+				// caso in cui il numeratore non è 0, ma lo è il denominatore
+				// NON DOVREBBE MAI SUCCEDERE, ma metto il controllo per vedere se c'è qualche problema
+				std::cout << "divido per 0 un non 0!!! (" << (*tableNew)[0] << " / " << (*v2Table)[0] << '\n';
+				double operazione = (*tableNew)[0] / (*v2Table)[0];
+				somma += operazione;
+
+				(*tableNew)[0] = operazione;
+				//(*tableNew)[0] /= (*v2Table)[0];
+			// DEBUG fine
+			} else {
+				//std::cout << tableNew->at(0) << " / " << (*v2Table)[0] << " = "; 
+				double operazione = (*tableNew)[0] / (*v2Table)[0];
+				somma += operazione;
+
+				(*tableNew)[0] = operazione;
+				//(*tableNew)[0] /= (*v2Table)[0];
+				//std::cout << tableNew->at(0) << '\n';
+			}
+
+		} else {
+
+			// TODO mettere anche qua i confronti per lo zero???
+
+			//std::cout << tableNew->at(0) << " * " << (*v2Table)[0] << " = "; 
+			double operazione = (*tableNew)[0] * (*v2Table)[0];
+			somma += operazione;
+
+			(*tableNew)[0] = operazione;
+			//(*tableNew)[0] *= (*v2Table)[0];
+			//std::cout << tableNew->at(0) << '\n';
+		}
+
+		// calcolo da posizione 1 a fine
+		for (std::size_t i = 1; i < tableNew->size(); i++) {
+			// aggiorno la configurazione
+			configurazioneAggiornata(&configurazione, &nStatiVars);
+
+			// calcolo indice di v2Table da cui prendere il dato
+			std::size_t statoVarJ = configurazione[statistichePerLeVarsV2_pos[0]];
+			for (std::size_t j = 1; j < statistichePerLeVarsV2_pos.size(); j++) {
+				statoVarJ = (statoVarJ * statistichePerLeVarsV2_nStates[j]) + configurazione[statistichePerLeVarsV2_pos[j]];
+			}	
+
+			if (isDivisione) {
+				if ((*tableNew)[i] <= zero && (*v2Table)[statoVarJ] <= zero) {
+					//std::cout << tableNew->at(i) << " / " << (*v2Table)[statoVarJ] << " = "; 
+					(*tableNew)[i] = 0;
+					//std::cout << tableNew->at(i) << '\n';
+				// DEBUG inizio	
+				} else if ((*v2Table)[statoVarJ] <= zero) {
+					// caso in cui il numeratore non è 0, ma lo è il denominatore
+					// NON DOVREBBE MAI SUCCEDERE, ma metto il controllo per vedere se c'è qualche problema
+					std::cout << "divido per 0 un non 0!!! (" << (*tableNew)[i] << " / " << (*v2Table)[i] << '\n';
+
+					double operazione = (*tableNew)[i] / (*v2Table)[statoVarJ];
+					somma += operazione;
+
+					(*tableNew)[i] = operazione;
+					//(*tableNew)[i] /= (*v2Table)[statoVarJ];
+				// DEBUG fine	
+				} else {
+					//std::cout << tableNew->at(i) << " / " << (*v2Table)[statoVarJ] << " = "; 
+					double operazione = (*tableNew)[i] / (*v2Table)[statoVarJ];
+					somma += operazione;
+
+					(*tableNew)[i] = operazione;
+					//(*tableNew)[i] /= (*v2Table)[statoVarJ];
+					//std::cout << tableNew->at(i) << '\n';
+				}
+			} else {
+				
+				// TODO mettere anche qua i confronti per lo zero???
+
+				//std::cout << tableNew->at(i) << " * " << (*v2Table)[statoVarJ] << " = ";
+				double operazione = (*tableNew)[i] * (*v2Table)[statoVarJ];
+				somma += operazione;
+
+				(*tableNew)[i] = operazione;
+				//(*tableNew)[i] *= (*v2Table)[statoVarJ];
+				//std::cout << tableNew->at(i) << '\n';
+			}
+
+		}
+
+		//if (std::abs(somma - 1) > epsilon) {
+		//	// non fa 1 la somma quindi devo normalizzare???
+		//	// TODO
+		//	normalizza(tableNew, somma);
+		//}
+
+		ProbabilityV* pNew = new ProbabilityV(vars, tableNew, somma);
+		//std::cout << "pNew: " << pNew->toString();
+		//std::cout << "dimTabella: " << tableNew->size() << std::endl;
+		//for (std::vector<Variable*>::iterator I = vars->begin(); I != vars->end(); I++) {
+		//	std::cout << "dim: " << (*I)->getStates()->size() << std::endl; 
+		//}
+		//std::string s223;
+		//std::cin >> s223;
+		return pNew;
+	}
+
+	//std::cout << "TableNew finale:\n" << vars->toString() << '\n';
+	//
+	//if (tableNew->size() > 0) {
+	//	for (unsigned i = 0; i < tableNew->size(); i++)
+	//		std::cout << tableNew->at(i) << '\n';
+	//} else {
+	//	std::cout << "tabella <= 0\n";
+	//}
+	//std::string ssss;
+	//std::cin >> ssss;
+
+	// TODO non so se è giusta la sommaTabella, in teoria sì perché copio la tabella1
+	return new ProbabilityV(vars, tableNew, v1P->getSommaTabella());
+}
+
+void ProbabilityV::configurazioneAggiornata(std::vector<std::size_t>* configurazione, std::vector<std::size_t>* nStatiVars) {
+	//bool flag = true;
+	// nota se sforo si diventa tutto 0 ma non da errore
+	for (std::size_t indiceVarDaAumentare = configurazione->size() - 1; indiceVarDaAumentare >= 0; indiceVarDaAumentare--) {
+		if ((*configurazione)[indiceVarDaAumentare] + 1 == (*nStatiVars)[indiceVarDaAumentare]) {
+			// sono arrivato in fondo per quella variabile:
+			// - do valore 0 
+			// - aumento la variabile precedente (reiterando nel ciclo con indice nuovo)
+			(*configurazione)[indiceVarDaAumentare] = 0;
+		} else {
+			(*configurazione)[indiceVarDaAumentare] += 1;
+			//flag = false;
+			break;
+		}
+	}
+}
+
+
+
+std::string ProbabilityV::toString() {
+	std::string s = variables->toString();
+	s.append("\n"); //tabella:{\n");
+
+	//uso la configurazione solo per stamparla
+	std::vector<std::size_t>* configurazione = createConfigurazione();
+	std::vector<std::size_t>* nStatiVars1 = new std::vector<std::size_t>();
+		nStatiVars1->reserve(variables->size());
+		for (std::size_t i = 0; i < variables->size(); i++) {
+			nStatiVars1->push_back(variables->get(i)->getStates()->size()); // li scorro in ordine per cui lista
+		}
+
+
+	for (std::vector<double>::iterator I = table->begin(); I != table->end(); ++I) {
+		//s.append(configurazioneToString(configurazione)).append("\t").append(boost::lexical_cast<std::string>(*I)).append("\n");
+		s.append(configurazioneToString(configurazione)).append("\t").append(std::to_string(*I)).append("\n");
+		configurazioneAggiornata(configurazione, nStatiVars1);
+	}
+	//s.append("}");
+
+	return s;
+}
+
+std::vector<std::size_t>* ProbabilityV::createConfigurazione()
+{
+	std::vector<std::size_t>* configurazione = new std::vector<std::size_t>();
+	configurazione->reserve(variables->size());
+	for (unsigned i = 0; i < variables->size(); i++) {
+		configurazione->push_back(0);
+	}
+	return configurazione;
+}
+
+std::string ProbabilityV::configurazioneToString(std::vector<std::size_t>* configurazione)
+{
+	std::string s;
+	for (std::size_t ii = 0; ii < configurazione->size(); ii++) {
+		s.append("\"").append(variables->get(ii)->getStates()->get(configurazione->at(ii))).append("\", ");
+	}
+	return s;
+}
+
+// COME COMPLESSITA' E' LA MORTE (con il solo vector)!!! 
+// adesso è un po' meglio
+bool ProbabilityV::confronta(ProbabilityV* other) {
+
+	bool esito = true;
+
+	// devono avere la stessa dimensione, altrimenti sono diverse per forza
+	if (variables->size() != other->variables->size())
+		return false;
+
+	// controllo che tutte le variabili sono uguali
+	for (std::size_t i = 0; i < variables->size(); i++) {
+		//if (std::find(other->variables->begin(), other->variables->end(), variables->at(i)) == other->variables->end()) // MORTE
+		if (!other->variables->exists(variables->get(i))) // GUADAGNO li scorro in ordine per cui avrebbe senso anche una lista
+			return false;
+	}
+	
+	std::vector<std::size_t> statistichePerLeVarsV2_pos (variables->size());
+	//std::vector<int> statistichePerLeVarsV2_nStates (variables->size());	
+
+	for (std::size_t i = 0; i < variables->size(); i++) {
+		//statistichePerLeVarsV2_pos.at(i) = std::find(variables->begin(), variables->end(), other->variables->at(i)) - variables->begin(); // MORTE
+		statistichePerLeVarsV2_pos.at(i) = variables->indexOf(other->variables->get(i)); // GUADAGNO li scorro in ordine per cui lista, ma c'è un indexOf qui
+		//statistichePerLeVarsV2_nStates.at(i) = other->variables->at(i)->getStates()->size(); // INUTILE
+	}
+
+	bool flag = true;
+	for (std::size_t i = 0; i < statistichePerLeVarsV2_pos.size(); i++) {
+		if (statistichePerLeVarsV2_pos.at(i) != i) {
+			flag = false;
+			break;
+		}
+	}
+
+	std::cout << variables->toString() << "\n";
+
+	if (flag) {
+		// hanno l'ordine giusto quindi controllo riga per riga
+		// uso la configurazione solo per stamparla
+		std::vector<std::size_t>* configurazione = createConfigurazione();
+		std::vector<std::size_t>* nStatiVars1 = new std::vector<std::size_t>();
+		nStatiVars1->reserve(variables->size());
+		for (std::size_t i = 0; i < variables->size(); i++) {
+			nStatiVars1->push_back(variables->get(i)->getStates()->size()); // li scorro in ordine per cui lista
+		}
+
+		for (std::size_t i = 0; i < table->size(); i++) {
+			std::cout << configurazioneToString(configurazione);
+			configurazioneAggiornata(configurazione, nStatiVars1);
+
+			if (std::abs(table->at(i) - other->table->at(i)) > epsilon) {
+				//return false;
+				esito = false;
+				std::cout << "\tERROR\t";
+			} else {
+				std::cout << "\tOK\t";
+			}
+			std::cout << ":\t" << table->at(i) << " - " << other->table->at(i) << "\n";
+		}
+
+		// distruggo configurazione e vars1..
+		configurazione->~vector();
+		nStatiVars1->~vector();
+
+	} else {
+		// ste maledette hanno ordine diverso e mi tocca andare a cercare la stessa configurazione
+		std::vector<std::size_t>* configurazione = createConfigurazione();
+		
+		// stampo configurazione attuale...
+		std::cout << configurazioneToString(configurazione);
+		// ... e poi l'esito del controllo
+		if (std::abs(table->at(0) - other->table->at(0)) > epsilon) {
+			// return false;
+			esito = false;
+			std::cout << "\tERROR\t";
+		} else {
+			std::cout << "\tOK\t";
+		}
+		std::cout << table->at(0) << " - " << other->table->at(0) << "\n";
+
+		// supporto: mi salvo il numero di stati di ogni variabili		
+		std::vector<std::size_t>* nStatiVars1 = new std::vector<std::size_t>();
+		nStatiVars1->reserve(variables->size());
+		for (std::size_t i = 0; i < variables->size(); i++) {
+			nStatiVars1->push_back(variables->get(i)->getStates()->size()); // li scorro in ordine per cui lista
+		}
+
+		// DEBUG c++
+		//for (unsigned i = 0; i < variables->size(); i++) {
+		//	std::cout << nStatiVars1->at(i) << ", ";
+		//}
+
+		// controllo da indice 1 a fine
+		for (std::size_t i = 1; i < table->size(); i++) {
+			configurazioneAggiornata(configurazione, nStatiVars1);
+
+			// calcolo indice di v2Table da cui prendere il dato
+			std::size_t statoVarJ = configurazione->at(statistichePerLeVarsV2_pos.at(0));
+			for (std::size_t j = 1; j < statistichePerLeVarsV2_pos.size(); j++) {
+				statoVarJ = (statoVarJ * other->variables->get(j)->getStates()->size()) + configurazione->at(statistichePerLeVarsV2_pos.at(j)); // li scorro in ordine per cui lista
+			}
+
+			// stampo configurazione attuale...
+			std::cout << configurazioneToString(configurazione);
+			// ... e poi l'esito del controllo
+			if (std::abs(table->at(i) - other->table->at(statoVarJ)) > epsilon) {
+				// return false;
+				esito = false;
+				std::cout << "\tERROR\t";
+			} else {
+				std::cout << "\tOK\t";
+			}
+			std::cout << table->at(i) << " - " << other->table->at(statoVarJ) << "\n";
+
+		}
+
+		// distruggo configurazione e vars1..
+		configurazione->~vector();
+		nStatiVars1->~vector();
+	}
+
+	return esito;
+}

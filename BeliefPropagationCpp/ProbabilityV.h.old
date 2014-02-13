@@ -1,0 +1,90 @@
+#pragma once
+
+#ifndef PROBABILITYV_H
+#define PROBABILITYV_H
+
+#include <vector>
+#include <map>
+//#include <boost/lexical_cast.hpp>
+#include <cmath> // per std::abs
+#include "Variable.h"
+#include "VecMap.h"
+
+#define epsilon 0.0000000001 //L // 10^-9 per il confronto dei valori delle probabilità, può esserci una leggera differenza per arrotondamenti vari
+#define zero 0.0 //L // per gestire il fatto della divisione 0/0 che da 0 invece di NaN
+
+
+class ProbabilityV
+{
+	// variabili in ordine in cui compaiono nella tabella
+	VecMap* variables;
+	// vettore che contiene tutte le probabilità delle varie configurazioni
+	std::vector<double>* table;
+
+	// contiene la somma dei valori della tabella (se = 1 ok, altrumenti andrebbe normalizzata)
+	double sommaTabella;
+	
+	//bool conditional;
+
+public:
+	// costruisco una nuova probabilità date le variabili coinvolte (ordinate secondo la tabella) e la tabella con le probabilità effettive
+	ProbabilityV(VecMap*, std::vector<double>*);
+	// sperimentale per la normalizzazione
+	ProbabilityV(VecMap*, std::vector<double>*, double sommaTab);
+	~ProbabilityV();
+
+	// restituisce le variabili
+	VecMap* getVariables();
+	// restituisce la tabella delle probabilità
+	std::vector<double>* getTable();
+
+	// calcola la nuova probabilità sommando sulla variabile passata
+	ProbabilityV* sumOn(Variable*);
+
+	// calcola la nuova probabilità dividendo la probabilità per quella passata
+	ProbabilityV* div(ProbabilityV*);
+	// calcola la nuova probabilità moltiplicando la probabilità per quella passata
+	ProbabilityV* mul(ProbabilityV*);
+
+	// mi aumenta di uno la configurazione passata per parametro conforme il numero di stati che ha ogni variabile (passata per secondo parametro)
+	void configurazioneAggiornata(std::vector<std::size_t>*, std::vector<std::size_t>*);
+
+	// copia della probabilità
+	ProbabilityV* copy();
+
+	//
+	std::string toString();
+
+	// restituisce true se e solo se i valori di ogni probabilità con la stessa configurazione differiscono di < epsilon (10^-9)
+	bool confronta(ProbabilityV*);
+
+	bool isNormalized() {
+		//std::cout << sommaTabella << '\t';
+		return std::abs(sommaTabella - 1) <= epsilon;
+	}
+
+	// normalizza la tabella della probabilità attuale e tengo la somma dentro il parametro sommaTabella quando la costruisco???
+	void normalizza();
+
+	// slice per le evidence (metodo utilizzabile solo sulle conditional probability!!!)
+	ProbabilityV* sliceOn(Variable* v); //, int indice);
+
+private:
+	// metodo per la moltiplicazione (se bool = false) o la divisione (se bool = true)
+	ProbabilityV* mul(ProbabilityV*, bool);
+
+	// crea una configurazione iniziale (tutti le variabili hanno stato 0)
+	std::vector<std::size_t>* createConfigurazione();
+	// stampa i valori corrispondenti degli stati data una configurazione
+	std::string configurazioneToString(std::vector<std::size_t>*);
+
+	// normalizza la tabella passata dividendo tutti i valori per la somma
+	//void normalizza(std::vector<long double>* tabellaDaNormalizzare, long double somma);
+	
+
+	double getSommaTabella() {
+		return sommaTabella;
+	}
+};
+
+#endif /* PROBABILITYV_H */
