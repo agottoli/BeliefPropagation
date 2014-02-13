@@ -57,7 +57,7 @@
 // fine
 
 // includo gli header di cuda
-#include "../BeliefPropagationCUDA/reduction.h"
+#include "../BeliefPropagationCUDA/myLibKernelSmallN.h"
 //#include "./CUDA/myLibKernelSmallN.h"
 
 

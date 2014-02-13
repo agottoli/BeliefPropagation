@@ -405,6 +405,8 @@ bool Probability::confronta(Probability* other) {
 		configOther->push_back(&config.at(index));
 	}
 
+	// DEBUG
+	std::size_t elementiError = 0;
 	
 	for (std::size_t i = 0; i < tableSize; i++) {
 
@@ -425,9 +427,10 @@ bool Probability::confronta(Probability* other) {
 		if (std::abs(table[i] - *(other->getAtConfig(configOther))) > epsilon) {
 			// diversi
 			esito = false;
-			std::cout << "\tERROR\t";
-			std::string sss;
-			std::cin >> sss;
+			elementiError++;
+			std::cout << "\tERROR elemento i = \t" << i << " delle tabelle JT = " << table[i] << " vs BP = " << *(other->getAtConfig(configOther)) << std::endl;
+			//std::string sss;
+			//std::cin >> sss;
 		} else {
 			// uguali
 			//std::cout << "\tOK\t";
@@ -436,6 +439,12 @@ bool Probability::confronta(Probability* other) {
 
 		nextConfig(&config);
 
+	}
+	
+	if (elementiError > 0) {
+		std::cout << elementiError << " elementi risultano diversi...";
+		std::string sss;
+		std::cin >> sss;
 	}
 
 	return esito;
