@@ -169,9 +169,11 @@ std::size_t* Separator::createIndexingTableCUDA(JTClique* cliqueToIndex)
 	std::size_t dimCliqueTable = cliquePsi->getTableSize();
 	std::size_t* indexT = new size_t[dimCliqueTable];
 
-	std::size_t* offset = new std::size_t[fi->getTableSize()];
+	std::size_t fiTableSize = fi->getTableSize();
+
+	std::size_t* offset = new std::size_t[fiTableSize];
 	// dicono che un array ha già tutti elementi a zero... MA NON E' VERO!!!
-	for (std::size_t i = 0; i < fi->getTableSize(); i++) {
+	for (std::size_t i = 0; i < fiTableSize; i++) { 
 		offset[i] = 0;
 	}
 
@@ -211,7 +213,15 @@ std::size_t* Separator::createIndexingTableCUDA(JTClique* cliqueToIndex)
 	for (std::size_t i = 0; i < dimCliqueTable; i++) {
 		// NOTA: configClique si riferisce esattamente alla configurazione dell'indice i nella tabella della cricca
 		fiIndex = fi->getIndexOfConfig(configSep);
-		indexT[fiIndex * dimMapToSame + (offset[fiIndex])++] = i; //cliquePsi->getAtConfig(&configClique);
+
+		
+		if (Config::indexingSumOnRow) {
+			// QUA C'E' LA DIFFERENZA DI INSERIRE I DATI IN [0000][1111][2222]
+			indexT[fiIndex * dimMapToSame + (offset[fiIndex])++] = i; //cliquePsi->getAtConfig(&configClique);
+		} else {
+			// OPPURE IN [012][012][012][012]
+			indexT[fiIndex + fiTableSize * (offset[fiIndex])++] = i;
+		}
 
 		// aggiorno alla prossima configurazione
 		cliquePsi->nextConfig(&configClique);
@@ -406,7 +416,14 @@ Probability* Separator::sumOnIndexingTableOfCUDA(JTClique* cli, JTClique* cliScr
 
 			for (std::size_t j = 0; j < numeroElemDaAggiornareConUgualeValore; j++) {
 				//std::cout << "iT[" << i * numeroElemDaAggiornareConUgualeValore + j << "] = " << *indexingTableScrivo[i * numeroElemDaAggiornareConUgualeValore + j] << " --> ";
-				tableCliScrivo[indexingTableScrivo[i * numeroElemDaAggiornareConUgualeValore + j]] *= divisioneTraFi;
+				
+				if (Config::indexingSumOnRow) {
+					// [0][1][2] * [0000][1111][2222]
+					tableCliScrivo[indexingTableScrivo[i * numeroElemDaAggiornareConUgualeValore + j]] *= divisioneTraFi;
+				} else {
+					// [0][1][2] * [012][012][012][012]
+					tableCliScrivo[indexingTableScrivo[i + dimFiStarTable * j]] *= divisioneTraFi;
+				}
 				//std::cout << *indexingTableScrivo[i * numeroElemDaAggiornareConUgualeValore + j];
 				//std::string sss;
 				//std::cin >> sss;
