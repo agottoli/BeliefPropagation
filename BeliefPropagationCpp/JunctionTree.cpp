@@ -1,19 +1,19 @@
 #include "JunctionTree.h"
 
 
-JunctionTree::JunctionTree(std::unordered_set<JTClique*>* c, std::unordered_set<Separator*>* l)
-{
-	cliques = c;
-	links = l;
-	root = NULL;
-}
+//JunctionTree::JunctionTree(std::unordered_set<JTClique*>* c, std::unordered_set<Separator*>* l)
+//{
+//	cliques = c;
+//	links = l;
+//	roots = new std::unordered_set<JTClique*>();
+//}
 
-JunctionTree::JunctionTree(std::unordered_set<JTClique*>* c, std::unordered_set<Separator*>* l, std::unordered_set<Variable*>* nodesBN)
+JunctionTree::JunctionTree(std::unordered_set<JTClique*>* c, std::unordered_set<Separator*>* l, std::unordered_set<Variable*>* nodesBN, std::unordered_set<JTClique*>* rootsSet)
 {
 	cliques = c;
 	links = l;
 	allVariables = nodesBN;
-	root = NULL;
+	roots = rootsSet;
 }
 
 
@@ -24,6 +24,7 @@ JunctionTree::~JunctionTree(void)
 	//root->~JTClique();
 }
 
+/*
 void JunctionTree::calcolaRootMigliore()
 {
 	// TODO che così è a prima che capita!!!
@@ -36,16 +37,24 @@ JTClique* JunctionTree::getRoot()
 	//	calcolaRootMigliore();
 	return root;
 }
+*/
+
+std::unordered_set<JTClique*>* JunctionTree::getRoots() 
+{
+	return roots;
+}
 
 std::string JunctionTree::getDOT()
 {
 	std::string s = "digraph {\n\tnodesep=\"1.5\"; ranksep=2;\n\tnode [shape=plaintext];\n\tedge [color=gray];\n";
-	JTClique* r = getRoot();
-	// partendo dalla root per ogni link che ha scrive i nodi collegati a lei
-	for (std::unordered_map<JTClique*, Separator*>::iterator I = r->getLinks()->begin(); I != r->getLinks()->end(); ++I) {
-		s.append("\t\"").append(r->toString()).append("\" -> \"").append((*I).first->toString()).append("\";\n");
-		// e chiama ricorsivamente per fare la stessa cosa su ogni figlio (in questo caso devo stare attento a non riscrivere il noo padre)
-		s.append(getDOT2((*I).first, r));
+	//JTClique* r = getRoot();
+	for (JTClique* r : *roots) {
+		// partendo dalla root per ogni link che ha scrive i nodi collegati a lei
+		for (std::unordered_map<JTClique*, Separator*>::iterator I = r->getLinks()->begin(); I != r->getLinks()->end(); ++I) {
+			s.append("\t\"").append(r->toString()).append("\" -> \"").append((*I).first->toString()).append("\";\n");
+			// e chiama ricorsivamente per fare la stessa cosa su ogni figlio (in questo caso devo stare attento a non riscrivere il noo padre)
+			s.append(getDOT2((*I).first, r));
+		}
 	}
 	s.append("}\n");
 

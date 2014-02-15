@@ -162,21 +162,51 @@ double** Separator::createIndexingTable(JTClique* cliqueToIndex)
 	return indexT;
 }
 
+inline std::size_t
+pow2roundup (std::size_t x)
+{
+    //if (x < 0)
+    //    return 0; // non capiterà mai perché le tabelle hanno tutte dimensione positiva!!!
+
+    --x; // da problemi con unsigned se x = 0, ma non capiterà mai
+    x |= x >> 1;
+    x |= x >> 2;
+    x |= x >> 4;
+    x |= x >> 8;
+    x |= x >> 16;
+    return x+1;
+}
+
 std::size_t* Separator::createIndexingTableCUDA(JTClique* cliqueToIndex)
 {
 	Probability* cliquePsi = cliqueToIndex->getPsi();
 
 	std::size_t dimCliqueTable = cliquePsi->getTableSize();
-	std::size_t* indexT = new size_t[dimCliqueTable];
 
 	std::size_t fiTableSize = fi->getTableSize();
 
+	std::size_t dimMapToSame = dimCliqueTable / fiTableSize;
+
+	// provo a costruire la tabella già pronta con m e N potenze di 2
+	std::size_t dimMapToSamePow2 = pow2roundup(dimMapToSame);
+	std::size_t nArrayPow2 = pow2roundup(fiTableSize);
+	std::size_t psiTableSizePow2 = dimMapToSamePow2 * nArrayPow2;
+	/*
 	std::size_t* offset = new std::size_t[fiTableSize];
 	// dicono che un array ha già tutti elementi a zero... MA NON E' VERO!!!
 	for (std::size_t i = 0; i < fiTableSize; i++) { 
 		offset[i] = 0;
 	}
-
+	*/
+	///*
+	// diventa...
+	std::size_t* offset = new std::size_t[nArrayPow2];
+	// dicono che un array ha già tutti elementi a zero... MA NON E' VERO!!!
+	for (std::size_t i = 0; i < nArrayPow2; i++) { 
+		offset[i] = 0;
+	}
+	//*/
+	//
 
 	// controllo che tutte le variabili della tabella other siano presenti in this
 	// e così mi salvo dove si trovano
@@ -202,12 +232,21 @@ std::size_t* Separator::createIndexingTableCUDA(JTClique* cliqueToIndex)
 		configSep->push_back(&configClique.at(index));
 	}
 
-	std::size_t dimMapToSame = dimCliqueTable / fi->getTableSize();
 
 	//std::cout << "numero elementi sommo: " << dimMapToSame << " e gli arrai sono: " << fi->getTableSize() << std::endl;
 	//std::string s;
 	//std::cin >> s;
 
+	
+	
+	// provo a costruire la tabella già pronta con m e N potenze di 2
+	std::size_t* indexT = new size_t[psiTableSizePow2];
+	for (std::size_t i = 0; i < psiTableSizePow2; i++) {
+		indexT[i] = SIZE_MAX;
+	}
+	/*
+	std::size_t* indexT = new size_t[dimCliqueTable];
+	*/
 
 	std::size_t fiIndex;
 	for (std::size_t i = 0; i < dimCliqueTable; i++) {
@@ -217,10 +256,26 @@ std::size_t* Separator::createIndexingTableCUDA(JTClique* cliqueToIndex)
 		
 		if (Config::indexingSumOnRow) {
 			// QUA C'E' LA DIFFERENZA DI INSERIRE I DATI IN [0000][1111][2222]
+			// provo a costruire la tabella già pronta con m e N potenze di 2
+			/*
 			indexT[fiIndex * dimMapToSame + (offset[fiIndex])++] = i; //cliquePsi->getAtConfig(&configClique);
+			*/
+			///*
+			// diventa...
+			indexT[fiIndex * dimMapToSamePow2 + (offset[fiIndex])++] = i; //cliquePsi->getAtConfig(&configClique);
+			//*/
+			//
 		} else {
 			// OPPURE IN [012][012][012][012]
+			// provo a costruire la tabella già pronta con m e N potenze di 2
+			/*
 			indexT[fiIndex + fiTableSize * (offset[fiIndex])++] = i;
+			*/
+			///*
+			// diventa...
+			indexT[fiIndex + nArrayPow2 * (offset[fiIndex])++] = i;
+			//*/
+			//
 		}
 
 		// aggiorno alla prossima configurazione
@@ -230,6 +285,13 @@ std::size_t* Separator::createIndexingTableCUDA(JTClique* cliqueToIndex)
 
 	delete offset;
 	delete configSep;
+
+	// DEBUG
+	//for (std::size_t i = 0; i < dimCliqueTable; i++) {
+	//	std::cout << indexT[i] << " ";
+	//}
+	//std::cout << std::endl;
+	//
 
 	return indexT;
 }
@@ -356,7 +418,6 @@ Probability* Separator::sumOnIndexingTableOfCUDA(JTClique* cli, JTClique* cliScr
 
 	std::size_t sizeTableLeggo = cli->getPsi()->getTableSize();
 	std::size_t numeroElemDaSommare = sizeTableLeggo / dimFiStarTable;
-	std::size_t numeroElemDaAggiornareConUgualeValore = cliScrivo->getPsi()->getTableSize() / dimFiStarTable;
 
 	// da
 	//double* fiStarTable = runSmallN(size, int nArray, double *h_idata, int *h_iIndexData);
@@ -370,7 +431,19 @@ Probability* Separator::sumOnIndexingTableOfCUDA(JTClique* cli, JTClique* cliScr
 	}
 	*/
 	
+	// provo a costruire la tabella già pronta con m e N potenze di 2
+	std::size_t numeroElemDaSommarePow2 = pow2roundup(numeroElemDaSommare);
+	std::size_t dimFiStarTablePow2 = pow2roundup(dimFiStarTable); // nArrayPow2 
+	std::size_t sizeTableLeggoPow2 = numeroElemDaSommarePow2 * dimFiStarTablePow2;
+	/*
 	double* fiStarTable = runSmallN(sizeTableLeggo, dimFiStarTable, cli->getPsi()->getTable(), (long unsigned int *) indexingTableLeggo); 
+	*/
+	///*
+	// diventa...
+	double* fiStarTable = runSmallN(sizeTableLeggoPow2, dimFiStarTablePow2, cli->getPsi()->getTable(), (long unsigned int *) indexingTableLeggo); //, dimFiStarTable);
+	// mi restituirà un array più lungo, ma modificando la dimensione del risultato in cuda, mi da solo il numero di elementi validi. 
+	//*/
+	//
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/*int size = sizeTableLeggo; //32;    // number of elements to reduce -> default:  16777216						// ALE
@@ -389,7 +462,18 @@ Probability* Separator::sumOnIndexingTableOfCUDA(JTClique* cli, JTClique* cliScr
 	
 	//
 	double* tableCliScrivo = cliScrivo->getPsi()->getTable();
+	std::size_t sizeTableScrivo = cliScrivo->getPsi()->getTableSize();
 	
+	std::size_t numeroElemDaAggiornareConUgualeValore = cliScrivo->getPsi()->getTableSize() / dimFiStarTable;
+
+	// provo a costruire la tabella già pronta con m e N potenze di 2
+	std::size_t numeroElemDaAggiornareConUgualeValorePow2 = pow2roundup(numeroElemDaAggiornareConUgualeValore);
+	std::size_t sizeTableScrivoPow2 = numeroElemDaAggiornareConUgualeValorePow2 * dimFiStarTablePow2;
+	//
+
+	//for (std::size_t i = 0; i < sizeTableScrivo; i++) {
+	//	std::cout << "indexingTableScrivo[i + dimFiStarTablePow2 * j] = " << indexingTableScrivo[i] << std::endl;
+	//}
 	
 	for (std::size_t i = 0; i < dimFiStarTable; i++) {
 
@@ -419,10 +503,24 @@ Probability* Separator::sumOnIndexingTableOfCUDA(JTClique* cli, JTClique* cliScr
 				
 				if (Config::indexingSumOnRow) {
 					// [0][1][2] * [0000][1111][2222]
+					/*
 					tableCliScrivo[indexingTableScrivo[i * numeroElemDaAggiornareConUgualeValore + j]] *= divisioneTraFi;
+					*/
+					///*
+					// diventa...
+					tableCliScrivo[indexingTableScrivo[i * numeroElemDaAggiornareConUgualeValorePow2 + j]] *= divisioneTraFi;
+					//*/
+					//
 				} else {
 					// [0][1][2] * [012][012][012][012]
+					/*
 					tableCliScrivo[indexingTableScrivo[i + dimFiStarTable * j]] *= divisioneTraFi;
+					*/
+					///*
+					// diventa...
+					tableCliScrivo[indexingTableScrivo[i + dimFiStarTablePow2 * j]] *= divisioneTraFi;
+					//*/
+					//
 				}
 				//std::cout << *indexingTableScrivo[i * numeroElemDaAggiornareConUgualeValore + j];
 				//std::string sss;

@@ -15,20 +15,22 @@ class JunctionTree
 	std::unordered_set<Separator*>* links;
 
 	// la cricca scelta come radice dell'albero (quella su cui si applica la BP)
-	JTClique* root;
+	//JTClique* root;
+	std::unordered_set<JTClique*>* roots;
 
 	std::unordered_set<Variable*>*allVariables;
 
 public:
 	// costruisce l'albero dati l'insieme di cricche e i separatori che le uniscono
-	JunctionTree(std::unordered_set<JTClique*>*, std::unordered_set<Separator*>*);
-	JunctionTree(std::unordered_set<JTClique*>*, std::unordered_set<Separator*>*, std::unordered_set<Variable*>*);
+	//JunctionTree(std::unordered_set<JTClique*>*, std::unordered_set<Separator*>*);
+	JunctionTree(std::unordered_set<JTClique*>*, std::unordered_set<Separator*>*, std::unordered_set<Variable*>*, std::unordered_set<JTClique*>*);
 	~JunctionTree(void);
 
 	// calcola la radice
-	void calcolaRootMigliore();
+	//void calcolaRootMigliore();
 	// restituisce la radice (se non è già stata calcolata, la calcola pure usndo il metodo createRootMigliore)
-	JTClique* getRoot();
+	//JTClique* getRoot();
+	std::unordered_set<JTClique*>* getRoots();
 
 	// rappresentazione dell'albero in dot
 	std::string getDOT();
@@ -43,6 +45,11 @@ public:
 std::unordered_set<JTClique*>* getCliques()
 {
 	return cliques;
+}
+
+bool unicoAlbero() {
+	std::cout << cliques->size() << "cliques con " << links->size() << " links." << std::endl;
+	return cliques->size() == 1 + links->size();
 }
 
 private:

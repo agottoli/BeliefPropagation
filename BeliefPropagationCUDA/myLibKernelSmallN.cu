@@ -1,6 +1,8 @@
 #ifndef MYLIBKERNELSMALLN_CU
 #define MYLIBKERNELSMALLN_CU
 
+#include <limits.h>
+
 #include "cuda_runtime.h"
 #include "device_launch_parameters.h"
 
@@ -58,15 +60,30 @@ reduce1StepSmallN(double *g_idata, double *g_odata, long unsigned int *d_iIndexD
 	unsigned int i = blockIdx.x*(blockDim.x*2) + threadIdx.x;
 	// in mySum ogni thread dovrebbe avere il valore dell'indice dell'array che deve analizzare 
 	// nota: solo metà degli elementi è presa in considerazione, in quanto 0 <= threadIdx.x <= blockDim (non blockDim*2)
-    double mySum = (i < n) ? g_idata[d_iIndexData[i]] : 0;
+    
+	//double mySum = (i < n) ? g_idata[d_iIndexData[i]] : 0;
+	// ALE
+	double mySum;
+	if (i < n && d_iIndexData[i] != ULONG_MAX) { //SIZE_MAX) {
+		mySum = g_idata[d_iIndexData[i]];
+	} else {
+		mySum = 0;
+	}
+	//
+
 	//cuPrintf ("CUPRINTF 1- blockIdx.x = %d mySum = %f \n",blockIdx.x, mySum);
 
 	// nella prima passata ogni thread prende come mySum il valore preso all'istruzione precedente 
 	// + il valore preso dal blocco successivo (viene così presa in considerazione l'altra metà degli elementi)
     //if (i + (blockDim.x*4) < n)
     //    mySum += g_idata[i+(blockDim.x*4)];
-    if (i + blockDim.x < n)
-        mySum += g_idata[d_iIndexData[i+blockDim.x]];
+	
+	//if (i + blockDim.x < n)
+	//	mySum += g_idata[d_iIndexData[i+blockDim.x]];
+	// ALE
+    if (i + blockDim.x < n && d_iIndexData[i+blockDim.x] != ULONG_MAX) { //SIZE_MAX) {
+		mySum += g_idata[d_iIndexData[i+blockDim.x]];
+	}
 
     sdata[tid] = mySum;
     __syncthreads();
@@ -156,7 +173,7 @@ double *reduceSmallNArray(int  n,
                   	double *h_odata,
                   	double *d_idata,
                   	double *d_odata,
-					long unsigned int *d_iIndexData)
+					long unsigned int *d_iIndexData) //, int nArrayVero)
 {
 	bool needReadBack = true;
 	
@@ -174,8 +191,10 @@ double *reduceSmallNArray(int  n,
 		cudaError_t error;
 		
 		unsigned int dimResult = nArray * sizeof(double);
+		//unsigned int dimResult = nArrayVero * sizeof(double);
 		double *gpu_result = (double *) malloc(dimResult);
-        for (int i=0; i < nArray; i++) gpu_result[i]=0;		
+        for (int i=0; i < nArray; i++) gpu_result[i]=0;	
+		//for (int i=0; i < nArrayVero; i++) gpu_result[i]=0;
 
 			if(debug) { assert (nArray%dimBlock.x == 0); cudaPrintfInit();
 					// execute the kernel
@@ -200,6 +219,7 @@ double *reduceSmallNArray(int  n,
 
 			double prec;
               for (int i=0; i < nArray; i++) 
+			//for (int i=0; i < nArrayVero; i++) 
 			{
 					for(int j=0; j < s; j++) {
 						gpu_result[i] += h_odata[i*s+j];
@@ -258,6 +278,7 @@ double *reduceSmallNArray(int  n,
 
 				double prec;
                 for (int i=0; i < nArray; i++) 
+				//for (int i=0; i < nArrayVero; i++)
                 {
 					for(int j=0; j < s; j++) {
 						gpu_result[i] += h_odata[i*s+j];
@@ -278,6 +299,7 @@ double *reduceSmallNArray(int  n,
 	    {
 	        // copy final sum from device to host
           cudaMemcpy(gpu_result, d_odata, sizeof(double)*nArray, cudaMemcpyDeviceToHost);
+			//cudaMemcpy(gpu_result, d_odata, sizeof(double)*nArrayVero, cudaMemcpyDeviceToHost);
 		  cudaError_t error = cudaGetLastError();
 		  if(error != cudaSuccess)
 		  {
@@ -289,7 +311,7 @@ double *reduceSmallNArray(int  n,
 	return gpu_result;   
 }
 
-double * runSmallN(int size, int nArray, double *h_idata, long unsigned int *h_iIndexData){
+double * runSmallN(int size, int nArray, double *h_idata, long unsigned int *h_iIndexData) { //, int nArrayVERO){
 	//int size = 1<<24;    // number of elements to reduce -> default:  16777216						// ALE
 	//int nArray = 1024;	// m = 16384 																// ALE
 	//size = 4096;																					// ALE
@@ -344,7 +366,7 @@ double * runSmallN(int size, int nArray, double *h_idata, long unsigned int *h_i
         double *gpu_result;																		// ALE è lungo nArray
 
         gpu_result = reduceSmallNArray(size, nArray, numThreads, numBlocks, maxThreads,
-                                        cpuFinalThreshold, h_odata, d_idata, d_odata, d_iIndexData);
+			cpuFinalThreshold, h_odata, d_idata, d_odata, d_iIndexData); //, nArrayVERO);
 
 		cudaEventRecord( stop, 0 );
 		cudaEventSynchronize( stop );

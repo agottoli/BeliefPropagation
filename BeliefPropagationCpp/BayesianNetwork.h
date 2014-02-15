@@ -123,7 +123,8 @@ private:
 
 	// FASE 2 metodi di supporto
 	// applica kruskal per trovare l'albero di ricoprimento massimo (massimo perché voglio i link con separatori massimi)
-	std::unordered_set<Separator*>* kruskal(std::priority_queue<Separator*, std::vector<Separator*>, MyComparatorSeparator>*, std::unordered_set<JTClique*>*);
+	//std::unordered_set<Separator*>* kruskal(std::priority_queue<Separator*, std::vector<Separator*>, MyComparatorSeparator>*, std::unordered_set<JTClique*>*);
+	JunctionTree* kruskal(std::priority_queue<Separator*, std::vector<Separator*>, MyComparatorSeparator>*, std::unordered_set<JTClique*>*);
 	//
 
 

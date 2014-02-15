@@ -19,6 +19,14 @@ public:
 
 	void unione(JTClique*, JTClique*);
 	JTClique* findSet(JTClique*);
+
+	std::unordered_set<JTClique*>* getRootsDisjoint() {
+		std::unordered_set<JTClique*>* rts = new std::unordered_set<JTClique*>();
+		for (std::unordered_map<JTClique*, JTClique*>::iterator it = roots.begin(); it != roots.end(); it++) {
+			rts->insert(findSet((*it).first)); // se mettessi second dovrebbe essere + veloce
+		}
+		return rts;
+	}
 };
 
 #endif /* DISJOINTSET_H */

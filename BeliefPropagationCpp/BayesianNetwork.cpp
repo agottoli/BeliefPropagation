@@ -543,7 +543,7 @@ JunctionTree* BayesianNetwork::createJunctionTreeMST(std::unordered_set<JTClique
 		}
 	}
 
-
+	/*
 	// ADESSO DEVO TROVARE IL MST per linkare le cricche
 	// uso Kruskal
 	std::unordered_set<Separator*>* links = kruskal(coda, cliques); 
@@ -551,10 +551,14 @@ JunctionTree* BayesianNetwork::createJunctionTreeMST(std::unordered_set<JTClique
 	// adesso ho tutte le cricche e i separatori scelti da kruskal, quindi posso creare il junction tree
 	//return new JunctionTree(cliques, links);
 	return new JunctionTree(cliques, links, &nodes);
+	*/
+
+	return kruskal(coda, cliques);
 }
 
 
-std::unordered_set<Separator*>* BayesianNetwork::kruskal(std::priority_queue<Separator*, std::vector<Separator*>, MyComparatorSeparator>* coda, std::unordered_set<JTClique*>* maximalCliques)
+//std::unordered_set<Separator*>* BayesianNetwork::kruskal(std::priority_queue<Separator*, std::vector<Separator*>, MyComparatorSeparator>* coda, std::unordered_set<JTClique*>* maximalCliques)
+JunctionTree* BayesianNetwork::kruskal(std::priority_queue<Separator*, std::vector<Separator*>, MyComparatorSeparator>* coda, std::unordered_set<JTClique*>* maximalCliques)
 {
 	// insieme di tutti i separatori scelti nell'albero
 	std::unordered_set<Separator*>* scelti = new std::unordered_set<Separator*>(); // TODO
@@ -604,7 +608,12 @@ numeroElementiDelleTabelleProbability += elementiInTabella;
 		}
 //	}
 
+	/*
 	return scelti;
+	*/
+	// trovo quali sono i rappresentanti che fanno da root agli alberi (se ce ne sono di più)
+	//ds.getRootsDijoint();
+	return new JunctionTree(maximalCliques, scelti, &nodes, ds.getRootsDisjoint());
 }
 
 

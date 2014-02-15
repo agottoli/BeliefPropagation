@@ -79,10 +79,22 @@
 //  return s.substr(0, s.length() - 1);
 //}
 
+#include <limits.h>
 
 int main(int argc, char* argv[]) 
 {
+	std::string sss;
 
+	/*
+	std::cout << ULLONG_MAX << " vs " << ULONG_MAX;
+	if (SIZE_MAX == ULLONG_MAX) //18446744073709551615
+		std::cout << "==";
+	else
+		std::cout << "!=";
+
+	std::cin >> sss;
+	*/
+	
 	selectGPU();
 	
 	// create input
@@ -105,9 +117,7 @@ int main(int argc, char* argv[])
 		std::cout << output[i] << " ";
 	}
 	*/
-	
-	
-	std::string sss;
+
 	
 
 	/// DIM //////////
@@ -138,17 +148,17 @@ int main(int argc, char* argv[])
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//// TEST PARSER
 	//std::string s = ReadFileFully("../RetiEsempio/Munin1.hugin");
-	/*
+	///*
 	if (argc < 2) {
 		// file di input non specificato
 		std::cout << "nessun file di input indicato." << std::endl;
 		return 0;
 	}
-	*/
+	//*/
 	
 	//std::ifstream f("../RetiEsempio/Alarm.hugin");
 	//std::ifstream f("../RetiEsempio/Barley.net");
-	/* * /
+	///*
 	if (argc == 1) {
 		std::cout << "Specificare file di input!";
 		std::cin >> sss;
@@ -247,16 +257,16 @@ int main(int argc, char* argv[])
 	std::cin >> sss;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/ * */
+	//*/
 
 	// CREO LA RETE
 	std::vector<BayesianNetwork*>* BNSet = new std::vector<BayesianNetwork*>();
 	BNSet->reserve(10);
-	BNSet->push_back(RetiEsempio::createEarthquakeEx());
-	BNSet->push_back(RetiEsempio::createAsiaEx());
+	//BNSet->push_back(RetiEsempio::createEarthquakeEx());
+	//BNSet->push_back(RetiEsempio::createAsiaEx());
 	//BNSet->push_back(RetiEsempio::createComaEx());
 	//BNSet->push_back(RetiEsempio::createSprinklerEx());
-	//BNSet->push_back(bn);
+	BNSet->push_back(bn);
 
 	//std::cout << "DOT BN:\n" << net->getDOT() << '\n';
 	//std::cin >> sss;
@@ -302,6 +312,13 @@ int main(int argc, char* argv[])
 		std::cout << "COSTRUZIONE JUNCTION TREE..." << std::endl;
 		//
 		JunctionTree* jt = net->createJunctionTreeMST(cli);
+		
+		// controllo se in numero di cricche del jt è uno in più del numero dei link
+		/*if (!jt->unicoAlbero()) {
+			std::cout << "E' una foresta... NON LO CONSIDERO VALIDO!!!" << std::endl;
+			std::cin >> sss;
+			return 1;
+		}*/
 		
 		
 		//std::cout << jt->getDOT() << '\n';
