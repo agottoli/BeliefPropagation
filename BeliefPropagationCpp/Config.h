@@ -9,7 +9,7 @@ namespace Config {
 
 	static bool useIndexingTable = true; // PER CUDA DEVE PER FORZA ESSERE TRUE!!!
 	//static bool useIndexingTable = false;
-	static bool useCUDA = false; // true
+	static bool useCUDA = false; //true;
 	static bool indexingSumOnRow = false;
 
 	static int numIndexing = 0;

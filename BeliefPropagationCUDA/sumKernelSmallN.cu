@@ -15,6 +15,10 @@
 
 bool debug = false;
 
+#ifndef SIZE_MAX
+#define SIZE_MAX ((size_t)-1)
+#endif
+
 void getNumBlocksAndThreadsSmallN(int n, int maxThreads, int &blocks, int &threads){
         //get device capability, to avoid block/grid size excceed the upbound
 	    cudaDeviceProp prop;
