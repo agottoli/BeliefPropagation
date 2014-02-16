@@ -1,5 +1,5 @@
-#ifndef MYLIBKERNELSMALLN_CU
-#define MYLIBKERNELSMALLN_CU
+#ifndef SUMKERNELSMALLN_CU
+#define SUMKERNELSMALLN_CU
 
 #include <limits.h>
 
@@ -9,7 +9,7 @@
 
 #include <stdio.h>
 
-#include "myLibKernelSmallN.h"
+#include "sumKernelSmallN.h"
 
 #include "myLib.h"
 

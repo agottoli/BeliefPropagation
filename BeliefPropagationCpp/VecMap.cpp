@@ -125,10 +125,10 @@ std::string VecMap::toString() {
 	return s;
 }
 
-	std::size_t VecMap::memoriaOccupataDallaRElativaTabella() {
-		std::size_t spazio = 1;
+	std::size_t VecMap::numeroElementiDellaRelativaTabella() {
+		std::size_t numEl = 1;
 		for (std::vector<Variable*>::iterator it = variables->begin(); it != variables->end(); it++) {
-			spazio *= (*it)->getNStates();
+			numEl *= (*it)->getNStates();
 		}
-		return spazio; // * sizeof(double) / 1000; // 1000 per kbyte, 1000000 per mbyte.
+		return numEl; // * sizeof(double) / 1000; // 1000 per kbyte, 1000000 per mbyte.
 	}

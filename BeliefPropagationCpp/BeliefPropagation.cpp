@@ -69,9 +69,9 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 		node->getPsi()->aggiornaOrdinato(fiSeparatoreStar, fiSeparatore);
 	} else {
 		// DEBUG calcolo te tabelle anche col metodo normale e le confronto con il nuovo metodo
-		Probability* copiaFiSeparatoreStar = first->getPsi()->sumOnNotPresent(fiSeparatore);
-		Probability* copiaPsiCricca = node->getPsi()->copy();
-		copiaPsiCricca->aggiornaOrdinato(copiaFiSeparatoreStar, fiSeparatore);
+		//Probability* copiaFiSeparatoreStar = first->getPsi()->sumOnNotPresent(fiSeparatore);
+		//Probability* copiaPsiCricca = node->getPsi()->copy();
+		//copiaPsiCricca->aggiornaOrdinato(copiaFiSeparatoreStar, fiSeparatore);
 		//
 		if (!Config::useCUDA)
 			fiSeparatoreStar = second->sumOnIndexingTableOf(first, node, elapsedSum, elapsedDivMul);
@@ -79,24 +79,24 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 			fiSeparatoreStar = second->sumOnIndexingTableOfCUDA(first, node, elapsedSum, elapsedDivMul);
 
 		// DEBUG confronta fiStar e psiStar
-		bool ok = copiaFiSeparatoreStar->confronta(fiSeparatoreStar);
-		if (ok)
-			std::cout << "OK!!! :D" << std::endl;
-		else {
-			std::cout << "ERROR!!! :(" << std::endl;
-			std::string sss;
-			std::cin >> sss;
-		}
-		std::cout << "vars copia: " << copiaPsiCricca->getVariables()->toString() << std::endl;
-		std::cout << "vars origi: " << node->getPsi()->getVariables()->toString() << std::endl;
-		ok = copiaPsiCricca->confronta(node->getPsi());
-		if (ok)
-			std::cout << "OK!!! :D" << std::endl;
-		else {
-			std::cout << "ERROR!!! :(" << std::endl;
-			std::string sss;
-			std::cin >> sss;
-		}
+		//bool ok = copiaFiSeparatoreStar->confronta(fiSeparatoreStar);
+		//if (ok)
+		//	std::cout << "OK!!! :D" << std::endl;
+		//else {
+		//	std::cout << "ERROR!!! :(" << std::endl;
+		//	std::string sss;
+		//	std::cin >> sss;
+		//}
+		//std::cout << "vars copia: " << copiaPsiCricca->getVariables()->toString() << std::endl;
+		//std::cout << "vars origi: " << node->getPsi()->getVariables()->toString() << std::endl;
+		//ok = copiaPsiCricca->confronta(node->getPsi());
+		//if (ok)
+		//	std::cout << "OK!!! :D" << std::endl;
+		//else {
+		//	std::cout << "ERROR!!! :(" << std::endl;
+		//	std::string sss;
+		//	std::cin >> sss;
+		//}
 		//	
 
 	}
@@ -166,9 +166,9 @@ void BeliefPropagation::update(JTClique* first, Separator* second, JTClique* nod
 		first->getPsi()->aggiornaOrdinato(fiSeparatoreStar, fiSeparatore);
 	} else {
 		// DEBUG calcolo te tabelle anche col metodo normale e le confronto con il nuovo metodo
-		Probability* copiaFiSeparatoreStar = node->getPsi()->sumOnNotPresent(fiSeparatore);
-		Probability* copiaPsiCricca = first->getPsi()->copy();
-		copiaPsiCricca->aggiornaOrdinato(copiaFiSeparatoreStar, fiSeparatore);
+		//Probability* copiaFiSeparatoreStar = node->getPsi()->sumOnNotPresent(fiSeparatore);
+		//Probability* copiaPsiCricca = first->getPsi()->copy();
+		//copiaPsiCricca->aggiornaOrdinato(copiaFiSeparatoreStar, fiSeparatore);
 		//
 		if (!Config::useCUDA)
 			fiSeparatoreStar = second->sumOnIndexingTableOf(node, first, elapsedSum, elapsedDivMul);
@@ -176,22 +176,22 @@ void BeliefPropagation::update(JTClique* first, Separator* second, JTClique* nod
 			fiSeparatoreStar = second->sumOnIndexingTableOfCUDA(node, first, elapsedSum, elapsedDivMul);
 
 		// DEBUG confronta fiStar e psiStar
-		bool ok = copiaFiSeparatoreStar->confronta(fiSeparatoreStar);
-		if (ok)
-			std::cout << "OK!!! :D" << std::endl;
-		else {
-			std::cout << "ERROR!!! :(" << std::endl;
-			std::string sss;
-			std::cin >> sss;
-		}
-		ok = copiaPsiCricca->confronta(first->getPsi());
-		if (ok)
-			std::cout << "OK!!! :D" << std::endl;
-		else {
-			std::cout << "ERROR!!! :(" << std::endl;
-			std::string sss;
-			std::cin >> sss;
-		}
+		//bool ok = copiaFiSeparatoreStar->confronta(fiSeparatoreStar);
+		//if (ok)
+		//	std::cout << "OK!!! :D" << std::endl;
+		//else {
+		//	std::cout << "ERROR!!! :(" << std::endl;
+		//	std::string sss;
+		//	std::cin >> sss;
+		//}
+		//ok = copiaPsiCricca->confronta(first->getPsi());
+		//if (ok)
+		//	std::cout << "OK!!! :D" << std::endl;
+		//else {
+		//	std::cout << "ERROR!!! :(" << std::endl;
+		//	std::string sss;
+		//	std::cin >> sss;
+		//}
 		//
 
 	}
@@ -220,9 +220,9 @@ JunctionTree* BeliefPropagation::BP(BayesianNetwork* bn)
 
 void BeliefPropagation::BP(JunctionTree* jt)
 {
-	std::cout << "inizia la belief propagation..." << std::endl;
-	std::string sss;
-	std::cin >> sss;
+	//std::cout << "inizia la belief propagation..." << std::endl;
+	//std::string sss;
+	//std::cin >> sss;
 
 	//time_t m;
 	//time_t now = time(NULL);
@@ -265,7 +265,7 @@ void BeliefPropagation::BP(JunctionTree* jt)
 	std::cout << "di cui " << *elapsedSum << " per eseguire le somme." << std::endl;
 	std::cout << "     e " << *elapsedDivMul << " per eseguire le div-mul." << std::endl;
 	// STAMPA ESECUZIONE fine
-	std::cin >> sss;
+	//std::cin >> sss;
 }
 
 std::string BeliefPropagation::tabLivello()

@@ -25,7 +25,7 @@
     <ClInclude Include="myLib.h">
       <FileType>Document</FileType>
     </ClInclude>
-    <CudaCompile Include="myLibKernelSmallN.cu" />
+    <CudaCompile Include="sumKernelSmallN.cu" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\BeliefPropagationCpp\huginParser\HuginGrammar.jj" />
@@ -53,7 +53,7 @@
     <ClInclude Include="..\BeliefPropagationCpp\States.h" />
     <ClInclude Include="..\BeliefPropagationCpp\Variable.h" />
     <ClInclude Include="..\BeliefPropagationCpp\VecMap.h" />
-    <ClInclude Include="myLibKernelSmallN.h" />
+    <ClInclude Include="sumKernelSmallN.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\BeliefPropagationCpp\BayesianNetwork.cpp" />

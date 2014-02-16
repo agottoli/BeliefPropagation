@@ -91,21 +91,16 @@ std::unordered_set<JTClique*>* BayesianNetwork::triangolateMaxClique()
 			if (iterat != findNodes.end()) {
 				v = iterat->second; //findNodes.find(ordinamento->at(i))->second;
 			
-				std::cout << "estratto elemento: " << v->toString() << " con indice imposto: " << i << std::endl; //v->getIndiceInOrdinamentoImposto() << '\n';
+				// DEBUG
+				//std::cout << "estratto elemento: " << v->toString() << " con indice imposto: " << i << std::endl; //v->getIndiceInOrdinamentoImposto() << '\n';
+				//
 
 				triangolarizzaSupport(v, &done, maximalCliqueSet);
 			} else {
 				// dico che non ho trovato la variabile
 
 				std::cout << "durante l'estrazione della variabile non ho trovato la variabile " << ordinamento->at(i) << std::endl;
-				//for (std::unordered_map<std::string, Variable*>::iterator it = findNodes.begin(); it != findNodes.end(); it++) {
-				//	std::cout << "(" << it->second->toString() << ")" << " vs " << "(" << ordinamento->at(i) << ")" << std::endl;
-				//	if (it->second->toString() == ordinamento->at(i)) {
-				//		std::cout << "OK";
-				//		std::string ss;
-				//		std::cin >> ss;
-				//	}
-				//}
+
 				std::cout << "errore a indice " << i << " di " << ordinamento->size() << std::endl;
 				if (i == ordinamento->size() - 1)
 					std::cout << "TUTTO REGOLARE, c'è solo un \\n alla fine." << std::endl;
@@ -128,22 +123,24 @@ std::unordered_set<JTClique*>* BayesianNetwork::triangolateMaxClique()
 		while (!copiaVars.empty()) {
 			// uso il numero di vicini non già selezionati
 			v = min(&copiaVars, &done);
-			std::cout << "estratto elemento: " << v->toString() << " con numero di vicini non selezionati: " << v->getNumNeighboursNotSelected() << '\n';
+			//std::cout << "estratto elemento: " << v->toString() << " con numero di vicini non selezionati: " << v->getNumNeighboursNotSelected() << '\n';
 			copiaVars.erase(v); // constant time
 
 			triangolarizzaSupport(v, &done, maximalCliqueSet);
 		}
 	}
 
-	std::cout << "fine ordinamento";
-	std::string sss;
-	std::cin >> sss;
+	std::cout << "fine creazione cricche." << std::endl;
+	//std::string sss;
+	//std::cin >> sss;
 
 	// le cricche massimali sono state create quindi bisogna assegnare la probabilità condizionale
 	// di ogni variabile ad una "sola" cricca in modo da calcolare i potenziali
 	// NOTA si assegna alla cricca che contiene tutte le variabili che compaiono nella tabella della probabilità condizionale
-	//TABELLE	
+	//TABELLE
+	std::cout << "Costruisco le tabelle dei potenziali delle varie cricche trovate...";
 	initPotentialsToMaximalCliques();
+	std::cout << " OK." << std::endl;
 
 	return maximalCliqueSet;
 }
@@ -349,7 +346,8 @@ void BayesianNetwork::createCliqueAndAddToSetIfMaximal(std::unordered_set<JTCliq
 	
 	if (isMaximalCliqueInSetOfMaximalClique(maximalCliqueSet, nodiCricca)) {
 		// DEBUG
-		std::cout << "creo una nuova cricca massimale, la numero " << numeroCriccheMassimali++ << std::endl;
+		//std::cout << "creo una nuova cricca massimale, la numero " << numeroCriccheMassimali << std::endl;
+		numeroCriccheMassimali++;
 		//
 		
 		JTClique* c = new JTClique(nodiCricca);
@@ -363,11 +361,12 @@ void BayesianNetwork::createCliqueAndAddToSetIfMaximal(std::unordered_set<JTCliq
 		}
 
 //TABELLE			
-std::cout << "la tabella ha variabili: " << vm->toString() << std::endl;
-std::size_t elementiInTabella = vm->memoriaOccupataDallaRElativaTabella();
-std::size_t kbytes = elementiInTabella * sizeof(double) / 1000;
-std::cout << "devo creare una PSI di dimensione: " << elementiInTabella << " elementi circa " << kbytes << "kbyte." << std::endl;
+//std::cout << "la tabella ha variabili: " << vm->toString() << std::endl;
+std::size_t elementiInTabella = vm->numeroElementiDellaRelativaTabella();
+//std::size_t kbytes = elementiInTabella * sizeof(double) / 1000;
+//std::cout << "devo creare una PSI di dimensione: " << elementiInTabella << " elementi circa " << kbytes << "kbyte." << std::endl;
 numeroElementiDelleTabelleProbability += elementiInTabella;
+
 
 //if (!Config::tabellaScazza)
 	c->setPsi(new Probability(vm, 1));
@@ -399,8 +398,8 @@ bool BayesianNetwork::isMaximalCliqueInSetOfMaximalClique(std::unordered_set<JTC
 void BayesianNetwork::initPotentialsToMaximalCliques()
 {
 	// DEBUG
-	std::cout << "initPotentialsToMaximalCliques start" << std::endl;
-	std::size_t varNum = 0;
+	//std::cout << "initPotentialsToMaximalCliques start" << std::endl;
+	//std::size_t varNum = 0;
 	//
 	
 	// prendo la probabilità condizionale di ogni variabile...
@@ -408,7 +407,7 @@ void BayesianNetwork::initPotentialsToMaximalCliques()
 		Probability* cp = (*I)->getConditionalProbability();
 		
 		// DEBUG
-		std::cout << "elaboro la prob condizionale della variabile " << varNum++ << ": " << (*I)->toString() << std::endl;
+		//std::cout << "elaboro la prob condizionale della variabile " << varNum++ << ": " << (*I)->toString() << std::endl;
 		//std::cout << "prob: " << cp->toString();
 		//std::string sss;
 		//std::cin >> sss;
@@ -422,7 +421,7 @@ void BayesianNetwork::initPotentialsToMaximalCliques()
 				//vars->push_back(*I); // ultimo elemento (se copio direttamente le variabili c'è anche l'ultima)
 
 				// DEBUG
-				std::cout << "la CP di " << (*I)->getLabel() << " la assegno alla cricca " << (*IJTC)->toString() << std::endl;
+				//std::cout << "la CP di " << (*I)->getLabel() << " la assegno alla cricca " << (*IJTC)->toString() << std::endl;
 				//
 			
 				// evidenza TODO
@@ -491,6 +490,7 @@ JunctionTree* BayesianNetwork::createJunctionTreeMST(std::unordered_set<JTClique
 	VecMap* separator;
 
 	// calcolo i vari separatori tra le varie cricche
+	std::cout << "Calcolo tutti i separatori tra le cricche...";
 	// quindi per ogni cricca...
 	for (std::unordered_set<JTClique*>::iterator cricca = cliques->begin(); cricca != cliques->end(); ++cricca) {
 		// ... controllo per le cricche successive...
@@ -553,6 +553,8 @@ JunctionTree* BayesianNetwork::createJunctionTreeMST(std::unordered_set<JTClique
 	return new JunctionTree(cliques, links, &nodes);
 	*/
 
+	std::cout << " OK." << std::endl;
+
 	return kruskal(coda, cliques);
 }
 
@@ -560,6 +562,9 @@ JunctionTree* BayesianNetwork::createJunctionTreeMST(std::unordered_set<JTClique
 //std::unordered_set<Separator*>* BayesianNetwork::kruskal(std::priority_queue<Separator*, std::vector<Separator*>, MyComparatorSeparator>* coda, std::unordered_set<JTClique*>* maximalCliques)
 JunctionTree* BayesianNetwork::kruskal(std::priority_queue<Separator*, std::vector<Separator*>, MyComparatorSeparator>* coda, std::unordered_set<JTClique*>* maximalCliques)
 {
+
+	std::cout << "Kruskal (scelgo i separatori e creo le tabelle comprese le indexing se ho scelto di utilizzarle)...";
+
 	// insieme di tutti i separatori scelti nell'albero
 	std::unordered_set<Separator*>* scelti = new std::unordered_set<Separator*>(); // TODO
 	// TODO c'è un metodo per riservare uno spazio al set??? so che sono (nCliques - 1)
@@ -587,7 +592,10 @@ JunctionTree* BayesianNetwork::kruskal(std::priority_queue<Separator*, std::vect
 			//TABELLE
 //if (!Config::tabellaScazza) {
 
-	std::cout << "costruisco il fi!!!" << std::endl;
+	// DEBUG
+	//std::cout << "costruisco il fi!!!" << std::endl;
+	//
+
 	elemento->setFi(new Probability(elemento->getVars(), 1));
 	
 	if (Config::useIndexingTable) {
@@ -601,9 +609,9 @@ JunctionTree* BayesianNetwork::kruskal(std::priority_queue<Separator*, std::vect
 	//	double* tttOgg = new double[s->getOggetto()->getPsi()->getTableSize()];
 	//}
 }
-std::size_t elementiInTabella = elemento->getVars()->memoriaOccupataDallaRElativaTabella();
-//std::cout << "devo creare una FI di dimensione: " << elementiInTabella << std::endl;
-numeroElementiDelleTabelleProbability += elementiInTabella;
+		// DEBUG
+//std::size_t elementiInTabella = elemento->getVars()->numeroElementiDellaRelativaTabella();
+//numeroElementiDelleTabelleProbability += elementiInTabella;
 //
 		}
 //	}
@@ -613,6 +621,9 @@ numeroElementiDelleTabelleProbability += elementiInTabella;
 	*/
 	// trovo quali sono i rappresentanti che fanno da root agli alberi (se ce ne sono di più)
 	//ds.getRootsDijoint();
+
+	std::cout << " OK." << std::endl;
+
 	return new JunctionTree(maximalCliques, scelti, &nodes, ds.getRootsDisjoint());
 }
 

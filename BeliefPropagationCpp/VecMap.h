@@ -68,7 +68,7 @@ public:
 		std::cout << "siza: " << siza << " size(): " << variables->size() << " capacity(): " << variables->capacity();
 	}
 
-	std::size_t memoriaOccupataDallaRElativaTabella(); //{
+	std::size_t numeroElementiDellaRelativaTabella(); //{
 		//std::size_t spazio = 1;
 		//for (std::vector<Variable*>::iterator it = variables->begin(); it != variables->end(); it++) {
 			//spazio *= (*it)->getNStates();

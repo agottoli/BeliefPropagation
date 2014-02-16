@@ -57,7 +57,7 @@
 // fine
 
 // includo gli header di cuda
-#include "../BeliefPropagationCUDA/myLibKernelSmallN.h"
+#include "../BeliefPropagationCUDA/sumKernelSmallN.h"
 //#include "./CUDA/myLibKernelSmallN.h"
 
 
@@ -84,41 +84,7 @@
 int main(int argc, char* argv[]) 
 {
 	std::string sss;
-
-	/*
-	std::cout << ULLONG_MAX << " vs " << ULONG_MAX;
-	if (SIZE_MAX == ULLONG_MAX) //18446744073709551615
-		std::cout << "==";
-	else
-		std::cout << "!=";
-
-	std::cin >> sss;
-	*/
 	
-	
-	// create input
-	/*
-	int size = 32;    // number of elements to reduce -> default:  16777216						// ALE
-	int nArray = 2;	// m = 16384 
-    unsigned int bytesValuesInput = size * sizeof(double);										// ALE
-    double *h_idata = (double *) malloc(bytesValuesInput);										// ALE
-	unsigned int bytesIndexInput = size * sizeof(double);										// ALE
-	int *h_iIndexData = (int *) malloc(bytesIndexInput);										// ALE
-		
-	for (int i=0; i<size; i++) { h_idata[i] = 1; h_iIndexData[i]=i; }							// ALE
-	//
-	
-	
-	double * output = runSmallN(size, nArray, h_idata, h_iIndexData);
-	
-	std::cout << "l'output: ";
-	for (int i = 0; i < nArray; i++) {
-		std::cout << output[i] << " ";
-	}
-	*/
-
-	
-
 	/// DIM //////////
 	//std::ofstream fM("meno1024.txt", std::ios::app); //apre il file in modalità append, lasciando intatto quello che c'è e scrivendo alla fine
  //   if(!fM) {
@@ -145,23 +111,13 @@ int main(int argc, char* argv[])
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	//// TEST PARSER
-	//std::string s = ReadFileFully("../RetiEsempio/Munin1.hugin");
+
 	///*
 	if (argc < 2) {
-		// file di input non specificato
-		std::cout << "nessun file di input indicato." << std::endl;
-		return 0;
-	}
-	//*/
-	
-	//std::ifstream f("../RetiEsempio/Alarm.hugin");
-	//std::ifstream f("../RetiEsempio/Barley.net");
-	///*
-	if (argc == 1) {
-		std::cout << "Specificare file di input!";
-		std::cin >> sss;
-        return -1;
+		std::cout << "Specificare file di input!" << std::endl;
+		std::cout << "USAGE: " << argv[0] << " file_input.net [file_ordinamento.num]" << std::endl;
+		//std::cin >> sss;
+        return 1;
 	}
 	std::ifstream f(argv[1]);
 
@@ -170,8 +126,8 @@ int main(int argc, char* argv[])
 
     if(!f) {
         std::cout << "Il file della rete non esiste! (" << argv[1] << ")";
-		std::cin >> sss;
-        return -1;
+		//std::cin >> sss;
+        return 2;
     }
 
     while(f.good()) //fino a quando c'è qualcosa da leggere ..
@@ -190,16 +146,16 @@ int main(int argc, char* argv[])
 	hugin_parser::HuginParserTokenManager *scanner = new hugin_parser::HuginParserTokenManager(stream);
 	hugin_parser::HuginParser parser(scanner);
 	//DEBUG
-	std::cout << "inizio parse\n";
+	std::cout << "Leggo la rete passata in input...";
 	//
 	parser.Start();
 	// DEBUG
-	std::cout << "fine parse\n";
+	std::cout << " OK." << std::endl;
 	//
 	
 	//std::cout << "file " << input;
 	// DEBUG
-	std::cout << "stampo le tabelle delle probabilità della rete appena letta." << std::endl;
+	//std::cout << "stampo le tabelle delle probabilità della rete appena letta." << std::endl;
 	//
 	BayesianNetwork* bn = parser.getBayesianNetwork();
 
@@ -207,13 +163,16 @@ int main(int argc, char* argv[])
 	// LEGGO L'ORDINAMENTO
 	std::vector<std::string>* ordinamento = new std::vector<std::string>();
 	if (argc > 2) {
+		
+		std::cout << "E' stato specificato un file di ordinamento." << std::endl;
+
 		std::ifstream f2(argv[2]);
 	//std::ifstream f2("../RetiEsempio/Barley.num");
 		std::string elem;
 
 		if(!f2) {
-			std::cout << "Il file dell'ordinamento non esiste! (" << argv[2] << ")" << std::endl;
-			std::cout << "continuo calcolandomi l'ordinamento." << std::endl;
+			std::cout << "Il file dell'ordinamento specificato non esiste! (" << argv[2] << ")" << std::endl;
+			std::cout << "continuo calcolandomi io l'ordinamento utilizzando un'euristica." << std::endl;
 
 			//if (strcmp(argv[2], "indexing") == 0)
 			//	Config::useIndexingTable = true;
@@ -226,6 +185,8 @@ int main(int argc, char* argv[])
 				ordinamento->push_back(elem);
 			}
 		}
+	} else {
+		std::cout << "non è stato specificato nessun ordinamento... lo decido io con un'euristica." << std::endl;
 	}
 
 	bn->setOrdinamento(ordinamento);
@@ -237,32 +198,33 @@ int main(int argc, char* argv[])
 	if (!Config::useIndexingTable) {
 		std::cout << "NON ";
 	}
-	std::cout << "uso l'indexing.";
-	std::cin >> sss;
+	std::cout << "uso le indexing table." << std::endl;
+	//std::cin >> sss;
 
 
 	std::unordered_set<Variable*>* vars = bn->getVariables();
-	std::size_t nStatiJoint = 1;
+	//std::size_t nStatiJoint = 1;
+	std::cout << "normalizzo le tabelle delle probabilità condizionali...";
 	for (std::unordered_set<Variable*>::iterator I = vars->begin(); I != vars->end(); I++) {
-		//std::cout << "cp " << (*I)->getConditionalProbability()->toString() << std::endl;
-		nStatiJoint *= (*I)->getStates()->size();
-		std::cout << (*I)->toString() << " " << (*I)->getStates()->size() << std::endl;
+		//nStatiJoint *= (*I)->getStates()->size();
+		//std::cout << (*I)->toString() << " " << (*I)->getStates()->size() << std::endl;
 		(*I)->getConditionalProbability()->normalizzaCPSeServe();
 	}
+	std::cout << " OK." << std::endl;
 	
 	// DEBUG
-	std::cout << "la tabella della probabilità congiunta conterrebbe " << nStatiJoint << " elementi." << std::endl;
+	//std::cout << "la tabella della probabilità congiunta conterrebbe " << nStatiJoint << " elementi." << std::endl;
 	
-	std::cin >> sss;
+	//std::cin >> sss;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	//*/
 
 	// CREO LA RETE
 	std::vector<BayesianNetwork*>* BNSet = new std::vector<BayesianNetwork*>();
-	BNSet->reserve(10);
-	BNSet->push_back(RetiEsempio::createEarthquakeEx());
-	BNSet->push_back(RetiEsempio::createAsiaEx());
+	//BNSet->reserve(10);
+	//BNSet->push_back(RetiEsempio::createEarthquakeEx());
+	//BNSet->push_back(RetiEsempio::createAsiaEx());
 	//BNSet->push_back(RetiEsempio::createComaEx());
 	//BNSet->push_back(RetiEsempio::createSprinklerEx());
 	BNSet->push_back(bn);
@@ -270,7 +232,8 @@ int main(int argc, char* argv[])
 	//std::cout << "DOT BN:\n" << net->getDOT() << '\n';
 	//std::cin >> sss;
 
-	resetGPU();
+	if (Config::useCUDA)
+		selectGPU();
 
 	for (std::vector<BayesianNetwork*>::iterator itNet = BNSet->begin(); itNet != BNSet->end(); itNet++) {
 		BayesianNetwork* net = *itNet;
@@ -288,32 +251,43 @@ int main(int argc, char* argv[])
 		//std::cin >> sss;
 		// MORALIZZO
 		// DEBUG
-		std::cout << "MORALIZZAZIONE..." << std::endl;
+		std::cout << "\nMORALIZZAZIONE..." << std::endl;
 		//
 		net->moralize();
+		// DEBUG
+		std::cout << "moralizzazione OK." << std::endl;
+		//
+
 		// TRIANGOLO E TROVO CRICCHE MASSIMALI
-		//DEBUG
-		std::cout << "TRIANGOLARIZZAZIONE..." << std::endl;
+		// DEBUG
+		std::cout << "\nTRIANGOLARIZZAZIONE..." << std::endl;
 		//
 		std::unordered_set<JTClique*>* cli = net->triangolateMaxClique();
-		
+		//DEBUG
+		std::cout << "triangolarizzazione OK." << std::endl;
+		//
+
 		//DEBUG
 		std::size_t nElem = net->getNumeroElementiDelleTabelleProbability();
-		std::cout << "Il numero di elementi memoriazzabili nelle tabelle sono: " << nElem << std::endl;
+		std::cout << "\n--------\nIl numero di elementi totali nelle tabelle dei potenziali delle cricche sono: " << nElem << std::endl;
 		std::size_t dimD = sizeof(double);
-		std::cout << "un double occupa: " << dimD << " byte." << std::endl;
+		//std::cout << "un double occupa: " << dimD << " byte." << std::endl;
 		std::size_t MbyteOccupati = nElem * dimD / 1000000;
 		std::cout << "per un totale di: " << MbyteOccupati << " Mbyte occupati dai soli elementi." << std::endl;
 		
-		std::cout << "numero di cricche trovate vs numero di cricche massimali:\n" << net->getNumeroCricche() << " vs " << net->getNumeroCriccheMassimali() << std::endl;
-		std::cin >> sss;
+		std::cout << "numero di cricche trovate: " << net->getNumeroCricche() << " numero di cricche massimali: " << net->getNumeroCriccheMassimali() << std::endl;
+		std::cout << "\n--------" << std::endl;
+		//std::cin >> sss;
 		//
 
 		// DEBUG
-		std::cout << "COSTRUZIONE JUNCTION TREE..." << std::endl;
+		std::cout << "\nCOSTRUZIONE JUNCTION TREE..."  << std::endl;
 		//
 		JunctionTree* jt = net->createJunctionTreeMST(cli);
-		
+		// DEBUG
+		std::cout << "costruzione junction tree OK." << std::endl;
+		//
+
 		// controllo se in numero di cricche del jt è uno in più del numero dei link
 		/*if (!jt->unicoAlbero()) {
 			std::cout << "E' una foresta... NON LO CONSIDERO VALIDO!!!" << std::endl;
@@ -337,15 +311,14 @@ int main(int argc, char* argv[])
 
 		// BP!!!
 		// DEBUG
-		std::cout << "BELIEF PROPAGATION..." << std::endl;
+		std::cout << "\nBELIEF PROPAGATION..." << std::endl;
 		//
-
-		selectGPU();
 
 		BeliefPropagation::BP(jt);
 
-		resetGPU();
+		std::cout << "belief propagation OK." << std::endl;
 
+		
 		// DEBUG voglio vedere un po' ti tabelle delle cricche che mi da junction tree uguale per ogni posizione
 		//for (std::unordered_set<JTClique*>::iterator it = jt->getCliques()->begin(); it != jt->getCliques()->end(); it++) {
 		//	std::cout << "psi: " << (*it)->getPsi()->toString();
@@ -353,6 +326,7 @@ int main(int argc, char* argv[])
 		//}
 		//
 
+		/* se le tabelle sono troppo grandi non posso usarlo :(
 		// CALCOLO LE JOINT PROBABILITY
 		// DEBUG
 		std::cout << "calcolo joint probability della bayesian network..." << std::endl;
@@ -377,12 +351,16 @@ int main(int argc, char* argv[])
 		else
 			std::cout << "\nERROR!!! :(\n";
 
+		*/
 		std::cin >> sss;
 		
 		
 	}
+
+	if (Config::useCUDA)
+		resetGPU();
 	
-	std::cin >> sss;
+	//std::cin >> sss;
 	
 }
 

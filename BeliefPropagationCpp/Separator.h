@@ -59,17 +59,25 @@ public:
 
 	void createIndexingTable() {
 		// creo tabelle di indexing
-		std::cout << "costruisco la indexing table per soggetto!!! " << ++(Config::numIndexing) << std::endl;
+		// DEBUG
+		//std::cout << "costruisco la indexing table per soggetto!!! " << ++(Config::numIndexing) << std::endl;
+		//
 		indexingSoggetto = createIndexingTable(soggetto);
-		std::cout << "costruisco la indexing table per oggetto!!!  " << ++(Config::numIndexing) << std::endl;
+		// DEBUG
+		//std::cout << "costruisco la indexing table per oggetto!!!  " << ++(Config::numIndexing) << std::endl;
+		//
 		indexingOggetto = createIndexingTable(oggetto);
 	}
 
 	void createIndexingTableCUDA() {
 		// creo tabelle di indexing
-		std::cout << "costruisco la indexing table CUDA per soggetto!!! " << ++(Config::numIndexing) << std::endl;
+		// DEBUG
+		//std::cout << "costruisco la indexing table CUDA per soggetto!!! " << ++(Config::numIndexing) << std::endl;
+		//
 		indexingSoggettoCUDA = createIndexingTableCUDA(soggetto);
-		std::cout << "costruisco la indexing table CUDA per oggetto!!!  " << ++(Config::numIndexing) << std::endl;
+		// DEBUG
+		//std::cout << "costruisco la indexing table CUDA per oggetto!!!  " << ++(Config::numIndexing) << std::endl;
+		//
 		indexingOggettoCUDA = createIndexingTableCUDA(oggetto);
 	}
 

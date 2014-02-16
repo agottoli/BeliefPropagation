@@ -6,7 +6,7 @@
 #include <time.h>
 
 // per cuda
-#include "../BeliefPropagationCUDA/myLibKernelSmallN.h"
+#include "../BeliefPropagationCUDA/sumKernelSmallN.h"
 //
 
 Separator::Separator(JTClique* s, JTClique* o, VecMap* v)
@@ -140,7 +140,7 @@ double** Separator::createIndexingTable(JTClique* cliqueToIndex)
 	*/
 	/////////////////////////////////////
 
-	std::cout << "numero elementi sommo m: " << dimMapToSame << " e gli arrai sono N: " << fi->getTableSize() << std::endl;
+	//std::cout << "numero elementi sommo m: " << dimMapToSame << " e gli arrai sono N: " << fi->getTableSize() << std::endl;
 	// END DEBUG
 	//std::string s;
 	//std::cin >> s;
