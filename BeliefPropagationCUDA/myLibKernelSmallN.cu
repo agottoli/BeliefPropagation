@@ -3,6 +3,7 @@
 
 #include <limits.h>
 
+#include "cuda.h"
 #include "cuda_runtime.h"
 #include "device_launch_parameters.h"
 
@@ -44,7 +45,7 @@ void getNumBlocksAndThreadsSmallN(int n, int maxThreads, int &blocks, int &threa
 	Nel primo livello occorre recuperare i dati da g_idata in base agli indici riportati in d_iIndexData
 */
 __global__ void
-reduce1StepSmallN(double *g_idata, double *g_odata, long unsigned int *d_iIndexData, unsigned int n, unsigned int nArray, bool debug)//, unsigned int fraction)
+reduce1StepSmallN(double *g_idata, double *g_odata, size_t *d_iIndexData, unsigned int n, unsigned int nArray, bool debug)//, unsigned int fraction)
 {	
 	// extern serve per rendere l'allocazione della memoria condivisa dinamica 
 	// si potrebbe utilizzare quella statica se la dimensione fosse nota a compile time
@@ -64,7 +65,7 @@ reduce1StepSmallN(double *g_idata, double *g_odata, long unsigned int *d_iIndexD
 	//double mySum = (i < n) ? g_idata[d_iIndexData[i]] : 0;
 	// ALE
 	double mySum;
-	if (i < n && d_iIndexData[i] != ULONG_MAX) { //SIZE_MAX) {
+	if (i < n && d_iIndexData[i] != SIZE_MAX) { //ULONG_MAX) { //SIZE_MAX) {
 		mySum = g_idata[d_iIndexData[i]];
 	} else {
 		mySum = 0;
@@ -81,7 +82,7 @@ reduce1StepSmallN(double *g_idata, double *g_odata, long unsigned int *d_iIndexD
 	//if (i + blockDim.x < n)
 	//	mySum += g_idata[d_iIndexData[i+blockDim.x]];
 	// ALE
-    if (i + blockDim.x < n && d_iIndexData[i+blockDim.x] != ULONG_MAX) { //SIZE_MAX) {
+    if (i + blockDim.x < n && d_iIndexData[i+blockDim.x] != SIZE_MAX) { //ULONG_MAX) { //SIZE_MAX) {
 		mySum += g_idata[d_iIndexData[i+blockDim.x]];
 	}
 
@@ -173,7 +174,7 @@ double *reduceSmallNArray(int  n,
                   	double *h_odata,
                   	double *d_idata,
                   	double *d_odata,
-					long unsigned int *d_iIndexData) //, int nArrayVero)
+					size_t *d_iIndexData) //, int nArrayVero)
 {
 	bool needReadBack = true;
 	
@@ -311,7 +312,7 @@ double *reduceSmallNArray(int  n,
 	return gpu_result;   
 }
 
-double * runSmallN(int size, int nArray, double *h_idata, long unsigned int *h_iIndexData) { //, int nArrayVERO){
+double * runSmallN(int size, int nArray, double *h_idata, size_t *h_iIndexData) { //, int nArrayVERO){
 	//int size = 1<<24;    // number of elements to reduce -> default:  16777216						// ALE
 	//int nArray = 1024;	// m = 16384 																// ALE
 	//size = 4096;																					// ALE
@@ -343,7 +344,7 @@ double * runSmallN(int size, int nArray, double *h_idata, long unsigned int *h_i
         
 		// allocate device memory and data
         double *d_idata = NULL;
-		long unsigned int *d_iIndexData = NULL;
+		size_t *d_iIndexData = NULL;
         double *d_odata = NULL;
         cudaMalloc((void **) &d_idata, bytesValuesInput);
         cudaMalloc((void **) &d_iIndexData, bytesIndexInput);

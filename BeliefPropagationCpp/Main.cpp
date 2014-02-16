@@ -95,7 +95,6 @@ int main(int argc, char* argv[])
 	std::cin >> sss;
 	*/
 	
-	selectGPU();
 	
 	// create input
 	/*
@@ -262,14 +261,16 @@ int main(int argc, char* argv[])
 	// CREO LA RETE
 	std::vector<BayesianNetwork*>* BNSet = new std::vector<BayesianNetwork*>();
 	BNSet->reserve(10);
-	//BNSet->push_back(RetiEsempio::createEarthquakeEx());
-	//BNSet->push_back(RetiEsempio::createAsiaEx());
+	BNSet->push_back(RetiEsempio::createEarthquakeEx());
+	BNSet->push_back(RetiEsempio::createAsiaEx());
 	//BNSet->push_back(RetiEsempio::createComaEx());
 	//BNSet->push_back(RetiEsempio::createSprinklerEx());
 	BNSet->push_back(bn);
 
 	//std::cout << "DOT BN:\n" << net->getDOT() << '\n';
 	//std::cin >> sss;
+
+	resetGPU();
 
 	for (std::vector<BayesianNetwork*>::iterator itNet = BNSet->begin(); itNet != BNSet->end(); itNet++) {
 		BayesianNetwork* net = *itNet;
@@ -338,8 +339,12 @@ int main(int argc, char* argv[])
 		// DEBUG
 		std::cout << "BELIEF PROPAGATION..." << std::endl;
 		//
+
+		selectGPU();
+
 		BeliefPropagation::BP(jt);
 
+		resetGPU();
 
 		// DEBUG voglio vedere un po' ti tabelle delle cricche che mi da junction tree uguale per ogni posizione
 		//for (std::unordered_set<JTClique*>::iterator it = jt->getCliques()->begin(); it != jt->getCliques()->end(); it++) {
@@ -379,7 +384,6 @@ int main(int argc, char* argv[])
 	
 	std::cin >> sss;
 	
-	resetGPU();
 }
 
 // NOTA trova l'errore che non compila più :(
