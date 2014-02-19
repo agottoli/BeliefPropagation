@@ -6,7 +6,8 @@
 #include <time.h>
 
 // per cuda
-#include "../BeliefPropagationCUDA/sumKernelSmallN.h"
+//#include "../BeliefPropagationCUDA/sumKernelSmallN.h"
+#include "../BeliefPropagationCUDA/myLibKernelBigN.h"
 //
 
 Separator::Separator(JTClique* s, JTClique* o, VecMap* v)
@@ -345,7 +346,7 @@ Probability* Separator::sumOnIndexingTableOf(JTClique* cli, JTClique* cliScrivo,
 
 		// rilevamento tempo occupato dalle somme!!!
 		end = clock();
-		*elapsedSum += (double)(end - begin) / CLOCKS_PER_SEC;
+		*elapsedSum += (double)(end - begin); // / CLOCKS_PER_SEC;
 		//
 
 		sommaTabella += fiStarTable[i];
@@ -382,7 +383,7 @@ Probability* Separator::sumOnIndexingTableOf(JTClique* cli, JTClique* cliScrivo,
 
 		// rilevamento tempo occupato dalla divisione e moltiplicazione!!!
 		end = clock();
-		*elapsedDivMul += (double)(end - begin) / CLOCKS_PER_SEC;
+		*elapsedDivMul += (double)(end - begin); // / CLOCKS_PER_SEC;
 		//
 
 	}
@@ -440,7 +441,7 @@ Probability* Separator::sumOnIndexingTableOfCUDA(JTClique* cli, JTClique* cliScr
 	*/
 	///*
 	// diventa...
-	double* fiStarTable = runSmallN(sizeTableLeggoPow2, dimFiStarTablePow2, cli->getPsi()->getTable(), indexingTableLeggo); //, dimFiStarTable);
+	double* fiStarTable = runBigN(sizeTableLeggoPow2, dimFiStarTablePow2, cli->getPsi()->getTable(), indexingTableLeggo); //, dimFiStarTable);
 	// mi restituirà un array più lungo, ma modificando la dimensione del risultato in cuda, mi da solo il numero di elementi validi. 
 	//*/
 	//

@@ -1,6 +1,3 @@
-#ifndef MYLIB_CU
-#define MYLIB_CU
-
 /*
     Parallel reduction
 
@@ -194,7 +191,7 @@ inline int gpuGetMaxGflopsDeviceId()
     return max_perf_device;
 }
 
-inline int findCudaDevice()
+inline int findCudaDevice() //int argc, const char **argv)
 {
     cudaDeviceProp deviceProp;
     int devID = 0;
@@ -208,5 +205,5 @@ inline int findCudaDevice()
     return devID;
 }
 
-#endif
+
 

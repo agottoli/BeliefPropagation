@@ -19,17 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cuPrintf.cu">
-      <FileType>Document</FileType>
-    </ClInclude>
-    <ClInclude Include="myLib.h">
-      <FileType>Document</FileType>
-    </ClInclude>
-    <CudaCompile Include="sumKernelSmallN.cu" />
-  </ItemGroup>
-  <ItemGroup>
     <Text Include="..\BeliefPropagationCpp\huginParser\HuginGrammar.jj" />
-    <ClInclude Include="cuPrintf.cuh" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\BeliefPropagationCpp\BayesianNetwork.h" />
@@ -53,7 +43,8 @@
     <ClInclude Include="..\BeliefPropagationCpp\States.h" />
     <ClInclude Include="..\BeliefPropagationCpp\Variable.h" />
     <ClInclude Include="..\BeliefPropagationCpp\VecMap.h" />
-    <ClInclude Include="sumKernelSmallN.h" />
+    <ClInclude Include="myLib.h" />
+    <ClInclude Include="myLibKernelBigN.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\BeliefPropagationCpp\BayesianNetwork.cpp" />
@@ -74,6 +65,15 @@
     <ClCompile Include="..\BeliefPropagationCpp\States.cpp" />
     <ClCompile Include="..\BeliefPropagationCpp\Variable.cpp" />
     <ClCompile Include="..\BeliefPropagationCpp\VecMap.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cuPrintf.cu">
+      <FileType>Document</FileType>
+    </ClInclude>
+    <CudaCompile Include="myLibKernelBigN.cu" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cuPrintf.cuh" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{3A6F60D0-1679-4C82-962F-83042363A100}</ProjectGuid>
@@ -208,6 +208,9 @@ copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
 copy "$(CudaToolkitBinDir)\cudart*.dll" "$(OutDir)"</Command>
     </PostBuildEvent>
     <CudaCompile />
+    <CudaCompile>
+      <TargetMachinePlatform>64</TargetMachinePlatform>
+    </CudaCompile>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

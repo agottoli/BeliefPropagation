@@ -57,7 +57,8 @@
 // fine
 
 // includo gli header di cuda
-#include "../BeliefPropagationCUDA/sumKernelSmallN.h"
+//#include "../BeliefPropagationCUDA/sumKernelSmallN.h"
+#include "../BeliefPropagationCUDA/myLibKernelBigN.h"
 //#include "./CUDA/myLibKernelSmallN.h"
 
 
@@ -83,6 +84,15 @@
 
 int main(int argc, char* argv[]) 
 {
+	/*
+	argc = 3;
+	char* argv2[3]; 
+	argv2[0] = argv[0];
+	argv2[1] = "..\\RetiEsempio\\powerplant.net";
+	argv2[2] = "..\\RetiEsempio\\powerplant.num";
+	argv = argv2;
+	*/
+
 	std::string sss;
 	
 	/// DIM //////////
@@ -352,7 +362,9 @@ int main(int argc, char* argv[])
 			std::cout << "\nERROR!!! :(\n";
 
 		*/
-		std::cin >> sss;
+		
+		
+		//std::cin >> sss;
 		
 		
 	}
