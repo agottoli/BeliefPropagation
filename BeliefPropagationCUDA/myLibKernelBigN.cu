@@ -257,7 +257,7 @@ double* runBigN(size_t size, size_t nArray, double *h_idata, size_t *h_iIndexDat
 				prec=gpu_result[i];
 			//    printf("\nGPU result = %f\n", gpu_result[i]);
 			}*/
-			assert (m==prec);
+//			assert (m==prec);
 			cudaEventDestroy( start );													// ALE
 			cudaEventDestroy( stop );													//ALE
 			

@@ -30,7 +30,7 @@ private:
 	// ritorno
 	static void distributeEvidence(JTClique* root, double* elapsedSum, double* elapsedDivMul);
 	static void distributeEvidence(JTClique* node, JTClique* father, double* elapsedSum, double* elapsedDivMul);
-	static void update(JTClique* first, Separator* second, JTClique* node, double* elapsedSum, double* elapsedDivMul);
+	//static void update(JTClique* first, Separator* second, JTClique* node, double* elapsedSum, double* elapsedDivMul);
 
 	// per stampa livello
 	static std::string tabLivello();

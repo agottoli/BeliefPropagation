@@ -336,7 +336,7 @@ int main(int argc, char* argv[])
 		//}
 		//
 
-		/* se le tabelle sono troppo grandi non posso usarlo :(
+		/* se le tabelle sono troppo grandi non posso usarlo :( * /
 		// CALCOLO LE JOINT PROBABILITY
 		// DEBUG
 		std::cout << "calcolo joint probability della bayesian network..." << std::endl;
@@ -361,7 +361,7 @@ int main(int argc, char* argv[])
 		else
 			std::cout << "\nERROR!!! :(\n";
 
-		*/
+		/ * */
 		
 		
 		//std::cin >> sss;

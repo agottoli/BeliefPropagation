@@ -51,7 +51,8 @@ void BeliefPropagation::collectEvidence(JTClique* node, JTClique* father, double
 	//livello--;
 }
 
-
+// sommo su first
+// modifico node
 void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* second, double* elapsedSum, double* elapsedDivMul)
 {
 	//livello++;
@@ -81,9 +82,9 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 		// DEBUG confronta fiStar e psiStar
 		bool ok = copiaFiSeparatoreStar->confronta(fiSeparatoreStar);
 		if (ok)
-			std::cout << "OK!!! :D" << std::endl;
+			std::cout << "separatore OK!!! :D" << std::endl;
 		else {
-			std::cout << "ERROR!!! :(" << std::endl;
+			std::cout << "separatore ERROR!!! :(" << std::endl;
 			std::string sss;
 			std::cin >> sss;
 		}
@@ -91,9 +92,9 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 		std::cout << "vars origi: " << node->getPsi()->getVariables()->toString() << std::endl;
 		ok = copiaPsiCricca->confronta(node->getPsi());
 		if (ok)
-			std::cout << "OK!!! :D" << std::endl;
+			std::cout << "cricca OK!!! :D" << std::endl;
 		else {
-			std::cout << "ERROR!!! :(" << std::endl;
+			std::cout << "cricca ERROR!!! :(" << std::endl;
 			std::string sss;
 			std::cin >> sss;
 		}
@@ -120,7 +121,8 @@ void BeliefPropagation::distributeEvidence(JTClique* root, double* elapsedSum, d
 		// STAMPA ESECUZIONE inizio
 		//std::cout << "update(" << entry->first->toString() << ", " << root->toString() << ")\n";
 		// STAMPA ESECUZIONE fine
-		update(entry->first, entry->second, root, elapsedSum, elapsedDivMul);
+		//update(entry->first, entry->second, root, elapsedSum, elapsedDivMul);
+		update(entry->first, root, entry->second, elapsedSum, elapsedDivMul);
 
 		// STAMPA ESECUZIONE inizio
 		//std::cout << "distributeEvidence(" << entry->first->toString() << ", " << root->toString() << ")\n";
@@ -137,7 +139,8 @@ void BeliefPropagation::distributeEvidence(JTClique* node, JTClique* father, dou
 			// STAMPA ESECUZIONE inizio
 			//std::cout << tabLivello() << "update(" << entry->first->toString() << ", " << node->toString() << ")\n";
 			// STAMPA ESECUZIONE fine
-			update(entry->first, entry->second, node, elapsedSum, elapsedDivMul);
+			//update(entry->first, entry->second, node, elapsedSum, elapsedDivMul);
+			update(entry->first, node, entry->second, elapsedSum, elapsedDivMul);
 
 			// STAMPA ESECUZIONE inizio
 			//std::cout << tabLivello() << "distributeEvidence(" << entry->first->toString() << ", " << node->toString() << ")\n";
@@ -148,7 +151,10 @@ void BeliefPropagation::distributeEvidence(JTClique* node, JTClique* father, dou
 	//livello--;
 }
 
-
+// sommo su node
+// modifico first
+// metodo INUTILE!!!
+/*
 void BeliefPropagation::update(JTClique* first, Separator* second, JTClique* node, double* elapsedSum, double* elapsedDivMul)
 {
 	//livello++;
@@ -207,7 +213,7 @@ void BeliefPropagation::update(JTClique* first, Separator* second, JTClique* nod
 
 	//livello--;
 }
-
+*/
 
 JunctionTree* BeliefPropagation::BP(BayesianNetwork* bn)
 {
