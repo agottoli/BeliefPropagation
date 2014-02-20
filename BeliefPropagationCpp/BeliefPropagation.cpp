@@ -70,16 +70,18 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 		node->getPsi()->aggiornaOrdinato(fiSeparatoreStar, fiSeparatore);
 	} else {
 		// DEBUG calcolo te tabelle anche col metodo normale e le confronto con il nuovo metodo
+		/*
 		Probability* copiaFiSeparatoreStar = first->getPsi()->sumOnNotPresent(fiSeparatore);
 		Probability* copiaPsiCricca = node->getPsi()->copy();
 		copiaPsiCricca->aggiornaOrdinato(copiaFiSeparatoreStar, fiSeparatore);
-		//
+		*/ //
 		if (!Config::useCUDA)
 			fiSeparatoreStar = second->sumOnIndexingTableOf(first, node, elapsedSum, elapsedDivMul);
 		else
 			fiSeparatoreStar = second->sumOnIndexingTableOfCUDA(first, node, elapsedSum, elapsedDivMul);
 
 		// DEBUG confronta fiStar e psiStar
+		/*
 		bool ok = copiaFiSeparatoreStar->confronta(fiSeparatoreStar);
 		if (ok)
 			std::cout << "separatore OK!!! :D" << std::endl;
@@ -98,6 +100,7 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 			std::string sss;
 			std::cin >> sss;
 		}
+		*/
 		//	
 
 	}

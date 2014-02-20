@@ -196,14 +196,14 @@ double* runBigN(size_t size, size_t nArray, double *h_idata, size_t *h_iIndexDat
 	//nArray = 1<<20;																					// ALE
     int maxThreads = 256;				// number of threads per block
     int cpuFinalThreshold = 1;
-    /*  STAMPE */
+    /*  STAMPE * /
 	printf("%d elements\n", size);
     printf("%d nArray\n", nArray);
 	printf("%d nArrayInput\n", dimInput);
 	printf("%d nArrayRisultato\n", dimRisultato);
     printf("%d m\n", m);
     printf("%d maxThreads\n", maxThreads);
-	/* */
+	/ * */
 
 	double *gpu_result;	
 
@@ -319,8 +319,9 @@ double* runBigN(size_t size, size_t nArray, double *h_idata, size_t *h_iIndexDat
 	        cudaFree(d_odata);													//ALE
 			cudaFree(d_iIndexData);
 		//} 
+		/*
 		printf("average time: %f\n", (total/100));
-
+		*/
 		// ALE_GOT
 		return gpu_result;
 		//
