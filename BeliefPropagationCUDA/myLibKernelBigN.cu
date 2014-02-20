@@ -19,7 +19,7 @@ const bool debug = false;
 #define SIZE_MAX ((size_t)-1)
 #endif
 
-void getNumBlocksAndThreadsSmallN(int n, int maxThreads, int &blocks, int &threads){
+void getNumBlocksAndThreadsBigN(size_t n, int maxThreads, int &blocks, int &threads){
         //get device capability, to avoid block/grid size excceed the upbound
 	    cudaDeviceProp prop;
 	    int device;
@@ -88,10 +88,11 @@ double *reduceBigNArray(size_t  n,
                   	int  numBlocks,
                   	int  maxThreads,
                   	//int  cpuFinalThreshold,
-                  	double *h_odata,
+                  	double *h_odata, // si può togliere ??
                   	double *d_idata,
                   	double *d_odata,
-					size_t *d_iIndexData)
+					size_t *d_iIndexData,
+					size_t dimRisultato)
 {
 	bool needReadBack = true;
 	
@@ -105,9 +106,14 @@ double *reduceBigNArray(size_t  n,
 
 		cudaError_t error;
 		
-		size_t dimResult = nArray * sizeof(double);
+		//size_t dimResult = nArray * sizeof(double);
+		size_t dimResult = dimRisultato * sizeof(double);
+
 		double *gpu_result = (double *) malloc(dimResult);
-        for (int i=0; i < nArray; i++) gpu_result[i]=0;		
+		// ALE_DOMANDA
+		// SERVE??? non viene sovrascritto poi dalla cudaMemCpy???
+		for (int i=0; i < dimRisultato; i++) gpu_result[i]=0;		
+		//
 
 		if(debug) { 
 			cudaPrintfInit();
@@ -144,7 +150,7 @@ double *reduceBigNArray(size_t  n,
 			int threads = 0, blocks = 0;
             
 
-			getNumBlocksAndThreadsSmallN(nElements, maxThreads, blocks, threads);
+			getNumBlocksAndThreadsBigN(nElements, maxThreads, blocks, threads);
 			
 			dim3 dimBlock(threads, 1, 1);
 			dim3 dimGrid(blocks, 1, 1);
@@ -163,7 +169,8 @@ double *reduceBigNArray(size_t  n,
 		if (needReadBack)
 	    {
 	        // copy final sum from device to host
-          cudaMemcpy(gpu_result, d_odata, sizeof(double)*nArray, cudaMemcpyDeviceToHost);
+          //cudaMemcpy(gpu_result, d_odata, sizeof(double)*nArray, cudaMemcpyDeviceToHost);
+			cudaMemcpy(gpu_result, d_odata, dimResult, cudaMemcpyDeviceToHost);
 		  error = cudaGetLastError();
 		  if(error != cudaSuccess)
 		  {
@@ -175,7 +182,12 @@ double *reduceBigNArray(size_t  n,
 	return gpu_result;   
 }
 
-double* runBigN(size_t size, size_t nArray, double *h_idata, size_t *h_iIndexData){
+double* runBigN(size_t size, size_t nArray, double *h_idata, size_t *h_iIndexData, size_t dimInput, size_t dimRisultato){
+	// ALE_GOT
+	//size = 1048576;
+	//nArray = 16384;
+	//
+
 	//int size = 1<<24; // 1<<24;    // number of elements to reduce -> default:  16777216				// ALE
 	//int nArray = 1<<4;	// m = 16384 
 	//int m = 1<<20; // 4 7 10 14 17 20 
@@ -187,6 +199,8 @@ double* runBigN(size_t size, size_t nArray, double *h_idata, size_t *h_iIndexDat
     /*  STAMPE */
 	printf("%d elements\n", size);
     printf("%d nArray\n", nArray);
+	printf("%d nArrayInput\n", dimInput);
+	printf("%d nArrayRisultato\n", dimRisultato);
     printf("%d m\n", m);
     printf("%d maxThreads\n", maxThreads);
 	/* */
@@ -196,16 +210,23 @@ double* runBigN(size_t size, size_t nArray, double *h_idata, size_t *h_iIndexDat
 	//for(int i =0; i<100; i++){
 
         // create input
-        size_t bytesValuesInput = size * sizeof(double);										// ALE
-        //double *h_idata = (double *) malloc(bytesValuesInput);										// ALE
+	size_t bytesValuesInput = dimInput * sizeof(double);										// ALE
+        // ALE_GOT
+		//double *
+		//	h_idata = (double *) malloc(bytesValuesInput);										// ALE
+		//
 		size_t bytesIndexInput = size * sizeof(size_t);										// ALE
-		//int *h_iIndexData = (int *) malloc(bytesIndexInput);										// ALE
-		
-		//for (int i=0; i<size; i++) { h_idata[i] = 1; h_iIndexData[i]=i; }							// ALE
-		
+		// ALE_GOT
+		//size_t *
+		//	h_iIndexData = (size_t *) malloc(bytesIndexInput);										// ALE
+		//
+		// ALE_GOT
+		//for (size_t i=0; i<size; i++) { h_idata[i] = 1; h_iIndexData[i]=i; }							// ALE
+		//
+
        	int numBlocks = 0;
         int numThreads = 0;
-		getNumBlocksAndThreadsSmallN(size, maxThreads, numBlocks, numThreads);
+		getNumBlocksAndThreadsBigN(size, maxThreads, numBlocks, numThreads);
        
 	    if (numBlocks == 1) cpuFinalThreshold = 1;
        
@@ -227,6 +248,20 @@ double* runBigN(size_t size, size_t nArray, double *h_idata, size_t *h_iIndexDat
 
         // copy data directly to device memory
         cudaMemcpy(d_idata, h_idata, bytesValuesInput, cudaMemcpyHostToDevice);
+
+		// ALE_GOT
+		/*
+		for (size_t l = 0; l < dimInput; l++)
+				printf("%f ", h_idata[l]);
+			printf("\n");
+			for (size_t l = 0; l < size; l++)
+				printf("%d ", h_iIndexData[l]);
+		*/
+		//	getchar();
+		
+		//
+
+
         cudaMemcpy(d_iIndexData, h_iIndexData, bytesIndexInput, cudaMemcpyHostToDevice);
 	    //printf("\nbytesOutput=%d\n",bytesOutput);
         //cudaMemcpy(d_odata, h_idata, bytesOutput, cudaMemcpyHostToDevice);			//NON SERVE!!!
@@ -243,7 +278,7 @@ double* runBigN(size_t size, size_t nArray, double *h_idata, size_t *h_iIndexDat
 	        double *gpu_result;																		// ALE è lungo nArray
 
 	        gpu_result = reduceBigNArray(size, nArray, numThreads, numBlocks, maxThreads,
-	                                        h_odata, d_idata, d_odata, d_iIndexData);
+										h_odata, d_idata, d_odata, d_iIndexData, dimRisultato);
 
 
 			cudaEventRecord( stop, 0 );
@@ -277,7 +312,9 @@ double* runBigN(size_t size, size_t nArray, double *h_idata, size_t *h_iIndexDat
 		//} 
 		printf("average time: %f\n", (total/100));
 
+		// ALE_GOT
 		return gpu_result;
+		//
 
 
 		

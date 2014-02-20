@@ -58,7 +58,7 @@ extern "C"
 	    return ((x&(x-1))==0);
 	}
 	
-	unsigned int nextPow2(unsigned int x)
+	size_t nextPow2(size_t x)
 	{
 	    --x;
 	    x |= x >> 1;

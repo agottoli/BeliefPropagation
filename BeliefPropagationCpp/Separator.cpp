@@ -441,7 +441,8 @@ Probability* Separator::sumOnIndexingTableOfCUDA(JTClique* cli, JTClique* cliScr
 	*/
 	///*
 	// diventa...
-	double* fiStarTable = runBigN(sizeTableLeggoPow2, dimFiStarTablePow2, cli->getPsi()->getTable(), indexingTableLeggo); //, dimFiStarTable);
+	double* fiStarTable = //new double[dimFiStarTable];
+		runBigN(sizeTableLeggoPow2, dimFiStarTablePow2, cli->getPsi()->getTable(), indexingTableLeggo, sizeTableLeggo, dimFiStarTable);
 	// mi restituirà un array più lungo, ma modificando la dimensione del risultato in cuda, mi da solo il numero di elementi validi. 
 	//*/
 	//
