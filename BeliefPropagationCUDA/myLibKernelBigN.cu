@@ -204,6 +204,15 @@ double* runBigN(size_t size, size_t nArray, double *h_idata, size_t *h_iIndexDat
     printf("%d m\n", m);
     printf("%d maxThreads\n", maxThreads);
 	/* */
+
+	double *gpu_result;	
+
+	if (m == 1) {
+		gpu_result = (double *) malloc(dimRisultato * sizeof(double));
+		for (size_t i = 0; i < dimInput; i++)
+			gpu_result[i] = h_idata[i];
+		return gpu_result;
+	}
 	
 	float total = 0.0;
 
@@ -275,7 +284,7 @@ double* runBigN(size_t size, size_t nArray, double *h_idata, size_t *h_iIndexDat
 		
 			cudaEventRecord( start, 0 );
 		
-	        double *gpu_result;																		// ALE è lungo nArray
+	        //double *gpu_result;																		// ALE è lungo nArray
 
 	        gpu_result = reduceBigNArray(size, nArray, numThreads, numBlocks, maxThreads,
 										h_odata, d_idata, d_odata, d_iIndexData, dimRisultato);
