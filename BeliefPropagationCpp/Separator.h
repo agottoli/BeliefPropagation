@@ -55,7 +55,8 @@ public:
 	std::string toString();
 
 	Probability* sumOnIndexingTableOf(JTClique* cli, JTClique* cliScrivo, double* elapsedSum, double* elapsedDivMul);
-	Probability* sumOnIndexingTableOfCUDA(JTClique* cli, JTClique* cliScrivo, double* elapsedSum, double* elapsedDivMul);
+	//Probability* sumOnIndexingTableOfCUDA(JTClique* cli, JTClique* cliScrivo, double* elapsedSum, double* elapsedDivMul);
+	void updateCUDA(JTClique* cli, JTClique* cliScrivo, double* elapsedSum, double* elapsedDivMul);
 
 	void createIndexingTable() {
 		// creo tabelle di indexing

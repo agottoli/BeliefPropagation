@@ -364,7 +364,7 @@ int main(int argc, char* argv[])
 		/ * */
 		
 		
-		//std::cin >> sss;
+		std::cin >> sss;
 		
 		
 	}

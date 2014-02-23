@@ -68,21 +68,41 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 	if (!Config::useIndexingTable) {
 		fiSeparatoreStar = first->getPsi()->sumOnNotPresent(fiSeparatore);
 		node->getPsi()->aggiornaOrdinato(fiSeparatoreStar, fiSeparatore);
+
+		// aggiorno la fi
+		second->setFi(fiSeparatoreStar);
+		delete fiSeparatore;
+
+		if (!node->getPsi()->isNormalized())
+			node->getPsi()->normalizza();
+
 	} else {
 		// DEBUG calcolo te tabelle anche col metodo normale e le confronto con il nuovo metodo
-		/*
 		Probability* copiaFiSeparatoreStar = first->getPsi()->sumOnNotPresent(fiSeparatore);
 		Probability* copiaPsiCricca = node->getPsi()->copy();
 		copiaPsiCricca->aggiornaOrdinato(copiaFiSeparatoreStar, fiSeparatore);
-		*/ //
-		if (!Config::useCUDA)
+		//
+		if (!Config::useCUDA) {
 			fiSeparatoreStar = second->sumOnIndexingTableOf(first, node, elapsedSum, elapsedDivMul);
-		else
-			fiSeparatoreStar = second->sumOnIndexingTableOfCUDA(first, node, elapsedSum, elapsedDivMul);
+
+			// aggiorno la fi
+			second->setFi(fiSeparatoreStar);
+			delete fiSeparatore;
+
+			//if (!node->getPsi()->isNormalized())
+			//	node->getPsi()->normalizza();
+		} else {
+			//fiSeparatoreStar = 
+			second->updateCUDA(first, node, elapsedSum, elapsedDivMul);
+
+			//if (!node->getPsi()->isNormalized())
+			//	node->getPsi()->normalizza();
+		}
 
 		// DEBUG confronta fiStar e psiStar
-		/*
-		bool ok = copiaFiSeparatoreStar->confronta(fiSeparatoreStar);
+		
+		//bool ok = copiaFiSeparatoreStar->confronta(fiSeparatoreStar);
+		bool ok = copiaFiSeparatoreStar->confronta(second->getFi());
 		if (ok)
 			std::cout << "separatore OK!!! :D" << std::endl;
 		else {
@@ -100,19 +120,14 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 			std::string sss;
 			std::cin >> sss;
 		}
-		*/
+		
 		//	
 
+		if (!node->getPsi()->isNormalized())
+			node->getPsi()->normalizza();
 	}
 
 	
-
-	// aggiorno la fi
-	second->setFi(fiSeparatoreStar);
-	delete fiSeparatore;
-
-	if (!node->getPsi()->isNormalized())
-		node->getPsi()->normalizza();
 
 	//livello--;
 }

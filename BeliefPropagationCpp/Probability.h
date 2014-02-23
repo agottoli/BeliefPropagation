@@ -11,7 +11,10 @@
 #include "VecMap.h"
 
 #define epsilon 0.0000000001 //L // 10^-9 per il confronto dei valori delle probabilità, può esserci una leggera differenza per arrotondamenti vari
+
+#ifndef zero
 #define zero 0.0 //L // per gestire il fatto della divisione 0/0 che da 0 invece di NaN
+#endif
 
 class Probability
 {
