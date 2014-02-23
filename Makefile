@@ -1,8 +1,8 @@
 all: beliefpropagationcpp
 
 beliefpropagationcpp: BeliefPropagationCpp/*.cpp BeliefPropagationCpp/huginParser/*.cc myLibKernelBigN.o
-	$(CXX) $(CXXFLAGS) -std=c++0x -o BeliefPropagation -I. BeliefPropagationCpp/*.cpp BeliefPropagationCpp/huginParser/*.cc myLibKernelBigN.o -lcudart; 
-#	rm sumKernelSmallN.o
+	$(CXX) $(CXXFLAGS) -std=c++0x -o BeliefPropagation -I. BeliefPropagationCpp/*.cpp BeliefPropagationCpp/huginParser/*.cc myLibKernelBigN.o -lcudart -lcublas;
+	rm myLibKernelBigN.o
 
 BeliefPropagationCpp/huginParser/*.cc: ./BeliefPropagationCpp/huginParser/HuginGrammar.jj
 	cd ./BeliefPropagationCpp/huginParser ; \

@@ -81,6 +81,8 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 		Probability* copiaFiSeparatoreStar = first->getPsi()->sumOnNotPresent(fiSeparatore);
 		Probability* copiaPsiCricca = node->getPsi()->copy();
 		copiaPsiCricca->aggiornaOrdinato(copiaFiSeparatoreStar, fiSeparatore);
+		if (!copiaPsiCricca->isNormalized())
+			copiaPsiCricca->normalizza();
 		//
 		if (!Config::useCUDA) {
 			fiSeparatoreStar = second->sumOnIndexingTableOf(first, node, elapsedSum, elapsedDivMul);
@@ -120,11 +122,7 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 			std::string sss;
 			std::cin >> sss;
 		}
-		
 		//	
-
-		if (!node->getPsi()->isNormalized())
-			node->getPsi()->normalizza();
 	}
 
 	

@@ -13,6 +13,8 @@
 
 #include "myLib.h"
 
+#include "cublas_v2.h"
+
 const bool debug = false;
 
 #ifndef SIZE_MAX
@@ -630,6 +632,20 @@ void scattering(size_t size,  // dimTabCricca POW2
 		cudaEventSynchronize( stop );
 		cudaEventElapsedTime( &timeMult, start, stop );
 		totalMult+=timeMult;
+		
+		// FASE DI NORMALIZZAZIONE
+		cublasHandle_t handle;
+		cublasCreate(&handle);
+		double sum; // TODO dopo metto d_sum = cudaMalloc(...)
+		cublasDasum(handle, dimCricca, d_MatrixData, 1, &sum);
+		printf("la somma degli elementi: %f\n", sum);
+		if (sum != 1.0) {
+			// normalizzo solo se necessario
+			sum = 1.0 / sum;
+			cublasDscal(handle, dimCricca, &sum, d_MatrixData, 1);
+			//getchar();
+		}
+		//
 
 		// copy final matrix from device to host
 		cudaMemcpy(h_MatrixData, d_MatrixData, bytesDataMatrix, cudaMemcpyDeviceToHost);
