@@ -14,6 +14,7 @@
 #include "myLib.h"
 
 #include "cublas_v2.h"
+#include "windows.h"
 
 const bool debug = false;
 
@@ -21,9 +22,9 @@ const bool debug = false;
 #define SIZE_MAX ((size_t)-1)
 #endif
 
-#ifndef zero
-#define zero 0.0
-#endif
+//#ifndef zeroALE
+//#define zeroALE 0.0
+//#endif
 
 //////////////////////////////////////////// RIDUZIONE ==> MARGINALIZATION //////////////////////////////////////////////////////
 
@@ -403,7 +404,7 @@ kernelDivVector(double *g_iVector1Data, double *g_iVector2Data, size_t n, const 
 	size_t i = blockIdx.x*(blockDim.x) + threadIdx.x;
 	if (i < n)
 		// ALE
-		g_iVector1Data[i] = (g_iVector2Data[i] > zero) ? g_iVector1Data[i] / g_iVector2Data[i] : 0;
+		g_iVector1Data[i] = (g_iVector2Data[i] > 0.0) ? g_iVector1Data[i] / g_iVector2Data[i] : 0; // zeroALE = 0.0
 }
 
 /*void getNumBlocksAndThreadsMultMatrixVector(int n, int maxThreads, int &blocks, int &threads){
@@ -712,23 +713,23 @@ if(!debug){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-void margAndScatt(size_t sizeCriccaPOW2, size_t sizeSeparatorePOW2, double *tabellaCricca, size_t *tabellaIndiciCricca, size_t dimCricca, size_t dimSeparatore, // dati per marginalization
-			size_t sizeCriccaMulPOW2, double* tabellaSeparatore, double* tabellaCriccaMul, size_t* tabellaIndiciCriccaMul, size_t dimCriccaMul // dati per scattering
-			) {
-
-	double* fiStarOnGpu = marginalizationBigN(sizeCriccaPOW2, sizeSeparatorePOW2, tabellaCricca, tabellaIndiciCricca, dimCricca, dimSeparatore);
-	scattering(sizeCriccaMulPOW2,  // dimTabCricca POW2
-			sizeSeparatorePOW2, // dimTabSep POW2
-			fiStarOnGpu, // double *h_iVector2Data qui ci va il device_v1data
-			tabellaSeparatore, // FI
-			tabellaCriccaMul, // PSI da aggiornare
-			tabellaIndiciCriccaMul, // Indexig of PSI da aggiornare
-
-			dimCriccaMul, // dimensione vera tabCricca
-			dimSeparatore // dim vera tabSe,p
-			);
-}
+// TUTTO INSIEME
+//void margAndScatt(size_t sizeCriccaPOW2, size_t sizeSeparatorePOW2, double *tabellaCricca, size_t *tabellaIndiciCricca, size_t dimCricca, size_t dimSeparatore, // dati per marginalization
+//			size_t sizeCriccaMulPOW2, double* tabellaSeparatore, double* tabellaCriccaMul, size_t* tabellaIndiciCriccaMul, size_t dimCriccaMul // dati per scattering
+//			) {
+//
+//	double* fiStarOnGpu = marginalizationBigN(sizeCriccaPOW2, sizeSeparatorePOW2, tabellaCricca, tabellaIndiciCricca, dimCricca, dimSeparatore);
+//	scattering(sizeCriccaMulPOW2,  // dimTabCricca POW2
+//			sizeSeparatorePOW2, // dimTabSep POW2
+//			fiStarOnGpu, // double *h_iVector2Data qui ci va il device_v1data
+//			tabellaSeparatore, // FI
+//			tabellaCriccaMul, // PSI da aggiornare
+//			tabellaIndiciCriccaMul, // Indexig of PSI da aggiornare
+//
+//			dimCriccaMul, // dimensione vera tabCricca
+//			dimSeparatore // dim vera tabSe,p
+//			);
+//}
 
 
 

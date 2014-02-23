@@ -23,13 +23,13 @@ public:
 
 private:
 	// andata
-	static void collectEvidence(JTClique* root, double* elapsedSum, double* elapsedDivMul);
-	static void collectEvidence(JTClique* node, JTClique* father, double* elapsedSum, double* elapsedDivMul);
-	static void update(JTClique* node, JTClique* first, Separator* second, double* elapsedSum, double* elapsedDivMul);
+	static void collectEvidence(JTClique* root, long long* elapsedSum, long long* elapsedDivMul);
+	static void collectEvidence(JTClique* node, JTClique* father, long long* elapsedSum, long long* elapsedDivMul);
+	static void update(JTClique* node, JTClique* first, Separator* second, long long* elapsedSum, long long* elapsedDivMul);
 
 	// ritorno
-	static void distributeEvidence(JTClique* root, double* elapsedSum, double* elapsedDivMul);
-	static void distributeEvidence(JTClique* node, JTClique* father, double* elapsedSum, double* elapsedDivMul);
+	static void distributeEvidence(JTClique* root, long long* elapsedSum, long long* elapsedDivMul);
+	static void distributeEvidence(JTClique* node, JTClique* father, long long* elapsedSum, long long* elapsedDivMul);
 	//static void update(JTClique* first, Separator* second, JTClique* node, double* elapsedSum, double* elapsedDivMul);
 
 	// per stampa livello

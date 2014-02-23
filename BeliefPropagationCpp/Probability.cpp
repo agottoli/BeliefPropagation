@@ -341,7 +341,7 @@ void Probability::aggiornaOrdinato(Probability* fiStar, Probability* fi) {
 	double somma = 0;
 
 	for (std::size_t i = 0; i < fiStar->getTableSize(); i++) {
-		if (tableFi[i] <= zero) {
+		if (tableFi[i] <= zeroALE) {
 			//std::cout << "divisione per zero!" << std::endl;
 			tabellaDiv[i] = 0;
 		} else {
@@ -362,7 +362,7 @@ void Probability::divOrdinato(Probability* other)
 	double somma = 0;
 	for (std::size_t i = 0; i < tableSize; i++) {
 		
-		if (otherTable[i] <= zero) {
+		if (otherTable[i] <= zeroALE) {
 			//std::cout << "divisione per zero!" << std::endl;
 			table[i] = 0;
 		} else {
@@ -423,12 +423,12 @@ bool Probability::confronta(Probability* other) {
 			std::string sss;
 			std::cin >> sss;
 		}
-
-		if (std::abs(table[i] - *(other->getAtConfig(configOther))) > epsilon) {
+		double delta;
+		if ((delta = std::abs(table[i] - *(other->getAtConfig(configOther)))) > epsilon) {
 			// diversi
 			esito = false;
 			elementiError++;
-			std::cout << "\tERROR elemento i = \t" << i << " delle tabelle JT = " << table[i] << " vs BP = " << *(other->getAtConfig(configOther)) << std::endl;
+			std::cout << "\tERROR elemento i = \t" << i << " delle tabelle JT = " << table[i] << " vs BP = " << *(other->getAtConfig(configOther)) << " delta: " << delta << std::endl;
 			//std::string sss;
 			//std::cin >> sss;
 		} else {

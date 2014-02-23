@@ -3,7 +3,8 @@
 #include <string>
 #include <fstream>
 // tempistiche somme
-#include <time.h>
+//#include <time.h>
+#include <chrono>
 
 // per cuda
 //#include "../BeliefPropagationCUDA/sumKernelSmallN.h"
@@ -297,7 +298,7 @@ std::size_t* Separator::createIndexingTableCUDA(JTClique* cliqueToIndex)
 	return indexT;
 }
 
-Probability* Separator::sumOnIndexingTableOf(JTClique* cli, JTClique* cliScrivo, double* elapsedSum, double* elapsedDivMul)
+void Separator::updatePotentials(JTClique* cli, JTClique* cliScrivo, long long* elapsedSum, long long* elapsedDivMul)
 {
 	double** indexingTableLeggo;
 	double** indexingTableScrivo;
@@ -321,8 +322,8 @@ Probability* Separator::sumOnIndexingTableOf(JTClique* cli, JTClique* cliScrivo,
 	
 
 	// rilevamento tempo occupato dalle somme
-	clock_t begin;
-	clock_t end;
+	std::chrono::system_clock::time_point begin;
+	std::chrono::system_clock::time_point end;
 
 	std::size_t numeroElemDaSommare = cli->getPsi()->getTableSize() / dimFiStarTable;
 	std::size_t numeroElemDaAggiornareConUgualeValore = cliScrivo->getPsi()->getTableSize() / dimFiStarTable;
@@ -332,7 +333,7 @@ Probability* Separator::sumOnIndexingTableOf(JTClique* cli, JTClique* cliScrivo,
 		//std::cout << " i = " << i;
 
 		// rilevamento tempo occupato dalle somme!!!
-		begin = clock();
+		begin = std::chrono::high_resolution_clock::now();
 		//
 
 		// calcolo il valore di fiStar[i]
@@ -345,8 +346,8 @@ Probability* Separator::sumOnIndexingTableOf(JTClique* cli, JTClique* cliScrivo,
 		}
 
 		// rilevamento tempo occupato dalle somme!!!
-		end = clock();
-		*elapsedSum += (double)(end - begin); // / CLOCKS_PER_SEC;
+		end = std::chrono::high_resolution_clock::now();
+		*elapsedSum += std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
 		//
 
 		sommaTabella += fiStarTable[i];
@@ -354,11 +355,11 @@ Probability* Separator::sumOnIndexingTableOf(JTClique* cli, JTClique* cliScrivo,
 		double divisioneTraFi;
 
 		// rilevamento tempo occupato dalla divisione e moltiplicazione!!!
-		begin = clock();
+		begin = std::chrono::high_resolution_clock::now();
 		//
 
 		// calcolo solo se la divisione 
-		if (fi->getTable()[i] > zero) {
+		if (fi->getTable()[i] > zeroALE) {
 			// calcolo quanto vale fiStar[i]/fi[i]
 			divisioneTraFi = fiStarTable[i] / fi->getTable()[i];
 		} else
@@ -382,16 +383,18 @@ Probability* Separator::sumOnIndexingTableOf(JTClique* cli, JTClique* cliScrivo,
 		}
 
 		// rilevamento tempo occupato dalla divisione e moltiplicazione!!!
-		end = clock();
-		*elapsedDivMul += (double)(end - begin); // / CLOCKS_PER_SEC;
+		end = std::chrono::high_resolution_clock::now();
+		*elapsedDivMul += std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
 		//
 
 	}
 
 	//std::string sss;
 	//std::cin >> sss;
-
-	return new Probability(vars, fiStarTable, dimFiStarTable, sommaTabella);
+	delete fi->getTable(); // free(fi->getTable());
+	fi->setTable(fiStarTable);
+	fi->setSommaTabella(sommaTabella);
+	//return new Probability(vars, fiStarTable, dimFiStarTable, sommaTabella);
 
 }
 
@@ -546,7 +549,7 @@ Probability* Separator::sumOnIndexingTableOf(JTClique* cli, JTClique* cliScrivo,
 //
 //}
 
-void Separator::updateCUDA(JTClique* cli, JTClique* cliScrivo, double* elapsedSum, double* elapsedDivMul)
+void Separator::updatePotentialsCUDA(JTClique* cli, JTClique* cliScrivo, long long* elapsedSum, long long* elapsedDivMul)
 {
 	std::size_t* indexingTableLeggo;
 	std::size_t* indexingTableScrivo;
@@ -565,8 +568,8 @@ void Separator::updateCUDA(JTClique* cli, JTClique* cliScrivo, double* elapsedSu
 	//double* fiStarTable = new double[dimFiStarTable];
 
 	// rilevamento tempo occupato dalle somme
-	clock_t begin;
-	clock_t end;
+	std::chrono::system_clock::time_point begin;
+	std::chrono::system_clock::time_point end;
 
 	std::size_t sizeTableLeggo = cli->getPsi()->getTableSize();
 	std::size_t numeroElemDaSommare = sizeTableLeggo / dimFiStarTable;
@@ -611,12 +614,27 @@ void Separator::updateCUDA(JTClique* cli, JTClique* cliScrivo, double* elapsedSu
 
 	
 		// rilevamento tempo occupato dalla divisione e moltiplicazione!!!
-		begin = clock();
+		//begin = clock();
 		//
 
-		margAndScatt(sizeTableLeggoPow2, dimFiStarTablePow2, cli->getPsi()->getTable(), indexingTableLeggo, sizeTableLeggo, dimFiStarTable,
+	// MARGINALIZATION
+	begin = std::chrono::high_resolution_clock::now();
+	double* fiStarOnGPU = marginalizationBigN(sizeTableLeggoPow2, dimFiStarTablePow2, cli->getPsi()->getTable(), indexingTableLeggo, sizeTableLeggo, dimFiStarTable);
+	end = std::chrono::high_resolution_clock::now();
+	*elapsedSum += std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
+
+	// SCATTERING
+	begin = std::chrono::high_resolution_clock::now();
+	scattering(sizeTableScrivoPow2, dimFiStarTablePow2, fiStarOnGPU, fi->getTable(), tableCliScrivo, indexingTableScrivo, sizeTableScrivo, dimFiStarTable);
+	end = std::chrono::high_resolution_clock::now();
+	*elapsedDivMul += std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
+		
+	
+	/* TUTTO COMPLETO 
+	margAndScatt(sizeTableLeggoPow2, dimFiStarTablePow2, cli->getPsi()->getTable(), indexingTableLeggo, sizeTableLeggo, dimFiStarTable,
 					sizeTableScrivoPow2, fi->getTable(), tableCliScrivo, indexingTableScrivo, sizeTableScrivo
 					);
+	*/
 
 		// calcolo solo se la divisione 
 		//if (fi->getTable()[i] > zero) {
@@ -628,8 +646,8 @@ void Separator::updateCUDA(JTClique* cli, JTClique* cliScrivo, double* elapsedSu
 		//std::cout << "fiStar[" << i << "]/fi[" << i << "] = " << divisioneTraFi << std::endl;
 
 		// rilevamento tempo occupato dalla divisione e moltiplicazione!!!
-		end = clock();
-		*elapsedDivMul += (double)(end - begin) / CLOCKS_PER_SEC;
+		//end = clock();
+		//*elapsedDivMul += (double)(end - begin) / CLOCKS_PER_SEC;
 		//
 
 

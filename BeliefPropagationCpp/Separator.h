@@ -54,9 +54,9 @@ public:
 	// rappresentazione del separatore
 	std::string toString();
 
-	Probability* sumOnIndexingTableOf(JTClique* cli, JTClique* cliScrivo, double* elapsedSum, double* elapsedDivMul);
+	void updatePotentials(JTClique* cli, JTClique* cliScrivo, long long* elapsedSum, long long* elapsedDivMul);
 	//Probability* sumOnIndexingTableOfCUDA(JTClique* cli, JTClique* cliScrivo, double* elapsedSum, double* elapsedDivMul);
-	void updateCUDA(JTClique* cli, JTClique* cliScrivo, double* elapsedSum, double* elapsedDivMul);
+	void updatePotentialsCUDA(JTClique* cli, JTClique* cliScrivo, long long* elapsedSum, long long* elapsedDivMul);
 
 	void createIndexingTable() {
 		// creo tabelle di indexing

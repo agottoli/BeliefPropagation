@@ -10,10 +10,10 @@
 #include "Variable.h"
 #include "VecMap.h"
 
-#define epsilon 0.0000000001 //L // 10^-9 per il confronto dei valori delle probabilità, può esserci una leggera differenza per arrotondamenti vari
+#define epsilon 0.000000001 //L // 10^-9 per il confronto dei valori delle probabilità, può esserci una leggera differenza per arrotondamenti vari
 
-#ifndef zero
-#define zero 0.0 //L // per gestire il fatto della divisione 0/0 che da 0 invece di NaN
+#ifndef zeroALE
+#define zeroALE 0.0 //L // per gestire il fatto della divisione 0/0 che da 0 invece di NaN
 #endif
 
 class Probability
@@ -46,6 +46,9 @@ public:
 	// restituisce la tabella delle probabilità
 	//std::vector<double>* getTable();
 	double* getTable();
+	void setTable(double* newTable) {
+		table = newTable;
+	}
 
 	// calcola la nuova probabilità moltiplicando la probabilità per quella passata
 	// NOTA: aggiorna la tabella this e quindi tutte le variabili presenti in other devono comparire anche in this!!!
@@ -73,7 +76,6 @@ public:
 	double getSommaTabella() {
 		return sommaTabella;
 	}
-
 	void setSommaTabella(double somma) {
 		sommaTabella = somma;
 	}

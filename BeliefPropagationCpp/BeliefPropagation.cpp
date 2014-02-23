@@ -3,7 +3,10 @@
 #include "BeliefPropagation.h"
 #include "States.h"
 #include "Config.h"
-#include <time.h>
+//#include <time.h>
+//#include <sys/timeb.h>
+#include <chrono>
+
 
 static int livello;
 
@@ -16,7 +19,7 @@ BeliefPropagation::~BeliefPropagation(void)
 {
 }
 
-void BeliefPropagation::collectEvidence(JTClique* root, double* elapsedSum, double* elapsedDivMul)
+void BeliefPropagation::collectEvidence(JTClique* root, long long* elapsedSum, long long* elapsedDivMul)
 {
 	livello = 0;
 	for (std::unordered_map<JTClique*, Separator*>::iterator entry = root->getLinks()->begin(); entry != root->getLinks()->end(); ++entry) {
@@ -32,7 +35,7 @@ void BeliefPropagation::collectEvidence(JTClique* root, double* elapsedSum, doub
 	}
 }
 
-void BeliefPropagation::collectEvidence(JTClique* node, JTClique* father, double* elapsedSum, double* elapsedDivMul)
+void BeliefPropagation::collectEvidence(JTClique* node, JTClique* father, long long* elapsedSum, long long* elapsedDivMul)
 {
 	//livello++;
 	for (std::unordered_map<JTClique*, Separator*>::iterator entry = node->getLinks()->begin(); entry != node->getLinks()->end(); ++entry) {
@@ -53,7 +56,7 @@ void BeliefPropagation::collectEvidence(JTClique* node, JTClique* father, double
 
 // sommo su first
 // modifico node
-void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* second, double* elapsedSum, double* elapsedDivMul)
+void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* second, long long* elapsedSum, long long* elapsedDivMul)
 {
 	//livello++;
 
@@ -79,24 +82,25 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 		/ * */
 	} else {
 		// DEBUG calcolo te tabelle anche col metodo normale e le confronto con il nuovo metodo
-		/*Probability* copiaFiSeparatoreStar = first->getPsi()->sumOnNotPresent(fiSeparatore);
+		Probability* copiaFiSeparatoreStar = first->getPsi()->sumOnNotPresent(fiSeparatore);
 		Probability* copiaPsiCricca = node->getPsi()->copy();
 		copiaPsiCricca->aggiornaOrdinato(copiaFiSeparatoreStar, fiSeparatore);
-		if (!copiaPsiCricca->isNormalized())
-			copiaPsiCricca->normalizza();*/
+		//if (!copiaPsiCricca->isNormalized())
+		//	copiaPsiCricca->normalizza();
 		//
 		if (!Config::useCUDA) {
-			fiSeparatoreStar = second->sumOnIndexingTableOf(first, node, elapsedSum, elapsedDivMul);
+			//fiSeparatoreStar = 
+			second->updatePotentials(first, node, elapsedSum, elapsedDivMul);
 
 			// aggiorno la fi
-			second->setFi(fiSeparatoreStar);
-			delete fiSeparatore;
+			//second->setFi(fiSeparatoreStar);
+			//delete fiSeparatore;
 
 			//if (!node->getPsi()->isNormalized())
 			//	node->getPsi()->normalizza();
 		} else {
 			//fiSeparatoreStar = 
-			second->updateCUDA(first, node, elapsedSum, elapsedDivMul);
+			second->updatePotentialsCUDA(first, node, elapsedSum, elapsedDivMul);
 
 			//if (!node->getPsi()->isNormalized())
 			//	node->getPsi()->normalizza();
@@ -105,7 +109,7 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 		// DEBUG confronta fiStar e psiStar
 		
 		//bool ok = copiaFiSeparatoreStar->confronta(fiSeparatoreStar);
-		/*bool ok = copiaFiSeparatoreStar->confronta(second->getFi());
+		bool ok = copiaFiSeparatoreStar->confronta(second->getFi());
 		if (ok)
 			std::cout << "separatore OK!!! :D" << std::endl;
 		else {
@@ -120,9 +124,9 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 			std::cout << "cricca OK!!! :D" << std::endl;
 		else {
 			std::cout << "cricca ERROR!!! :(" << std::endl;
-			std::string sss;
-			std::cin >> sss;
-		}*/
+			//std::string sss;
+			//std::cin >> sss;
+		}
 		//	
 	}
 
@@ -132,7 +136,7 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 }
 
 
-void BeliefPropagation::distributeEvidence(JTClique* root, double* elapsedSum, double* elapsedDivMul)
+void BeliefPropagation::distributeEvidence(JTClique* root, long long* elapsedSum, long long* elapsedDivMul)
 {
 	for (std::unordered_map<JTClique*, Separator*>::iterator entry = root->getLinks()->begin(); entry != root->getLinks()->end(); ++entry) {
 		// STAMPA ESECUZIONE inizio
@@ -148,7 +152,7 @@ void BeliefPropagation::distributeEvidence(JTClique* root, double* elapsedSum, d
 	}
 }
 
-void BeliefPropagation::distributeEvidence(JTClique* node, JTClique* father, double* elapsedSum, double* elapsedDivMul)
+void BeliefPropagation::distributeEvidence(JTClique* node, JTClique* father, long long* elapsedSum, long long* elapsedDivMul)
 {
 	//livello++;
 	for (std::unordered_map<JTClique*, Separator*>::iterator entry = node->getLinks()->begin(); entry != node->getLinks()->end(); ++entry) {
@@ -249,10 +253,27 @@ void BeliefPropagation::BP(JunctionTree* jt)
 
 	//time_t m;
 	//time_t now = time(NULL);
-	double* elapsedSum = new double(0.0);
-	double* elapsedDivMul = new double(0.0);
-	clock_t begin = clock();
-	
+	long long* elapsedSum = new long long(0);
+	long long* elapsedDivMul = new long long(0);
+	//clock_gettime();
+	auto begin = std::chrono::high_resolution_clock::now();
+	/*
+	std::chrono::system_clock::time_point b1;
+	std::chrono::system_clock::time_point b2;
+	long long b3 = 0;
+	for (int i = 0; i < 1000; i++) {
+		b1 = std::chrono::high_resolution_clock::now();
+		std::cout << "sdljsdsofdnfobnfdoifnioflmlkmlkmllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll";
+		b2 = std::chrono::high_resolution_clock::now();
+		b3 += std::chrono::duration_cast<std::chrono::milliseconds>(b2 - b1).count();
+		
+	}
+	auto begin22 = std::chrono::high_resolution_clock::now();
+
+	std::cout << "ccc " <<b3 << " vs " << std::chrono::duration_cast<std::chrono::milliseconds>(begin22 - begin).count();
+	std::string sd;
+	std::cin >> sd;
+	*/
 	/*
 	jt->calcolaRootMigliore();
 	
@@ -279,16 +300,16 @@ void BeliefPropagation::BP(JunctionTree* jt)
 	}
 
 	//m = difftime(time(NULL), now);
-	clock_t end = clock();
-	double elapsedTime = (double)(end - begin) / CLOCKS_PER_SEC;
+	auto end = std::chrono::high_resolution_clock::now();
+	//double elapsedTime = 
+	
 
 	// STAMPA ESECUZIONE inizio
 
-	double elapsedSumPrint = *elapsedSum / CLOCKS_PER_SEC;
 	std::cout << "valori delle tabelle aggiornate.\n";
-	std::cout << "BeliefPropagation eseguito in: " << elapsedTime << ".\n";
-	std::cout << "di cui " << elapsedSumPrint << " per eseguire le somme." << std::endl;
-	std::cout << "     e " << *elapsedDivMul << " per eseguire le div-mul." << std::endl;
+	std::cout << "BeliefPropagation eseguito in: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() / 1000.0 << ".\n";
+	std::cout << "di cui " << *elapsedSum / 1000.0 << " per eseguire le somme." << std::endl;
+	std::cout << "     e " << *elapsedDivMul / 1000.0 << " per eseguire le div-mul." << std::endl;
 	// STAMPA ESECUZIONE fine
 	//std::cin >> sss;
 }
