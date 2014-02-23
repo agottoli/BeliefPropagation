@@ -73,16 +73,17 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 		second->setFi(fiSeparatoreStar);
 		delete fiSeparatore;
 
+		/* PROVA SENZA NORMALIZZAZIONE * /
 		if (!node->getPsi()->isNormalized())
 			node->getPsi()->normalizza();
-
+		/ * */
 	} else {
 		// DEBUG calcolo te tabelle anche col metodo normale e le confronto con il nuovo metodo
-		Probability* copiaFiSeparatoreStar = first->getPsi()->sumOnNotPresent(fiSeparatore);
+		/*Probability* copiaFiSeparatoreStar = first->getPsi()->sumOnNotPresent(fiSeparatore);
 		Probability* copiaPsiCricca = node->getPsi()->copy();
 		copiaPsiCricca->aggiornaOrdinato(copiaFiSeparatoreStar, fiSeparatore);
 		if (!copiaPsiCricca->isNormalized())
-			copiaPsiCricca->normalizza();
+			copiaPsiCricca->normalizza();*/
 		//
 		if (!Config::useCUDA) {
 			fiSeparatoreStar = second->sumOnIndexingTableOf(first, node, elapsedSum, elapsedDivMul);
@@ -104,7 +105,7 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 		// DEBUG confronta fiStar e psiStar
 		
 		//bool ok = copiaFiSeparatoreStar->confronta(fiSeparatoreStar);
-		bool ok = copiaFiSeparatoreStar->confronta(second->getFi());
+		/*bool ok = copiaFiSeparatoreStar->confronta(second->getFi());
 		if (ok)
 			std::cout << "separatore OK!!! :D" << std::endl;
 		else {
@@ -121,7 +122,7 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 			std::cout << "cricca ERROR!!! :(" << std::endl;
 			std::string sss;
 			std::cin >> sss;
-		}
+		}*/
 		//	
 	}
 

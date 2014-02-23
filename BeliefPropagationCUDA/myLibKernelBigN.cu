@@ -459,12 +459,13 @@ void scattering(size_t size,  // dimTabCricca POW2
 	size_t m = size / n;
 
 	//int maxThreadsDiv = 512;				/// ATTENZIONE, QUANDO SI FANNO I TEST BISOGNA VARIARE ENTRAMBI I VALORI!!!
+	/*
 	printf("%d n\n", n);
 	printf("%d m\n", m);
 	printf("%d size\n", size);
 	printf("%d dimSep\n", dimSeparatore);
 	printf("%d dimCricca\n", dimCricca);
-
+	*/
 	cudaError_t error;
 
 	float bestAverageTimeMult = 100.0;
@@ -634,17 +635,20 @@ void scattering(size_t size,  // dimTabCricca POW2
 		totalMult+=timeMult;
 		
 		// FASE DI NORMALIZZAZIONE
+		/* PROVA SENZA NORMALIZZAZIONE * /
 		cublasHandle_t handle;
 		cublasCreate(&handle);
 		double sum; // TODO dopo metto d_sum = cudaMalloc(...)
 		cublasDasum(handle, dimCricca, d_MatrixData, 1, &sum);
-		printf("la somma degli elementi: %f\n", sum);
+		//printf("la somma degli elementi: %f\n", sum);
 		if (sum != 1.0) {
 			// normalizzo solo se necessario
 			sum = 1.0 / sum;
 			cublasDscal(handle, dimCricca, &sum, d_MatrixData, 1);
 			//getchar();
 		}
+		cublasDestroy(handle);
+		/ * */
 		//
 
 		// copy final matrix from device to host
@@ -691,6 +695,7 @@ void scattering(size_t size,  // dimTabCricca POW2
 			exit(-1);
 		}
 	//} 
+	/*
 	if(bestAverageTimeDiv > (totalDiv/100) && (!debug)) { bestAverageTimeDiv = (totalDiv/100); bestMaxThreadsDiv = maxThreadsDiv; 
 	printf("bestPartialAverageTimeDiv: %f\n bestPartialMaxThreads = %d\n", bestAverageTimeDiv, bestMaxThreadsDiv);
 	}
@@ -702,6 +707,7 @@ if(!debug){
 	printf("bestAverageTimeDiv: %f\n bestMaxThreadsDiv = %d\n", bestAverageTimeDiv, bestMaxThreadsDiv);
 	printf("bestAverageTimeMult: %f\n bestMaxThreadsMult = %d\n", bestAverageTimeMult, bestMaxThreadsMult);
 }
+*/
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
