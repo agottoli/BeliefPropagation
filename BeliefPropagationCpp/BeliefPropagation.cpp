@@ -302,6 +302,11 @@ void BeliefPropagation::BP(JunctionTree* jt)
 
 	}
 
+	// NORMALIZZO QUA ALLA FINE
+	if (!Config::useCUDA)
+		jt->normalizeAllPotentials();
+	//
+
 	//m = difftime(time(NULL), now);
 	auto end = std::chrono::high_resolution_clock::now();
 	//double elapsedTime = 

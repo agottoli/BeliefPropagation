@@ -34,6 +34,29 @@ public:
 
 	// rappresentazione dell'albero in dot
 	std::string getDOT();
+
+	void normalizeAllPotentials() {
+		for (std::unordered_set<JTClique*>::iterator cli = cliques->begin(); cli != cliques->end(); cli++) {
+			if (!(*cli)->getPsi()->isNormalized())
+				(*cli)->getPsi()->normalizza();
+		}
+		for (std::unordered_set<Separator*>::iterator sep = links->begin(); sep != links->end(); sep++) {
+			if (!(*sep)->getFi()->isNormalized())
+				(*sep)->getFi()->normalizza();
+		}
+	}
+
+	/* CONVIENE FARLA OGNI VOLTA QUANDO AGGIORNO LE TABELLE PERCHE' ALTRIMENTI ADESSO DEVO RITRASFERIRE TUTTE LE TABELLE IN GPU
+	void normalizeAllPotentialsCUDA() {
+		for (std::unordered_set<JTClique*>::iterator cli = cliques->begin(); cli != cliques->end(); cli++) {
+			if (!(*cli)->getPsi()->isNormalized())
+				(*cli)->getPsi()->normalizza();
+		}
+		for (std::unordered_set<Separator*>::iterator sep = links->begin(); sep != links->end(); sep++) {
+			if (!(*sep)->getFi()->isNormalized())
+				(*sep)->getFi()->normalizza();
+		}
+	}*/
 	
 	// calcola la probabilità congiunta del junction tree (moltiplica tutti i potenziali delle cricche, moltiplica i potenziali dei separatori e poi fa la divisione tra i due)
 	Probability* calcolaJointProbability();
