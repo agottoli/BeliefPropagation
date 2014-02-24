@@ -90,7 +90,7 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 		//if (!copiaPsiCricca->isNormalized())
 		//	copiaPsiCricca->normalizza();
 		//
-		if (!Config::useCUDA) {
+		if (!Config::useCUDA) { // TODO aggiungi dimensione minima delle tabelle!!!
 			//fiSeparatoreStar = 
 			second->updatePotentials(first, node, elapsedSum, elapsedDivMul);
 

@@ -58,7 +58,7 @@
 
 // includo gli header di cuda
 //#include "../BeliefPropagationCUDA/sumKernelSmallN.h"
-#include "../BeliefPropagationCUDA/myLibKernelBigN.h"
+#include "../BeliefPropagationCUDA/margAndScatt.h"
 //#include "./CUDA/myLibKernelSmallN.h"
 
 
@@ -90,6 +90,8 @@ int main(int argc, char* argv[])
 	argv2[0] = argv[0];
 	argv2[1] = "..\\RetiEsempio\\Munin2.net";
 	argv2[2] = "..\\RetiEsempio\\Munin2.num";
+	//argv2[1] = "..\\RetiEsempio\\powerplant.net";
+	//argv2[2] = "..\\RetiEsempio\\powerplant.num";
 	argv = argv2;
 	/ *  */
 

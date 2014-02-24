@@ -44,7 +44,7 @@
     <ClInclude Include="..\BeliefPropagationCpp\Variable.h" />
     <ClInclude Include="..\BeliefPropagationCpp\VecMap.h" />
     <ClInclude Include="myLib.h" />
-    <ClInclude Include="myLibKernelBigN.h" />
+    <ClInclude Include="margAndScatt.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\BeliefPropagationCpp\BayesianNetwork.cpp" />
@@ -70,7 +70,7 @@
     <ClInclude Include="cuPrintf.cu">
       <FileType>Document</FileType>
     </ClInclude>
-    <CudaCompile Include="myLibKernelBigN.cu" />
+    <CudaCompile Include="margAndScatt.cu" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cuPrintf.cuh" />

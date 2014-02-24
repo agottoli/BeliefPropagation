@@ -6,6 +6,13 @@ double* marginalizationBigN(size_t size, // dimTabCricca POW2
 							size_t dimInput, // dimensione vera cricca
 							size_t dimRisultato // dimensione vera separatore
 							);
+double* marginalizationSmallN(size_t size, // dimTabCricca POW2
+							size_t nArray, // dimTabSep POW2
+							double *h_idata, // PSI da sommare
+							size_t *h_iIndexData, // Indexig of PSI da sommare
+							size_t dimInput, // dimensione vera cricca
+							size_t dimRisultato // dimensione vera separatore
+							);
 void scattering(size_t size,  // dimTabCricca POW2
 			size_t n, // dimTabSep POW2
 			double *d_iVector1Data, // double *h_iVector2Data qui ci va il device_v1data

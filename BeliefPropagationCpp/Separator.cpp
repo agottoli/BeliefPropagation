@@ -8,7 +8,7 @@
 
 // per cuda
 //#include "../BeliefPropagationCUDA/sumKernelSmallN.h"
-#include "../BeliefPropagationCUDA/myLibKernelBigN.h"
+#include "../BeliefPropagationCUDA/margAndScatt.h"
 //
 
 Separator::Separator(JTClique* s, JTClique* o, VecMap* v)
@@ -618,9 +618,18 @@ void Separator::updatePotentialsCUDA(JTClique* cli, JTClique* cliScrivo, long lo
 		//
 
 	// MARGINALIZATION
-	begin = std::chrono::high_resolution_clock::now();
-	double* fiStarOnGPU = marginalizationBigN(sizeTableLeggoPow2, dimFiStarTablePow2, cli->getPsi()->getTable(), indexingTableLeggo, sizeTableLeggo, dimFiStarTable);
-	end = std::chrono::high_resolution_clock::now();
+	double* fiStarOnGPU;
+	if (dimFiStarTablePow2 > 512) {
+		// BIG N
+		begin = std::chrono::high_resolution_clock::now();
+		fiStarOnGPU = marginalizationBigN(sizeTableLeggoPow2, dimFiStarTablePow2, cli->getPsi()->getTable(), indexingTableLeggo, sizeTableLeggo, dimFiStarTable);
+		end = std::chrono::high_resolution_clock::now();
+	} else {
+		// SMALL N
+		begin = std::chrono::high_resolution_clock::now();
+		fiStarOnGPU = marginalizationSmallN(sizeTableLeggoPow2, dimFiStarTablePow2, cli->getPsi()->getTable(), indexingTableLeggo, sizeTableLeggo, dimFiStarTable);
+		end = std::chrono::high_resolution_clock::now();
+	}
 	*elapsedSum += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
 
 	// SCATTERING
