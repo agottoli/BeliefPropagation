@@ -15,7 +15,7 @@
 
 #include "cublas_v2.h"
 
-const bool debug = false;
+const bool debug = true; //false;
 
 #ifndef SIZE_MAX
 #define SIZE_MAX ((size_t)-1)
@@ -415,9 +415,10 @@ void reduceSmallNArray(size_t  n,
 				smemSize = (threads <= 32) ? 2 * threads * sizeof(double) : threads * sizeof(double);
 
 				// do in input al reduce da rielaborare gli stessi dati
-				if(debug) { cudaPrintfInit();
+				//if(debug) { cudaPrintfInit();
 					printf("\n\t iter esecuzione:\n %d dimGrid\n %d dimBlock\n %d smemSize\n %d s\n %d n\n",dimGrid.x, dimBlock.x, smemSize, s, n);
-					printf("nElements: %d \n",nElements); }
+					printf("nElements: %d \n",nElements); 
+					//}
 				switch (threads){
 					case 512:
 					reduce2StepSmallN<512><<< dimGrid, dimBlock, smemSize >>>(d_odata, d_odata, nElements, nArray, debug);	break;
@@ -526,6 +527,8 @@ double* marginalizationSmallN(size_t size, size_t nArray, double *h_idata, size_
 	printf("%d elements\n", size);
     printf("%d nArray\n", nArray);
     printf("%d m\n", m);
+	printf("%d dimCriccaDaSommare\n", dimInput);
+	printf("%d dimSeparatore\n", dimRisultato);
     //printf("%d maxThreads\n", maxThreads);
 	/* */
 

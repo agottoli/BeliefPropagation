@@ -619,7 +619,7 @@ void Separator::updatePotentialsCUDA(JTClique* cli, JTClique* cliScrivo, long lo
 
 	// MARGINALIZATION
 	double* fiStarOnGPU;
-	if (dimFiStarTablePow2 > 512) {
+	if (dimFiStarTablePow2 > 256) {
 		// BIG N
 		begin = std::chrono::high_resolution_clock::now();
 		fiStarOnGPU = marginalizationBigN(sizeTableLeggoPow2, dimFiStarTablePow2, cli->getPsi()->getTable(), indexingTableLeggo, sizeTableLeggo, dimFiStarTable);

@@ -1,8 +1,8 @@
 all: beliefpropagationcpp
 
-beliefpropagationcpp: BeliefPropagationCpp/*.cpp BeliefPropagationCpp/huginParser/*.cc myLibKernelBigN.o
-	$(CXX) $(CXXFLAGS) -std=c++0x -o BeliefPropagation -I. BeliefPropagationCpp/*.cpp BeliefPropagationCpp/huginParser/*.cc myLibKernelBigN.o -lcudart -lcublas;
-	rm myLibKernelBigN.o
+beliefpropagationcpp: BeliefPropagationCpp/*.cpp BeliefPropagationCpp/huginParser/*.cc margAndScatt.o
+	$(CXX) $(CXXFLAGS) -std=c++0x -o BeliefPropagation -I. BeliefPropagationCpp/*.cpp BeliefPropagationCpp/huginParser/*.cc margAndScatt.o -lcudart -lcublas;
+	rm margAndScatt.o
 
 BeliefPropagationCpp/huginParser/*.cc: ./BeliefPropagationCpp/huginParser/HuginGrammar.jj
 	cd ./BeliefPropagationCpp/huginParser ; \
@@ -12,8 +12,8 @@ BeliefPropagationCpp/huginParser/*.cc: ./BeliefPropagationCpp/huginParser/HuginG
 #sumKernelSmallN.o:
 #	nvcc -c -o sumKernelSmallN.o BeliefPropagationCUDA/sumKernelSmallN.cu -arch=compute_30
 
-myLibKernelBigN.o:
-	nvcc -c -o myLibKernelBigN.o BeliefPropagationCUDA/myLibKernelBigN.cu -arch=compute_30
+margAndScatt.o:
+	nvcc -c -o margAndScatt.o BeliefPropagationCUDA/margAndScatt.cu -arch=compute_30
 	
 clean:
 	/bin/rm -rf BeliefPropagation BeliefPropagationCpp/huginParser/*.cc BeliefPropagationCpp/huginParser/*.h
