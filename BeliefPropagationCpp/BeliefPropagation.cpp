@@ -315,9 +315,9 @@ void BeliefPropagation::BP(JunctionTree* jt)
 	// STAMPA ESECUZIONE inizio
 
 	std::cout << "valori delle tabelle aggiornate.\n";
-	std::cout << "BeliefPropagation eseguito in: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() / 1000.0 << ".\n";
-	std::cout << "di cui " << *elapsedSum / 1000.0 << " per eseguire le somme." << std::endl;
-	std::cout << "     e " << *elapsedDivMul / 1000.0 << " per eseguire le div-mul." << std::endl;
+	std::cout << "BeliefPropagation eseguito in: " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() / 1000000000.0 << ".\n";
+	std::cout << "di cui " << *elapsedSum / 1000000000.0 << " per eseguire le somme." << std::endl;
+	std::cout << "     e " << *elapsedDivMul / 1000000000.0 << " per eseguire le div-mul." << std::endl;
 	// STAMPA ESECUZIONE fine
 	//std::cin >> sss;
 }

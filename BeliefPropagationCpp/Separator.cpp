@@ -347,7 +347,7 @@ void Separator::updatePotentials(JTClique* cli, JTClique* cliScrivo, long long* 
 
 		// rilevamento tempo occupato dalle somme!!!
 		end = std::chrono::high_resolution_clock::now();
-		*elapsedSum += std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
+		*elapsedSum += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
 		//
 
 		sommaTabella += fiStarTable[i];
@@ -384,7 +384,7 @@ void Separator::updatePotentials(JTClique* cli, JTClique* cliScrivo, long long* 
 
 		// rilevamento tempo occupato dalla divisione e moltiplicazione!!!
 		end = std::chrono::high_resolution_clock::now();
-		*elapsedDivMul += std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
+		*elapsedDivMul += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
 		//
 
 	}
@@ -621,13 +621,13 @@ void Separator::updatePotentialsCUDA(JTClique* cli, JTClique* cliScrivo, long lo
 	begin = std::chrono::high_resolution_clock::now();
 	double* fiStarOnGPU = marginalizationBigN(sizeTableLeggoPow2, dimFiStarTablePow2, cli->getPsi()->getTable(), indexingTableLeggo, sizeTableLeggo, dimFiStarTable);
 	end = std::chrono::high_resolution_clock::now();
-	*elapsedSum += std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
+	*elapsedSum += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
 
 	// SCATTERING
 	begin = std::chrono::high_resolution_clock::now();
 	scattering(sizeTableScrivoPow2, dimFiStarTablePow2, fiStarOnGPU, fi->getTable(), tableCliScrivo, indexingTableScrivo, sizeTableScrivo, dimFiStarTable);
 	end = std::chrono::high_resolution_clock::now();
-	*elapsedDivMul += std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count();
+	*elapsedDivMul += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
 		
 	
 	/* TUTTO COMPLETO 
