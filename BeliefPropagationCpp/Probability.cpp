@@ -104,7 +104,7 @@ void Probability::normalizzaCPSeServe()
 		for (std::size_t j = 0; j < nStatesLastVar; j++) {
 			sommaParziale += table[i * nStatesLastVar + j];
 		}
-		if (abs(sommaParziale - 1) > epsilon) {
+		if (abs(sommaParziale - 1) > epsilonALE) {
 			for (std::size_t j = 0; j < nStatesLastVar; j++) {
 				table[i * nStatesLastVar + j] /= sommaParziale;
 				somma += table[i * nStatesLastVar + j];
@@ -424,7 +424,7 @@ bool Probability::confronta(Probability* other) {
 			std::cin >> sss;
 		}
 		double delta;
-		if ((delta = std::abs(table[i] - *(other->getAtConfig(configOther)))) > epsilon) {
+		if ((delta = std::abs(table[i] - *(other->getAtConfig(configOther)))) > epsilonALE) {
 			// diversi
 			esito = false;
 			elementiError++;

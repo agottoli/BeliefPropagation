@@ -10,7 +10,9 @@
 #include "Variable.h"
 #include "VecMap.h"
 
-#define epsilon 0.000000001 //L // 10^-9 per il confronto dei valori delle probabilità, può esserci una leggera differenza per arrotondamenti vari
+//#ifndef epsilon
+#define epsilonALE 0.0000000001 //L // 10^-9 per il confronto dei valori delle probabilità, può esserci una leggera differenza per arrotondamenti vari
+//#endif
 
 #ifndef zeroALE
 #define zeroALE 0.0 //L // per gestire il fatto della divisione 0/0 che da 0 invece di NaN
@@ -67,7 +69,7 @@ public:
 
 	bool isNormalized() {
 		//std::cout << sommaTabella << '\t';
-		return std::abs(sommaTabella - 1) <= epsilon;
+		return std::abs(sommaTabella - 1) <= epsilonALE;
 	}
 
 	// normalizza la tabella della probabilità attuale e tengo la somma dentro il parametro sommaTabella quando la costruisco???

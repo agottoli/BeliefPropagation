@@ -14,7 +14,6 @@
 #include "myLib.h"
 
 #include "cublas_v2.h"
-#include "windows.h"
 
 const bool debug = false;
 

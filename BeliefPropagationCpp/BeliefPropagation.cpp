@@ -82,9 +82,11 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 		/ * */
 	} else {
 		// DEBUG calcolo te tabelle anche col metodo normale e le confronto con il nuovo metodo
+		/*
 		Probability* copiaFiSeparatoreStar = first->getPsi()->sumOnNotPresent(fiSeparatore);
 		Probability* copiaPsiCricca = node->getPsi()->copy();
 		copiaPsiCricca->aggiornaOrdinato(copiaFiSeparatoreStar, fiSeparatore);
+		*/
 		//if (!copiaPsiCricca->isNormalized())
 		//	copiaPsiCricca->normalizza();
 		//
@@ -107,7 +109,7 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 		}
 
 		// DEBUG confronta fiStar e psiStar
-		
+		/*
 		//bool ok = copiaFiSeparatoreStar->confronta(fiSeparatoreStar);
 		bool ok = copiaFiSeparatoreStar->confronta(second->getFi());
 		if (ok)
@@ -127,6 +129,7 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 			//std::string sss;
 			//std::cin >> sss;
 		}
+		*/
 		//	
 	}
 
