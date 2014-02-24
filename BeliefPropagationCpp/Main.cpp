@@ -84,7 +84,7 @@
 
 int main(int argc, char* argv[]) 
 {
-	/* * /
+	/* */
 	argc = 3;
 	char* argv2[3]; 
 	argv2[0] = argv[0];
@@ -93,7 +93,7 @@ int main(int argc, char* argv[])
 	//argv2[1] = "..\\RetiEsempio\\powerplant.net";
 	//argv2[2] = "..\\RetiEsempio\\powerplant.num";
 	argv = argv2;
-	/ *  */
+	/*  */
 
 	std::string sss;
 	
@@ -206,10 +206,11 @@ int main(int argc, char* argv[])
 	//if (argc > 3)
 	//	if (strcmp(argv[3], "indexing") == 0)
 	//		Config::useIndexingTable = true;
-
-	if (!Config::useIndexingTable) {
+#if !USE_INDEXING_TABLE
+	//if (!Config::useIndexingTable) {
 		std::cout << "NON ";
-	}
+	//}
+#endif
 	std::cout << "uso le indexing table." << std::endl;
 	//std::cin >> sss;
 
@@ -244,8 +245,10 @@ int main(int argc, char* argv[])
 	//std::cout << "DOT BN:\n" << net->getDOT() << '\n';
 	//std::cin >> sss;
 
-	if (Config::useCUDA)
+#if USE_CUDA
+	//if (Config::useCUDA)
 		selectGPU();
+#endif
 
 	for (std::vector<BayesianNetwork*>::iterator itNet = BNSet->begin(); itNet != BNSet->end(); itNet++) {
 		BayesianNetwork* net = *itNet;
@@ -371,9 +374,10 @@ int main(int argc, char* argv[])
 		
 	}
 
-	if (Config::useCUDA)
+#if USE_CUDA
+//	if (Config::useCUDA)
 		resetGPU();
-	
+#endif	
 	//std::cin >> sss;
 	
 }

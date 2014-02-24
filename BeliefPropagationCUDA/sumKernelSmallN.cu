@@ -19,7 +19,7 @@ bool debug = false;
 #define SIZE_MAX ((size_t)-1)
 #endif
 
-void getNumBlocksAndThreadsSmallN(int n, int maxThreads, int &blocks, int &threads){
+void getNumBlocksAndThreadsSmallN(size_t n, int maxThreads, int &blocks, int &threads){
         //get device capability, to avoid block/grid size excceed the upbound
 	    cudaDeviceProp prop;
 	    int device;
@@ -49,7 +49,7 @@ void getNumBlocksAndThreadsSmallN(int n, int maxThreads, int &blocks, int &threa
 	Nel primo livello occorre recuperare i dati da g_idata in base agli indici riportati in d_iIndexData
 */
 __global__ void
-reduce1StepSmallN(double *g_idata, double *g_odata, size_t *d_iIndexData, unsigned int n, unsigned int nArray, bool debug)//, unsigned int fraction)
+reduce1StepSmallN(double *g_idata, double *g_odata, size_t *d_iIndexData, size_t n, size_t nArray, bool debug)//, unsigned int fraction)
 {	
 	// extern serve per rendere l'allocazione della memoria condivisa dinamica 
 	// si potrebbe utilizzare quella statica se la dimensione fosse nota a compile time
@@ -58,11 +58,11 @@ reduce1StepSmallN(double *g_idata, double *g_odata, size_t *d_iIndexData, unsign
 
     // perform first level of reduction,
     // reading from global memory, writing to shared memory
-    unsigned int tid = threadIdx.x;
+    size_t tid = threadIdx.x;
 	// legge blocchi di dimensione doppia
 	// i scorre tutte le threads di tutti i blocchi pari: blocco0[thread0...threadn] blocco2[thread0...threadn]
 //  orig:  unsigned int i = blockIdx.x*(blockDim.x*2) + threadIdx.x;
-	unsigned int i = blockIdx.x*(blockDim.x*2) + threadIdx.x;
+	size_t i = blockIdx.x*(blockDim.x*2) + threadIdx.x;
 	// in mySum ogni thread dovrebbe avere il valore dell'indice dell'array che deve analizzare 
 	// nota: solo metà degli elementi è presa in considerazione, in quanto 0 <= threadIdx.x <= blockDim (non blockDim*2)
     
@@ -95,7 +95,7 @@ reduce1StepSmallN(double *g_idata, double *g_odata, size_t *d_iIndexData, unsign
 	//if(tid < 6 || tid > 250) cuPrintf ("CUPRINTF 2- blockIdx.x = %d mySum = %f \n",blockIdx.x, mySum);
 
     // do reduction in shared mem
-    for (unsigned int s=blockDim.x/2; s >= nArray; s>>=1)
+    for (size_t s=blockDim.x/2; s >= nArray; s>>=1)
     {
         if (tid < s)
         {
@@ -119,7 +119,7 @@ reduce1StepSmallN(double *g_idata, double *g_odata, size_t *d_iIndexData, unsign
     it performs the first level of reduction when reading from global memory.
 */
 __global__ void
-reduce2StepSmallN(double *g_idata, double *g_odata, unsigned int n, unsigned int nArray, bool debug)//, unsigned int fraction)
+reduce2StepSmallN(double *g_idata, double *g_odata, size_t n, size_t nArray, bool debug)//, unsigned int fraction)
 {	
 	// extern serve per rendere l'allocazione della memoria condivisa dinamica 
 	// si potrebbe utilizzare quella statica se la dimensione fosse nota a compile time
@@ -128,11 +128,11 @@ reduce2StepSmallN(double *g_idata, double *g_odata, unsigned int n, unsigned int
 
     // perform first level of reduction,
     // reading from global memory, writing to shared memory
-    unsigned int tid = threadIdx.x;
+    size_t tid = threadIdx.x;
 	// legge blocchi di dimensione doppia
 	// i scorre tutte le threads di tutti i blocchi pari: blocco0[thread0...threadn] blocco2[thread0...threadn]
 //  orig:  unsigned int i = blockIdx.x*(blockDim.x*2) + threadIdx.x;
-	unsigned int i = blockIdx.x*(blockDim.x*2) + threadIdx.x;
+	size_t i = blockIdx.x*(blockDim.x*2) + threadIdx.x;
 	// in mySum ogni thread dovrebbe avere il valore dell'indice dell'array che deve analizzare 
 	// nota: solo metà degli elementi è presa in considerazione, in quanto 0 <= threadIdx.x <= blockDim (non blockDim*2)
     double mySum = (i < n) ? g_idata[i] : 0;
@@ -150,7 +150,7 @@ reduce2StepSmallN(double *g_idata, double *g_odata, unsigned int n, unsigned int
 	//if(tid < 6 || tid > 250) cuPrintf ("CUPRINTF 2- blockIdx.x = %d mySum = %f \n",blockIdx.x, mySum);
 
     // do reduction in shared mem
-    for (unsigned int s=blockDim.x/2; s >= nArray; s>>=1)
+    for (size_t s=blockDim.x/2; s >= nArray; s>>=1)
     {
         if (tid < s)
         {
@@ -169,8 +169,8 @@ reduce2StepSmallN(double *g_idata, double *g_odata, unsigned int n, unsigned int
 		}
 }
 
-double *reduceSmallNArray(int  n,
-				  	int nArray,
+double *reduceSmallNArray(size_t n,
+				  	size_t nArray,
                  	int  numThreads,
                   	int  numBlocks,
                   	int  maxThreads,
@@ -178,7 +178,9 @@ double *reduceSmallNArray(int  n,
                   	double *h_odata,
                   	double *d_idata,
                   	double *d_odata,
-					size_t *d_iIndexData) //, int nArrayVero)
+					size_t *d_iIndexData,
+					size_t dimRisultato
+					)
 {
 	bool needReadBack = true;
 	
@@ -195,11 +197,13 @@ double *reduceSmallNArray(int  n,
 
 		cudaError_t error;
 		
-		unsigned int dimResult = nArray * sizeof(double);
+		size_t dimResult = nArray * sizeof(double);
 		//unsigned int dimResult = nArrayVero * sizeof(double);
+		/*
 		double *gpu_result = (double *) malloc(dimResult);
         for (int i=0; i < nArray; i++) gpu_result[i]=0;	
 		//for (int i=0; i < nArrayVero; i++) gpu_result[i]=0;
+		*/
 
 			if(debug) { assert (nArray%dimBlock.x == 0); cudaPrintfInit();
 					// execute the kernel
@@ -207,8 +211,8 @@ double *reduceSmallNArray(int  n,
 			reduce1StepSmallN<<< dimGrid, dimBlock, smemSize >>>(d_idata, d_odata, d_iIndexData, n, nArray, debug);//, fraction);
 			if(debug) { cudaPrintfDisplay (stdout, true); cudaPrintfEnd (); }
         
-        if (true)
-        {
+ //       if (true)
+ //       {
 	        int s=numBlocks;
 
             // sum partial sums from each block on CPU
@@ -221,9 +225,9 @@ double *reduceSmallNArray(int  n,
 			    printf("\nCUDA error1: %s\n", cudaGetErrorString(error));
 			    exit(-1);
 			  }	
-
+			
 			double prec;
-              for (int i=0; i < nArray; i++) 
+              for (size_t i=0; i < nArray; i++) 
 			//for (int i=0; i < nArrayVero; i++) 
 			{
 					for(int j=0; j < s; j++) {
@@ -237,9 +241,10 @@ double *reduceSmallNArray(int  n,
 					prec=gpu_result[i];
               }
 			if(debug) { 	printf("\n CPU gpu_result[0]=%f     s = %d", gpu_result[0], s); }
-
             needReadBack = false;
-        }
+			
+  //      }
+		/*
         else
         {
             // sum partial block sums on GPU
@@ -300,6 +305,7 @@ double *reduceSmallNArray(int  n,
                 needReadBack = false;
            }
 }
+		*/
 		if (needReadBack)
 	    {
 	        // copy final sum from device to host

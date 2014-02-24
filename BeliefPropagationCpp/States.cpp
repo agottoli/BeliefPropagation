@@ -10,8 +10,10 @@ States::States(int reserve)
 	states->reserve(reserve);
 	// MEMORIA 2014-01-14
 	//useMap = false; //true;
-	if (Config::useMap)
+#if USE_MAP_IN_VECMAP
+//	if (Config::useMap)
 		statesMap = new std::unordered_map<std::string,int>();
+#endif
 	//
 }
 
@@ -27,26 +29,31 @@ std::vector<std::string>::reference States::get(std::size_t index) { // std::vec
 void States::push_back(std::string var) {
 	states->push_back(var);
 	// MEMORIA 2014-01-14 
-	if (Config::useMap)
+#if USE_MAP_IN_VECMAP
+//	if (Config::useMap)
 		(*statesMap)[var] = siza;
+#endif
 	//
 	siza++;
 }
 
 std::size_t States::indexOf(std::string var) {
 	// MEMORIA 2014-01-14 
-	if (Config::useMap) {
+#if USE_MAP_IN_VECMAP
+//	if (Config::useMap) {
 		std::unordered_map<std::string,int>::iterator temp = statesMap->find(var);
 		if (temp == statesMap->end())
 			return SIZE_MAX;
 		return temp->second;
-	} else {
+#else
+//	} else {
 		// sostituito da
 		std::vector<std::string>::iterator temp = std::find(states->begin(), states->end(), var);
 		if (temp == states->end())
 			return SIZE_MAX; // non può esserci un indice di dimensione max perché la length sarebbe max + 1
 		return temp - states->begin();
-	}
+//	}
+#endif
 	//
 }
 

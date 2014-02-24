@@ -597,13 +597,18 @@ JunctionTree* BayesianNetwork::kruskal(std::priority_queue<Separator*, std::vect
 	//
 
 	elemento->setFi(new Probability(elemento->getVars(), 1));
-	
-	if (Config::useIndexingTable) {
-		if (!Config::useCUDA)
+
+#if USE_INDEXING_TABLE && !USE_CUDA
+//	if (Config::useIndexingTable) {
+//		if (!Config::useCUDA)
 			elemento->createIndexingTable();
-		else
+#endif
+#if USE_CUDA
+		//else
 			elemento->createIndexingTableCUDA();
-	}
+//	}
+#endif
+
 	//else {
 	//	double* tttSogg = new double[s->getSoggetto()->getPsi()->getTableSize()];
 	//	double* tttOgg = new double[s->getOggetto()->getPsi()->getTableSize()];

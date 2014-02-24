@@ -104,7 +104,7 @@ void Probability::normalizzaCPSeServe()
 		for (std::size_t j = 0; j < nStatesLastVar; j++) {
 			sommaParziale += table[i * nStatesLastVar + j];
 		}
-		if (abs(sommaParziale - 1) > epsilonALE) {
+		if (abs(sommaParziale - 1) > EPSILON_SOGLIA) {
 			for (std::size_t j = 0; j < nStatesLastVar; j++) {
 				table[i * nStatesLastVar + j] /= sommaParziale;
 				somma += table[i * nStatesLastVar + j];
@@ -341,7 +341,7 @@ void Probability::aggiornaOrdinato(Probability* fiStar, Probability* fi) {
 	double somma = 0;
 
 	for (std::size_t i = 0; i < fiStar->getTableSize(); i++) {
-		if (tableFi[i] <= zeroALE) {
+		if (tableFi[i] <= ZERO_DIVISIONE) {
 			//std::cout << "divisione per zero!" << std::endl;
 			tabellaDiv[i] = 0;
 		} else {
@@ -362,7 +362,7 @@ void Probability::divOrdinato(Probability* other)
 	double somma = 0;
 	for (std::size_t i = 0; i < tableSize; i++) {
 		
-		if (otherTable[i] <= zeroALE) {
+		if (otherTable[i] <= ZERO_DIVISIONE) {
 			//std::cout << "divisione per zero!" << std::endl;
 			table[i] = 0;
 		} else {
@@ -424,7 +424,7 @@ bool Probability::confronta(Probability* other) {
 			std::cin >> sss;
 		}
 		double delta;
-		if ((delta = std::abs(table[i] - *(other->getAtConfig(configOther)))) > epsilonALE) {
+		if ((delta = std::abs(table[i] - *(other->getAtConfig(configOther)))) > EPSILON_SOGLIA) {
 			// diversi
 			esito = false;
 			elementiError++;

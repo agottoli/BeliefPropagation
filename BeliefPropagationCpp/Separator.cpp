@@ -255,8 +255,8 @@ std::size_t* Separator::createIndexingTableCUDA(JTClique* cliqueToIndex)
 		// NOTA: configClique si riferisce esattamente alla configurazione dell'indice i nella tabella della cricca
 		fiIndex = fi->getIndexOfConfig(configSep);
 
-		
-		if (Config::indexingSumOnRow) {
+#if INDEXINGSUM_ON_ROW		
+//		if (Config::indexingSumOnRow) {
 			// QUA C'E' LA DIFFERENZA DI INSERIRE I DATI IN [0000][1111][2222]
 			// provo a costruire la tabella già pronta con m e N potenze di 2
 			/*
@@ -267,7 +267,8 @@ std::size_t* Separator::createIndexingTableCUDA(JTClique* cliqueToIndex)
 			indexT[fiIndex * dimMapToSamePow2 + (offset[fiIndex])++] = i; //cliquePsi->getAtConfig(&configClique);
 			//*/
 			//
-		} else {
+#else
+//		} else {
 			// OPPURE IN [012][012][012][012]
 			// provo a costruire la tabella già pronta con m e N potenze di 2
 			/*
@@ -278,7 +279,8 @@ std::size_t* Separator::createIndexingTableCUDA(JTClique* cliqueToIndex)
 			indexT[fiIndex + nArrayPow2 * (offset[fiIndex])++] = i;
 			//*/
 			//
-		}
+//		}
+#endif
 
 		// aggiorno alla prossima configurazione
 		cliquePsi->nextConfig(&configClique);
@@ -359,7 +361,7 @@ void Separator::updatePotentials(JTClique* cli, JTClique* cliScrivo, long long* 
 		//
 
 		// calcolo solo se la divisione 
-		if (fi->getTable()[i] > zeroALE) {
+		if (fi->getTable()[i] > ZERO_DIVISIONE) {
 			// calcolo quanto vale fiStar[i]/fi[i]
 			divisioneTraFi = fiStarTable[i] / fi->getTable()[i];
 		} else
@@ -567,9 +569,11 @@ void Separator::updatePotentialsCUDA(JTClique* cli, JTClique* cliScrivo, long lo
 
 	//double* fiStarTable = new double[dimFiStarTable];
 
+#if TIMER_DETTAGLIATO && TIMER_CON_TRASFERIMENTI_MEMORIA
 	// rilevamento tempo occupato dalle somme
 	std::chrono::system_clock::time_point begin;
 	std::chrono::system_clock::time_point end;
+#endif
 
 	std::size_t sizeTableLeggo = cli->getPsi()->getTableSize();
 	std::size_t numeroElemDaSommare = sizeTableLeggo / dimFiStarTable;
@@ -619,25 +623,39 @@ void Separator::updatePotentialsCUDA(JTClique* cli, JTClique* cliScrivo, long lo
 
 	// MARGINALIZATION
 	double* fiStarOnGPU;
-	if (dimFiStarTablePow2 > 256) {
+	if (dimFiStarTablePow2 > LIMITE_SEPARATORE_MARGINALIZZAZIONE) {
 		// BIG N
+#if TIMER_DETTAGLIATO && TIMER_CON_TRASFERIMENTI_MEMORIA
 		begin = std::chrono::high_resolution_clock::now();
-		fiStarOnGPU = marginalizationBigN(sizeTableLeggoPow2, dimFiStarTablePow2, cli->getPsi()->getTable(), indexingTableLeggo, sizeTableLeggo, dimFiStarTable);
+#endif
+		fiStarOnGPU = marginalizationBigN(sizeTableLeggoPow2, dimFiStarTablePow2, cli->getPsi()->getTable(), indexingTableLeggo, sizeTableLeggo, dimFiStarTable, elapsedSum, elapsedDivMul);
+#if TIMER_DETTAGLIATO && TIMER_CON_TRASFERIMENTI_MEMORIA
 		end = std::chrono::high_resolution_clock::now();
+#endif
 	} else {
+		std::cout << "NON DEVE MAI APPARIRE!!!";
 		// SMALL N
+#if TIMER_DETTAGLIATO && TIMER_CON_TRASFERIMENTI_MEMORIA
 		begin = std::chrono::high_resolution_clock::now();
-		fiStarOnGPU = marginalizationSmallN(sizeTableLeggoPow2, dimFiStarTablePow2, cli->getPsi()->getTable(), indexingTableLeggo, sizeTableLeggo, dimFiStarTable);
+#endif
+		fiStarOnGPU = marginalizationSmallN(sizeTableLeggoPow2, dimFiStarTablePow2, cli->getPsi()->getTable(), indexingTableLeggo, sizeTableLeggo, dimFiStarTable, elapsedSum, elapsedDivMul);
+#if TIMER_DETTAGLIATO && TIMER_CON_TRASFERIMENTI_MEMORIA
 		end = std::chrono::high_resolution_clock::now();
+#endif
 	}
+#if TIMER_DETTAGLIATO && TIMER_CON_TRASFERIMENTI_MEMORIA
 	*elapsedSum += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
+#endif
 
 	// SCATTERING
+#if TIMER_DETTAGLIATO && TIMER_CON_TRASFERIMENTI_MEMORIA
 	begin = std::chrono::high_resolution_clock::now();
-	scattering(sizeTableScrivoPow2, dimFiStarTablePow2, fiStarOnGPU, fi->getTable(), tableCliScrivo, indexingTableScrivo, sizeTableScrivo, dimFiStarTable);
+#endif
+	scattering(sizeTableScrivoPow2, dimFiStarTablePow2, fiStarOnGPU, fi->getTable(), tableCliScrivo, indexingTableScrivo, sizeTableScrivo, dimFiStarTable, elapsedSum, elapsedDivMul);
+#if TIMER_DETTAGLIATO && TIMER_CON_TRASFERIMENTI_MEMORIA
 	end = std::chrono::high_resolution_clock::now();
 	*elapsedDivMul += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
-		
+#endif
 	
 	/* TUTTO COMPLETO 
 	margAndScatt(sizeTableLeggoPow2, dimFiStarTablePow2, cli->getPsi()->getTable(), indexingTableLeggo, sizeTableLeggo, dimFiStarTable,

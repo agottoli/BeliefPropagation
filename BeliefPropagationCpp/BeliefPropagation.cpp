@@ -23,42 +23,57 @@ void BeliefPropagation::collectEvidence(JTClique* root, long long* elapsedSum, l
 {
 	livello = 0;
 	for (std::unordered_map<JTClique*, Separator*>::iterator entry = root->getLinks()->begin(); entry != root->getLinks()->end(); ++entry) {
+#if PRINT_EXECUTION_BP
 		// STAMPA ESECUZIONE inizio
-		//std::cout << "collectEvidence(" << entry->first->toString() << ", " << root->toString() << ")\n";
+		std::cout << "collectEvidence(" << entry->first->toString() << ", " << root->toString() << ")\n";
 		// STAMPA ESECUZIONE fine
+#endif
 		collectEvidence(entry->first, root, elapsedSum, elapsedDivMul);
 
+#if PRINT_EXECUTION_BP
 		// STAMPA ESECUZIONE inizio
-		//std::cout << "update(" << root->toString() << ", " << entry->first->toString() << ")\n";
+		std::cout << "update(" << root->toString() << ", " << entry->first->toString() << ")\n";
 		// STAMPA ESECUZIONE fine
+#endif
 		update(root, entry->first, entry->second, elapsedSum, elapsedDivMul);
 	}
 }
 
 void BeliefPropagation::collectEvidence(JTClique* node, JTClique* father, long long* elapsedSum, long long* elapsedDivMul)
 {
-	//livello++;
+#if PRINT_EXECUTION_BP
+	livello++;
+#endif
+
 	for (std::unordered_map<JTClique*, Separator*>::iterator entry = node->getLinks()->begin(); entry != node->getLinks()->end(); ++entry) {
 		if (entry->first != father) {
+#if PRINT_EXECUTION_BP
 			// STAMPA ESECUZIONE inizio
-			//std::cout << tabLivello() << "collectEvidence(" << entry->first->toString() << ", " << node->toString() << ")\n";
+			std::cout << tabLivello() << "collectEvidence(" << entry->first->toString() << ", " << node->toString() << ")\n";
 			// STAMPA ESECUZIONE fine
+#endif
 			collectEvidence(entry->first, node, elapsedSum, elapsedDivMul);
 
+#if PRINT_EXECUTION_BP
 			// STAMPA ESECUZIONE inizio
-			//std::cout << tabLivello() << "update(" << node->toString() << ", " << entry->first->toString() << ")\n";
+			std::cout << tabLivello() << "update(" << node->toString() << ", " << entry->first->toString() << ")\n";
 			// STAMPA ESECUZIONE fine
+#endif
 			update(node, entry->first, entry->second, elapsedSum, elapsedDivMul);
 		}
 	}
-	//livello--;
+#if PRINT_EXECUTION_BP
+	livello--;
+#endif
 }
 
 // sommo su first
 // modifico node
 void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* second, long long* elapsedSum, long long* elapsedDivMul)
 {
-	//livello++;
+#if PRINT_EXECUTION_BP
+	livello++;
+#endif
 
 	// STAMPA ESECUZIONE inizio
 	//std::cout << tabLivello() << "fiS* = sumOn{varsC\\varsS}(psiCfiglio)\n";
@@ -68,7 +83,8 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 	
 	Probability* fiSeparatoreStar;
 	
-	if (!Config::useIndexingTable) {
+#if !USE_INDEXING_TABLE && !USE_CUDA
+//	if (!Config::useIndexingTable) {
 		fiSeparatoreStar = first->getPsi()->sumOnNotPresent(fiSeparatore);
 		node->getPsi()->aggiornaOrdinato(fiSeparatoreStar, fiSeparatore);
 
@@ -80,34 +96,44 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 		if (!node->getPsi()->isNormalized())
 			node->getPsi()->normalizza();
 		/ * */
-	} else {
+#else
+//	} else {
+#if CONTROLLA_UPDATE
 		// DEBUG calcolo te tabelle anche col metodo normale e le confronto con il nuovo metodo
 		/* */
 		Probability* copiaFiSeparatoreStar = first->getPsi()->sumOnNotPresent(fiSeparatore);
 		Probability* copiaPsiCricca = node->getPsi()->copy();
 		copiaPsiCricca->aggiornaOrdinato(copiaFiSeparatoreStar, fiSeparatore);
 		/* */
-		//if (!copiaPsiCricca->isNormalized())
-		//	copiaPsiCricca->normalizza();
+#if NORMALIZZA_AD_OGNI_PASSO
+		if (!copiaPsiCricca->isNormalized())
+			copiaPsiCricca->normalizza();
+#endif
 		//
-		if (!Config::useCUDA) { // TODO aggiungi dimensione minima delle tabelle!!!
+#endif
+
+#if !USE_CUDA
+		//if (!Config::useCUDA) { // TODO aggiungi dimensione minima delle tabelle!!!
 			//fiSeparatoreStar = 
 			second->updatePotentials(first, node, elapsedSum, elapsedDivMul);
 
 			// aggiorno la fi
 			//second->setFi(fiSeparatoreStar);
 			//delete fiSeparatore;
-
-			//if (!node->getPsi()->isNormalized())
-			//	node->getPsi()->normalizza();
-		} else {
+#if NORMALIZZA_AD_OGNI_PASSO
+			if (!node->getPsi()->isNormalized())
+				node->getPsi()->normalizza();
+#endif
+#else
+		//} else {
 			//fiSeparatoreStar = 
 			second->updatePotentialsCUDA(first, node, elapsedSum, elapsedDivMul);
 
 			//if (!node->getPsi()->isNormalized())
 			//	node->getPsi()->normalizza();
-		}
-
+//		}
+#endif
+#if CONTROLLA_UPDATE
 		// DEBUG confronta fiStar e psiStar
 		/* */
 		//bool ok = copiaFiSeparatoreStar->confronta(fiSeparatoreStar);
@@ -129,50 +155,65 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 			std::string sss;
 			std::cin >> sss;
 		}
+#endif
 		/* */
 		//	
-	}
+//	}
+#endif
 
 	
-
-	//livello--;
+#if PRINT_EXECUTION_BP
+	livello--;
+#endif
 }
 
 
 void BeliefPropagation::distributeEvidence(JTClique* root, long long* elapsedSum, long long* elapsedDivMul)
 {
 	for (std::unordered_map<JTClique*, Separator*>::iterator entry = root->getLinks()->begin(); entry != root->getLinks()->end(); ++entry) {
+#if PRINT_EXECUTION_BP
 		// STAMPA ESECUZIONE inizio
-		//std::cout << "update(" << entry->first->toString() << ", " << root->toString() << ")\n";
+		std::cout << "update(" << entry->first->toString() << ", " << root->toString() << ")\n";
 		// STAMPA ESECUZIONE fine
+#endif
 		//update(entry->first, entry->second, root, elapsedSum, elapsedDivMul);
 		update(entry->first, root, entry->second, elapsedSum, elapsedDivMul);
 
+#if PRINT_EXECUTION_BP
 		// STAMPA ESECUZIONE inizio
-		//std::cout << "distributeEvidence(" << entry->first->toString() << ", " << root->toString() << ")\n";
+		std::cout << "distributeEvidence(" << entry->first->toString() << ", " << root->toString() << ")\n";
 		// STAMPA ESECUZIONE fine
+#endif
 		distributeEvidence(entry->first, root, elapsedSum,  elapsedDivMul);
 	}
 }
 
 void BeliefPropagation::distributeEvidence(JTClique* node, JTClique* father, long long* elapsedSum, long long* elapsedDivMul)
 {
-	//livello++;
+#if PRINT_EXECUTION_BP
+	livello++;
+#endif
 	for (std::unordered_map<JTClique*, Separator*>::iterator entry = node->getLinks()->begin(); entry != node->getLinks()->end(); ++entry) {
 		if (entry->first != father) {
+#if PRINT_EXECUTION_BP
 			// STAMPA ESECUZIONE inizio
-			//std::cout << tabLivello() << "update(" << entry->first->toString() << ", " << node->toString() << ")\n";
+			std::cout << tabLivello() << "update(" << entry->first->toString() << ", " << node->toString() << ")\n";
 			// STAMPA ESECUZIONE fine
+#endif
 			//update(entry->first, entry->second, node, elapsedSum, elapsedDivMul);
 			update(entry->first, node, entry->second, elapsedSum, elapsedDivMul);
 
+#if PRINT_EXECUTION_BP
 			// STAMPA ESECUZIONE inizio
-			//std::cout << tabLivello() << "distributeEvidence(" << entry->first->toString() << ", " << node->toString() << ")\n";
+			std::cout << tabLivello() << "distributeEvidence(" << entry->first->toString() << ", " << node->toString() << ")\n";
 			// STAMPA ESECUZIONE fine
+#endif
 			distributeEvidence(entry->first, node, elapsedSum, elapsedDivMul);
 		}
 	}
-	//livello--;
+#if PRINT_EXECUTION_BP
+	livello--;
+#endif
 }
 
 // sommo su node
@@ -303,8 +344,10 @@ void BeliefPropagation::BP(JunctionTree* jt)
 	}
 
 	// NORMALIZZO QUA ALLA FINE
-	if (!Config::useCUDA)
+#if !USE_CUDA && !NORMALIZZA_AD_OGNI_PASSO
+//	if (!Config::useCUDA)
 		jt->normalizeAllPotentials();
+#endif
 	//
 
 	//m = difftime(time(NULL), now);
@@ -316,8 +359,10 @@ void BeliefPropagation::BP(JunctionTree* jt)
 
 	std::cout << "valori delle tabelle aggiornate.\n";
 	std::cout << "BeliefPropagation eseguito in: " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() / 1000000000.0 << ".\n";
+#if TIMER_DETTAGLIATO
 	std::cout << "di cui " << *elapsedSum / 1000000000.0 << " per eseguire le somme." << std::endl;
 	std::cout << "     e " << *elapsedDivMul / 1000000000.0 << " per eseguire le div-mul." << std::endl;
+#endif
 	// STAMPA ESECUZIONE fine
 	//std::cin >> sss;
 }

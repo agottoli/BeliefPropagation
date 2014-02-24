@@ -12,8 +12,10 @@ VecMap::VecMap(std::size_t reserve)
 	variables->reserve(reserve);
 	// MEMORIA 2014-01-14
 	//useMap = false; //true;
-	if (Config::useMap)
+#if USE_MAP_IN_VECMAP
+//	if (Config::useMap)
 		variablesMap = new std::unordered_map<Variable*,std::size_t>();
+#endif
 	//
 	//variablesMap // TODO c'è un modo per riservare lo spazio anche per le map???
 }
@@ -24,8 +26,10 @@ VecMap::VecMap(std::vector<Variable*>* v, std::unordered_map<Variable*,std::size
 	variables = new std::vector<Variable*>(*v);
 	// MEMORIA 2014-01-14
 	//useMap = false;
-	if (Config::useMap)
+#if USE_MAP_IN_VECMAP
+//	if (Config::useMap)
 		variablesMap = new std::unordered_map<Variable*,std::size_t>(*vm);
+#endif
 	//
 }
 
@@ -33,8 +37,10 @@ VecMap::~VecMap(void)
 {
 	delete variables;
 	// MEMORIA 2014-01-14
-	if (Config::useMap)
+#if USE_MAP_IN_VECMAP
+//	if (Config::useMap)
 		delete variablesMap;
+#endif
 	//
 	//std::cout << "distruggo un VecMap";
 	//variables->~vector(); non posso distruggere il vettore altrimenti mi distrugge anche gli elementi che ci sono dentro :(
@@ -54,18 +60,21 @@ std::vector<Variable*>::reference VecMap::get(std::size_t index) { // std::vecto
 
 std::size_t VecMap::indexOf(Variable* var) {
 	// MEMORIA 2014-01-14
-	if (Config::useMap) {
+#if USE_MAP_IN_VECMAP
+//	if (Config::useMap) {
 		std::unordered_map<Variable*,std::size_t>::iterator temp = variablesMap->find(var);
 		if (temp == variablesMap->end())
 			return SIZE_MAX; // non può esserci un indice di dimensione max perché la length sarebbe max + 1
 		return temp->second;
-	} else {
+#else
+//} else {
 		// sostituito da
 		std::vector<Variable*>::iterator temp = std::find(variables->begin(), variables->end(), var);
 		if (temp == variables->end())
 			return SIZE_MAX; // non può esserci un indice di dimensione max perché la length sarebbe max + 1
 		return temp - variables->begin();
-	}
+//	}
+#endif
 	//
 
 	
@@ -73,12 +82,15 @@ std::size_t VecMap::indexOf(Variable* var) {
 
 bool VecMap::exists(Variable* var) {
 	// MEMORIA 2014-01-14
-	if (Config::useMap) 
+#if USE_MAP_IN_VECMAP
+//	if (Config::useMap) 
 		return (variablesMap->find(var) != variablesMap->end()) ;
+#else
 	
 	// sostituito da
 	return std::find(variables->begin(), variables->end(), var) != variables->end();
 	//
+#endif
 }
 
 std::vector<Variable*>::iterator VecMap::begin() {
@@ -92,8 +104,10 @@ std::vector<Variable*>::iterator VecMap::end() {
 void VecMap::push_back(Variable* var) {
 	variables->push_back(var);
 	// MEMORIA 2014-01-14
-	if (Config::useMap)
+#if USE_MAP_IN_VECMAP
+//	if (Config::useMap)
 		(*variablesMap)[var] = siza;
+#endif
 	//
 
 	siza++;
