@@ -75,6 +75,8 @@ bool unicoAlbero() {
 	return cliques->size() == 1 + links->size();
 }
 
+void getStatistics();
+
 private:
 	// getDOT private recursive
 	std::string getDOT2(JTClique*, JTClique*);

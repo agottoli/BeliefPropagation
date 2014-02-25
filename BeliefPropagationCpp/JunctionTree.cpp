@@ -160,3 +160,42 @@ std::string toString()
 	// TODO
 	return s;
 }
+
+void JunctionTree::getStatistics() 
+{
+	std::cout << "Numero di cricche: " << cliques->size() << "\n";
+	std::size_t minCliqueSize = SIZE_MAX;
+	std::size_t maxCliqueSize = 0;
+	std::size_t sumCliqueSize = 0;
+	for (std::unordered_set<JTClique*>::iterator clique = cliques->begin(); clique != cliques->end(); clique++) {
+		if (maxCliqueSize < (*clique)->getPsi()->getTableSize())
+			maxCliqueSize = (*clique)->getPsi()->getTableSize();
+
+		if (minCliqueSize > (*clique)->getPsi()->getTableSize())
+			minCliqueSize = (*clique)->getPsi()->getTableSize();
+
+		sumCliqueSize += (*clique)->getPsi()->getTableSize();
+	}
+	std::cout << "Dimensione totale cricche: " << sumCliqueSize << "\n";
+	std::cout << "Massima dimensione cricca: " << maxCliqueSize << "\n";
+	std::cout << "Media dimensione cricca:   " << sumCliqueSize / cliques->size() << "\n";
+	std::cout << "Minima dimensione cricca:  " << minCliqueSize << "\n";
+
+	std::cout << "Numero di separatori: " << links->size() << "\n";
+	std::size_t minSepSize = SIZE_MAX;
+	std::size_t maxSepSize = 0;
+	std::size_t sumSepSize = 0;
+	for (std::unordered_set<Separator*>::iterator sep = links->begin(); sep != links->end(); sep++) {
+		if (maxSepSize < (*sep)->getFi()->getTableSize())
+			maxSepSize = (*sep)->getFi()->getTableSize();
+
+		if (minSepSize > (*sep)->getFi()->getTableSize())
+			minSepSize = (*sep)->getFi()->getTableSize();
+
+		sumSepSize += (*sep)->getFi()->getTableSize();
+	}
+	std::cout << "Massima dimensione separatori: " << maxSepSize << "\n";
+	std::cout << "Media dimensione separatori:   " << sumSepSize / links->size() << "\n";
+	std::cout << "Minima dimensione separatori:  " << minSepSize << "\n";
+
+}

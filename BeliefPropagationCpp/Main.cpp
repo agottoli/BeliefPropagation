@@ -324,6 +324,12 @@ int main(int argc, char* argv[])
 		}
 		std::cin >> sss;*/
 
+#if PRINT_JT_STATISTICS
+		std::cout << "-----------------------------------------\n";
+		jt->getStatistics();
+		std::cout << "-----------------------------------------\n";
+#endif
+
 		// BP!!!
 		// DEBUG
 		std::cout << "\nBELIEF PROPAGATION..." << std::endl;
