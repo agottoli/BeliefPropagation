@@ -424,7 +424,7 @@ void reduceSmallNArray(size_t  n,
 
 			//reduce1StepSmallN<<< dimGrid, dimBlock, smemSize >>>(d_idata, d_odata, d_iIndexData, n, nArray, debug);
 
-			printf("numThreads: %d", numThreads);
+			//printf("numThreads: %d", numThreads);
 					switch (numThreads){
 						case 512:
 						reduce1StepSmallN<512><<< dimGrid, dimBlock, smemSize >>>(d_idata, d_odata, d_iIndexData, n, nArray);	break;

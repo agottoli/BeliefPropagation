@@ -39,9 +39,11 @@ namespace Config {
 #define USE_INDEXING_TABLE TRUE // obbligatorio per cuda
 #endif
 
+/////////////////////////////////////////////////////////////////
 #ifndef USE_CUDA
-#define USE_CUDA TRUE
+#define USE_CUDA FALSE //TRUE
 #endif
+/////////////////////////////////////////////////////////////////
 
 #ifndef SUM_ON_ROW
 // la disposizione degli elementi che vanno sommati assieme in fase di marginalizzazione
@@ -52,24 +54,26 @@ namespace Config {
 
 #ifndef NORMALIZZA_AD_OGNI_PASSO
 // indica se normalizzo ogni tabella oppure no dopo averla aggiornata
-#define NORMALIZZA_AD_OGNI_PASSO FALSE
+#define NORMALIZZA_AD_OGNI_PASSO TRUE //FALSE
 #endif
 
 #ifndef CONTROLLA_UPDATE
-#define CONTROLLA_UPDATE TRUE
+#define CONTROLLA_UPDATE FALSE
 #endif
 
 #ifndef PRINT_EXECUTION_BP
 #define PRINT_EXECUTION_BP FALSE
 #endif
 
+/////////////////////////////////////////////////////////////////
 #ifndef TIMER_DETTAGLIATO
 #define TIMER_DETTAGLIATO TRUE
 #endif
 
 #ifndef TIMER_CON_TRASFERIMENTI_MEMORIA
-#define TIMER_CON_TRASFERIMENTI_MEMORIA FALSE //TRUE
+#define TIMER_CON_TRASFERIMENTI_MEMORIA TRUE
 #endif
+/////////////////////////////////////////////////////////////////
 
 #ifndef LIMITE_SEPARATORE_MARGINALIZZAZIONE
 #define LIMITE_SEPARATORE_MARGINALIZZAZIONE 256
