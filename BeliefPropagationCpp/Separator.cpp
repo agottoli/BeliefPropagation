@@ -633,7 +633,6 @@ void Separator::updatePotentialsCUDA(JTClique* cli, JTClique* cliScrivo, long lo
 		end = std::chrono::high_resolution_clock::now();
 #endif
 	} else {
-		std::cout << "NON DEVE MAI APPARIRE!!!";
 		// SMALL N
 #if TIMER_DETTAGLIATO && TIMER_CON_TRASFERIMENTI_MEMORIA
 		begin = std::chrono::high_resolution_clock::now();

@@ -15,12 +15,14 @@
 
 #include "myLib.h"
 
+#if NORMALIZZA_AD_OGNI_PASSO
 #include "cublas_v2.h"
-
+#endif
+/*
 #if (TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA)
 #include <chrono>
 #endif
-
+*/
 #ifndef DEBUG_FLAG
 //const bool debug = true; //false;
 #define DEBUG_FLAG FALSE
@@ -70,7 +72,7 @@ void getNumBlocksAndThreadsSmallN(size_t n, int maxThreads, int &blocks, int &th
 */
 template <unsigned int blockSize> // forse basta usare blockDim.x
 __global__ void
-reduce1StepSmallN(double *g_idata, double *g_odata, size_t *d_iIndexData, size_t n, size_t nArray)
+reduce1StepSmallN(double *g_idata, double *g_odata, size_t *d_iIndexData, size_t n, size_t const nArray)
 {	
 	// extern serve per rendere l'allocazione della memoria condivisa dinamica 
 	// si potrebbe utilizzare quella statica se la dimensione fosse nota a compile time
@@ -147,14 +149,14 @@ reduce1StepSmallN(double *g_idata, double *g_odata, size_t *d_iIndexData, size_t
         }    __syncthreads();
 	    
 		} break;
-	case 64: for (size_t s=blockDim.x/2; s >= nArray; s>>=1){
+	default: for (size_t s=blockDim.x/2; s >= nArray; s>>=1){								// ALE LAST CORR
 		if (tid < s)
         {
             sdata[tid] = mySum = mySum + sdata[tid + s];
         }    __syncthreads();
 
 		} break;
-		}		
+		}	
     /*for (unsigned int s=blockDim.x/2; s >= nArray*2; s>>=1) // orig: s >= nArray
     {
         if (tid < s)
@@ -182,40 +184,52 @@ reduce1StepSmallN(double *g_idata, double *g_odata, size_t *d_iIndexData, size_t
         // doesn't reorder stores to it and induce incorrect behavior.
         volatile double *smem = sdata;
     	    if (blockSize >=  64 && nArray < 64) smem[tid] = mySum = mySum + smem[tid + 32]; 
+
 			#if DEBUG_FLAG
 			if(//debug && 
 				(tid == 0 || tid == (blockDim.x-1))&&(blockIdx.x==0 || blockIdx.x==gridDim.x-1)) cuPrintf ("CUPRINTF 4- sdata[%d] = %f mySum = %f \n", tid, sdata[tid], mySum);
 #endif
 
+
 			if (blockSize >=  32 && nArray < 32) smem[tid] = mySum = mySum + smem[tid + 16];
-			#if DEBUG_FLAG
+			
+#if DEBUG_FLAG
 			if(//debug && 
 				(tid == 0 || tid == (blockDim.x-1))&&(blockIdx.x==0 || blockIdx.x==gridDim.x-1)) cuPrintf ("CUPRINTF 5- sdata[%d] = %f mySum = %f \n", tid, sdata[tid], mySum);
 #endif
+
 			
 			if (blockSize >=  16 && nArray < 16) smem[tid] = mySum = mySum + smem[tid + 8];
+
 			#if DEBUG_FLAG
 			if(//debug && 
 				(tid == 0 || tid == (blockDim.x-1))&&(blockIdx.x==0 || blockIdx.x==gridDim.x-1)) cuPrintf ("CUPRINTF 6- sdata[%d] = %f mySum = %f \n", tid, sdata[tid], mySum);
 #endif
+
 			
 	        if (blockSize >=  8 && nArray < 8) smem[tid] = mySum = mySum + smem[tid + 4];
+
 			#if DEBUG_FLAG
 			if(//debug && 
 				(tid == 0 || tid == (blockDim.x-1))&&(blockIdx.x==0 || blockIdx.x==gridDim.x-1)) cuPrintf ("CUPRINTF 7- sdata[%d] = %f mySum = %f \n", tid, sdata[tid], mySum);
 #endif
+
 	
 	        if (blockSize >=  4 && nArray < 4) smem[tid] = mySum = mySum + smem[tid + 2];
+
 			#if DEBUG_FLAG
 			if(//debug &&
 				(tid == 0 || tid == (blockDim.x-1))&&(blockIdx.x==0 || blockIdx.x==gridDim.x-1)) cuPrintf ("CUPRINTF 8- sdata[%d] = %f mySum = %f \n", tid, sdata[tid], mySum);
 #endif
+
 	
 	        if (blockSize >=  2 && nArray < 2) smem[tid] = mySum = mySum + smem[tid + 1];
+
 			#if DEBUG_FLAG
 			if(//debug && 
 				(tid == 0 || tid == (blockDim.x-1))&&(blockIdx.x==0 || blockIdx.x==gridDim.x-1)) cuPrintf ("CUPRINTF 9- sdata[%d] = %f mySum = %f \n", tid, sdata[tid], mySum);
 #endif
+
 	
 	    }
 
@@ -243,7 +257,7 @@ If blockSize > 32, allocate blockSize*sizeof(T) bytes.
 */
 template <unsigned int blockSize> // forse basta usare blockDim.x
 __global__ void
-reduce2StepSmallN(double *g_idata, double *g_odata, size_t n, size_t nArray)
+reduce2StepSmallN(double *g_idata, double *g_odata, size_t n, size_t const nArray)
 {	
 	// extern serve per rendere l'allocazione della memoria condivisa dinamica 
 	// si potrebbe utilizzare quella statica se la dimensione fosse nota a compile time
@@ -313,7 +327,7 @@ reduce2StepSmallN(double *g_idata, double *g_odata, size_t n, size_t nArray)
         }    __syncthreads();
 	    
 		} break;
-	case 64: for (size_t s=blockDim.x/2; s >= nArray; s>>=1){
+	default: for (size_t s=blockDim.x/2; s >= nArray; s>>=1){
 		if (tid < s)
         {
             sdata[tid] = mySum = mySum + sdata[tid + s];
@@ -399,6 +413,7 @@ void reduceSmallNArray(size_t  n,
 		double *gpu_result = (double *) malloc(dimResult);
 		for (size_t i=0; i < nArray; i++) gpu_result[i]=0;
 		*/
+
 		#if DEBUG_FLAG
 			//if(debug) { 
 				cudaPrintfInit();
@@ -406,6 +421,7 @@ void reduceSmallNArray(size_t  n,
 					printf("\n1 esecuzione:\n %d dimGrid\n %d dimBlock\n %d smemSize\n",dimGrid.x, dimBlock.x, smemSize ); 
 			//}
 #endif
+
 			//reduce1StepSmallN<<< dimGrid, dimBlock, smemSize >>>(d_idata, d_odata, d_iIndexData, n, nArray, debug);
 
 			printf("numThreads: %d", numThreads);
@@ -432,11 +448,13 @@ void reduceSmallNArray(size_t  n,
 						reduce1StepSmallN<1><<< dimGrid, dimBlock, smemSize >>>(d_idata, d_odata, d_iIndexData, n, nArray);	break;
 					}
 			
+
 			#if DEBUG_FLAG
 			//if(debug) { 
 				cudaPrintfDisplay (stdout, true); cudaPrintfEnd (); 
 			//}
 			#endif
+
         
             // sum partial block sums on GPU
             int s=numBlocks;
@@ -455,6 +473,7 @@ void reduceSmallNArray(size_t  n,
 				smemSize = (threads <= 32) ? 2 * threads * sizeof(double) : threads * sizeof(double);
 
 				// do in input al reduce da rielaborare gli stessi dati
+
 				#if DEBUG_FLAG
 				//if(debug) { 
 					cudaPrintfInit();
@@ -462,6 +481,7 @@ void reduceSmallNArray(size_t  n,
 					printf("nElements: %d \n",nElements); 
 					//}
 				#endif
+
 
 				switch (threads){
 					case 512:
@@ -486,11 +506,13 @@ void reduceSmallNArray(size_t  n,
 					reduce2StepSmallN<1><<< dimGrid, dimBlock, smemSize >>>(d_odata, d_odata, nElements, nArray);	break;
 				}
 					
+/*
 				#if DEBUG_FLAG
 				//if(debug) { 
 					cudaPrintfDisplay (stdout, true);   cudaPrintfEnd (); 
 				//}
 				#endif
+*/
 				
 				error = cudaGetLastError();
 			  	if(error != cudaSuccess)
@@ -502,11 +524,13 @@ void reduceSmallNArray(size_t  n,
 				s = blocks;
 				iterDebug++;
             }
+/*
 			#if DEBUG_FLAG
 			//if(debug) { 
 				printf("\n passato il while... s = %d",s); printf("\niterazioni: %d",iterDebug);
 			//}
 			#endif
+*/
 			//if(iterDebug!=0) { printf("\n ci sono iterazioni");exit(-1);}
             /*
 			if (s > 1)
@@ -578,6 +602,7 @@ double* marginalizationSmallN(size_t size, size_t nArray, double *h_idata, size_
     //int maxThreads = 512;				// number of threads per block
     int cpuFinalThreshold = 1;				// da testare
     /* STAMPE */
+/*
 #if DEBUG_FLAG
 	printf("%d elements\n", size);
     printf("%d nArray\n", nArray);
@@ -585,6 +610,7 @@ double* marginalizationSmallN(size_t size, size_t nArray, double *h_idata, size_
 	printf("%d dimCriccaDaSommare\n", dimInput);
 	printf("%d dimSeparatore\n", dimRisultato);
 #endif
+*/
     //printf("%d maxThreads\n", maxThreads);
 	/* */
 
@@ -631,19 +657,23 @@ double* marginalizationSmallN(size_t size, size_t nArray, double *h_idata, size_
 					getNumBlocksAndThreadsSmallN(size, maxThreads, numBlocks, numThreads);
 
 					if (numBlocks == 1) { cpuFinalThreshold = 1; 
+/*
 						#if DEBUG_FLAG
 						//if(debug) 
 							printf("cpuFinalThreshold = 1\n");
 						#endif
+*/
 					}
         
 			        // allocate mem for the result on host side
 					size_t bytesOutput = sizeof(double)*nArray*numBlocks;
 			        //double *h_odata = (double *) malloc(bytesOutput);
+/*
 					#if DEBUG_FLAG
 					//if(debug) 
 						printf("%d blocks\n", numBlocks);
 					#endif
+*/
         
 					// allocate device memory and data
 			        double *d_idata = NULL;
@@ -659,31 +689,36 @@ double* marginalizationSmallN(size_t size, size_t nArray, double *h_idata, size_
 				    //printf("\nbytesOutput=%d\n",bytesOutput);
 			        //cudaMemcpy(d_odata, h_idata, bytesOutput, cudaMemcpyHostToDevice);			//NON SERVE!!!
 
+#if (TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA)
 					// per i test si può inserire un warm-up
 					cudaEvent_t start, stop;
 					cudaEventCreate(&start); // vedi http://docs.nvidia.com/cuda/cuda-c-best-practices-guide/
 					cudaEventCreate(&stop);	
 					cudaEventRecord( start, 0 );
-		
+#endif
 			        //double *gpu_result;																		// ALE è lungo nArray
 
-
+/*
 #if (TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA)
 	std::chrono::system_clock::time_point begin = std::chrono::high_resolution_clock::now();
 #endif
+*/
 			        //gpu_result = 
 					reduceSmallNArray(size, nArray, numThreads, numBlocks, maxThreads,
 			                                        cpuFinalThreshold, d_idata, d_odata, d_iIndexData, dimRisultato);
-
+/*
 #if (TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA)
 	std::chrono::system_clock::time_point end = std::chrono::high_resolution_clock::now();
 	*elapsedSum += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
 #endif
-
+*/
+#if (TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA)
 					cudaEventRecord( stop, 0 );
 					cudaEventSynchronize( stop );
 					cudaEventElapsedTime( &time, start, stop );
-					total+=time;										// ALE 
+					//total+=time;										// ALE 
+					*elapsedSum += time * 1000000;
+#endif
 					//double prec=gpu_result[0];
 					/*for(int i=0; i < nArray ; i++)	{
 						if(prec != gpu_result[i]) printf("\nERRORE:  gpu_result[%d-1]=%f != gpu_result[%d]=%f\n",i,prec,i, gpu_result[i]);
@@ -692,8 +727,10 @@ double* marginalizationSmallN(size_t size, size_t nArray, double *h_idata, size_
 					}*/
 					//assert (m==prec);
 					//if(prec != m) printf("\nERRORE:  m=%d != prec=%f\n",m,prec);
+#if (TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA)
 					cudaEventDestroy( start );													//ALE
-					cudaEventDestroy( stop );													//ALE
+					cudaEventDestroy( stop );
+#endif													//ALE
 		
 		
 			        //printf("\nGPU result       \t= \t %f\n", prec);
@@ -780,11 +817,13 @@ reduce2StepBigN(double *g_idata, double *g_odata, size_t n, size_t halfN, size_t
         //mySum += g_idata[i+blockDim.x];
 		//double mySum = g_idata[i] + g_idata[i+blockDim.x];
 		g_odata[i] = g_idata[i] + g_idata[i+halfN];
+/*
 		#if DEBUG_FLAG
 			if(//debug && 
 				(threadIdx.x == 0 || threadIdx.x == (blockDim.x-1))&&(blockIdx.x==0 || blockIdx.x==gridDim.x-1)) 
 				cuPrintf ("CUPRINTF 4- g_odata[%d*%d + %d] = %f \n", blockIdx.x, nArray, threadIdx.x, g_odata[threadIdx.x]);
 		#endif
+*/
 	}
 }
 
@@ -825,6 +864,7 @@ void reduceBigNArray(size_t  n,
 		for (int i=0; i < dimRisultato; i++) gpu_result[i]=0;		
 		//
 		*/
+/*
 		#if DEBUG_FLAG
 		//if(debug) { 
 			cudaPrintfInit();
@@ -832,14 +872,17 @@ void reduceBigNArray(size_t  n,
 				printf("\nSTART esecuzione:\n %d dimGrid\n %d dimBlock\n",dimGrid.x, dimBlock.x ); 
 		//}
 		#endif
+*/
 
 		reduce1StepBigN<<< dimGrid, dimBlock>>>(d_idata, d_odata, d_iIndexData, n, n>>1, nArray);
 		
+/*
 		#if DEBUG_FLAG
 		//if(debug) { 
 			cudaPrintfDisplay (stdout, true); cudaPrintfEnd (); 
 		//}
 		#endif
+*/
 		/*
 		unsigned int dimResultCHECK = (n>>1) * sizeof(double);
 		double *gpu_resultCHECK = (double *) malloc(dimResultCHECK);
@@ -874,6 +917,7 @@ void reduceBigNArray(size_t  n,
 			dim3 dimBlock(threads, 1, 1);
 			dim3 dimGrid(blocks, 1, 1);
 			
+/*
 			#if DEBUG_FLAG
 			//if(debug) 
 				printf("\n%d elementi:\n %d dimGrid\n %d dimBlock\n",nElements,dimGrid.x, dimBlock.x ); 
@@ -885,14 +929,17 @@ void reduceBigNArray(size_t  n,
 				printf("\n%d esecuzione:\n %d dimGrid\n %d dimBlock\n",nElements,dimGrid.x, dimBlock.x ); 
 			//}
 			#endif
+*/
 
 			reduce2StepBigN<<< dimGrid, dimBlock>>>(d_odata, d_odata, nElements, nElements>>1, nArray);
 			
+/*
 			#if DEBUG_FLAG
 			//if(debug) { 
 				cudaPrintfDisplay (stdout, true); cudaPrintfEnd (); 
 			//}
 			#endif
+*/
 			
         }
         /*
@@ -995,11 +1042,11 @@ double* marginalizationBigN(size_t size, size_t nArray, double *h_idata, size_t 
         // allocate mem for the result on host side
 		size_t bytesOutput = sizeof(double)*(size/2);											// ALE
         double *h_odata = (double *) malloc(bytesOutput);
-
-#if DEBUGFLAG
+/*
+#if DEBUG_FLAG
         if(debug) printf("%d blocks\n", numBlocks);
 #endif
-       
+*/   
 		// allocate device memory and data
         double *d_idata = NULL;
 		size_t *d_iIndexData = NULL;
@@ -1031,7 +1078,7 @@ double* marginalizationBigN(size_t size, size_t nArray, double *h_idata, size_t 
 	    //printf("\nbytesOutput=%d\n",bytesOutput);
         //cudaMemcpy(d_odata, h_idata, bytesOutput, cudaMemcpyHostToDevice);			//NON SERVE!!!
 
-		#if TIMER_CUDA
+		#if (TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA)
 		// per i test si può inserire un warm-up
 			cudaEvent_t start, stop;
 			float time;	// GPU TIME
@@ -1041,31 +1088,35 @@ double* marginalizationBigN(size_t size, size_t nArray, double *h_idata, size_t 
 		
 			cudaEventRecord( start, 0 );
 		#endif
+
 	        //double *gpu_result;																		// ALE è lungo nArray
 			
 			//ALE 2014-02-23
 			/*
 	        gpu_result = 
 			*/
-
+/*
 #if TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA
 	std::chrono::system_clock::time_point begin = std::chrono::high_resolution_clock::now();
 #endif
-
+*/
 			reduceBigNArray(size, nArray, numThreads, numBlocks, maxThreads,
 										h_odata, d_idata, d_odata, d_iIndexData, dimRisultato);
-
+/*
 #if TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA
 	std::chrono::system_clock::time_point end = std::chrono::high_resolution_clock::now();
 	*elapsedSum += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
 #endif
+*/
 
-	#if TIMER_CUDA
+	#if (TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA)
 			cudaEventRecord( stop, 0 );
 			cudaEventSynchronize( stop );
 			cudaEventElapsedTime( &time, start, stop );
-			total+=time; // ALE
+			//total+=time; // ALE
+			*elapsedSum += time * 1000000;
 	#endif
+
 			//printf ("\nTime for the kernel: %f ms\n", time);											// ALE 
 			//double prec=gpu_result[0];
 			/*for(int i=0; i < nArray ; i++)	{
@@ -1074,10 +1125,12 @@ double* marginalizationBigN(size_t size, size_t nArray, double *h_idata, size_t 
 			//    printf("\nGPU result = %f\n", gpu_result[i]);
 			}*/
 //			assert (m==prec);
-			#if TIMER_CUDA
+
+			#if (TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA)
 			cudaEventDestroy( start );													// ALE
 			cudaEventDestroy( stop );													//ALE
 			#endif
+
 			
 			
 	        //printf("\nGPU result       \t= \t %f\n", prec);
@@ -1289,43 +1342,51 @@ void scattering(size_t size,  // dimTabCricca POW2
 		// griglia di un'unica dimensione
 		dim3 dimGridDiv(numBlocks, 1, 1);
 
+/*
 		#if DEBUG_FLAG
 		//if(debug) { 
 			cudaPrintfInit(); 
 			printf("\n DIV:\n %d dimGrid\n %d dimBlock\n",dimGridDiv.x, dimBlockDiv.x ); 
 		//}
 		#endif
+*/
 
-		#if TIMER_CUDA
+
+		#if TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA
 		cudaEvent_t start, stop;
 		cudaEventCreate(&start); // vedi http://docs.nvidia.com/cuda/cuda-c-best-practices-guide/
 		cudaEventCreate(&stop);	
 		cudaEventRecord( start, 0 );
 		#endif
 
+/*
 #if TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA
 	std::chrono::system_clock::time_point begin = std::chrono::high_resolution_clock::now();
 #endif
-
+*/
 		kernelDivVector<<< dimGridDiv, dimBlockDiv >>>(d_iVector1Data, d_iVector2Data, n);	
-
+/*
 #if TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA
 	std::chrono::system_clock::time_point end = std::chrono::high_resolution_clock::now();
 	*elapsedDivMul += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
 #endif
+*/
 
-		#if TIMER_CUDA
+		#if TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA
 		cudaEventRecord( stop, 0 );
 		cudaEventSynchronize( stop );
 		cudaEventElapsedTime( &timeDiv, start, stop );
+		*elapsedDivMul += timeDiv * 1000000;
 		//totalDiv+=timeDiv;
 		#endif
 
+/*
 		#if DEBUG_FLAG
 		//if(debug) {
 			cudaPrintfDisplay (stdout, true); cudaPrintfEnd (); 
 		//}
 		#endif
+*/
 
 		error = cudaGetLastError();
 		if(error != cudaSuccess)
@@ -1376,33 +1437,39 @@ void scattering(size_t size,  // dimTabCricca POW2
 		// (equivalente) a dim3 dimGrid = dim3(numBlocks, 1, 1);
 		// griglia di un'unica dimensione
 		dim3 dimGridMult(numBlocks, 1, 1);
+/*
 		#if DEBUG_FLAG
 		//if(debug) { 
 			cudaPrintfInit(); 
 			printf("\n MULT:\n %d dimGrid\n %d dimBlock\n",dimGridMult.x, dimBlockMult.x ); 
 		//}
 		#endif
+*/
 
-		#if TIMER_CUDA
+
+		#if TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA
 		cudaEventRecord( start, 0 );
 		#endif
 
+/*
 #if TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA
 	begin = std::chrono::high_resolution_clock::now();
 #endif
+*/
 		kernelMultMatrixVector<<< dimGridMult, dimBlockMult >>>(d_MatrixData, d_MatrixIndex, d_iVector1Data, n, size);
-
+/*
 #if TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA
 	end = std::chrono::high_resolution_clock::now();
 	*elapsedDivMul += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
 #endif
-
-
+*/
+/*
 		#if DEBUG_FLAG
 		//if(debug) { 
 			cudaPrintfDisplay (stdout, true); cudaPrintfEnd (); 
 		//}
 		#endif
+*/
 		// risultato atteso moltiplicazione: 4			// ALE
 
 		error = cudaGetLastError();
@@ -1413,16 +1480,10 @@ void scattering(size_t size,  // dimTabCricca POW2
 			exit(-1);
 		}
 
-		#if TIMER_CUDA
-		float timeMult = 0;
-		cudaEventRecord( stop, 0 );
-		cudaEventSynchronize( stop );
-		cudaEventElapsedTime( &timeMult, start, stop );
-		totalMult+=timeMult;
-		#endif
-		
+// se c'è viene incluso nel conteggio del tempo
+#if NORMALIZZA_AD_OGNI_PASSO		
 		// FASE DI NORMALIZZAZIONE
-		/* PROVA SENZA NORMALIZZAZIONE * /
+		/* PROVA SENZA NORMALIZZAZIONE */
 		cublasHandle_t handle;
 		cublasCreate(&handle);
 		double sum; // TODO dopo metto d_sum = cudaMalloc(...)
@@ -1435,8 +1496,19 @@ void scattering(size_t size,  // dimTabCricca POW2
 			//getchar();
 		}
 		cublasDestroy(handle);
-		/ * */
+		/* */
 		//
+#endif
+
+
+		#if TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA
+		float timeMult = 0;
+		cudaEventRecord( stop, 0 );
+		cudaEventSynchronize( stop );
+		cudaEventElapsedTime( &timeMult, start, stop );
+		//totalMult+=timeMult;
+		*elapsedDivMul += timeMult * 1000000;
+		#endif
 
 		// copy final matrix from device to host
 		cudaMemcpy(h_MatrixData, d_MatrixData, bytesDataMatrix, cudaMemcpyDeviceToHost);
@@ -1460,13 +1532,14 @@ void scattering(size_t size,  // dimTabCricca POW2
 		*/
 
 		// 64000/8 = 8000 elementi nella constant memory
-
-		#if TIMER_CUDA
+		#if TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA
 		cudaEventDestroy( start );													//ALE
 		cudaEventDestroy( stop );													//ALE
-
-		totalMult+=timeMult;	
 		#endif
+
+		//totalMult+=timeMult;	
+
+
 
 		//free(h_iVector1Data);											//ALE
 		//free(h_iVector2Data);

@@ -1,7 +1,7 @@
 all: beliefpropagationcpp
 
 beliefpropagationcpp: BeliefPropagationCpp/*.cpp BeliefPropagationCpp/huginParser/*.cc margAndScatt.o
-	$(CXX) $(CXXFLAGS) -std=c++0x -o BeliefPropagation -I. BeliefPropagationCpp/*.cpp BeliefPropagationCpp/huginParser/*.cc margAndScatt.o -lcudart -lcublas;
+	$(CXX) $(CXXFLAGS) -std=c++11 -o BeliefPropagation -I. BeliefPropagationCpp/*.cpp BeliefPropagationCpp/huginParser/*.cc margAndScatt.o -lcudart -lcublas;
 	rm margAndScatt.o
 
 BeliefPropagationCpp/huginParser/*.cc: ./BeliefPropagationCpp/huginParser/HuginGrammar.jj

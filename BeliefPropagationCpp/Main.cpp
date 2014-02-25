@@ -84,7 +84,7 @@
 
 int main(int argc, char* argv[]) 
 {
-	/* */
+	/* * /
 	argc = 3;
 	char* argv2[3]; 
 	argv2[0] = argv[0];
@@ -93,7 +93,7 @@ int main(int argc, char* argv[])
 	//argv2[1] = "..\\RetiEsempio\\powerplant.net";
 	//argv2[2] = "..\\RetiEsempio\\powerplant.num";
 	argv = argv2;
-	/*  */
+	/ *  */
 
 	std::string sss;
 	
