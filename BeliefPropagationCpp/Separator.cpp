@@ -322,21 +322,24 @@ void Separator::updatePotentials(JTClique* cli, JTClique* cliScrivo, long long* 
 
 	//std::cout << "sto eseguendo il metodo con la index" << std::endl;
 	
-
+#if TIMER_DETTAGLIATO
 	// rilevamento tempo occupato dalle somme
 	std::chrono::system_clock::time_point begin;
 	std::chrono::system_clock::time_point end;
+#endif
 
 	std::size_t numeroElemDaSommare = cli->getPsi()->getTableSize() / dimFiStarTable;
 	std::size_t numeroElemDaAggiornareConUgualeValore = cliScrivo->getPsi()->getTableSize() / dimFiStarTable;
 
-	double sommaTabella = 0;
+	double sommaTabella = 0.0;
+	double sommaTabellaCri = 0.0;
 	for (std::size_t i = 0; i < dimFiStarTable; i++) {
 		//std::cout << " i = " << i;
-
+#if TIMER_DETTAGLIATO
 		// rilevamento tempo occupato dalle somme!!!
 		begin = std::chrono::high_resolution_clock::now();
 		//
+#endif
 
 		// calcolo il valore di fiStar[i]
 		for (std::size_t j = 0; j < numeroElemDaSommare; j++) {
@@ -347,18 +350,22 @@ void Separator::updatePotentials(JTClique* cli, JTClique* cliScrivo, long long* 
 			
 		}
 
+#if TIMER_DETTAGLIATO
 		// rilevamento tempo occupato dalle somme!!!
 		end = std::chrono::high_resolution_clock::now();
 		*elapsedSum += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
 		//
+#endif
 
 		sommaTabella += fiStarTable[i];
 
 		double divisioneTraFi;
 
+#if TIMER_DETTAGLIATO
 		// rilevamento tempo occupato dalla divisione e moltiplicazione!!!
 		begin = std::chrono::high_resolution_clock::now();
 		//
+#endif
 
 		// calcolo solo se la divisione 
 		if (fi->getTable()[i] > ZERO_DIVISIONE) {
@@ -381,13 +388,23 @@ void Separator::updatePotentials(JTClique* cli, JTClique* cliScrivo, long long* 
 				//std::cout << *indexingTableScrivo[i * numeroElemDaAggiornareConUgualeValore + j];
 				//std::string sss;
 				//std::cin >> sss;
+
+				// SUMT
+				sommaTabellaCri += *indexingTableScrivo[i * numeroElemDaAggiornareConUgualeValore + j];
+			}
+		} else {
+			for (std::size_t j = 0; j < numeroElemDaAggiornareConUgualeValore; j++) {
+				// SUMT
+				sommaTabellaCri += *indexingTableScrivo[i * numeroElemDaAggiornareConUgualeValore + j];
 			}
 		}
 
+#if TIMER_DETTAGLIATO
 		// rilevamento tempo occupato dalla divisione e moltiplicazione!!!
 		end = std::chrono::high_resolution_clock::now();
 		*elapsedDivMul += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
 		//
+#endif
 
 	}
 
@@ -396,6 +413,10 @@ void Separator::updatePotentials(JTClique* cli, JTClique* cliScrivo, long long* 
 	delete fi->getTable(); // free(fi->getTable());
 	fi->setTable(fiStarTable);
 	fi->setSommaTabella(sommaTabella);
+
+	//SUMT
+	cliScrivo->getPsi()->setSommaTabella(sommaTabellaCri);
+
 	//return new Probability(vars, fiStarTable, dimFiStarTable, sommaTabella);
 
 }
@@ -656,6 +677,11 @@ void Separator::updatePotentialsCUDA(JTClique* cli, JTClique* cliScrivo, long lo
 	*elapsedDivMul += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
 #endif
 	
+
+	// setto i nuovi valori delle tabelle che ho modificato
+	cliScrivo->getPsi()->setSommaTabella(1.0); // perché faccio la normalizzazione direttamente nel kernel
+	fi->setSommaTabella(cli->getPsi()->getSommaTabella());
+
 	/* TUTTO COMPLETO 
 	margAndScatt(sizeTableLeggoPow2, dimFiStarTablePow2, cli->getPsi()->getTable(), indexingTableLeggo, sizeTableLeggo, dimFiStarTable,
 					sizeTableScrivoPow2, fi->getTable(), tableCliScrivo, indexingTableScrivo, sizeTableScrivo
@@ -682,6 +708,193 @@ void Separator::updatePotentialsCUDA(JTClique* cli, JTClique* cliScrivo, long lo
 	
 	//return new Probability(vars, fiStarTable, dimFiStarTable, sommaTabella);
 	//return new Probability(vars, fiStarTable, dimFiStarTable, cli->getPsi()->getSommaTabella());
+
+}
+
+void Separator::updatePotentialsCUDAonCPU(JTClique* cli, JTClique* cliScrivo, long long* elapsedSum, long long* elapsedDivMul)
+{
+	// OCCHIO: le tabelle degli indici adesso hanno anche i valori SIZE_MAX!!!!
+	size_t* indexingTableLeggo;
+	size_t* indexingTableScrivo;
+	if (cli == soggetto) {
+		indexingTableLeggo = indexingSoggettoCUDA;
+		indexingTableScrivo = indexingOggettoCUDA;
+	} else {
+		// sicuramente è dell'oggetto, non ammetto che uno sbagli a passarmi la cli!!!
+		indexingTableLeggo = indexingOggettoCUDA;
+		indexingTableScrivo = indexingSoggettoCUDA;
+	}
+
+	std::size_t dimFiStarTable = fi->getTableSize();
+
+	double* fiStarTable = new double[dimFiStarTable];
+	//for (std::size_t i = 0; i < dimFiStarTable; i++) {
+	//	fiStarTable[i] = 0.0;
+	//}
+
+	//std::cout << "sto eseguendo il metodo con la index" << std::endl;
+	double* tableCliScrivo = cliScrivo->getPsi()->getTable();
+	double* tableCliLeggo = cli->getPsi()->getTable();
+	
+#if TIMER_DETTAGLIATO //&& TIMER_CON_TRASFERIMENTI_MEMORIA
+	// rilevamento tempo occupato dalle somme
+	std::chrono::system_clock::time_point begin;
+	std::chrono::system_clock::time_point end;
+#endif
+
+	std::size_t numeroElemDaSommare = cli->getPsi()->getTableSize() / dimFiStarTable;
+	std::size_t numeroElemDaAggiornareConUgualeValore = cliScrivo->getPsi()->getTableSize() / dimFiStarTable;
+
+
+
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// provo a costruire la tabella già pronta con m e N potenze di 2
+	std::size_t numeroElemDaSommarePow2 = pow2roundup(numeroElemDaSommare);
+	std::size_t dimFiStarTablePow2 = pow2roundup(dimFiStarTable); // nArrayPow2 
+	std::size_t sizeTableLeggoPow2 = numeroElemDaSommarePow2 * dimFiStarTablePow2;
+	// provo a costruire la tabella già pronta con m e N potenze di 2
+	std::size_t numeroElemDaAggiornareConUgualeValorePow2 = pow2roundup(numeroElemDaAggiornareConUgualeValore);
+	std::size_t sizeTableScrivoPow2 = numeroElemDaAggiornareConUgualeValorePow2 * dimFiStarTablePow2;
+	//
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+	double sommaTabella = 0.0;
+	double sommaTabellaCri = 0.0;
+	for (std::size_t i = 0; i < dimFiStarTable; i++) {
+		//std::cout << " i = " << i;
+
+		fiStarTable[i] = 0.0;
+
+#if TIMER_DETTAGLIATO //&& TIMER_CON_TRASFERIMENTI_MEMORIA
+		// rilevamento tempo occupato dalle somme!!!
+		begin = std::chrono::high_resolution_clock::now();
+		//
+#endif
+
+		// calcolo il valore di fiStar[i]
+		for (std::size_t j = 0; j < numeroElemDaSommare; j++) {
+#if SUM_ON_ROW
+				//if (Config::indexingSumOnRow) {
+					// [0][1][2] * [0000][1111][2222]
+			fiStarTable[i] += tableCliLeggo[indexingTableLeggo[i * numeroElemDaSommarePow2 + j]];
+#else
+				//} else {
+					// [0][1][2] * [012][012][012][012]
+			fiStarTable[i] += tableCliLeggo[indexingTableLeggo[i + dimFiStarTablePow2 * j]];
+				//}
+#endif
+			//std::cout << " j = " << j << std::endl;
+			//std::cout << fiStarTable[i];
+			//fiStarTable[i] += *indexingTableLeggo[i * numeroElemDaSommare + j];
+			//std::cout << " --> " << fiStarTable[i] << std::endl;
+			
+		}
+
+#if TIMER_DETTAGLIATO //&& TIMER_CON_TRASFERIMENTI_MEMORIA
+		// rilevamento tempo occupato dalle somme!!!
+		end = std::chrono::high_resolution_clock::now();
+		*elapsedSum += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
+		//
+#endif
+
+		sommaTabella += fiStarTable[i];
+
+		double divisioneTraFi;
+
+#if TIMER_DETTAGLIATO //&& TIMER_CON_TRASFERIMENTI_MEMORIA
+		// rilevamento tempo occupato dalla divisione e moltiplicazione!!!
+		begin = std::chrono::high_resolution_clock::now();
+		//
+#endif
+
+		// calcolo solo se la divisione 
+		if (fi->getTable()[i] > ZERO_DIVISIONE) {
+			// calcolo quanto vale fiStar[i]/fi[i]
+			divisioneTraFi = fiStarTable[i] / fi->getTable()[i];
+		} else
+			divisioneTraFi = 0;
+
+		//std::cout << "fiStar[" << i << "]/fi[" << i << "] = " << divisioneTraFi << std::endl;
+
+		// se devo moltiplicare per 1 allora mi risparmio il giro
+		if (divisioneTraFi != 1) {
+
+			// provo a sbagliare per vedere se il confronto lo rileva
+			//divisioneTraFi = 0.5;
+
+			for (std::size_t j = 0; j < numeroElemDaAggiornareConUgualeValore; j++) {
+#if !USE_CUDA && SUM_ON_ROW
+				// NON VIENE MAI USATO!!!
+				//if (Config::indexingSumOnRow) {
+					// [0][1][2] * [0000][1111][2222]
+					/*
+					tableCliScrivo[indexingTableScrivo[i * numeroElemDaAggiornareConUgualeValore + j]] *= divisioneTraFi;
+					*/
+					///*
+					// diventa...
+					tableCliScrivo[indexingTableScrivo[i * numeroElemDaAggiornareConUgualeValorePow2 + j]] *= divisioneTraFi;
+
+					// SUMT
+					sommaTabellaCri += tableCliScrivo[indexingTableScrivo[i * numeroElemDaAggiornareConUgualeValorePow2 + j]];
+
+
+					//std::cout << sommaTabellaCri << std::endl;
+					//*/
+					//
+#else
+				//} else {
+					// [0][1][2] * [012][012][012][012]
+					/*
+					tableCliScrivo[indexingTableScrivo[i + dimFiStarTable * j]] *= divisioneTraFi;
+					*/
+					///*
+					// diventa...
+					tableCliScrivo[indexingTableScrivo[i + dimFiStarTablePow2 * j]] *= divisioneTraFi;
+
+					// SUMT
+					sommaTabellaCri += tableCliScrivo[indexingTableScrivo[i + dimFiStarTablePow2 * j]];
+
+
+					//std::cout << sommaTabellaCri << std::endl;
+					//*/
+					//
+				//}
+#endif
+				
+
+			}
+		} else {
+			for (std::size_t j = 0; j < numeroElemDaAggiornareConUgualeValore; j++) {
+#if SUM_ON_ROW
+					sommaTabellaCri += tableCliScrivo[indexingTableScrivo[i * numeroElemDaAggiornareConUgualeValorePow2 + j]];
+#else
+					// SUMT
+					sommaTabellaCri += tableCliScrivo[indexingTableScrivo[i + dimFiStarTablePow2 * j]];
+					//std::cout << sommaTabellaCri << std::endl;
+#endif
+			}
+		}
+
+#if TIMER_DETTAGLIATO //&& TIMER_CON_TRASFERIMENTI_MEMORIA
+		// rilevamento tempo occupato dalla divisione e moltiplicazione!!!
+		end = std::chrono::high_resolution_clock::now();
+		*elapsedDivMul += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
+		//
+#endif
+
+	}
+
+	//std::string sss;
+	//std::cin >> sss;
+	delete fi->getTable(); // free(fi->getTable());
+	fi->setTable(fiStarTable);
+	fi->setSommaTabella(sommaTabella);
+
+	// SUMT
+	cliScrivo->getPsi()->setSommaTabella(sommaTabellaCri);
+
+	//return new Probability(vars, fiStarTable, dimFiStarTable, sommaTabella);
 
 }
 

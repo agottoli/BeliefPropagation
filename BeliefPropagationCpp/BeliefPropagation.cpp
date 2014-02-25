@@ -81,11 +81,11 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 
 	Probability* fiSeparatore = second->getFi();
 	
-	Probability* fiSeparatoreStar;
+	//Probability* fiSeparatoreStar;
 	
 #if !USE_INDEXING_TABLE && !USE_CUDA
 //	if (!Config::useIndexingTable) {
-		fiSeparatoreStar = first->getPsi()->sumOnNotPresent(fiSeparatore);
+		Probability* fiSeparatoreStar = first->getPsi()->sumOnNotPresent(fiSeparatore);
 		node->getPsi()->aggiornaOrdinato(fiSeparatoreStar, fiSeparatore);
 
 		// aggiorno la fi
@@ -127,7 +127,17 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 #else
 		//} else {
 			//fiSeparatoreStar = 
+		// calcolo con la GPU solo se le dimenzioni delle tabelle sono significative
+		if (first->getPsi()->getTableSize() > LIMITE_CRICCHE_GPU && node->getPsi()->getTableSize() > LIMITE_CRICCHE_GPU)
 			second->updatePotentialsCUDA(first, node, elapsedSum, elapsedDivMul);
+		else {
+			std::cout << "resto su CPU!!!!" << std::endl;
+			second->updatePotentialsCUDAonCPU(first, node, elapsedSum, elapsedDivMul);
+#if NORMALIZZA_AD_OGNI_PASSO
+			if (!node->getPsi()->isNormalized())
+				node->getPsi()->normalizza();
+#endif
+		}
 
 			//if (!node->getPsi()->isNormalized())
 			//	node->getPsi()->normalizza();

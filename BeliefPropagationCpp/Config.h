@@ -54,11 +54,11 @@ namespace Config {
 
 #ifndef NORMALIZZA_AD_OGNI_PASSO
 // indica se normalizzo ogni tabella oppure no dopo averla aggiornata
-#define NORMALIZZA_AD_OGNI_PASSO TRUE //FALSE
+#define NORMALIZZA_AD_OGNI_PASSO TRUE //FALSE // sulla GPU lo fa in ogni caso perché non costa nulla farlo con le cublas!!!
 #endif
 
 #ifndef CONTROLLA_UPDATE
-#define CONTROLLA_UPDATE FALSE
+#define CONTROLLA_UPDATE TRUE //FALSE
 #endif
 
 #ifndef PRINT_EXECUTION_BP
@@ -77,6 +77,10 @@ namespace Config {
 
 #ifndef LIMITE_SEPARATORE_MARGINALIZZAZIONE
 #define LIMITE_SEPARATORE_MARGINALIZZAZIONE 256
+#endif
+
+#ifndef LIMITE_CRICCHE_GPU
+#define LIMITE_CRICCHE_GPU 100
 #endif
 
 #ifndef PRINT_JT_STATISTICS
