@@ -127,9 +127,12 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 #else
 		//} else {
 			//fiSeparatoreStar = 
+#if IBRIDO_GPU_CPU
 		// calcolo con la GPU solo se le dimenzioni delle tabelle sono significative
 		if (first->getPsi()->getTableSize() > LIMITE_CRICCHE_GPU && node->getPsi()->getTableSize() > LIMITE_CRICCHE_GPU)
+#endif
 			second->updatePotentialsCUDA(first, node, elapsedSum, elapsedDivMul);
+#if IBRIDO_GPU_CPU
 		else {
 			std::cout << "resto su CPU!!!!" << std::endl;
 			second->updatePotentialsCUDAonCPU(first, node, elapsedSum, elapsedDivMul);
@@ -138,6 +141,7 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 				node->getPsi()->normalizza();
 #endif
 		}
+#endif
 
 			//if (!node->getPsi()->isNormalized())
 			//	node->getPsi()->normalizza();

@@ -41,7 +41,7 @@ namespace Config {
 
 /////////////////////////////////////////////////////////////////
 #ifndef USE_CUDA
-#define USE_CUDA FALSE //TRUE
+#define USE_CUDA TRUE
 #endif
 /////////////////////////////////////////////////////////////////
 
@@ -71,12 +71,16 @@ namespace Config {
 #endif
 
 #ifndef TIMER_CON_TRASFERIMENTI_MEMORIA
-#define TIMER_CON_TRASFERIMENTI_MEMORIA TRUE
+#define TIMER_CON_TRASFERIMENTI_MEMORIA FALSE //TRUE
 #endif
 /////////////////////////////////////////////////////////////////
 
 #ifndef LIMITE_SEPARATORE_MARGINALIZZAZIONE
 #define LIMITE_SEPARATORE_MARGINALIZZAZIONE 256
+#endif
+
+#ifndef IBRIDO_GPU_CPU
+#define IBRIDO_GPU_CPU FALSE //TRUE
 #endif
 
 #ifndef LIMITE_CRICCHE_GPU
