@@ -66,12 +66,22 @@ namespace Config {
 #endif
 
 /////////////////////////////////////////////////////////////////
-#ifndef TIMER_DETTAGLIATO
+#ifndef TIMER_DETTAGLIATO 
 #define TIMER_DETTAGLIATO TRUE
+// se mpostato a TRUE   -> attiva la possibilità di misurare le varie fasi dell'algoritmo
+// se impostato a FALSE -> misura tutto il metodo della belief propagation dall'inizio alla fine contando anche le chiamate ricorsive dell'esplorazione dell'albero
 #endif
 
-#ifndef TIMER_CON_TRASFERIMENTI_MEMORIA
+#ifndef TIMER_MARG_SCATT_DIVISI
+#define TIMER_MARG_SCATT_DIVISI FALSE 
+// se mpostato a TRUE   -> prende i tempi della fase di marginalizzazione e scattering separatamente 
+// se impostato a FALSE -> prende i tempi della fase di update delle tabelle tutto insieme
+#endif
+
+#ifndef TIMER_CON_TRASFERIMENTI_MEMORIA // influisce solo sui tempi di cuda e con TIMER_MARG_SCATT_DIVISI = TRUE
 #define TIMER_CON_TRASFERIMENTI_MEMORIA FALSE //TRUE
+// se mpostato a TRUE   -> prende i tempi della fase di marginalizzazione e scattering COMPRESO IL TEMPO PER LE CUDAMEMCPY
+// se impostato a FALSE -> prende i tempi della fase di marginalizzazione e scattering SOLO DEI KERNEL
 #endif
 /////////////////////////////////////////////////////////////////
 

@@ -694,7 +694,7 @@ double* marginalizationSmallN(size_t size, size_t nArray, double *h_idata, size_
 				    //printf("\nbytesOutput=%d\n",bytesOutput);
 			        //cudaMemcpy(d_odata, h_idata, bytesOutput, cudaMemcpyHostToDevice);			//NON SERVE!!!
 
-#if (TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA)
+#if (TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI && !TIMER_CON_TRASFERIMENTI_MEMORIA)
 					// per i test si può inserire un warm-up
 					cudaEvent_t start, stop;
 					cudaEventCreate(&start); // vedi http://docs.nvidia.com/cuda/cuda-c-best-practices-guide/
@@ -704,7 +704,7 @@ double* marginalizationSmallN(size_t size, size_t nArray, double *h_idata, size_
 			        //double *gpu_result;																		// ALE è lungo nArray
 
 /*
-#if (TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA)
+#if (TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI && !TIMER_CON_TRASFERIMENTI_MEMORIA)
 	std::chrono::system_clock::time_point begin = std::chrono::high_resolution_clock::now();
 #endif
 */
@@ -712,12 +712,12 @@ double* marginalizationSmallN(size_t size, size_t nArray, double *h_idata, size_
 					reduceSmallNArray(size, nArray, numThreads, numBlocks, maxThreads,
 			                                        cpuFinalThreshold, d_idata, d_odata, d_iIndexData, dimRisultato, dimInput);
 /*
-#if (TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA)
+#if (TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI && !TIMER_CON_TRASFERIMENTI_MEMORIA)
 	std::chrono::system_clock::time_point end = std::chrono::high_resolution_clock::now();
 	*elapsedSum += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
 #endif
 */
-#if (TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA)
+#if (TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI && !TIMER_CON_TRASFERIMENTI_MEMORIA)
 					cudaEventRecord( stop, 0 );
 					cudaEventSynchronize( stop );
 					cudaEventElapsedTime( &time, start, stop );
@@ -732,7 +732,7 @@ double* marginalizationSmallN(size_t size, size_t nArray, double *h_idata, size_
 					}*/
 					//assert (m==prec);
 					//if(prec != m) printf("\nERRORE:  m=%d != prec=%f\n",m,prec);
-#if (TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA)
+#if (TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI && !TIMER_CON_TRASFERIMENTI_MEMORIA)
 					cudaEventDestroy( start );													//ALE
 					cudaEventDestroy( stop );
 #endif													//ALE
@@ -1087,7 +1087,7 @@ double* marginalizationBigN(size_t size, size_t nArray, double *h_idata, size_t 
 	    //printf("\nbytesOutput=%d\n",bytesOutput);
         //cudaMemcpy(d_odata, h_idata, bytesOutput, cudaMemcpyHostToDevice);			//NON SERVE!!!
 
-		#if (TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA)
+		#if (TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI && !TIMER_CON_TRASFERIMENTI_MEMORIA)
 		// per i test si può inserire un warm-up
 			cudaEvent_t start, stop;
 			float time;	// GPU TIME
@@ -1105,20 +1105,20 @@ double* marginalizationBigN(size_t size, size_t nArray, double *h_idata, size_t 
 	        gpu_result = 
 			*/
 /*
-#if TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA
+#if TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI && !TIMER_CON_TRASFERIMENTI_MEMORIA
 	std::chrono::system_clock::time_point begin = std::chrono::high_resolution_clock::now();
 #endif
 */
 			reduceBigNArray(size, nArray, numThreads, numBlocks, maxThreads,
 							h_odata, d_idata, d_odata, d_iIndexData, dimRisultato, dimInput);
 /*
-#if TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA
+#if TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI && !TIMER_CON_TRASFERIMENTI_MEMORIA
 	std::chrono::system_clock::time_point end = std::chrono::high_resolution_clock::now();
 	*elapsedSum += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
 #endif
 */
 
-	#if (TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA)
+	#if (TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI && !TIMER_CON_TRASFERIMENTI_MEMORIA)
 			cudaEventRecord( stop, 0 );
 			cudaEventSynchronize( stop );
 			cudaEventElapsedTime( &time, start, stop );
@@ -1135,7 +1135,7 @@ double* marginalizationBigN(size_t size, size_t nArray, double *h_idata, size_t 
 			}*/
 //			assert (m==prec);
 
-			#if (TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA)
+			#if (TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI && !TIMER_CON_TRASFERIMENTI_MEMORIA)
 			cudaEventDestroy( start );													// ALE
 			cudaEventDestroy( stop );													//ALE
 			#endif
@@ -1362,7 +1362,7 @@ void scattering(size_t size,  // dimTabCricca POW2
 */
 
 
-		#if TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA
+		#if TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI && !TIMER_CON_TRASFERIMENTI_MEMORIA
 		cudaEvent_t start, stop;
 		cudaEventCreate(&start); // vedi http://docs.nvidia.com/cuda/cuda-c-best-practices-guide/
 		cudaEventCreate(&stop);	
@@ -1370,19 +1370,19 @@ void scattering(size_t size,  // dimTabCricca POW2
 		#endif
 
 /*
-#if TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA
+#if TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI && !TIMER_CON_TRASFERIMENTI_MEMORIA
 	std::chrono::system_clock::time_point begin = std::chrono::high_resolution_clock::now();
 #endif
 */
 		kernelDivVector<<< dimGridDiv, dimBlockDiv >>>(d_iVector1Data, d_iVector2Data, n);	
 /*
-#if TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA
+#if TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI && !TIMER_CON_TRASFERIMENTI_MEMORIA
 	std::chrono::system_clock::time_point end = std::chrono::high_resolution_clock::now();
 	*elapsedDivMul += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
 #endif
 */
 
-		#if TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA
+		#if TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI && !TIMER_CON_TRASFERIMENTI_MEMORIA
 		cudaEventRecord( stop, 0 );
 		cudaEventSynchronize( stop );
 		cudaEventElapsedTime( &timeDiv, start, stop );
@@ -1457,18 +1457,18 @@ void scattering(size_t size,  // dimTabCricca POW2
 */
 
 
-		#if TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA
+		#if TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI && !TIMER_CON_TRASFERIMENTI_MEMORIA
 		cudaEventRecord( start, 0 );
 		#endif
 
 /*
-#if TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA
+#if TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI && !TIMER_CON_TRASFERIMENTI_MEMORIA
 	begin = std::chrono::high_resolution_clock::now();
 #endif
 */
 		kernelMultMatrixVector<<< dimGridMult, dimBlockMult >>>(d_MatrixData, d_MatrixIndex, d_iVector1Data, n, size, dimCricca);
 /*
-#if TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA
+#if TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI && !TIMER_CON_TRASFERIMENTI_MEMORIA
 	end = std::chrono::high_resolution_clock::now();
 	*elapsedDivMul += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
 #endif
@@ -1511,7 +1511,7 @@ void scattering(size_t size,  // dimTabCricca POW2
 #endif
 
 
-		#if TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA
+		#if TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI && !TIMER_CON_TRASFERIMENTI_MEMORIA
 		float timeMult = 0;
 		cudaEventRecord( stop, 0 );
 		cudaEventSynchronize( stop );
@@ -1542,7 +1542,7 @@ void scattering(size_t size,  // dimTabCricca POW2
 		*/
 
 		// 64000/8 = 8000 elementi nella constant memory
-		#if TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA
+		#if TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI && !TIMER_CON_TRASFERIMENTI_MEMORIA
 		cudaEventDestroy( start );													//ALE
 		cudaEventDestroy( stop );													//ALE
 		#endif

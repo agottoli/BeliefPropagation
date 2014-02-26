@@ -82,9 +82,18 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 	Probability* fiSeparatore = second->getFi();
 	
 	//Probability* fiSeparatoreStar;
+
+#if TIMER_DETTAGLIATO && !TIMER_MARG_SCATT_DIVISI
+	std::chrono::system_clock::time_point begin;
+	std::chrono::system_clock::time_point end;
+#endif
 	
 #if !USE_INDEXING_TABLE && !USE_CUDA
 //	if (!Config::useIndexingTable) {
+
+#if TIMER_DETTAGLIATO && !TIMER_MARG_SCATT_DIVISI
+	begin = std::chrono::high_resolution_clock::now();
+#endif
 		Probability* fiSeparatoreStar = first->getPsi()->sumOnNotPresent(fiSeparatore);
 		node->getPsi()->aggiornaOrdinato(fiSeparatoreStar, fiSeparatore);
 
@@ -92,10 +101,17 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 		second->setFi(fiSeparatoreStar);
 		delete fiSeparatore;
 
-		/* PROVA SENZA NORMALIZZAZIONE * /
+#if TIMER_DETTAGLIATO && !TIMER_MARG_SCATT_DIVISI
+	end = std::chrono::high_resolution_clock::now();
+	*elapsedSum += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
+#endif
+
+#if NORMALIZZA_AD_OGNI_PASSO
+		/* PROVA SENZA NORMALIZZAZIONE */
 		if (!node->getPsi()->isNormalized())
 			node->getPsi()->normalizza();
-		/ * */
+		/* */
+#endif
 #else
 //	} else {
 #if CONTROLLA_UPDATE
@@ -110,6 +126,11 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 			copiaPsiCricca->normalizza();
 #endif
 		//
+#endif
+
+
+#if TIMER_DETTAGLIATO && !TIMER_MARG_SCATT_DIVISI
+	begin = std::chrono::high_resolution_clock::now();
 #endif
 
 #if !USE_CUDA
@@ -147,6 +168,13 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 			//	node->getPsi()->normalizza();
 //		}
 #endif
+
+#if TIMER_DETTAGLIATO && !TIMER_MARG_SCATT_DIVISI
+	end = std::chrono::high_resolution_clock::now();
+	*elapsedSum += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
+#endif
+
+
 #if CONTROLLA_UPDATE
 		// DEBUG confronta fiStar e psiStar
 		/* */
@@ -373,9 +401,11 @@ void BeliefPropagation::BP(JunctionTree* jt)
 
 	std::cout << "valori delle tabelle aggiornate.\n";
 	std::cout << "BeliefPropagation eseguito in: " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() / 1000000000.0 << ".\n";
-#if TIMER_DETTAGLIATO
-	std::cout << "di cui " << *elapsedSum / 1000000000.0 << " per eseguire le somme." << std::endl;
-	std::cout << "     e " << *elapsedDivMul / 1000000000.0 << " per eseguire le div-mul." << std::endl;
+#if TIMER_DETTAGLIATO && !TIMER_MARG_SCATT_DIVISI
+	std::cout << "di cui " << *elapsedSum / 1000000000.0 << " per eseguire la marginalizzazione." << std::endl;
+	std::cout << "     e " << *elapsedDivMul / 1000000000.0 << " per eseguire lo scattering." << std::endl;
+#elif TIMER_DETTAGLIATO
+	std::cout << "di cui " << *elapsedSum / 1000000000.0 << " per eseguire gli update." << std::endl;
 #endif
 	// STAMPA ESECUZIONE fine
 	//std::cin >> sss;
