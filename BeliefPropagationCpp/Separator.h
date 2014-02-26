@@ -58,6 +58,21 @@ public:
 	//Probability* sumOnIndexingTableOfCUDA(JTClique* cli, JTClique* cliScrivo, double* elapsedSum, double* elapsedDivMul);
 	void updatePotentialsCUDA(JTClique* cli, JTClique* cliScrivo, long long* elapsedSum, long long* elapsedDivMul);
 	void updatePotentialsCUDAonCPU(JTClique* cli, JTClique* cliScrivo, long long* elapsedSum, long long* elapsedDivMul);
+	// metodi per gestire il caso misto in cui c'è possibilità che una tabella è fatta su cpu e l'altra su gpu...
+	double* marginalizationCPU(size_t dimFiStarTable, // sarebbe sia la dimensione dell'output, sia il nostro caro nArray.
+							  size_t numeroElemDaSommare, // sarebbe il nostro caro e vecchio m
+							  double** indexingTableLeggo // la indexing table che punta agli elementi su cui fare la marginalizzazione
+							  //,Separator* sep // quello che si becca la tabella appena calcolata... // QUI!!!
+							  );
+	void scatteringCPU(size_t dimFiStarTable, // sarebbe la dimsione del separatore su cui iteriamo per leggere i valori da dividere
+				size_t numeroElemDaAggiornareConUgualeValore,
+				double** indexingTableScrivo,
+				double* fiStarTable,
+				double* fiTable,
+				JTClique* cliScrivo,
+				bool fiStarTableOnCPU
+				);
+	//
 
 	void createIndexingTable() {
 		// creo tabelle di indexing
@@ -73,10 +88,10 @@ public:
 
 	void createIndexingTableCUDA() {
 	
-#if IBRIDO_GPU_CPU
-		if (soggetto->getPsi()->getTableSize() <= LIMITE_CRICCHE_GPU) {
+#if UTILIZZA_CPU_PER_TABELLE_PICCOLE
+		if (soggetto->getPsi()->getTableSize() <= SIZE_MAX_CPU) {
 			// DEBUG
-			std::cout << "Siccome la tabella ha dimensione piccola, decido di fare su cpu e quindi costruisco le indexing table per il metodo con cpu." << ++(Config::numIndexing) << std::endl;
+			std::cout << "Siccome la tabella ha dimensione piccola, decido di fare su cpu e quindi costruisco le indexing table per il metodo con cpu.\n"; // << ++(Config::numIndexing) << std::endl;
 			//
 			indexingSoggetto = createIndexingTable(soggetto);
 		} else {
@@ -87,12 +102,12 @@ public:
 			//
 			indexingSoggettoCUDA = createIndexingTableCUDA(soggetto);
 			
-#if IBRIDO_GPU_CPU
+#if UTILIZZA_CPU_PER_TABELLE_PICCOLE
 		}
 		
-		if (oggetto->getPsi()->getTableSize() <= LIMITE_CRICCHE_GPU) {
+		if (oggetto->getPsi()->getTableSize() <= SIZE_MAX_CPU) {
 			// DEBUG
-			std::cout << "Siccome la tabella ha dimensione piccola, decido di fare su cpu e quindi costruisco le indexing table per il metodo con cpu." << ++(Config::numIndexing) << std::endl;
+			std::cout << "Siccome la tabella ha dimensione piccola, decido di fare su cpu e quindi costruisco le indexing table per il metodo con cpu.\n"; // << ++(Config::numIndexing) << std::endl;
 			//
 			indexingOggetto = createIndexingTable(oggetto);
 		} else {
@@ -102,7 +117,7 @@ public:
 			//
 			indexingOggettoCUDA = createIndexingTableCUDA(oggetto);
 			
-#if IBRIDO_GPU_CPU
+#if UTILIZZA_CPU_PER_TABELLE_PICCOLE
 		}
 #endif
 	}

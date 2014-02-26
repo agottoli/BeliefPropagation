@@ -83,15 +83,15 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 	
 	//Probability* fiSeparatoreStar;
 
-#if TIMER_DETTAGLIATO && !TIMER_MARG_SCATT_DIVISI
+#if !TEMPO_COMPLESSIVO && !CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE
 	std::chrono::system_clock::time_point begin;
 	std::chrono::system_clock::time_point end;
 #endif
 	
-#if !USE_INDEXING_TABLE && !USE_CUDA
+#if !USE_INDEXING_TABLE && !USA_CUDA
 //	if (!Config::useIndexingTable) {
 
-#if TIMER_DETTAGLIATO && !TIMER_MARG_SCATT_DIVISI
+#if !TEMPO_COMPLESSIVO && !CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE
 	begin = std::chrono::high_resolution_clock::now();
 #endif
 		Probability* fiSeparatoreStar = first->getPsi()->sumOnNotPresent(fiSeparatore);
@@ -101,7 +101,7 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 		second->setFi(fiSeparatoreStar);
 		delete fiSeparatore;
 
-#if TIMER_DETTAGLIATO && !TIMER_MARG_SCATT_DIVISI
+#if !TEMPO_COMPLESSIVO && !CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE
 	end = std::chrono::high_resolution_clock::now();
 	*elapsedSum += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
 #endif
@@ -129,11 +129,11 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 #endif
 
 
-#if TIMER_DETTAGLIATO && !TIMER_MARG_SCATT_DIVISI
+#if !TEMPO_COMPLESSIVO && !CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE
 	begin = std::chrono::high_resolution_clock::now();
 #endif
 
-#if !USE_CUDA
+#if !USA_CUDA
 		//if (!Config::useCUDA) { // TODO aggiungi dimensione minima delle tabelle!!!
 			//fiSeparatoreStar = 
 			second->updatePotentials(first, node, elapsedSum, elapsedDivMul);
@@ -155,7 +155,7 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 //		}
 #endif
 
-#if TIMER_DETTAGLIATO && !TIMER_MARG_SCATT_DIVISI
+#if !TEMPO_COMPLESSIVO && !CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE
 	end = std::chrono::high_resolution_clock::now();
 	*elapsedSum += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
 #endif
@@ -372,7 +372,7 @@ void BeliefPropagation::BP(JunctionTree* jt)
 	}
 
 	// NORMALIZZO QUA ALLA FINE
-#if !USE_CUDA && !NORMALIZZA_AD_OGNI_PASSO
+#if !USA_CUDA && !NORMALIZZA_AD_OGNI_PASSO
 //	if (!Config::useCUDA)
 		jt->normalizeAllPotentials();
 #endif
@@ -386,12 +386,21 @@ void BeliefPropagation::BP(JunctionTree* jt)
 	// STAMPA ESECUZIONE inizio
 
 	std::cout << "valori delle tabelle aggiornate.\n";
-	std::cout << "BeliefPropagation eseguito in: " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() / 1000000000.0 << ".\n";
-#if TIMER_DETTAGLIATO && TIMER_MARG_SCATT_DIVISI
-	std::cout << "di cui " << *elapsedSum / 1000000000.0 << " per eseguire la marginalizzazione." << std::endl;
-	std::cout << "     e " << *elapsedDivMul / 1000000000.0 << " per eseguire lo scattering." << std::endl;
-#elif TIMER_DETTAGLIATO
-	std::cout << "di cui " << *elapsedSum / 1000000000.0 << " per eseguire gli update." << std::endl;
+#if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE
+
+#if CONSIDERA_TRASFERIMENTI_MEMORIA
+	std::cout << "Tempi compresi i trasferimenti in memoria:\n";
+#else
+	std::cout << "Tempi SENZA i trasferimenti in memoria:\n";
+#endif
+	std::cout << "Per eseguire la marginalizzazione: " << *elapsedSum / 1000000.0 << " ms." << std::endl;
+	std::cout << "per eseguire lo scattering:        " << *elapsedDivMul / 1000000.0 << " ms." << std::endl;
+#elif !TEMPO_COMPLESSIVO
+	std::cout << "Tempi compresi i trasferimenti in memoria:\n";
+	std::cout << "Per eseguire gli update delle tabelle: " << *elapsedSum / 1000000.0 << " ms." << std::endl;
+#else
+	std::cout << "Tempi compresi i trasferimenti in memoria:\n";
+	std::cout << "Per eseguire tutta la Belief Propagation: " << *elapsedSum / 1000000.0 << " ms." << std::endl;
 #endif
 	// STAMPA ESECUZIONE fine
 	//std::cin >> sss;

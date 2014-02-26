@@ -303,13 +303,13 @@ std::size_t* Separator::createIndexingTableCUDA(JTClique* cliqueToIndex)
 void Separator::updatePotentials(JTClique* cli, JTClique* cliScrivo, long long* elapsedSum, long long* elapsedDivMul)
 {
 
-#if TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI
+#if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE
 	// rilevamento tempo occupato dalle somme
 	std::chrono::system_clock::time_point begin;
 	std::chrono::system_clock::time_point end;
 #endif
 
-#if TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI
+#if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE
 		// rilevamento tempo occupato dalle somme!!!
 		begin = std::chrono::high_resolution_clock::now();
 		//
@@ -341,7 +341,7 @@ void Separator::updatePotentials(JTClique* cli, JTClique* cliScrivo, long long* 
 	double sommaTabella = 0.0;
 	double sommaTabellaCri = 0.0;
 
-#if TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI
+#if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE
 		// rilevamento tempo occupato dalle somme!!!
 		end = std::chrono::high_resolution_clock::now();
 		*elapsedSum += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
@@ -350,7 +350,7 @@ void Separator::updatePotentials(JTClique* cli, JTClique* cliScrivo, long long* 
 
 	for (std::size_t i = 0; i < dimFiStarTable; i++) {
 		//std::cout << " i = " << i;
-#if TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI
+#if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE
 		// rilevamento tempo occupato dalle somme!!!
 		begin = std::chrono::high_resolution_clock::now();
 		//
@@ -369,14 +369,14 @@ void Separator::updatePotentials(JTClique* cli, JTClique* cliScrivo, long long* 
 
 		sommaTabella += fiStarTable[i];
 
-#if TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI
+#if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE
 		// rilevamento tempo occupato dalle somme!!!
 		end = std::chrono::high_resolution_clock::now();
 		*elapsedSum += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
 		//
 //#endif	
 
-//#if TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI
+//#if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE
 		// rilevamento tempo occupato dalla divisione e moltiplicazione!!!
 		begin = std::chrono::high_resolution_clock::now();
 		//
@@ -416,7 +416,7 @@ void Separator::updatePotentials(JTClique* cli, JTClique* cliScrivo, long long* 
 			}
 		}
 
-#if TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI
+#if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE
 		// rilevamento tempo occupato dalla divisione e moltiplicazione!!!
 		end = std::chrono::high_resolution_clock::now();
 		*elapsedDivMul += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
@@ -426,7 +426,7 @@ void Separator::updatePotentials(JTClique* cli, JTClique* cliScrivo, long long* 
 	}
 
 
-#if TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI
+#if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE
 		// rilevamento tempo occupato dalla divisione e moltiplicazione!!!
 		begin = std::chrono::high_resolution_clock::now();
 		//
@@ -441,7 +441,7 @@ void Separator::updatePotentials(JTClique* cli, JTClique* cliScrivo, long long* 
 	//SUMT
 	cliScrivo->getPsi()->setSommaTabella(sommaTabellaCri);
 
-#if TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI
+#if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE
 		// rilevamento tempo occupato dalla divisione e moltiplicazione!!!
 		end = std::chrono::high_resolution_clock::now();
 		*elapsedDivMul += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
@@ -608,16 +608,16 @@ void Separator::updatePotentialsCUDA(JTClique* cli, JTClique* cliScrivo, long lo
 	std::size_t* indexingTableLeggoCUDA;
 	std::size_t* indexingTableScrivoCUDA;
 
-#if IBRIDO_GPU_CPU
-	double* indexingTableLeggo;
-	double* indexingTableScrivo;
+#if UTILIZZA_CPU_PER_TABELLE_PICCOLE
+	double** indexingTableLeggo;
+	double** indexingTableScrivo;
 #endif
 	
 	if (cli == soggetto) {
 		indexingTableLeggoCUDA = indexingSoggettoCUDA;
 		indexingTableScrivoCUDA = indexingOggettoCUDA;
 		
-#if IBRIDO_GPU_CPU
+#if UTILIZZA_CPU_PER_TABELLE_PICCOLE
 		indexingTableLeggo = indexingSoggetto;
 		indexingTableScrivo = indexingOggetto;
 #endif
@@ -627,7 +627,7 @@ void Separator::updatePotentialsCUDA(JTClique* cli, JTClique* cliScrivo, long lo
 		indexingTableLeggoCUDA = indexingOggettoCUDA;
 		indexingTableScrivoCUDA = indexingSoggettoCUDA;
 		
-#if IBRIDO_GPU_CPU
+#if UTILIZZA_CPU_PER_TABELLE_PICCOLE
 		indexingTableLeggo = indexingOggetto;
 		indexingTableScrivo = indexingSoggetto;
 #endif
@@ -638,7 +638,7 @@ void Separator::updatePotentialsCUDA(JTClique* cli, JTClique* cliScrivo, long lo
 
 	//double* fiStarTable = new double[dimFiStarTable];
 
-#if TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI && TIMER_CON_TRASFERIMENTI_MEMORIA
+#if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE && CONSIDERA_TRASFERIMENTI_MEMORIA
 	// rilevamento tempo occupato dalle somme
 	std::chrono::system_clock::time_point begin;
 	std::chrono::system_clock::time_point end;
@@ -691,44 +691,118 @@ void Separator::updatePotentialsCUDA(JTClique* cli, JTClique* cliScrivo, long lo
 		//
 
 	// MARGINALIZATION
-	double* fiStarOnGPU;
-	if (dimFiStarTablePow2 > LIMITE_SEPARATORE_MARGINALIZZAZIONE) {
+	double* fiStarTable; // se uso l'approccio ibrido
+	double* fiTable = fi->getTable();
+
+	bool is_fiStarTableOnHost;
+
+#if UTILIZZA_CPU_PER_TABELLE_PICCOLE
+	//double* fiStarOnCPU;
+	if (sizeTableLeggo <= SIZE_MAX_CPU) {
+		is_fiStarTableOnHost = true;
+		
+		#if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE && CONSIDERA_TRASFERIMENTI_MEMORIA
+		begin = std::chrono::high_resolution_clock::now();
+		#endif
+		
+		std::cout << "marginalization su CPU." << std::endl;
+		fiStarTable = marginalizationCPU(dimFiStarTable, numeroElemDaSommare, indexingTableLeggo); //, this);
+
+		#if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE && CONSIDERA_TRASFERIMENTI_MEMORIA
+		end = std::chrono::high_resolution_clock::now();
+		#endif
+
+		// la somma della tabella di fi viene settata da marginalization
+		fi->setTable(fiStarTable); // se ce l'ho già la tabella la setto, in caso andassi su gpu che non salva più
+
+	} else {
+#endif
+
+	is_fiStarTableOnHost = false;
+	std::cout << "marginalization su CUDA." << std::endl;
+	if (dimFiStarTablePow2 > SIZE_MAX_SMALL_N) {
 		// BIG N
-#if TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI && TIMER_CON_TRASFERIMENTI_MEMORIA
+#if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE && CONSIDERA_TRASFERIMENTI_MEMORIA
 		begin = std::chrono::high_resolution_clock::now();
 #endif
-		fiStarOnGPU = marginalizationBigN(sizeTableLeggoPow2, dimFiStarTablePow2, cli->getPsi()->getTable(), indexingTableLeggo, sizeTableLeggo, dimFiStarTable, elapsedSum, elapsedDivMul);
-#if TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI && TIMER_CON_TRASFERIMENTI_MEMORIA
+		fiStarTable = marginalizationBigN(sizeTableLeggoPow2, dimFiStarTablePow2, cli->getPsi()->getTable(), indexingTableLeggoCUDA, sizeTableLeggo, dimFiStarTable, elapsedSum, elapsedDivMul);
+#if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE && CONSIDERA_TRASFERIMENTI_MEMORIA
 		end = std::chrono::high_resolution_clock::now();
 #endif
 	} else {
 		// SMALL N
-#if TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI && TIMER_CON_TRASFERIMENTI_MEMORIA
+#if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE && CONSIDERA_TRASFERIMENTI_MEMORIA
 		begin = std::chrono::high_resolution_clock::now();
 #endif
-		fiStarOnGPU = marginalizationSmallN(sizeTableLeggoPow2, dimFiStarTablePow2, cli->getPsi()->getTable(), indexingTableLeggo, sizeTableLeggo, dimFiStarTable, elapsedSum, elapsedDivMul);
-#if TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI && TIMER_CON_TRASFERIMENTI_MEMORIA
+		fiStarTable = marginalizationSmallN(sizeTableLeggoPow2, dimFiStarTablePow2, cli->getPsi()->getTable(), indexingTableLeggoCUDA, sizeTableLeggo, dimFiStarTable, elapsedSum, elapsedDivMul);
+#if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE && CONSIDERA_TRASFERIMENTI_MEMORIA
 		end = std::chrono::high_resolution_clock::now();
 #endif
 	}
-#if TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI && TIMER_CON_TRASFERIMENTI_MEMORIA
+
+#if UTILIZZA_CPU_PER_TABELLE_PICCOLE
+	} // fine della marginalizzazione
+#endif
+
+#if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE && CONSIDERA_TRASFERIMENTI_MEMORIA
 	*elapsedSum += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
 #endif
 
 	// SCATTERING
-#if TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI && TIMER_CON_TRASFERIMENTI_MEMORIA
+
+#if UTILIZZA_CPU_PER_TABELLE_PICCOLE
+	if (sizeTableScrivo <= SIZE_MAX_CPU) {
+#if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE && CONSIDERA_TRASFERIMENTI_MEMORIA
 	begin = std::chrono::high_resolution_clock::now();
 #endif
-	scattering(sizeTableScrivoPow2, dimFiStarTablePow2, fiStarOnGPU, fi->getTable(), tableCliScrivo, indexingTableScrivo, sizeTableScrivo, dimFiStarTable, elapsedSum, elapsedDivMul);
-#if TIMER_DETTAGLIATO && !!TIMER_MARG_SCATT_DIVISI && TIMER_CON_TRASFERIMENTI_MEMORIA
+
+	std::cout << "scattering su CPU." << std::endl;
+	scatteringCPU(dimFiStarTable, numeroElemDaAggiornareConUgualeValore, indexingTableScrivo, fiStarTable, fiTable, cliScrivo, is_fiStarTableOnHost); // QUIIIIII!!!!
+
+#if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE && CONSIDERA_TRASFERIMENTI_MEMORIA
 	end = std::chrono::high_resolution_clock::now();
-	*elapsedDivMul += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
 #endif
-	
+
+	// cancello dopo lo scattering che non mi serve più
+	delete fiTable;
+	// per me è giusto qui il set della tabella
+	//fi->setTable(fiStarTable); // lo faccio da dentro il scatteringCPU
+	// la somma della tabella di fi viene settata da marginalization
+
+#if NORMALIZZA_AD_OGNI_PASSO
+	// normalizzo le cricche
+	if (!cliScrivo->getPsi()->isNormalized())
+		cliScrivo->getPsi()->normalizza();
+#endif
+
+	} else {
+#endif
+
+#if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE && CONSIDERA_TRASFERIMENTI_MEMORIA
+	begin = std::chrono::high_resolution_clock::now();
+#endif
+
+	std::cout << "scattering su CUDA." << std::endl;
+	scattering(sizeTableScrivoPow2, dimFiStarTablePow2, fiStarTable, fiTable, tableCliScrivo, indexingTableScrivoCUDA, sizeTableScrivo, dimFiStarTable, elapsedSum, elapsedDivMul, is_fiStarTableOnHost);
+#if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE && CONSIDERA_TRASFERIMENTI_MEMORIA
+	end = std::chrono::high_resolution_clock::now();
+#endif
 
 	// setto i nuovi valori delle tabelle che ho modificato
 	cliScrivo->getPsi()->setSommaTabella(1.0); // perché faccio la normalizzazione direttamente nel kernel
 	fi->setSommaTabella(cli->getPsi()->getSommaTabella());
+	// qui in cuda, la fi viene già settata se su device
+	//                    altrimenti devo settarla ma lo faccio su all'uscita dalla marginalization
+
+#if UTILIZZA_CPU_PER_TABELLE_PICCOLE
+	} // fine scattering
+#endif
+
+	std::cout << "fine update\n";
+
+#if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE && CONSIDERA_TRASFERIMENTI_MEMORIA
+	*elapsedDivMul += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
+#endif	
 
 	/* TUTTO COMPLETO 
 	margAndScatt(sizeTableLeggoPow2, dimFiStarTablePow2, cli->getPsi()->getTable(), indexingTableLeggo, sizeTableLeggo, dimFiStarTable,
@@ -759,6 +833,108 @@ void Separator::updatePotentialsCUDA(JTClique* cli, JTClique* cliScrivo, long lo
 
 }
 
+double* Separator::marginalizationCPU(size_t dimFiStarTable, // sarebbe sia la dimensione dell'output, sia il nostro caro nArray.
+							  size_t numeroElemDaSommare, // sarebbe il nostro caro e vecchio m
+							  double** indexingTableLeggo // la indexing table che punta agli elementi su cui fare la marginalizzazione
+							  //,Separator* sep // quello che si becca la tabella appena calcolata... // QUI!!!
+							  ) {
+
+
+
+	double* fiStarTable = new double[dimFiStarTable];
+	//for (std::size_t i = 0; i < dimFiStarTable; i++) {
+	//	fiStarTable[i] = 0.0;
+	//}
+
+	//std::cout << "sto eseguendo il metodo con la index" << std::endl;
+
+	//std::size_t numeroElemDaSommare = cli->getPsi()->getTableSize() / dimFiStarTable;
+
+
+	double sommaTabella = 0.0;
+	for (std::size_t i = 0; i < dimFiStarTable; i++) {
+		//std::cout << " i = " << i;
+
+		fiStarTable[i] = 0.0;
+
+		// calcolo il valore di fiStar[i]
+		for (std::size_t j = 0; j < numeroElemDaSommare; j++) {
+			//std::cout << " j = " << j << std::endl;
+			//std::cout << fiStarTable[i];
+			fiStarTable[i] += *indexingTableLeggo[i * numeroElemDaSommare + j];
+			//std::cout << " --> " << fiStarTable[i] << std::endl;
+			
+		}
+
+		sommaTabella += fiStarTable[i];
+
+	}
+
+	// per aiutare la normalizzazione
+	//sep->getFi()->setSommaTabella(sommaTabella);
+	fi->setSommaTabella(sommaTabella);
+
+	return fiStarTable;
+}
+
+void Separator::scatteringCPU(size_t dimFiStarTable, // sarebbe la dimsione del separatore su cui iteriamo per leggere i valori da dividere
+				size_t numeroElemDaAggiornareConUgualeValore,
+				double** indexingTableScrivo,
+				double* fiStarTable,
+				double* fiTable,
+				JTClique* cliScrivo,
+				bool fiStarTableOnCPU
+				)
+{
+
+	if (!fiStarTableOnCPU)
+		fiStarTable = recuperaDaGPU(fiStarTable, dimFiStarTable);
+
+	double divisioneTraFi;
+
+	double sommaTabellaCri = 0.0;
+
+	for (std::size_t i = 0; i < dimFiStarTable; i++) {
+		
+
+		// calcolo solo se la divisione 
+		if (fiTable[i] > ZERO_DIVISIONE) {
+			// calcolo quanto vale fiStar[i]/fi[i]
+			divisioneTraFi = fiStarTable[i] / fiTable[i];
+		} else
+			divisioneTraFi = 0;
+
+		//std::cout << "fiStar[" << i << "]/fi[" << i << "] = " << divisioneTraFi << std::endl;
+
+		// se devo moltiplicare per 1 allora mi risparmio il giro
+		if (divisioneTraFi != 1) {
+
+			// provo a sbagliare per vedere se il confronto lo rileva
+			//divisioneTraFi = 0.5;
+
+			for (std::size_t j = 0; j < numeroElemDaAggiornareConUgualeValore; j++) {
+				//std::cout << "iT[" << i * numeroElemDaAggiornareConUgualeValore + j << "] = " << *indexingTableScrivo[i * numeroElemDaAggiornareConUgualeValore + j] << " --> ";
+				*indexingTableScrivo[i * numeroElemDaAggiornareConUgualeValore + j] *= divisioneTraFi;
+				//std::cout << *indexingTableScrivo[i * numeroElemDaAggiornareConUgualeValore + j];
+				//std::string sss;
+				//std::cin >> sss;
+
+				// SUMT
+				sommaTabellaCri += *indexingTableScrivo[i * numeroElemDaAggiornareConUgualeValore + j];
+			}
+		} else {
+			for (std::size_t j = 0; j < numeroElemDaAggiornareConUgualeValore; j++) {
+				// SUMT
+				sommaTabellaCri += *indexingTableScrivo[i * numeroElemDaAggiornareConUgualeValore + j];
+			}
+		}
+	}
+
+	//delete fiTable;
+	fi->setTable(fiStarTable);
+	cliScrivo->getPsi()->setSommaTabella(sommaTabellaCri);
+}
+
 void Separator::updatePotentialsCUDAonCPU(JTClique* cli, JTClique* cliScrivo, long long* elapsedSum, long long* elapsedDivMul)
 {
 	// OCCHIO: le tabelle degli indici adesso hanno anche i valori SIZE_MAX!!!!
@@ -784,7 +960,7 @@ void Separator::updatePotentialsCUDAonCPU(JTClique* cli, JTClique* cliScrivo, lo
 	double* tableCliScrivo = cliScrivo->getPsi()->getTable();
 	double* tableCliLeggo = cli->getPsi()->getTable();
 	
-#if TIMER_DETTAGLIATO  && !!TIMER_MARG_SCATT_DIVISI
+#if !TEMPO_COMPLESSIVO  && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE
 	// rilevamento tempo occupato dalle somme
 	std::chrono::system_clock::time_point begin;
 	std::chrono::system_clock::time_point end;
@@ -814,7 +990,7 @@ void Separator::updatePotentialsCUDAonCPU(JTClique* cli, JTClique* cliScrivo, lo
 
 		fiStarTable[i] = 0.0;
 
-#if TIMER_DETTAGLIATO  && !!TIMER_MARG_SCATT_DIVISI
+#if !TEMPO_COMPLESSIVO  && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE
 		// rilevamento tempo occupato dalle somme!!!
 		begin = std::chrono::high_resolution_clock::now();
 		//
@@ -839,7 +1015,7 @@ void Separator::updatePotentialsCUDAonCPU(JTClique* cli, JTClique* cliScrivo, lo
 			
 		}
 
-#if TIMER_DETTAGLIATO  && !!TIMER_MARG_SCATT_DIVISI
+#if !TEMPO_COMPLESSIVO  && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE
 		// rilevamento tempo occupato dalle somme!!!
 		end = std::chrono::high_resolution_clock::now();
 		*elapsedSum += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();
@@ -850,7 +1026,7 @@ void Separator::updatePotentialsCUDAonCPU(JTClique* cli, JTClique* cliScrivo, lo
 
 		double divisioneTraFi;
 
-#if TIMER_DETTAGLIATO  && !!TIMER_MARG_SCATT_DIVISI
+#if !TEMPO_COMPLESSIVO  && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE
 		// rilevamento tempo occupato dalla divisione e moltiplicazione!!!
 		begin = std::chrono::high_resolution_clock::now();
 		//
@@ -872,7 +1048,7 @@ void Separator::updatePotentialsCUDAonCPU(JTClique* cli, JTClique* cliScrivo, lo
 			//divisioneTraFi = 0.5;
 
 			for (std::size_t j = 0; j < numeroElemDaAggiornareConUgualeValore; j++) {
-#if !USE_CUDA && SUM_ON_ROW
+#if !USA_CUDA && SUM_ON_ROW
 				// NON VIENE MAI USATO!!!
 				//if (Config::indexingSumOnRow) {
 					// [0][1][2] * [0000][1111][2222]
@@ -924,7 +1100,7 @@ void Separator::updatePotentialsCUDAonCPU(JTClique* cli, JTClique* cliScrivo, lo
 			}
 		}
 
-#if TIMER_DETTAGLIATO  && !!TIMER_MARG_SCATT_DIVISI
+#if !TEMPO_COMPLESSIVO  && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE
 		// rilevamento tempo occupato dalla divisione e moltiplicazione!!!
 		end = std::chrono::high_resolution_clock::now();
 		*elapsedDivMul += std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count();

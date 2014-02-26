@@ -24,6 +24,7 @@ void scattering(size_t size,  // dimTabCricca POW2
 			size_t dimCricca, // dimensione vera tabCricca
 			size_t dimSeparatore // dim vera tabSep
 			, long long* elapsedSum, long long* elapsedDivMul
+			, bool isOnHost // mi dice se devo trasferirmi il separatore dalla cpu oppure è già in GPU (sarebbe il d_iVector1Data)
 			);
 
 //void margAndScatt(size_t sizeCriccaPOW2, size_t sizeSeparatorePOW2, double *tabellaCricca, size_t *tabellaIndiciCricca, size_t dimCricca, size_t dimSeparatore, // dati per marginalization
@@ -34,3 +35,7 @@ void scattering(size_t size,  // dimTabCricca POW2
 
 void selectGPU();
 void resetGPU();
+
+
+double* recuperaDaGPU(double* tabella, std::size_t sizeTable);
+

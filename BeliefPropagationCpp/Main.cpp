@@ -245,7 +245,7 @@ int main(int argc, char* argv[])
 	//std::cout << "DOT BN:\n" << net->getDOT() << '\n';
 	//std::cin >> sss;
 
-#if USE_CUDA
+#if USA_CUDA
 	//if (Config::useCUDA)
 		selectGPU();
 #endif
@@ -380,7 +380,7 @@ int main(int argc, char* argv[])
 		
 	}
 
-#if USE_CUDA
+#if USA_CUDA
 //	if (Config::useCUDA)
 		resetGPU();
 #endif	

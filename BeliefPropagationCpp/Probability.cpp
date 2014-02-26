@@ -17,9 +17,10 @@ Probability::Probability(VecMap* vars, double initValue)
 
 		// controllo per non allocare miliardi di elementi
 		if (dim >= 100000000) {
-			std::cout << "stai creando una tabella di " << dim << " elementi.";
-			std::string s;
-			std::cin >> s;
+			std::cout << "Stai creando una tabella di " << dim << " elementi.";
+			//std::string s;
+			//std::cin >> s;
+			exit(1);
 			//Config::tabellaScazza = true;
 		} //else {
 
@@ -410,12 +411,12 @@ bool Probability::confronta(Probability* other) {
 	
 	for (std::size_t i = 0; i < tableSize; i++) {
 
-		if (table[i] < 0 || table[i] > 100000) {
+		/*if (table[i] < 0 || table[i] > 100000) {
 			std::cout << "valore tabella 1 strano: " << table[i];
 			esito = false;
 			std::string sss;
 			std::cin >> sss;
-		}
+		}*/
 
 		if (*(other->getAtConfig(configOther)) < 0 || *(other->getAtConfig(configOther)) > 100000) {
 			std::cout << "valore tabella 2 strano: " << *(other->getAtConfig(configOther));
