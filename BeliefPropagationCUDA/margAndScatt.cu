@@ -33,9 +33,11 @@
 #define TIMER_CUDA FALSE
 #endif
 
+/*
 #ifndef SIZE_MAX
 #define SIZE_MAX ((size_t)-1)
 #endif
+*/
 
 
 //////////////////////////////////////////// RIDUZIONE ==> MARGINALIZATION //////////////////////////////////////////////////////
@@ -72,7 +74,7 @@ void getNumBlocksAndThreadsSmallN(size_t n, int maxThreads, int &blocks, int &th
 */
 template <unsigned int blockSize> // forse basta usare blockDim.x
 __global__ void
-reduce1StepSmallN(double *g_idata, double *g_odata, size_t *d_iIndexData, size_t n, size_t const nArray)
+reduce1StepSmallN(double *g_idata, double *g_odata, size_t *d_iIndexData, size_t n, size_t const nArray, size_t dimDataTable)
 {	
 	// extern serve per rendere l'allocazione della memoria condivisa dinamica 
 	// si potrebbe utilizzare quella statica se la dimensione fosse nota a compile time
@@ -92,14 +94,16 @@ reduce1StepSmallN(double *g_idata, double *g_odata, size_t *d_iIndexData, size_t
 	size_t index1 = d_iIndexData[i+blockDim.x];				// DA INSERIRE NELLA VERSIONE ROLLED
 	size_t index2 = d_iIndexData[i];
 	
-    double mySum = (i < n && index2 != SIZE_MAX) ? g_idata[index2] : 0;
+    //double mySum = (i < n && index2 != SIZE_MAX) ? g_idata[index2] : 0;
+	double mySum = (i < n && index2 < dimDataTable) ? g_idata[index2] : 0;
 	//cuPrintf ("CUPRINTF 1- blockIdx.x = %d mySum = %f \n",blockIdx.x, mySum);
 
 	// nella prima passata ogni thread prende come mySum il valore preso all'istruzione precedente 
 	// + il valore preso dal blocco successivo (viene così presa in considerazione l'altra metà degli elementi)
     //if (i + (blockDim.x*4) < n)
     //    mySum += g_idata[i+(blockDim.x*4)];
-    if (i + blockDim.x < n && index1 != SIZE_MAX)
+    //if (i + blockDim.x < n && index1 != SIZE_MAX)
+	if (i + blockDim.x < n && index1 < dimDataTable)
         mySum += g_idata[index1];
 
     sdata[tid] = mySum;
@@ -390,7 +394,8 @@ void reduceSmallNArray(size_t  n,
                   	double *d_idata,
                   	double *d_odata,
 					size_t *d_iIndexData,
-					size_t dimRisultato
+					size_t dimRisultato,
+					size_t sizeDataTable
 					)
 {
 	bool needReadBack = true;
@@ -427,25 +432,25 @@ void reduceSmallNArray(size_t  n,
 			//printf("numThreads: %d", numThreads);
 					switch (numThreads){
 						case 512:
-						reduce1StepSmallN<512><<< dimGrid, dimBlock, smemSize >>>(d_idata, d_odata, d_iIndexData, n, nArray);	break;
+						reduce1StepSmallN<512><<< dimGrid, dimBlock, smemSize >>>(d_idata, d_odata, d_iIndexData, n, nArray, sizeDataTable);	break;
 						case 256:
-						reduce1StepSmallN<256><<< dimGrid, dimBlock, smemSize >>>(d_idata, d_odata, d_iIndexData, n, nArray);	break;
+						reduce1StepSmallN<256><<< dimGrid, dimBlock, smemSize >>>(d_idata, d_odata, d_iIndexData, n, nArray, sizeDataTable);	break;
 						case 128:
-						reduce1StepSmallN<128><<< dimGrid, dimBlock, smemSize >>>(d_idata, d_odata, d_iIndexData, n, nArray);	break;
+						reduce1StepSmallN<128><<< dimGrid, dimBlock, smemSize >>>(d_idata, d_odata, d_iIndexData, n, nArray, sizeDataTable);	break;
 						case 64:
-						reduce1StepSmallN<64><<< dimGrid, dimBlock, smemSize >>>(d_idata, d_odata, d_iIndexData, n, nArray);	break;
+						reduce1StepSmallN<64><<< dimGrid, dimBlock, smemSize >>>(d_idata, d_odata, d_iIndexData, n, nArray, sizeDataTable);	break;
 						case 32:
-						reduce1StepSmallN<32><<< dimGrid, dimBlock, smemSize >>>(d_idata, d_odata, d_iIndexData, n, nArray);	break;
+						reduce1StepSmallN<32><<< dimGrid, dimBlock, smemSize >>>(d_idata, d_odata, d_iIndexData, n, nArray, sizeDataTable);	break;
 						case 16:
-						reduce1StepSmallN<16><<< dimGrid, dimBlock, smemSize >>>(d_idata, d_odata, d_iIndexData, n, nArray);	break;
+						reduce1StepSmallN<16><<< dimGrid, dimBlock, smemSize >>>(d_idata, d_odata, d_iIndexData, n, nArray, sizeDataTable);	break;
 						case 8:
-						reduce1StepSmallN<8><<< dimGrid, dimBlock, smemSize >>>(d_idata, d_odata, d_iIndexData, n, nArray);	break;
+						reduce1StepSmallN<8><<< dimGrid, dimBlock, smemSize >>>(d_idata, d_odata, d_iIndexData, n, nArray, sizeDataTable);	break;
 						case 4:
-						reduce1StepSmallN<4><<< dimGrid, dimBlock, smemSize >>>(d_idata, d_odata, d_iIndexData, n, nArray);	break;
+						reduce1StepSmallN<4><<< dimGrid, dimBlock, smemSize >>>(d_idata, d_odata, d_iIndexData, n, nArray, sizeDataTable);	break;
 						case 2:
-						reduce1StepSmallN<2><<< dimGrid, dimBlock, smemSize >>>(d_idata, d_odata, d_iIndexData, n, nArray);	break;
+						reduce1StepSmallN<2><<< dimGrid, dimBlock, smemSize >>>(d_idata, d_odata, d_iIndexData, n, nArray, sizeDataTable);	break;
 						case 1:
-						reduce1StepSmallN<1><<< dimGrid, dimBlock, smemSize >>>(d_idata, d_odata, d_iIndexData, n, nArray);	break;
+						reduce1StepSmallN<1><<< dimGrid, dimBlock, smemSize >>>(d_idata, d_odata, d_iIndexData, n, nArray, sizeDataTable);	break;
 					}
 			
 
@@ -705,7 +710,7 @@ double* marginalizationSmallN(size_t size, size_t nArray, double *h_idata, size_
 */
 			        //gpu_result = 
 					reduceSmallNArray(size, nArray, numThreads, numBlocks, maxThreads,
-			                                        cpuFinalThreshold, d_idata, d_odata, d_iIndexData, dimRisultato);
+			                                        cpuFinalThreshold, d_idata, d_odata, d_iIndexData, dimRisultato, dimInput);
 /*
 #if (TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA)
 	std::chrono::system_clock::time_point end = std::chrono::high_resolution_clock::now();
@@ -783,7 +788,7 @@ void getNumBlocksAndThreadsBigN(size_t n, int maxThreads, int &blocks, int &thre
 }
 
 __global__ void
-reduce1StepBigN(double *g_idata, double *g_odata, size_t *d_iIndexData, size_t n, size_t halfN, size_t nArray)//, unsigned int fraction)
+reduce1StepBigN(double *g_idata, double *g_odata, size_t *d_iIndexData, size_t n, size_t halfN, size_t nArray, size_t dimDataTable)//, unsigned int fraction)
 {	
 	// i scorre la prima metà dei dati in input
 	size_t i = blockIdx.x*blockDim.x + threadIdx.x;
@@ -795,8 +800,10 @@ reduce1StepBigN(double *g_idata, double *g_odata, size_t *d_iIndexData, size_t n
 		
     if (i < halfN){ // sta sempre dentro all'if
 		//g_odata[i] = g_idata[d_iIndexData[i]] + g_idata[d_iIndexData[i+halfN]];
-		double mySum = (index1 != SIZE_MAX) ? g_idata[index1] : 0;
-		g_odata[i] = (index2 != SIZE_MAX) ? g_idata[index2] + mySum : mySum;
+		//double mySum = (index1 != SIZE_MAX) ? g_idata[index1] : 0;
+		double mySum = (index1 < dimDataTable) ? g_idata[index1] : 0;
+		//g_odata[i] = (index2 != SIZE_MAX) ? g_idata[index2] + mySum : mySum;
+		g_odata[i] = (index2 < dimDataTable) ? g_idata[index2] + mySum : mySum;
 		#if DEBUG_FLAG
 			if(//debug && 
 				(threadIdx.x == 0 || threadIdx.x == (blockDim.x-1))&&(blockIdx.x==0 || blockIdx.x==gridDim.x-1)) 
@@ -839,7 +846,9 @@ void reduceBigNArray(size_t  n,
                   	double *d_idata,
                   	double *d_odata,
 					size_t *d_iIndexData,
-					size_t dimRisultato)
+					size_t dimRisultato,
+					size_t sizeDataTable
+					)
 {
 	bool needReadBack = true;
 	
@@ -874,7 +883,7 @@ void reduceBigNArray(size_t  n,
 		#endif
 */
 
-		reduce1StepBigN<<< dimGrid, dimBlock>>>(d_idata, d_odata, d_iIndexData, n, n>>1, nArray);
+		reduce1StepBigN<<< dimGrid, dimBlock>>>(d_idata, d_odata, d_iIndexData, n, n>>1, nArray, sizeDataTable);
 		
 /*
 		#if DEBUG_FLAG
@@ -1101,7 +1110,7 @@ double* marginalizationBigN(size_t size, size_t nArray, double *h_idata, size_t 
 #endif
 */
 			reduceBigNArray(size, nArray, numThreads, numBlocks, maxThreads,
-										h_odata, d_idata, d_odata, d_iIndexData, dimRisultato);
+							h_odata, d_idata, d_odata, d_iIndexData, dimRisultato, dimInput);
 /*
 #if TIMER_DETTAGLIATO && !TIMER_CON_TRASFERIMENTI_MEMORIA
 	std::chrono::system_clock::time_point end = std::chrono::high_resolution_clock::now();
