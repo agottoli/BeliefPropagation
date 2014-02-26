@@ -386,13 +386,28 @@ void BeliefPropagation::BP(JunctionTree* jt)
 	// STAMPA ESECUZIONE inizio
 
 	std::cout << "valori delle tabelle aggiornate.\n";
-#if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE
+
+std::cout << "\n-------------------------------\nModalità scelta:\n";
+
+#if USA_CUDA
+	std::cout << "CUDA\n";
+#if UTILIZZA_CPU_PER_TABELLE_PICCOLE
+	std::cout << "utilizzando la cpu per tabelle fino a " << SIZE_MAX_CPU << " elementi.\n";
+#endif
 
 #if CONSIDERA_TRASFERIMENTI_MEMORIA
-	std::cout << "Tempi compresi i trasferimenti in memoria:\n";
+	std::cout << "misurazione dei tempi COMPRESI i trasferimenti in memoria\n";
 #else
-	std::cout << "Tempi SENZA i trasferimenti in memoria:\n";
+	std::cout << "misurazione dei tempi SENZA i trasferimenti in memoria\n";
 #endif
+
+#else
+	std::cout << "sequenziale\n";
+#endif
+
+
+
+#if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE
 	std::cout << "Per eseguire la marginalizzazione: " << *elapsedSum / 1000000.0 << " ms." << std::endl;
 	std::cout << "per eseguire lo scattering:        " << *elapsedDivMul / 1000000.0 << " ms." << std::endl;
 #elif !TEMPO_COMPLESSIVO
@@ -402,6 +417,8 @@ void BeliefPropagation::BP(JunctionTree* jt)
 	std::cout << "Tempi compresi i trasferimenti in memoria:\n";
 	std::cout << "Per eseguire tutta la Belief Propagation: " << *elapsedSum / 1000000.0 << " ms." << std::endl;
 #endif
+
+	std::cout << "\n-------------------------------\n";
 	// STAMPA ESECUZIONE fine
 	//std::cin >> sss;
 }
