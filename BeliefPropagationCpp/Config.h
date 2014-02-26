@@ -24,7 +24,7 @@ namespace Config {
 #endif
 
 #ifndef EPSILON_SOGLIA
-#define EPSILON_SOGLIA 0.0000000001 //L // 10^-9 per il confronto dei valori delle probabilità, può esserci una leggera differenza per arrotondamenti vari
+#define EPSILON_SOGLIA 0.0000000001 //L // 10^-10 per il confronto dei valori delle probabilità, può esserci una leggera differenza per arrotondamenti vari
 #endif
 
 #ifndef ZERO_DIVISIONE
@@ -59,6 +59,8 @@ namespace Config {
 
 #ifndef CONTROLLA_UPDATE
 #define CONTROLLA_UPDATE TRUE //FALSE
+// se impostato a TRUE   -> controlla se ogni tabella è stata calcolata correttamente (serve solo per DEBUG)
+// se impostato a FALSE  -> assume che siano corrette
 #endif
 
 #ifndef PRINT_EXECUTION_BP
@@ -68,19 +70,19 @@ namespace Config {
 /////////////////////////////////////////////////////////////////
 #ifndef TIMER_DETTAGLIATO 
 #define TIMER_DETTAGLIATO TRUE
-// se mpostato a TRUE   -> attiva la possibilità di misurare le varie fasi dell'algoritmo
+// se impostato a TRUE   -> attiva la possibilità di misurare le varie fasi dell'algoritmo
 // se impostato a FALSE -> misura tutto il metodo della belief propagation dall'inizio alla fine contando anche le chiamate ricorsive dell'esplorazione dell'albero
 #endif
 
 #ifndef TIMER_MARG_SCATT_DIVISI
-#define TIMER_MARG_SCATT_DIVISI FALSE 
+#define TIMER_MARG_SCATT_DIVISI TRUE //FALSE 
 // se mpostato a TRUE   -> prende i tempi della fase di marginalizzazione e scattering separatamente 
 // se impostato a FALSE -> prende i tempi della fase di update delle tabelle tutto insieme
 #endif
 
 #ifndef TIMER_CON_TRASFERIMENTI_MEMORIA // influisce solo sui tempi di cuda e con TIMER_MARG_SCATT_DIVISI = TRUE
 #define TIMER_CON_TRASFERIMENTI_MEMORIA FALSE //TRUE
-// se mpostato a TRUE   -> prende i tempi della fase di marginalizzazione e scattering COMPRESO IL TEMPO PER LE CUDAMEMCPY
+// se impostato a TRUE   -> prende i tempi della fase di marginalizzazione e scattering COMPRESO IL TEMPO PER LE CUDAMEMCPY
 // se impostato a FALSE -> prende i tempi della fase di marginalizzazione e scattering SOLO DEI KERNEL
 #endif
 /////////////////////////////////////////////////////////////////
@@ -90,11 +92,11 @@ namespace Config {
 #endif
 
 #ifndef IBRIDO_GPU_CPU
-#define IBRIDO_GPU_CPU FALSE //TRUE
+#define IBRIDO_GPU_CPU TRUE
 #endif
 
 #ifndef LIMITE_CRICCHE_GPU
-#define LIMITE_CRICCHE_GPU 100
+#define LIMITE_CRICCHE_GPU 1000
 #endif
 
 #ifndef PRINT_JT_STATISTICS

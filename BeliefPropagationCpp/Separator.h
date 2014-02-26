@@ -72,15 +72,39 @@ public:
 	}
 
 	void createIndexingTableCUDA() {
-		// creo tabelle di indexing
-		// DEBUG
-		//std::cout << "costruisco la indexing table CUDA per soggetto!!! " << ++(Config::numIndexing) << std::endl;
-		//
-		indexingSoggettoCUDA = createIndexingTableCUDA(soggetto);
-		// DEBUG
-		//std::cout << "costruisco la indexing table CUDA per oggetto!!!  " << ++(Config::numIndexing) << std::endl;
-		//
-		indexingOggettoCUDA = createIndexingTableCUDA(oggetto);
+	
+#if IBRIDO_GPU_CPU
+		if (soggetto->getPsi()->getTableSize() <= LIMITE_CRICCHE_GPU) {
+			// DEBUG
+			std::cout << "Siccome la tabella ha dimensione piccola, decido di fare su cpu e quindi costruisco le indexing table per il metodo con cpu." << ++(Config::numIndexing) << std::endl;
+			//
+			indexingSoggetto = createIndexingTable(soggetto);
+		} else {
+#endif
+			// creo tabelle di indexing
+			// DEBUG
+			//std::cout << "costruisco la indexing table CUDA per soggetto!!! " << ++(Config::numIndexing) << std::endl;
+			//
+			indexingSoggettoCUDA = createIndexingTableCUDA(soggetto);
+			
+#if IBRIDO_GPU_CPU
+		}
+		
+		if (oggetto->getPsi()->getTableSize() <= LIMITE_CRICCHE_GPU) {
+			// DEBUG
+			std::cout << "Siccome la tabella ha dimensione piccola, decido di fare su cpu e quindi costruisco le indexing table per il metodo con cpu." << ++(Config::numIndexing) << std::endl;
+			//
+			indexingOggetto = createIndexingTable(oggetto);
+		} else {
+#endif
+			// DEBUG
+			//std::cout << "costruisco la indexing table CUDA per oggetto!!!  " << ++(Config::numIndexing) << std::endl;
+			//
+			indexingOggettoCUDA = createIndexingTableCUDA(oggetto);
+			
+#if IBRIDO_GPU_CPU
+		}
+#endif
 	}
 
 	void aggiornaPotenzialeOrdinato(JTClique* node, Probability* fiSeparatoreStar, Probability* fiSeparatore);

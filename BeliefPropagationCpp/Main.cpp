@@ -84,7 +84,7 @@
 
 int main(int argc, char* argv[]) 
 {
-	/* */
+	/* * /
 	argc = 3;
 	char* argv2[3]; 
 	argv2[0] = argv[0];

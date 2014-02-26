@@ -148,21 +148,7 @@ void BeliefPropagation::update(JTClique* node, JTClique* first, Separator* secon
 #else
 		//} else {
 			//fiSeparatoreStar = 
-#if IBRIDO_GPU_CPU
-		// calcolo con la GPU solo se le dimenzioni delle tabelle sono significative
-		if (first->getPsi()->getTableSize() > LIMITE_CRICCHE_GPU && node->getPsi()->getTableSize() > LIMITE_CRICCHE_GPU)
-#endif
-			second->updatePotentialsCUDA(first, node, elapsedSum, elapsedDivMul);
-#if IBRIDO_GPU_CPU
-		else {
-			std::cout << "resto su CPU!!!!" << std::endl;
-			second->updatePotentialsCUDAonCPU(first, node, elapsedSum, elapsedDivMul);
-#if NORMALIZZA_AD_OGNI_PASSO
-			if (!node->getPsi()->isNormalized())
-				node->getPsi()->normalizza();
-#endif
-		}
-#endif
+				second->updatePotentialsCUDA(first, node, elapsedSum, elapsedDivMul);
 
 			//if (!node->getPsi()->isNormalized())
 			//	node->getPsi()->normalizza();
@@ -401,7 +387,7 @@ void BeliefPropagation::BP(JunctionTree* jt)
 
 	std::cout << "valori delle tabelle aggiornate.\n";
 	std::cout << "BeliefPropagation eseguito in: " << std::chrono::duration_cast<std::chrono::nanoseconds>(end - begin).count() / 1000000000.0 << ".\n";
-#if TIMER_DETTAGLIATO && !TIMER_MARG_SCATT_DIVISI
+#if TIMER_DETTAGLIATO && TIMER_MARG_SCATT_DIVISI
 	std::cout << "di cui " << *elapsedSum / 1000000000.0 << " per eseguire la marginalizzazione." << std::endl;
 	std::cout << "     e " << *elapsedDivMul / 1000000000.0 << " per eseguire lo scattering." << std::endl;
 #elif TIMER_DETTAGLIATO

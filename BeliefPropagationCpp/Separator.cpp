@@ -605,16 +605,33 @@ void Separator::updatePotentials(JTClique* cli, JTClique* cliScrivo, long long* 
 
 void Separator::updatePotentialsCUDA(JTClique* cli, JTClique* cliScrivo, long long* elapsedSum, long long* elapsedDivMul)
 {
-	std::size_t* indexingTableLeggo;
-	std::size_t* indexingTableScrivo;
+	std::size_t* indexingTableLeggoCUDA;
+	std::size_t* indexingTableScrivoCUDA;
+
+#if IBRIDO_GPU_CPU
+	double* indexingTableLeggo;
+	double* indexingTableScrivo;
+#endif
 	
 	if (cli == soggetto) {
-		indexingTableLeggo = indexingSoggettoCUDA;
-		indexingTableScrivo = indexingOggettoCUDA;
+		indexingTableLeggoCUDA = indexingSoggettoCUDA;
+		indexingTableScrivoCUDA = indexingOggettoCUDA;
+		
+#if IBRIDO_GPU_CPU
+		indexingTableLeggo = indexingSoggetto;
+		indexingTableScrivo = indexingOggetto;
+#endif
+		
 	} else {
 		// sicuramente è dell'oggetto, non ammetto che uno sbagli a passarmi la cli!!!
-		indexingTableLeggo = indexingOggettoCUDA;
-		indexingTableScrivo = indexingSoggettoCUDA;
+		indexingTableLeggoCUDA = indexingOggettoCUDA;
+		indexingTableScrivoCUDA = indexingSoggettoCUDA;
+		
+#if IBRIDO_GPU_CPU
+		indexingTableLeggo = indexingOggetto;
+		indexingTableScrivo = indexingSoggetto;
+#endif
+		
 	}
 
 	std::size_t dimFiStarTable = fi->getTableSize();
