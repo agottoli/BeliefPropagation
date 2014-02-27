@@ -398,7 +398,7 @@ void reduceSmallNArray(size_t  n,
 					size_t sizeDataTable
 					)
 {
-	bool needReadBack = true;
+	//bool needReadBack = true;
 	
     cudaDeviceSynchronize();
     	// (equivalente) a dim3 dimBlock = dim3(numThreads, 1, 1);
@@ -413,7 +413,7 @@ void reduceSmallNArray(size_t  n,
 
 		cudaError_t error;
 		
-		size_t dimResult = dimRisultato * sizeof(double);
+		//size_t dimResult = dimRisultato * sizeof(double);
 		/* 
 		double *gpu_result = (double *) malloc(dimResult);
 		for (size_t i=0; i < nArray; i++) gpu_result[i]=0;
@@ -645,9 +645,9 @@ double* marginalizationSmallN(size_t size, size_t nArray, double *h_idata, size_
 		//for(int maxThreads = nArray; maxThreads <1024; maxThreads*=2){
 		int maxThreads = 512;
 
-			float total = 0.0;
+			//float total = 0.0;
 			//for(int i =0; i<100; i++){
-					float time=0;	// GPU TIME
+					//float time=0;	// GPU TIME
 			        // create input
 			        size_t bytesValuesInput = dimInput * sizeof(double);										// ALE
 			        //double *h_idata = (double *) malloc(bytesValuesInput);										// ALE
@@ -850,7 +850,7 @@ void reduceBigNArray(size_t  n,
 					size_t sizeDataTable
 					)
 {
-	bool needReadBack = true;
+	//bool needReadBack = true;
 	
     cudaDeviceSynchronize();
     	// (equivalente) a dim3 dimBlock = dim3(numThreads, 1, 1);
@@ -860,10 +860,10 @@ void reduceBigNArray(size_t  n,
 		// griglia di un'unica dimensione
 	    dim3 dimGrid(numBlocks, 1, 1);
 
-		cudaError_t error;
+		//cudaError_t error;
 		
 		//size_t dimResult = nArray * sizeof(double);
-		size_t dimResult = dimRisultato * sizeof(double);
+		//size_t dimResult = dimRisultato * sizeof(double);
 
 		// ALE 2014-02-23
 		/*
@@ -993,7 +993,7 @@ double* marginalizationBigN(size_t size, size_t nArray, double *h_idata, size_t 
 	//size = 1<<16;																						// ALE
 	//nArray = 1<<20;																					// ALE
     int maxThreads = 256;				// number of threads per block
-    int cpuFinalThreshold = 1;
+    //int cpuFinalThreshold = 1;
     /*  STAMPE * /
 	printf("%d elements\n", size);
     printf("%d nArray\n", nArray);
@@ -1023,7 +1023,7 @@ double* marginalizationBigN(size_t size, size_t nArray, double *h_idata, size_t 
 	}
 
 	
-	float total = 0.0;
+	//float total = 0.0;
 
 	//for(int i =0; i<100; i++){
 
@@ -1046,7 +1046,7 @@ double* marginalizationBigN(size_t size, size_t nArray, double *h_idata, size_t 
         int numThreads = 0;
 		getNumBlocksAndThreadsBigN(size, maxThreads, numBlocks, numThreads);
        
-	    if (numBlocks == 1) cpuFinalThreshold = 1;
+	    //if (numBlocks == 1) cpuFinalThreshold = 1;
        
         // allocate mem for the result on host side
 		size_t bytesOutput = sizeof(double)*(size/2);											// ALE
@@ -1263,10 +1263,11 @@ void scattering(size_t size,  // dimTabCricca POW2
 	//unsigned int m = 1<<12;//5;
 	//unsigned int size = m*n;
 
-	size_t m = size / n;
+	
 
 	//int maxThreadsDiv = 512;				/// ATTENZIONE, QUANDO SI FANNO I TEST BISOGNA VARIARE ENTRAMBI I VALORI!!!
 	/*
+	size_t m = size / n;
 	printf("%d n\n", n);
 	printf("%d m\n", m);
 	printf("%d size\n", size);
@@ -1275,10 +1276,10 @@ void scattering(size_t size,  // dimTabCricca POW2
 	*/
 	cudaError_t error;
 
-	float bestAverageTimeMult = 100.0;
-	float bestAverageTimeDiv = 100.0;
-	unsigned int bestMaxThreadsDiv = 0;
-	unsigned int bestMaxThreadsMult = 0;
+	//float bestAverageTimeMult = 100.0;
+	//float bestAverageTimeDiv = 100.0;
+	//unsigned int bestMaxThreadsDiv = 0;
+	//unsigned int bestMaxThreadsMult = 0;
 
 	
 	//for (int maxThreads = 32; maxThreads < 1024; maxThreads*=2) {
@@ -1288,12 +1289,12 @@ void scattering(size_t size,  // dimTabCricca POW2
 	unsigned int maxThreadsDiv = maxThreads;
 	unsigned int maxThreadsMult = maxThreads;
 
-	float totalDiv = 0.0;
-	float totalMult = 0.0;
+	//float totalDiv = 0.0;
+	//float totalMult = 0.0;
 		
 	//for(int i =0; i<100; i++){
 	
-		float timeDiv=0;																						// GPU TIME
+		//float timeDiv=0;																						// GPU TIME
 		// create input
 		// BISOGNA TOGLIERE GLI INDICI DALL'ARRAY, (METTERE L'ARRAY NELLA CONSTANT MEMORY)...
 		//size_t bytesVector = n * sizeof(double); // ALE
@@ -1390,7 +1391,7 @@ void scattering(size_t size,  // dimTabCricca POW2
 	std::chrono::system_clock::time_point begin = std::chrono::high_resolution_clock::now();
 #endif
 */
-		kernelDivVector<<< dimGridDiv, dimBlockDiv >>>(d_iVector1Data, d_iVector2Data, n);	
+		kernelDivVector<<< dimGridDiv, dimBlockDiv >>>(d_iVector1Data, d_iVector2Data, dimSeparatore);	
 /*
 #if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE && !CONSIDERA_TRASFERIMENTI_MEMORIA
 	std::chrono::system_clock::time_point end = std::chrono::high_resolution_clock::now();
@@ -1482,7 +1483,7 @@ void scattering(size_t size,  // dimTabCricca POW2
 	begin = std::chrono::high_resolution_clock::now();
 #endif
 */
-		kernelMultMatrixVector<<< dimGridMult, dimBlockMult >>>(d_MatrixData, d_MatrixIndex, d_iVector1Data, n, size, dimCricca);
+		kernelMultMatrixVector<<< dimGridMult, dimBlockMult >>>(d_MatrixData, d_MatrixIndex, d_iVector1Data, dimSeparatore, size, dimCricca);
 /*
 #if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE && !CONSIDERA_TRASFERIMENTI_MEMORIA
 	end = std::chrono::high_resolution_clock::now();
