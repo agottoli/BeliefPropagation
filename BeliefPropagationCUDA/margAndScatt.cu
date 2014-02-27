@@ -1390,7 +1390,7 @@ void scattering(size_t size,  // dimTabCricca POW2
 	std::chrono::system_clock::time_point begin = std::chrono::high_resolution_clock::now();
 #endif
 */
-		kernelDivVector<<< dimGridDiv, dimBlockDiv >>>(d_iVector1Data, d_iVector2Data, n);	
+		kernelDivVector<<< dimGridDiv, dimBlockDiv >>>(d_iVector1Data, d_iVector2Data, dimSeparatore);	
 /*
 #if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE && !CONSIDERA_TRASFERIMENTI_MEMORIA
 	std::chrono::system_clock::time_point end = std::chrono::high_resolution_clock::now();
@@ -1482,7 +1482,7 @@ void scattering(size_t size,  // dimTabCricca POW2
 	begin = std::chrono::high_resolution_clock::now();
 #endif
 */
-		kernelMultMatrixVector<<< dimGridMult, dimBlockMult >>>(d_MatrixData, d_MatrixIndex, d_iVector1Data, n, size, dimCricca);
+		kernelMultMatrixVector<<< dimGridMult, dimBlockMult >>>(d_MatrixData, d_MatrixIndex, d_iVector1Data, dimSeparatore, size, dimCricca);
 /*
 #if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE && !CONSIDERA_TRASFERIMENTI_MEMORIA
 	end = std::chrono::high_resolution_clock::now();
