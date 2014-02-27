@@ -91,7 +91,7 @@ public:
 #if UTILIZZA_CPU_PER_TABELLE_PICCOLE
 		if (soggetto->getPsi()->getTableSize() <= SIZE_MAX_CPU) {
 			// DEBUG
-			std::cout << "Siccome la tabella ha dimensione piccola, decido di fare su cpu e quindi costruisco le indexing table per il metodo con cpu.\n"; // << ++(Config::numIndexing) << std::endl;
+			//std::cout << "Siccome la tabella ha dimensione piccola, decido di fare su cpu e quindi costruisco le indexing table per il metodo con cpu.\n"; // << ++(Config::numIndexing) << std::endl;
 			//
 			indexingSoggetto = createIndexingTable(soggetto);
 		} else {
@@ -107,7 +107,7 @@ public:
 		
 		if (oggetto->getPsi()->getTableSize() <= SIZE_MAX_CPU) {
 			// DEBUG
-			std::cout << "Siccome la tabella ha dimensione piccola, decido di fare su cpu e quindi costruisco le indexing table per il metodo con cpu.\n"; // << ++(Config::numIndexing) << std::endl;
+			//std::cout << "Siccome la tabella ha dimensione piccola, decido di fare su cpu e quindi costruisco le indexing table per il metodo con cpu.\n"; // << ++(Config::numIndexing) << std::endl;
 			//
 			indexingOggetto = createIndexingTable(oggetto);
 		} else {
