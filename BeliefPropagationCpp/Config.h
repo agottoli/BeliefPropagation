@@ -23,17 +23,10 @@
 // se impostato a FALSE -> attiva la possibilità di misurare le varie fasi dell'algoritmo (con o senza trasferimenti...)
 #endif
 
-#ifndef CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE
-// pemette di dividere la misurazione del tempo per entrambe le fasi di aggiornamento
-#define CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE TRUE //FALSE 
-// se impostato a TRUE  -> prende i tempi della fase di marginalizzazione e scattering separatamente 
-// se impostato a FALSE -> prende i tempi della fase di update delle tabelle tutto insieme
-#endif
-
 #ifndef CONSIDERA_TRASFERIMENTI_MEMORIA 
 // Permette di prendere i tempi senza le operazioni di trasferimento dei dati tra ram e gpu
 // influisce solo sui tempi di cuda e con CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE = TRUE, altrimenti sono sempre compresi i tempi dovuti ai trasferimenti
-#define CONSIDERA_TRASFERIMENTI_MEMORIA FALSE //TRUE
+#define CONSIDERA_TRASFERIMENTI_MEMORIA TRUE
 // se impostato a TRUE  -> prende i tempi della fase di marginalizzazione e scattering COMPRESO IL TEMPO PER LE CUDAMEMCPY
 // se impostato a FALSE -> prende i tempi della fase di marginalizzazione e scattering SOLO DEI KERNEL
 #endif
@@ -57,7 +50,7 @@
 // questo valore rappresenta la dimensione massima della tabella dei potenziali 
 // che viene processata direttamente dalla cpu
 // invece di essere trasferita alla gpu
-#define SIZE_MAX_CPU 150 
+#define SIZE_MAX_CPU 150
 #endif
 
 #ifndef PRINT_EXECUTION_BP
@@ -69,8 +62,15 @@
 ///////////////////////////////////////////////////////////////
 // NON MODIFICARE I VALORI QUA SOTTO
 
+#ifndef CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE
+// pemette di dividere la misurazione del tempo per entrambe le fasi di aggiornamento
+#define CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE TRUE //FALSE 
+// se impostato a TRUE  -> prende i tempi della fase di marginalizzazione e scattering separatamente 
+// se impostato a FALSE -> prende i tempi della fase di update delle tabelle tutto insieme
+#endif
+
 #ifndef CONTROLLA_UPDATE
-#define CONTROLLA_UPDATE TRUE //FALSE
+#define CONTROLLA_UPDATE FALSE
 // se impostato a TRUE   -> controlla se ogni tabella è stata calcolata correttamente (serve solo per DEBUG)
 // se impostato a FALSE  -> assume che siano corrette
 

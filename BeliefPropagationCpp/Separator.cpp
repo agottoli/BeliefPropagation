@@ -806,7 +806,7 @@ void Separator::updatePotentialsCUDA(JTClique* cli, JTClique* cliScrivo, long lo
 	} // fine scattering
 #endif
 
-	std::cout << "fine update\n";
+	//std::cout << "fine update\n";
 
 
 	/* TUTTO COMPLETO 
