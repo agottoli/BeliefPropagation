@@ -18,14 +18,14 @@
 /////////////////////////////////////////////////////////////////
 #ifndef TEMPO_COMPLESSIVO // da girare 
 // permette di prendere i tempi relativi alle sole operazioni sulle tabelle
-#define TEMPO_COMPLESSIVO FALSE
+#define TEMPO_COMPLESSIVO TRUE //FALSE
 // se impostato a TRUE  -> misura tutto il metodo della belief propagation dall'inizio alla fine contando anche le chiamate ricorsive dell'esplorazione dell'albero
 // se impostato a FALSE -> attiva la possibilità di misurare le varie fasi dell'algoritmo (con o senza trasferimenti...)
 #endif
 
 #ifndef CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE
 // pemette di dividere la misurazione del tempo per entrambe le fasi di aggiornamento
-#define CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE TRUE //FALSE 
+#define CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE FALSE 
 // se impostato a TRUE  -> prende i tempi della fase di marginalizzazione e scattering separatamente 
 // se impostato a FALSE -> prende i tempi della fase di update delle tabelle tutto insieme
 #endif
@@ -57,7 +57,7 @@
 // questo valore rappresenta la dimensione massima della tabella dei potenziali 
 // che viene processata direttamente dalla cpu
 // invece di essere trasferita alla gpu
-#define SIZE_MAX_CPU 1000 
+#define SIZE_MAX_CPU 150
 #endif
 
 #ifndef PRINT_EXECUTION_BP
@@ -70,7 +70,7 @@
 // NON MODIFICARE I VALORI QUA SOTTO
 
 #ifndef CONTROLLA_UPDATE
-#define CONTROLLA_UPDATE TRUE //FALSE
+#define CONTROLLA_UPDATE FALSE
 // se impostato a TRUE   -> controlla se ogni tabella è stata calcolata correttamente (serve solo per DEBUG)
 // se impostato a FALSE  -> assume che siano corrette
 
