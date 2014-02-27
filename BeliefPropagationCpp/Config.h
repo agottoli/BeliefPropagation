@@ -57,7 +57,7 @@
 // questo valore rappresenta la dimensione massima della tabella dei potenziali 
 // che viene processata direttamente dalla cpu
 // invece di essere trasferita alla gpu
-#define SIZE_MAX_CPU 1000 
+#define SIZE_MAX_CPU 150 
 #endif
 
 #ifndef PRINT_EXECUTION_BP

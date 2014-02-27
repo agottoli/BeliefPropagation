@@ -415,7 +415,7 @@ std::cout << "\n-------------------------------\nModalità scelta:\n";
 	std::cout << "Per eseguire gli update delle tabelle: " << *elapsedSum / 1000000.0 << " ms." << std::endl;
 #else
 	std::cout << "Tempi compresi i trasferimenti in memoria:\n";
-	std::cout << "Per eseguire tutta la Belief Propagation: " << *elapsedSum / 1000000.0 << " ms." << std::endl;
+	std::cout << "Per eseguire tutta la Belief Propagation: " << std::chrono::duration_cast<std::chrono::milliseconds>(end - begin).count() << " ms." << std::endl;
 #endif
 
 	std::cout << "\n-------------------------------\n";

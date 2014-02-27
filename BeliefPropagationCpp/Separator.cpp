@@ -705,7 +705,9 @@ void Separator::updatePotentialsCUDA(JTClique* cli, JTClique* cliScrivo, long lo
 		begin = std::chrono::high_resolution_clock::now();
 		#endif
 		
-		std::cout << "marginalization su CPU." << std::endl;
+		// DEBUG
+		//std::cout << "marginalization su CPU." << std::endl;
+		//
 		fiStarTable = marginalizationCPU(dimFiStarTable, numeroElemDaSommare, indexingTableLeggo); //, this);
 
 		#if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE // && CONSIDERA_TRASFERIMENTI_MEMORIA
@@ -720,7 +722,9 @@ void Separator::updatePotentialsCUDA(JTClique* cli, JTClique* cliScrivo, long lo
 #endif
 
 	is_fiStarTableOnHost = false;
-	std::cout << "marginalization su CUDA." << std::endl;
+	// DEBUG
+	//std::cout << "marginalization su CUDA." << std::endl;
+	//
 	if (dimFiStarTablePow2 > SIZE_MAX_SMALL_N) {
 		// BIG N
 #if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE && CONSIDERA_TRASFERIMENTI_MEMORIA
@@ -755,8 +759,9 @@ void Separator::updatePotentialsCUDA(JTClique* cli, JTClique* cliScrivo, long lo
 #if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE // && CONSIDERA_TRASFERIMENTI_MEMORIA
 	begin = std::chrono::high_resolution_clock::now();
 #endif
-
-	std::cout << "scattering su CPU." << std::endl;
+	// DEBUG
+	//std::cout << "scattering su CPU." << std::endl;
+	//
 	scatteringCPU(dimFiStarTable, numeroElemDaAggiornareConUgualeValore, indexingTableScrivo, fiStarTable, fiTable, cliScrivo, is_fiStarTableOnHost); // QUIIIIII!!!!
 
 #if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE && CONSIDERA_TRASFERIMENTI_MEMORIA
@@ -782,8 +787,9 @@ void Separator::updatePotentialsCUDA(JTClique* cli, JTClique* cliScrivo, long lo
 #if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE && CONSIDERA_TRASFERIMENTI_MEMORIA
 	begin = std::chrono::high_resolution_clock::now();
 #endif
-
-	std::cout << "scattering su CUDA." << std::endl;
+	// DEBUG
+	//std::cout << "scattering su CUDA." << std::endl;
+	//
 	scattering(sizeTableScrivoPow2, dimFiStarTablePow2, fiStarTable, fiTable, tableCliScrivo, indexingTableScrivoCUDA, sizeTableScrivo, dimFiStarTable, elapsedSum, elapsedDivMul, is_fiStarTableOnHost);
 #if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE && CONSIDERA_TRASFERIMENTI_MEMORIA
 	end = std::chrono::high_resolution_clock::now();
