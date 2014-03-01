@@ -608,29 +608,29 @@ void Separator::updatePotentialsCUDA(JTClique* cli, JTClique* cliScrivo, long lo
 	std::size_t* indexingTableLeggoCUDA;
 	std::size_t* indexingTableScrivoCUDA;
 
-#if UTILIZZA_CPU_PER_TABELLE_PICCOLE
-	double** indexingTableLeggo;
-	double** indexingTableScrivo;
-#endif
+//#if UTILIZZA_CPU_PER_TABELLE_PICCOLE
+//	double** indexingTableLeggo;
+//	double** indexingTableScrivo;
+//#endif
 	
 	if (cli == soggetto) {
 		indexingTableLeggoCUDA = indexingSoggettoCUDA;
 		indexingTableScrivoCUDA = indexingOggettoCUDA;
 		
-#if UTILIZZA_CPU_PER_TABELLE_PICCOLE
-		indexingTableLeggo = indexingSoggetto;
-		indexingTableScrivo = indexingOggetto;
-#endif
+//#if UTILIZZA_CPU_PER_TABELLE_PICCOLE
+//		indexingTableLeggo = indexingSoggetto;
+//		indexingTableScrivo = indexingOggetto;
+//#endif
 		
 	} else {
 		// sicuramente è dell'oggetto, non ammetto che uno sbagli a passarmi la cli!!!
 		indexingTableLeggoCUDA = indexingOggettoCUDA;
 		indexingTableScrivoCUDA = indexingSoggettoCUDA;
 		
-#if UTILIZZA_CPU_PER_TABELLE_PICCOLE
-		indexingTableLeggo = indexingOggetto;
-		indexingTableScrivo = indexingSoggetto;
-#endif
+//#if UTILIZZA_CPU_PER_TABELLE_PICCOLE
+//		indexingTableLeggo = indexingOggetto;
+//		indexingTableScrivo = indexingSoggetto;
+//#endif
 		
 	}
 
@@ -698,17 +698,18 @@ void Separator::updatePotentialsCUDA(JTClique* cli, JTClique* cliScrivo, long lo
 
 #if UTILIZZA_CPU_PER_TABELLE_PICCOLE
 	//double* fiStarOnCPU;
-	if (sizeTableLeggo <= SIZE_MAX_CPU) {
+	if (sizeTableLeggo <= SIZE_MAX_CPU_MARGINALIZATION || numeroElemDaSommarePow2 <= 4) {
 		is_fiStarTableOnHost = true;
-		
-		#if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE // && CONSIDERA_TRASFERIMENTI_MEMORIA
-		begin = std::chrono::high_resolution_clock::now();
-		#endif
 		
 		// DEBUG
 		//std::cout << "marginalization su CPU." << std::endl;
 		//
-		fiStarTable = marginalizationCPU(dimFiStarTable, numeroElemDaSommare, indexingTableLeggo); //, this);
+
+		#if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE // && CONSIDERA_TRASFERIMENTI_MEMORIA
+		begin = std::chrono::high_resolution_clock::now();
+		#endif
+		
+		fiStarTable = marginalizationCPUindexCUDA(dimFiStarTable, numeroElemDaSommare, indexingTableLeggoCUDA, cli->getPsi()->getTable(), numeroElemDaSommarePow2, dimFiStarTablePow2); //, this);
 
 		#if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE // && CONSIDERA_TRASFERIMENTI_MEMORIA
 		end = std::chrono::high_resolution_clock::now();
@@ -722,11 +723,12 @@ void Separator::updatePotentialsCUDA(JTClique* cli, JTClique* cliScrivo, long lo
 #endif
 
 	is_fiStarTableOnHost = false;
-	// DEBUG
-	//std::cout << "marginalization su CUDA." << std::endl;
-	//
+	
 	if (dimFiStarTablePow2 > SIZE_MAX_SMALL_N) {
 		// BIG N
+		// DEBUG
+		//std::cout << "marginalization su CUDA (BIG N)." << std::endl;
+		//
 #if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE && CONSIDERA_TRASFERIMENTI_MEMORIA
 		begin = std::chrono::high_resolution_clock::now();
 #endif
@@ -737,6 +739,9 @@ void Separator::updatePotentialsCUDA(JTClique* cli, JTClique* cliScrivo, long lo
 #endif
 	} else {
 		// SMALL N
+		// DEBUG
+		//std::cout << "marginalization su CUDA (Small N)." << std::endl;
+		//
 #if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE && CONSIDERA_TRASFERIMENTI_MEMORIA
 		begin = std::chrono::high_resolution_clock::now();
 #endif
@@ -755,14 +760,17 @@ void Separator::updatePotentialsCUDA(JTClique* cli, JTClique* cliScrivo, long lo
 	// SCATTERING
 
 #if UTILIZZA_CPU_PER_TABELLE_PICCOLE
-	if (sizeTableScrivo <= SIZE_MAX_CPU) {
+	if (sizeTableScrivo <= SIZE_MAX_CPU_SCATTERING) {
+		// DEBUG
+		//std::cout << "scattering su CPU." << std::endl;
+		//
 #if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE // && CONSIDERA_TRASFERIMENTI_MEMORIA
 	begin = std::chrono::high_resolution_clock::now();
 #endif
-	// DEBUG
-	//std::cout << "scattering su CPU." << std::endl;
-	//
-	scatteringCPU(dimFiStarTable, numeroElemDaAggiornareConUgualeValore, indexingTableScrivo, fiStarTable, fiTable, cliScrivo, is_fiStarTableOnHost); // QUIIIIII!!!!
+	
+	scatteringCPUindexCUDA(dimFiStarTable, numeroElemDaAggiornareConUgualeValore, indexingTableScrivoCUDA, fiStarTable, 
+		fiTable, cliScrivo, is_fiStarTableOnHost, tableCliScrivo, numeroElemDaAggiornareConUgualeValorePow2, dimFiStarTablePow2); // QUIIIIII!!!!
+
 
 #if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE && CONSIDERA_TRASFERIMENTI_MEMORIA
 	end = std::chrono::high_resolution_clock::now();
@@ -783,13 +791,13 @@ void Separator::updatePotentialsCUDA(JTClique* cli, JTClique* cliScrivo, long lo
 
 	} else {
 #endif
-
+		// DEBUG
+		//std::cout << "scattering su CUDA." << std::endl;
+		//
 #if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE && CONSIDERA_TRASFERIMENTI_MEMORIA
 	begin = std::chrono::high_resolution_clock::now();
 #endif
-	// DEBUG
-	//std::cout << "scattering su CUDA." << std::endl;
-	//
+	
 	scattering(sizeTableScrivoPow2, dimFiStarTablePow2, fiStarTable, fiTable, tableCliScrivo, indexingTableScrivoCUDA, sizeTableScrivo, dimFiStarTable, elapsedSum, elapsedDivMul, is_fiStarTableOnHost);
 #if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE && CONSIDERA_TRASFERIMENTI_MEMORIA
 	end = std::chrono::high_resolution_clock::now();
@@ -806,6 +814,8 @@ void Separator::updatePotentialsCUDA(JTClique* cli, JTClique* cliScrivo, long lo
 	} // fine scattering
 #endif
 
+	std::string sss;
+	std::cin >> sss;
 	//std::cout << "fine update\n";
 
 
@@ -882,6 +892,91 @@ double* Separator::marginalizationCPU(size_t dimFiStarTable, // sarebbe sia la d
 	return fiStarTable;
 }
 
+double* Separator::marginalizationCPUindexCUDA(size_t dimFiStarTable, // sarebbe sia la dimensione dell'output, sia il nostro caro nArray.
+							  size_t numeroElemDaSommare, // sarebbe il nostro caro e vecchio m
+							  size_t* indexingTableLeggo // la indexing table che punta agli elementi su cui fare la marginalizzazione
+							  , double* tableCliLeggo
+							  , size_t numeroElemDaSommarePow2
+							  , size_t dimFiStarTablePow2
+							  //,Separator* sep // quello che si becca la tabella appena calcolata... // QUI!!!
+							  ) {
+
+
+
+	double* fiStarTable = new double[dimFiStarTable];
+
+
+	/*
+	double sommaTabella = 0.0;
+	for (std::size_t i = 0; i < dimFiStarTable; i++) {
+		//std::cout << " i = " << i;
+
+		fiStarTable[i] = 0.0;
+
+		// calcolo il valore di fiStar[i]
+		for (std::size_t j = 0; j < numeroElemDaSommare; j++) {
+			//std::cout << " j = " << j << std::endl;
+			//std::cout << fiStarTable[i];
+			fiStarTable[i] += *indexingTableLeggo[i * numeroElemDaSommare + j];
+			//std::cout << " --> " << fiStarTable[i] << std::endl;
+			
+		}
+
+		sommaTabella += fiStarTable[i];
+
+	}
+
+	// per aiutare la normalizzazione
+	//sep->getFi()->setSommaTabella(sommaTabella);
+	fi->setSommaTabella(sommaTabella);
+
+	return fiStarTable;
+	*/
+
+
+	//////////////////////////////////
+
+
+
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+	double sommaTabella = 0.0;
+	for (std::size_t i = 0; i < dimFiStarTable; i++) {
+		//std::cout << " i = " << i;
+
+		fiStarTable[i] = 0.0;
+
+		// calcolo il valore di fiStar[i]
+		for (std::size_t j = 0; j < numeroElemDaSommare; j++) {
+#if SUM_ON_ROW
+				//if (Config::indexingSumOnRow) {
+					// [0][1][2] * [0000][1111][2222]
+			fiStarTable[i] += tableCliLeggo[indexingTableLeggo[i * numeroElemDaSommarePow2 + j]];
+#else
+				//} else {
+					// [0][1][2] * [012][012][012][012]
+			fiStarTable[i] += tableCliLeggo[indexingTableLeggo[i + dimFiStarTablePow2 * j]];
+				//}
+#endif
+			//std::cout << " j = " << j << std::endl;
+			//std::cout << fiStarTable[i];
+			//fiStarTable[i] += *indexingTableLeggo[i * numeroElemDaSommare + j];
+			//std::cout << " --> " << fiStarTable[i] << std::endl;
+			
+		}
+
+		sommaTabella += fiStarTable[i];
+
+	}
+
+
+	fi->setSommaTabella(sommaTabella);
+
+	return fiStarTable;
+}
+
 void Separator::scatteringCPU(size_t dimFiStarTable, // sarebbe la dimsione del separatore su cui iteriamo per leggere i valori da dividere
 				size_t numeroElemDaAggiornareConUgualeValore,
 				double** indexingTableScrivo,
@@ -938,6 +1033,107 @@ void Separator::scatteringCPU(size_t dimFiStarTable, // sarebbe la dimsione del 
 	//delete fiTable;
 	fi->setTable(fiStarTable);
 	cliScrivo->getPsi()->setSommaTabella(sommaTabellaCri);
+}
+
+void Separator::scatteringCPUindexCUDA(size_t dimFiStarTable, // sarebbe la dimsione del separatore su cui iteriamo per leggere i valori da dividere
+				size_t numeroElemDaAggiornareConUgualeValore,
+				size_t* indexingTableScrivo,
+				double* fiStarTable,
+				double* fiTable,
+				JTClique* cliScrivo,
+				bool fiStarTableOnCPU
+				, double* tableCliScrivo
+				, size_t numeroElemDaAggiornareConUgualeValorePow2
+				, size_t dimFiStarTablePow2
+				)
+{
+
+	if (!fiStarTableOnCPU)
+		fiStarTable = recuperaDaGPU(fiStarTable, dimFiStarTable);
+
+	double divisioneTraFi;
+
+	double sommaTabellaCri = 0.0;
+
+	for (std::size_t i = 0; i < dimFiStarTable; i++) {
+
+		// calcolo solo se la divisione 
+		if (fi->getTable()[i] > ZERO_DIVISIONE) {
+			// calcolo quanto vale fiStar[i]/fi[i]
+			divisioneTraFi = fiStarTable[i] / fiTable[i]; // CAMBIARE
+		} else
+			divisioneTraFi = 0;
+
+		//std::cout << "fiStar[" << i << "]/fi[" << i << "] = " << divisioneTraFi << std::endl;
+
+		// se devo moltiplicare per 1 allora mi risparmio il giro
+		if (divisioneTraFi != 1) {
+
+			// provo a sbagliare per vedere se il confronto lo rileva
+			//divisioneTraFi = 0.5;
+
+			for (std::size_t j = 0; j < numeroElemDaAggiornareConUgualeValore; j++) {
+#if !USA_CUDA && SUM_ON_ROW
+				// NON VIENE MAI USATO!!!
+				//if (Config::indexingSumOnRow) {
+					// [0][1][2] * [0000][1111][2222]
+					/*
+					tableCliScrivo[indexingTableScrivo[i * numeroElemDaAggiornareConUgualeValore + j]] *= divisioneTraFi;
+					*/
+					///*
+					// diventa...
+					tableCliScrivo[indexingTableScrivo[i * numeroElemDaAggiornareConUgualeValorePow2 + j]] *= divisioneTraFi;
+
+					// SUMT
+					sommaTabellaCri += tableCliScrivo[indexingTableScrivo[i * numeroElemDaAggiornareConUgualeValorePow2 + j]];
+
+
+					//std::cout << sommaTabellaCri << std::endl;
+					//*/
+					//
+#else
+				//} else {
+					// [0][1][2] * [012][012][012][012]
+					/*
+					tableCliScrivo[indexingTableScrivo[i + dimFiStarTable * j]] *= divisioneTraFi;
+					*/
+					///*
+					// diventa...
+					tableCliScrivo[indexingTableScrivo[i + dimFiStarTablePow2 * j]] *= divisioneTraFi;
+
+					// SUMT
+					sommaTabellaCri += tableCliScrivo[indexingTableScrivo[i + dimFiStarTablePow2 * j]];
+
+
+					//std::cout << sommaTabellaCri << std::endl;
+					//*/
+					//
+				//}
+#endif
+				
+
+			}
+		} else {
+			for (std::size_t j = 0; j < numeroElemDaAggiornareConUgualeValore; j++) {
+#if SUM_ON_ROW
+					sommaTabellaCri += tableCliScrivo[indexingTableScrivo[i * numeroElemDaAggiornareConUgualeValorePow2 + j]];
+#else
+					// SUMT
+					sommaTabellaCri += tableCliScrivo[indexingTableScrivo[i + dimFiStarTablePow2 * j]];
+					//std::cout << sommaTabellaCri << std::endl;
+#endif
+			}
+		}
+
+
+	}
+
+
+	fi->setTable(fiStarTable); // CAMBIARE
+
+	// SUMT
+	cliScrivo->getPsi()->setSommaTabella(sommaTabellaCri);
+
 }
 
 void Separator::updatePotentialsCUDAonCPU(JTClique* cli, JTClique* cliScrivo, long long* elapsedSum, long long* elapsedDivMul)

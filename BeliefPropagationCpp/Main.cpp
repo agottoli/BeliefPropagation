@@ -84,7 +84,9 @@
 
 int main(int argc, char* argv[]) 
 {
-	/* * /
+	bool VS = false;
+	/* */
+	VS = true;
 	argc = 3;
 	char* argv2[3]; 
 	argv2[0] = argv[0];
@@ -374,8 +376,8 @@ int main(int argc, char* argv[])
 
 		/ * */
 		
-		
-		std::cin >> sss;
+		if (VS)
+			std::cin >> sss;
 		
 		
 	}

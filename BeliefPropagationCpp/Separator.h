@@ -64,6 +64,14 @@ public:
 							  double** indexingTableLeggo // la indexing table che punta agli elementi su cui fare la marginalizzazione
 							  //,Separator* sep // quello che si becca la tabella appena calcolata... // QUI!!!
 							  );
+	double* marginalizationCPUindexCUDA(size_t dimFiStarTable, // sarebbe sia la dimensione dell'output, sia il nostro caro nArray.
+							  size_t numeroElemDaSommare, // sarebbe il nostro caro e vecchio m
+							  size_t* indexingTableLeggo // la indexing table che punta agli elementi su cui fare la marginalizzazione
+							  , double* tableCliLeggo
+							  , size_t numeroElemDaSommarePow2
+							  , size_t dimFiStarTablePow2
+							  //,Separator* sep // quello che si becca la tabella appena calcolata... // QUI!!!
+							  );
 	void scatteringCPU(size_t dimFiStarTable, // sarebbe la dimsione del separatore su cui iteriamo per leggere i valori da dividere
 				size_t numeroElemDaAggiornareConUgualeValore,
 				double** indexingTableScrivo,
@@ -71,6 +79,17 @@ public:
 				double* fiTable,
 				JTClique* cliScrivo,
 				bool fiStarTableOnCPU
+				);
+	void scatteringCPUindexCUDA(size_t dimFiStarTable, // sarebbe la dimsione del separatore su cui iteriamo per leggere i valori da dividere
+				size_t numeroElemDaAggiornareConUgualeValore,
+				size_t* indexingTableScrivo,
+				double* fiStarTable,
+				double* fiTable,
+				JTClique* cliScrivo,
+				bool fiStarTableOnCPU
+				, double* tableCliScrivo
+				, size_t numeroElemDaAggiornareConUgualeValorePow2
+				, size_t dimFiStarTablePow2
 				);
 	//
 
@@ -87,7 +106,7 @@ public:
 	}
 
 	void createIndexingTableCUDA() {
-	
+/*	
 #if UTILIZZA_CPU_PER_TABELLE_PICCOLE
 		if (soggetto->getPsi()->getTableSize() <= SIZE_MAX_CPU) {
 			// DEBUG
@@ -96,12 +115,13 @@ public:
 			indexingSoggetto = createIndexingTable(soggetto);
 		} else {
 #endif
+*/
 			// creo tabelle di indexing
 			// DEBUG
 			//std::cout << "costruisco la indexing table CUDA per soggetto!!! " << ++(Config::numIndexing) << std::endl;
 			//
 			indexingSoggettoCUDA = createIndexingTableCUDA(soggetto);
-			
+/*			
 #if UTILIZZA_CPU_PER_TABELLE_PICCOLE
 		}
 		
@@ -112,14 +132,16 @@ public:
 			indexingOggetto = createIndexingTable(oggetto);
 		} else {
 #endif
+*/
 			// DEBUG
 			//std::cout << "costruisco la indexing table CUDA per oggetto!!!  " << ++(Config::numIndexing) << std::endl;
 			//
 			indexingOggettoCUDA = createIndexingTableCUDA(oggetto);
-			
+/*			
 #if UTILIZZA_CPU_PER_TABELLE_PICCOLE
 		}
 #endif
+*/
 	}
 
 	void aggiornaPotenzialeOrdinato(JTClique* node, Probability* fiSeparatoreStar, Probability* fiSeparatore);

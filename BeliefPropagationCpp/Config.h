@@ -46,11 +46,17 @@
 #endif
 
 // TODO si potrebbe passare da input!!!
-#ifndef SIZE_MAX_CPU
+#ifndef SIZE_MAX_CPU_MARGINALIZATION
 // questo valore rappresenta la dimensione massima della tabella dei potenziali 
 // che viene processata direttamente dalla cpu
 // invece di essere trasferita alla gpu
-#define SIZE_MAX_CPU 150
+#define SIZE_MAX_CPU_MARGINALIZATION 2500
+#endif
+#ifndef SIZE_MAX_CPU_SCATTERING
+// questo valore rappresenta la dimensione massima della tabella dei potenziali 
+// che viene processata direttamente dalla cpu
+// invece di essere trasferita alla gpu
+#define SIZE_MAX_CPU_SCATTERING 150
 #endif
 
 #ifndef PRINT_EXECUTION_BP
@@ -70,7 +76,7 @@
 #endif
 
 #ifndef CONTROLLA_UPDATE
-#define CONTROLLA_UPDATE FALSE
+#define CONTROLLA_UPDATE TRUE // FALSE
 // se impostato a TRUE   -> controlla se ogni tabella è stata calcolata correttamente (serve solo per DEBUG)
 // se impostato a FALSE  -> assume che siano corrette
 
@@ -95,7 +101,7 @@
 
 #ifndef NORMALIZZA_AD_OGNI_PASSO
 // indica se si ha intenzione di normalizzare le tabelle appena vengono aggiornate oppure no
-#define NORMALIZZA_AD_OGNI_PASSO TRUE //FALSE // sulla GPU lo fa in ogni caso perché non costa nulla farlo con le cublas!!!
+#define NORMALIZZA_AD_OGNI_PASSO FALSE // sulla GPU lo fa in ogni caso perché non costa nulla farlo con le cublas!!!
 #endif
 
 

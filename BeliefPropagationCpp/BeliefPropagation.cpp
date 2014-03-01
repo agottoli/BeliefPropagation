@@ -392,7 +392,7 @@ std::cout << "\n-------------------------------\nModalità scelta:\n";
 #if USA_CUDA
 	std::cout << "CUDA\n";
 #if UTILIZZA_CPU_PER_TABELLE_PICCOLE
-	std::cout << "utilizzando la cpu per tabelle fino a " << SIZE_MAX_CPU << " elementi.\n";
+	std::cout << "utilizzando la cpu per tabelle fino a " << SIZE_MAX_CPU_MARGINALIZATION << " elementi per MARGINALIZZAZIONE e fino a " << SIZE_MAX_CPU_SCATTERING << " elementi per SCATTERING.\n";
 #endif
 
 #if CONSIDERA_TRASFERIMENTI_MEMORIA

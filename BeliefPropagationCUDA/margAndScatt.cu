@@ -18,19 +18,10 @@
 #if NORMALIZZA_AD_OGNI_PASSO
 #include "cublas_v2.h"
 #endif
-/*
-#if (!TEMPO_COMPLESSIVO && !CONSIDERA_TRASFERIMENTI_MEMORIA)
-#include <chrono>
-#endif
-*/
+
 #ifndef DEBUG_FLAG
 //const bool debug = true; //false;
 #define DEBUG_FLAG FALSE
-#endif
-
-#ifndef TIMER_CUDA
-//const bool debug = true; //false;
-#define TIMER_CUDA FALSE
 #endif
 
 /*
@@ -1235,12 +1226,12 @@ kernelDivVector(double *g_iVector1Data, double *g_iVector2Data, size_t n)
 }*/
 
 	__global__ void
-kernelMultMatrixVector(double *d_MatrixData, size_t *d_MatrixIndex, double * g_iVector1Data, size_t n, size_t size, size_t sizeDataTable){
+kernelMultMatrixVector(double *d_MatrixData, size_t *d_MatrixIndex, double * g_iVector1Data, size_t dimSeparatorePow2, size_t size, size_t sizeDataTable){ // dimSep, size, dimCricca
 	size_t i = blockIdx.x*(blockDim.x) + threadIdx.x;
 	size_t index = d_MatrixIndex[i];
 	//if (index != SIZE_MAX)
 	if (index < sizeDataTable)
-		d_MatrixData[index] *= g_iVector1Data[i % n];
+		d_MatrixData[index] *= g_iVector1Data[i % dimSeparatorePow2]; // dimSepPow2 vs dimSep ???
 	
 	//if(debug && (threadIdx.x == 0 || threadIdx.x == (blockDim.x-1))&&(blockIdx.x==0 || blockIdx.x==gridDim.x-1)) cuPrintf ("CUPRINTF 3- d_MatrixData[%d] = %f \n", index, d_MatrixData[index]);
 }
@@ -1483,7 +1474,7 @@ void scattering(size_t size,  // dimTabCricca POW2
 	begin = std::chrono::high_resolution_clock::now();
 #endif
 */
-		kernelMultMatrixVector<<< dimGridMult, dimBlockMult >>>(d_MatrixData, d_MatrixIndex, d_iVector1Data, dimSeparatore, size, dimCricca);
+		kernelMultMatrixVector<<< dimGridMult, dimBlockMult >>>(d_MatrixData, d_MatrixIndex, d_iVector1Data, n, size, dimCricca);
 /*
 #if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE && !CONSIDERA_TRASFERIMENTI_MEMORIA
 	end = std::chrono::high_resolution_clock::now();
@@ -1565,6 +1556,9 @@ void scattering(size_t size,  // dimTabCricca POW2
 		#endif
 
 		//totalMult+=timeMult;	
+
+		//for (size_t l = 0; l < dimCricca; l++)
+		//	printf("el[%d] = %f\n", l, h_MatrixData[l]);
 
 
 
