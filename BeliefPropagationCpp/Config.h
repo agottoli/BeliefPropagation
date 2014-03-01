@@ -50,13 +50,13 @@
 // questo valore rappresenta la dimensione massima della tabella dei potenziali 
 // che viene processata direttamente dalla cpu
 // invece di essere trasferita alla gpu
-#define SIZE_MAX_CPU_MARGINALIZATION 2500
+#define SIZE_MAX_CPU_MARGINALIZATION 5000
 #endif
 #ifndef SIZE_MAX_CPU_SCATTERING
 // questo valore rappresenta la dimensione massima della tabella dei potenziali 
 // che viene processata direttamente dalla cpu
 // invece di essere trasferita alla gpu
-#define SIZE_MAX_CPU_SCATTERING 150
+#define SIZE_MAX_CPU_SCATTERING 5000
 #endif
 
 #ifndef PRINT_EXECUTION_BP
@@ -76,7 +76,7 @@
 #endif
 
 #ifndef CONTROLLA_UPDATE
-#define CONTROLLA_UPDATE TRUE // FALSE
+#define CONTROLLA_UPDATE FALSE // TRUE
 // se impostato a TRUE   -> controlla se ogni tabella è stata calcolata correttamente (serve solo per DEBUG)
 // se impostato a FALSE  -> assume che siano corrette
 

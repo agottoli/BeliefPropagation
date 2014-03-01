@@ -85,7 +85,7 @@
 int main(int argc, char* argv[]) 
 {
 	bool VS = false;
-	/* */
+	/* * /
 	VS = true;
 	argc = 3;
 	char* argv2[3]; 
