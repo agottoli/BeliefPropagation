@@ -9,9 +9,6 @@ BeliefPropagationCpp/huginParser/*.cc: ./BeliefPropagationCpp/huginParser/HuginG
 	java -cp ../../javacc/bin/lib/javacc.jar javacc $(JAVACC_OPTS) HuginGrammar.jj ; \
 	cd ../..
 
-#sumKernelSmallN.o:
-#	nvcc -c -o sumKernelSmallN.o BeliefPropagationCUDA/sumKernelSmallN.cu -arch=compute_30
-
 margAndScatt.o:
 	nvcc -c -o margAndScatt.o BeliefPropagationCUDA/margAndScatt.cu -arch=compute_30
 	

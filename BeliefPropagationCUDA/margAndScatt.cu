@@ -687,6 +687,7 @@ double* marginalizationSmallN(size_t size, size_t nArray, double *h_idata, size_
 
 #if (!TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE && !CONSIDERA_TRASFERIMENTI_MEMORIA)
 					// per i test si può inserire un warm-up
+					float time=0;	// GPU TIME
 					cudaEvent_t start, stop;
 					cudaEventCreate(&start); // vedi http://docs.nvidia.com/cuda/cuda-c-best-practices-guide/
 					cudaEventCreate(&stop);	
@@ -1371,6 +1372,7 @@ void scattering(size_t size,  // dimTabCricca POW2
 
 
 		#if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE && !CONSIDERA_TRASFERIMENTI_MEMORIA
+		float timeDiv=0;	// GPU TIME
 		cudaEvent_t start, stop;
 		cudaEventCreate(&start); // vedi http://docs.nvidia.com/cuda/cuda-c-best-practices-guide/
 		cudaEventCreate(&stop);	
