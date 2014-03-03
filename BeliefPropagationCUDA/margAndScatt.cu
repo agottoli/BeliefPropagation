@@ -1372,7 +1372,7 @@ void scattering(size_t size,  // dimTabCricca POW2
 
 
 		#if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE && !CONSIDERA_TRASFERIMENTI_MEMORIA
-		float timeDiv=0;	// GPU TIME
+		float time=0;	// GPU TIME
 		cudaEvent_t start, stop;
 		cudaEventCreate(&start); // vedi http://docs.nvidia.com/cuda/cuda-c-best-practices-guide/
 		cudaEventCreate(&stop);	
@@ -1395,9 +1395,8 @@ void scattering(size_t size,  // dimTabCricca POW2
 		#if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE && !CONSIDERA_TRASFERIMENTI_MEMORIA
 		cudaEventRecord( stop, 0 );
 		cudaEventSynchronize( stop );
-		cudaEventElapsedTime( &timeDiv, start, stop );
-		*elapsedDivMul += timeDiv * 1000000;
-		//totalDiv+=timeDiv;
+		cudaEventElapsedTime( &time, start, stop );
+		*elapsedDivMul += time * 1000000;
 		#endif
 
 /*
@@ -1522,12 +1521,10 @@ void scattering(size_t size,  // dimTabCricca POW2
 
 
 		#if !TEMPO_COMPLESSIVO && CONSIDERA_MARGINALIZZAZIONE_E_SCATTERING_DIVISE && !CONSIDERA_TRASFERIMENTI_MEMORIA
-		float timeMult = 0;
 		cudaEventRecord( stop, 0 );
 		cudaEventSynchronize( stop );
-		cudaEventElapsedTime( &timeMult, start, stop );
-		//totalMult+=timeMult;
-		*elapsedDivMul += timeMult * 1000000;
+		cudaEventElapsedTime( &time, start, stop );
+		*elapsedDivMul += time * 1000000;
 		#endif
 
 		// copy final matrix from device to host

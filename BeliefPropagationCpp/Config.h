@@ -76,7 +76,7 @@
 #endif
 
 #ifndef CONTROLLA_UPDATE
-#define CONTROLLA_UPDATE FALSE
+#define CONTROLLA_UPDATE FALSE // TRUE
 // se impostato a TRUE   -> controlla se ogni tabella è stata calcolata correttamente (serve solo per DEBUG)
 // se impostato a FALSE  -> assume che siano corrette
 
