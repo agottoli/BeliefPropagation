@@ -13,6 +13,12 @@ class Probability;
 class Separator;
 class VecMap;
 
+/**
+ * Classe che implementa le cricche del junction tree.
+ *
+ * @author Alessandro Gottoli vr352595
+ */
+
 class JTClique
 {
 	// variabili che compongono la cricca

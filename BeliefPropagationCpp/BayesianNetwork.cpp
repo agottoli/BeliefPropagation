@@ -9,6 +9,11 @@
 #include <math.h> // per il ceil
 #include "Config.h"
 
+/**
+ * Implementa i metodi necessari ad una bayesian network.
+ *
+ * @author Alessandro Gottoli vr352595
+ */
 
 BayesianNetwork::BayesianNetwork(void)
 {
@@ -225,22 +230,6 @@ Variable* BayesianNetwork::min(std::unordered_set<Variable*>* cliques, std::unor
 		i = dim % 2;
 		j = i + dim / 2;
 
-		// prova unrolling
-		//for (; j + 3 < dim; i = i + 4, j = j + 4) {
-		//	if (mins[i]->getNumNeighboursNotSelected() > mins[j]->getNumNeighboursNotSelected()) {
-		//		mins[i] = mins[j];
-		//	}
-		//	if (mins[i+1]->getNumNeighboursNotSelected() > mins[j+1]->getNumNeighboursNotSelected()) {
-		//		mins[i+1] = mins[j+1];
-		//	}
-		//	if (mins[i+2]->getNumNeighboursNotSelected() > mins[j+2]->getNumNeighboursNotSelected()) {
-		//		mins[i+2] = mins[j+2];
-		//	}
-		//	if (mins[i+3]->getNumNeighboursNotSelected() > mins[j+3]->getNumNeighboursNotSelected()) {
-		//		mins[i+3] = mins[j+3];
-		//	}
-		//}
-
 		for (; j < dim; i++, j++) {
 
 			if (mins[i]->getNumNeighboursNotSelected() > mins[j]->getNumNeighboursNotSelected()) {
@@ -360,16 +349,16 @@ void BayesianNetwork::createCliqueAndAddToSetIfMaximal(std::unordered_set<JTCliq
 			vm->push_back(*I);
 		}
 
-//TABELLE			
-//std::cout << "la tabella ha variabili: " << vm->toString() << std::endl;
-std::size_t elementiInTabella = vm->numeroElementiDellaRelativaTabella();
-//std::size_t kbytes = elementiInTabella * sizeof(double) / 1000;
-//std::cout << "devo creare una PSI di dimensione: " << elementiInTabella << " elementi circa " << kbytes << "kbyte." << std::endl;
-numeroElementiDelleTabelleProbability += elementiInTabella;
+		//TABELLE			
+		//std::cout << "la tabella ha variabili: " << vm->toString() << std::endl;
+		std::size_t elementiInTabella = vm->numeroElementiDellaRelativaTabella();
+		//std::size_t kbytes = elementiInTabella * sizeof(double) / 1000;
+		//std::cout << "devo creare una PSI di dimensione: " << elementiInTabella << " elementi circa " << kbytes << "kbyte." << std::endl;
+		numeroElementiDelleTabelleProbability += elementiInTabella;
 
 
-//if (!Config::tabellaScazza)
-	c->setPsi(new Probability(vm, 1));
+		//if (!Config::tabellaScazza)
+			c->setPsi(new Probability(vm, 1));
 
 		// specifico alla variabile che fa parte della cricca, mi serve per analizzare solo le cricche a cui appartiene
 		// quando devo assegnare la sua probabilità ad una cricca
@@ -590,36 +579,37 @@ JunctionTree* BayesianNetwork::kruskal(std::priority_queue<Separator*, std::vect
 
 			// QUA COSTRUISCO SOLO PER QUELLI SCELTI
 			//TABELLE
-//if (!Config::tabellaScazza) {
+			//if (!Config::tabellaScazza) {
 
-	// DEBUG
-	//std::cout << "costruisco il fi!!!" << std::endl;
-	//
+				// DEBUG
+				//std::cout << "costruisco il fi!!!" << std::endl;
+				//
 
-	elemento->setFi(new Probability(elemento->getVars(), 1));
+				elemento->setFi(new Probability(elemento->getVars(), 1));
 
 #if USE_INDEXING_TABLE && !USA_CUDA
-//	if (Config::useIndexingTable) {
-//		if (!Config::useCUDA)
-			elemento->createIndexingTable();
+				//	if (Config::useIndexingTable) {
+				//		if (!Config::useCUDA)
+							elemento->createIndexingTable();
 #endif
 #if USA_CUDA
-		//else
-			elemento->createIndexingTableCUDA();
-//	}
+						//else
+							elemento->createIndexingTableCUDA();
+				//	}
 #endif
 
-	//else {
-	//	double* tttSogg = new double[s->getSoggetto()->getPsi()->getTableSize()];
-	//	double* tttOgg = new double[s->getOggetto()->getPsi()->getTableSize()];
-	//}
-}
-		// DEBUG
-//std::size_t elementiInTabella = elemento->getVars()->numeroElementiDellaRelativaTabella();
-//numeroElementiDelleTabelleProbability += elementiInTabella;
-//
+				//else {
+				//	double* tttSogg = new double[s->getSoggetto()->getPsi()->getTableSize()];
+				//	double* tttOgg = new double[s->getOggetto()->getPsi()->getTableSize()];
+				//}
+			//	}
 		}
-//	}
+		// DEBUG
+		//std::size_t elementiInTabella = elemento->getVars()->numeroElementiDellaRelativaTabella();
+		//numeroElementiDelleTabelleProbability += elementiInTabella;
+		//
+	}
+
 
 	/*
 	return scelti;

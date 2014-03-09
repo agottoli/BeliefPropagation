@@ -11,6 +11,11 @@
 #include "../BeliefPropagationCUDA/margAndScatt.h"
 //
 
+/**
+ * Implementa i metodi del separatore.
+ *
+ * @author Alessandro Gottoli vr352595
+ */
 Separator::Separator(JTClique* s, JTClique* o, VecMap* v)
 {
 	soggetto = s;

@@ -7,6 +7,11 @@
 #include "JTClique.h"
 #include "Separator.h"
 
+/**
+ * Classe che implementa il junction tree.
+ *
+ * @author Alessandro Gottoli vr352595
+ */
 class JunctionTree
 {
 	// le cricche che compongono l'albero

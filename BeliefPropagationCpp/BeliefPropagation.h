@@ -9,6 +9,11 @@
 #include "JunctionTree.h"
 #include "BayesianNetwork.h"
 
+/**
+ * Classe che implementa la Belief Propagation.
+ *
+ * @author Alessandro Gottoli vr352595
+ */
 class BeliefPropagation
 {
 

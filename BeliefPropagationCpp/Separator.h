@@ -9,6 +9,11 @@
 //#include "ProbabilityMD.h"
 #include "Config.h"
 
+/**
+ * Classe che implementa il separatore, cioè l'arco che collega due cricche nel junction tree con la propria probabilità.
+ *
+ * @author Alessandro Gottoli vr352595
+ */
 class Separator
 {
 	// le due cricche collegate dal link di questo separatore

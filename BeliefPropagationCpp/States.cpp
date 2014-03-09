@@ -2,7 +2,10 @@
 #include "Config.h"
 #include <algorithm>    // std::find
 
-
+/**
+ *
+ * @author Alessandro Gottoli vr352595
+ */
 States::States(int reserve)
 {
 	siza = 0;

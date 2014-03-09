@@ -7,6 +7,11 @@
 //#include <sys/timeb.h>
 #include <chrono>
 
+/**
+ * Implementa i metodi necessari della Belief Propagation.
+ *
+ * @author Alessandro Gottoli vr352595
+ */
 
 static int livello;
 
@@ -244,70 +249,6 @@ void BeliefPropagation::distributeEvidence(JTClique* node, JTClique* father, lon
 #endif
 }
 
-// sommo su node
-// modifico first
-// metodo INUTILE!!!
-/*
-void BeliefPropagation::update(JTClique* first, Separator* second, JTClique* node, double* elapsedSum, double* elapsedDivMul)
-{
-	//livello++;
-
-	// STAMPA ESECUZIONE inizio
-	//std::cout << tabLivello() << "fiS* = sumOn{varsC\\varsS}(psiCpadre)\n";
-	// STAMPA ESECUZIONE fine
-
-	Probability* fiSeparatore = second->getFi();
-	
-	Probability* fiSeparatoreStar;
-
-	if (!Config::useIndexingTable) {
-		fiSeparatoreStar = node->getPsi()->sumOnNotPresent(fiSeparatore);
-		first->getPsi()->aggiornaOrdinato(fiSeparatoreStar, fiSeparatore);
-	} else {
-		// DEBUG calcolo te tabelle anche col metodo normale e le confronto con il nuovo metodo
-		Probability* copiaFiSeparatoreStar = node->getPsi()->sumOnNotPresent(fiSeparatore);
-		Probability* copiaPsiCricca = first->getPsi()->copy();
-		copiaPsiCricca->aggiornaOrdinato(copiaFiSeparatoreStar, fiSeparatore);
-		//
-		if (!Config::useCUDA)
-			fiSeparatoreStar = second->sumOnIndexingTableOf(node, first, elapsedSum, elapsedDivMul);
-		else
-			fiSeparatoreStar = second->sumOnIndexingTableOfCUDA(node, first, elapsedSum, elapsedDivMul);
-
-		// DEBUG confronta fiStar e psiStar
-		bool ok = copiaFiSeparatoreStar->confronta(fiSeparatoreStar);
-		if (ok)
-			std::cout << "OK!!! :D" << std::endl;
-		else {
-			std::cout << "ERROR!!! :(" << std::endl;
-			std::string sss;
-			std::cin >> sss;
-		}
-		ok = copiaPsiCricca->confronta(first->getPsi());
-		if (ok)
-			std::cout << "OK!!! :D" << std::endl;
-		else {
-			std::cout << "ERROR!!! :(" << std::endl;
-			std::string sss;
-			std::cin >> sss;
-		}
-		//
-
-	}
-
-	
-
-	// aggiorno la fi
-	second->setFi(fiSeparatoreStar);
-	delete fiSeparatore;
-
-	if (!first->getPsi()->isNormalized())
-		first->getPsi()->normalizza();
-
-	//livello--;
-}
-*/
-
 JunctionTree* BeliefPropagation::BP(BayesianNetwork* bn)
 {
 	bn->moralize();
@@ -319,38 +260,11 @@ JunctionTree* BeliefPropagation::BP(BayesianNetwork* bn)
 
 void BeliefPropagation::BP(JunctionTree* jt)
 {
-	//std::cout << "inizia la belief propagation..." << std::endl;
-	//std::string sss;
-	//std::cin >> sss;
 
-	//time_t m;
-	//time_t now = time(NULL);
 	long long* elapsedSum = new long long(0);
 	long long* elapsedDivMul = new long long(0);
-	//clock_gettime();
-	auto begin = std::chrono::high_resolution_clock::now();
-	/*
-	std::chrono::system_clock::time_point b1;
-	std::chrono::system_clock::time_point b2;
-	long long b3 = 0;
-	for (int i = 0; i < 1000; i++) {
-		b1 = std::chrono::high_resolution_clock::now();
-		std::cout << "sdljsdsofdnfobnfdoifnioflmlkmlkmllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll";
-		b2 = std::chrono::high_resolution_clock::now();
-		b3 += std::chrono::duration_cast<std::chrono::milliseconds>(b2 - b1).count();
-		
-	}
-	auto begin22 = std::chrono::high_resolution_clock::now();
 
-	std::cout << "ccc " <<b3 << " vs " << std::chrono::duration_cast<std::chrono::milliseconds>(begin22 - begin).count();
-	std::string sd;
-	std::cin >> sd;
-	*/
-	/*
-	jt->calcolaRootMigliore();
-	
-	JTClique* root = jt->getRoot();
-	*/
+	auto begin = std::chrono::high_resolution_clock::now();
 
 	//std::cout << "le roots sono: " << jt->getRoots()->size() << std::endl;
 

@@ -36,6 +36,11 @@ public:
 	}
 };
 
+/**
+ * Classe che implementa una bayesian network.
+ *
+ * @author Alessandro Gottoli vr352595
+ */
 class BayesianNetwork
 {
 	// insieme che contiene tutte le variabili che compongono la rete
@@ -66,7 +71,7 @@ public:
 
 
 	// aggiunge una variabile alla rete
-	void addVariable(Variable*);
+	void addVariable(Variable* v);
 	// restituisce tutte le variabili della rete
 	std::unordered_set<Variable*>* getVariables(void);
 
@@ -102,6 +107,7 @@ public:
 	}
 	//
 
+	// restituisce l'insieme di tutte le variabili
 	std::unordered_set<Variable*>* getAllVariables()
 	{
 		return &nodes;
@@ -128,7 +134,7 @@ private:
 	//
 
 
-
+	// metodo di supporto per la triangolarizzazione
 	void triangolarizzaSupport(Variable*, std::unordered_set<Variable*>*, std::unordered_set<JTClique*>*);
 
 };

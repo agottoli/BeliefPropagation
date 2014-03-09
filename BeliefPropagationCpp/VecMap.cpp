@@ -5,6 +5,10 @@
 
 #include <iostream>
 
+/**
+ *
+ * @author Alessandro Gottoli vr352595
+ */
 VecMap::VecMap(std::size_t reserve)
 {
 	siza = 0;

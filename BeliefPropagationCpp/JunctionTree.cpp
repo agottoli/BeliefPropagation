@@ -1,5 +1,10 @@
 #include "JunctionTree.h"
 
+/**
+ * Implementa i metodi per il junction tree.
+ *
+ * @author Alessandro Gottoli vr352595
+ */
 
 //JunctionTree::JunctionTree(std::unordered_set<JTClique*>* c, std::unordered_set<Separator*>* l)
 //{

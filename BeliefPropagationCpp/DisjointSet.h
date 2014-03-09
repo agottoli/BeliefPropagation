@@ -8,6 +8,11 @@
 
 class JTClique;
 
+/**
+ * Classe che implementa gli insiemi disgiunti.
+ *
+ * @author Alessandro Gottoli vr352595
+ */
 class DisjointSet
 {
 	std::unordered_map<JTClique*, JTClique*> roots;

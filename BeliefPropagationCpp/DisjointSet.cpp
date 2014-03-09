@@ -1,6 +1,10 @@
 #include "DisjointSet.h"
 
-
+/**
+ * Implementa i metodi per gli insiemi disgiunti.
+ *
+ * @author Alessandro Gottoli vr352595
+ */
 DisjointSet::DisjointSet(std::unordered_set<JTClique*>* elements)
 {
 	for (std::unordered_set<JTClique*>::iterator I = elements->begin(); I != elements->end(); ++I) {

@@ -13,6 +13,11 @@ class Probability;
 class JTClique;
 class States;
 
+/**
+ * Classe che implementa la variabile e com'è collegata alla rete bayesiana.
+ *
+ * @author Alessandro Gottoli vr352595
+ */
 class Variable
 {
 	// nome della variabile

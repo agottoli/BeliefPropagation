@@ -5,6 +5,11 @@
 #include "Variable.h"
 #include "VecMap.h"
 
+/**
+ * Implementa i metodi per le cricche del junction tree.
+ *
+ * @author Alessandro Gottoli vr352595
+ */
 
 JTClique::JTClique(std::unordered_set<Variable*>* vs)
 {

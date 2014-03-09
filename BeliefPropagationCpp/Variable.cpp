@@ -6,6 +6,11 @@
 //#include "ProbabilityMD.h"
 #include "States.h"
 
+/**
+ * Implementa i metodi delle variabili.
+ *
+ * @author Alessandro Gottoli vr352595
+ */
 Variable::Variable(std::string l, States* s)
 {
 	// DEBUG

@@ -22,6 +22,12 @@
 #endif
 */
 
+/**
+ * Classe che implementa la probabilità.
+ *
+ * @author Alessandro Gottoli vr352595
+ */
+
 class Probability
 {
 	// variabili in ordine in cui compaiono nella tabella

@@ -13,6 +13,11 @@ class Variable;
 
 //const bool useMap = true;
 
+/**
+ * Classe che identifica l'insieme di variabili che fanno parte della stessa cricca.
+ *
+ * @author Alessandro Gottoli vr352595
+ */
 class VecMap
 {
 	// numero di elementi contenuti

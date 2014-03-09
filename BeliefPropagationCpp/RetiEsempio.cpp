@@ -9,7 +9,11 @@
 #include "VecMap.h"
 #include "States.h"
 
-
+/**
+ * Piccole reti di esempio da tutorial per vedere se i calcoli sono giusti (sono quelle di alcune slide che si fanno anche a mano).
+ *
+ * @author Alessandro Gottoli vr352595
+ */
 class RetiEsempio
 {
 

@@ -1,6 +1,9 @@
 #ifndef MARGANDSCATT_CU
 #define MARGANDSCATT_CU
 
+/**
+ * Contiene tutti i kernel CUDA per le fasi della belief propagation (marginalizzione e scattering)
+ */
 #include "../BeliefPropagationCpp/Config.h"
 
 #include <limits.h>
@@ -23,12 +26,6 @@
 //const bool debug = true; //false;
 #define DEBUG_FLAG FALSE
 #endif
-
-/*
-#ifndef SIZE_MAX
-#define SIZE_MAX ((size_t)-1)
-#endif
-*/
 
 
 //////////////////////////////////////////// RIDUZIONE ==> MARGINALIZATION //////////////////////////////////////////////////////

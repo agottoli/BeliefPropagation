@@ -1,5 +1,14 @@
 #pragma once
 
+/**
+ * Qui si può scegliere la configurazione da utilizzare.
+ * Si parte dal scegliere se eseguire il metodo su cpu o su CUDA,
+ * al fare su gpu solo tabelle di una certa dimensione.
+ * Si sceglie anche come prendere i tempi.
+ * 
+ * @author Alessandro Gottoli vr352595
+ */
+
 #ifndef TRUE
 #define TRUE 1
 #define FALSE 0

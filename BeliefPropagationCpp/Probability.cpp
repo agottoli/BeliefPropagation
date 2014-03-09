@@ -4,6 +4,12 @@
 #include <string>
 #include "Config.h"
 
+/**
+ * Implementa i metodi che lavorano sulla probabilità.
+ *
+ * @author Alessandro Gottoli vr352595
+ */
+
 Probability::Probability(VecMap* vars, double initValue)
 {
 	variables  = vars;

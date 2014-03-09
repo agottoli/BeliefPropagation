@@ -9,6 +9,11 @@
 
 //const bool useMapS = true;
 
+/**
+ * Classe che implementa l'insieme dei valori che può avere una variabile.
+ *
+ * @author Alessandro Gottoli vr352595
+ */
 class States
 {
 	// numero di elementi contenuti
