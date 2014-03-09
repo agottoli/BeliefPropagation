@@ -9,6 +9,11 @@ Il parametro più importante è
 	se TRUE  -> abilita la vesione parallela in CUDA
 	se FALSE -> abilita la versione sequenziale
 
+- UTILIZZA_CPU_PER_TABELLE_PICCOLE
+	ha validità solo se USA_CUDA = TRUE
+	se TRUE -> esegue su cpu le tabelle più piccole (dai test fatti si è individuato a 5000 questa dimensione, ma si può cambiare modificando un altro parametro)
+	se FALSE -> esgue tutta la belief propagation su GPU
+
 Altri parametri che possono interessare sono quelli relativi al modo di prendere i tempi di esecuzione:
 - TEMPO_COMPLESSIVO
 	se TRUE  -> misura il tempo di esecuzione della belief propagation
