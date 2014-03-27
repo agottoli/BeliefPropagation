@@ -1,5 +1,5 @@
 # Belief Propagation 
-=============================================================================
+===========================================================================
 
 Implementazione dell'algoritmo di belief propagation in versione sequenziale (C++) e in versione parallela (CUDA)
 per i corsi di Intelligenza Artificiale (Prof. Alessandro Farinelli) e Architetture Avanzate (Prof. Nicola Bombieri).
@@ -26,22 +26,28 @@ Il parametro piů importante č:
 
 - USA_CUDA
 >	se TRUE  -> abilita la vesione parallela in CUDA
+
 >	se FALSE -> abilita la versione sequenziale
 
 - UTILIZZA_CPU_PER_TABELLE_PICCOLE
 >	ha validitŕ solo se USA_CUDA = TRUE
+
 >	se TRUE -> esegue su cpu le tabelle piů piccole (dai test fatti si č individuato a 5000 questa dimensione, ma si puň cambiare modificando un altro parametro)
+
 >	se FALSE -> esgue tutta la belief propagation su GPU
 
 Altri parametri che possono interessare sono quelli relativi al modo di prendere i tempi di esecuzione:
 
 - TEMPO_COMPLESSIVO
 >	se TRUE  -> misura il tempo di esecuzione della belief propagation
+
 >	se FALSE -> abilitŕ la possibilitŕ di misurare ogni fase dell'algoritmo
 
 - CONSIDERA_TRASFERIMENTI_MEMORIA
 >	ha validitŕ solo se TEMPO_COMPLESSIVO = FALSE
+
 >	se TRUE  -> misura il tempo di esecuzione di ogni fase COMPRESI i trasferimenti in memoria
+
 >	se FALSE -> misura il tempo di esecuzione di ogni fase SENZA i trasferimenti in memoria
 
 
