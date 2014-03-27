@@ -10,14 +10,15 @@ Il programma prevede una fase di preprocessing dove si ha:
 - trasformazione da rete bayesiana a junction tree, visto che la belief propagation si applica su questi ultimi
 - costruzione delle index mapping table per velocizzare la ricerca degli elementi durante gli aggiornamenti delle tabelle
 
-Le reti di benchmark utilizzate possono essere trovate [qui]:http://bndg.cs.aau.dk/html/bayesian_networks.html.
+Le reti di benchmark utilizzate possono essere trovate 
+[qui]:http://bndg.cs.aau.dk/html/bayesian_networks.html.
  
 
 ## COMPILAZIONE:
 
 Assieme al programma č presente un makefile che permette di compilare facilmente con il segunte comando:
 
-	make
+    make
 
 Il codice sorgente č unico sia per la versione sequenziale che per la versione parallela,
 infatti vengono utilizzate delle direttive di preprocessing per decidere quale versione compilare.
@@ -26,28 +27,28 @@ Il parametro piů importante č:
 
 - USA_CUDA
 >	se TRUE  -> abilita la vesione parallela in CUDA
-
+>
 >	se FALSE -> abilita la versione sequenziale
 
 - UTILIZZA_CPU_PER_TABELLE_PICCOLE
 >	ha validitŕ solo se USA_CUDA = TRUE
-
+>
 >	se TRUE -> esegue su cpu le tabelle piů piccole (dai test fatti si č individuato a 5000 questa dimensione, ma si puň cambiare modificando un altro parametro)
-
+>
 >	se FALSE -> esgue tutta la belief propagation su GPU
 
 Altri parametri che possono interessare sono quelli relativi al modo di prendere i tempi di esecuzione:
 
 - TEMPO_COMPLESSIVO
 >	se TRUE  -> misura il tempo di esecuzione della belief propagation
-
+>
 >	se FALSE -> abilitŕ la possibilitŕ di misurare ogni fase dell'algoritmo
 
 - CONSIDERA_TRASFERIMENTI_MEMORIA
 >	ha validitŕ solo se TEMPO_COMPLESSIVO = FALSE
-
+>
 >	se TRUE  -> misura il tempo di esecuzione di ogni fase COMPRESI i trasferimenti in memoria
-
+>
 >	se FALSE -> misura il tempo di esecuzione di ogni fase SENZA i trasferimenti in memoria
 
 
