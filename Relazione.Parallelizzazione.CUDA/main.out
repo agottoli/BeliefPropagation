@@ -1,0 +1,17 @@
+\BOOKMARK [1][-]{section.1}{Introduzione}{}% 1
+\BOOKMARK [1][-]{section.2}{Marginalizzazione}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Procedura che parallelizza su m}{section.2}% 3
+\BOOKMARK [3][-]{subsubsection.2.1.1}{Fase 1}{subsection.2.1}% 4
+\BOOKMARK [3][-]{subsubsection.2.1.2}{Fase 2}{subsection.2.1}% 5
+\BOOKMARK [3][-]{subsubsection.2.1.3}{Loop unrolling}{subsection.2.1}% 6
+\BOOKMARK [3][-]{subsubsection.2.1.4}{Istruzioni shuffle}{subsection.2.1}% 7
+\BOOKMARK [2][-]{subsection.2.2}{Procedura che parallelizza su n}{section.2}% 8
+\BOOKMARK [3][-]{subsubsection.2.2.1}{Dimensionamento dei bloccchi}{subsection.2.2}% 9
+\BOOKMARK [3][-]{subsubsection.2.2.2}{Scelta tra i due approcci}{subsection.2.2}% 10
+\BOOKMARK [3][-]{subsubsection.2.2.3}{Utilizzo della memoria costante}{subsection.2.2}% 11
+\BOOKMARK [1][-]{section.3}{Scattering}{}% 12
+\BOOKMARK [2][-]{subsubsection.3.0.4}{Fase 1}{section.3}% 13
+\BOOKMARK [3][-]{subsubsection.3.0.5}{Fase 2}{subsubsection.3.0.4}% 14
+\BOOKMARK [1][-]{section.4}{Normalizzazione}{}% 15
+\BOOKMARK [1][-]{section.5}{Soglia di parallelizzazione}{}% 16
+\BOOKMARK [1][-]{section.6}{Test e conclusioni}{}% 17

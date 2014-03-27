@@ -282,14 +282,14 @@ La procedura si può scomporre in due fasi:
 Essendo operazioni molto utilizzate esistono diverse librerie che le implementano. Abbiamo quindi effettuato dei test prestazionali utilizzando le librerie Thrust e cuBLAS.
 Dai test le cuBLAS si sono rivelate più veloci rispetto alle Thrust, probabilmente a causa del fatto che queste ultime non assumono che ogni riga abbia la stessa lunghezza, e di conseguenza non sfruttino appieno questa regolarità.
 
-\subsubsection{Soglia di parallelizzazione}\label{sogliaparallelizzazione}
+\subsubsection{Soglia di parallelizzazione}
 Analizzando la figura \ref{sommavaloretotale} si nota come un gran numero di tabelle presenti una dimensione troppo piccola per poter ottere uno speedup positivo dall'elaborazione su GPGPU.
 %Per questa ragione abbiamo inserito un controllo che esegue il codice su GPGPU solo nel caso in cui questo risulti essere effettivamente vantaggioso.
 Abbiamo pertanto tentato di stabilire una soglia al di sotto della quale elaborare i dati solo su CPU. 
 
 Il controllo viene effettuato sulla dimensione della tabella dei potenziali, prima di eseguire ogni fase di marginalizzazione e di scattering (si noti che a seconda di come procedono le elaborazioni potrebbe risultare conveniente eseguire la marginalizzazione su GPGPU ma non lo scattering, o viceversa).
 
-Mediante misurazioni empiriche abbiamo identificato come $5000$ il numero minimo di elementi per cominciare un'elaborazione basata su GPGPU.
+Mediante misurazioni empiriche abbiamo identificato come $250$ il numero minimo di elementi per cominciare un'elaborazione basata su GPGPU.
 Si noti tuttavia che tale valore costituisce solo un'approssimazione in quanto in presenza di piccoli input i tempi misurati risultano essere molto bassi, ed è dunque difficile ottenere misure precise.
 Abbiamo inoltre verificato che, dato l’elevato overhead, una volta trasferiti i dati su scheda video è conveniente elaborarli fino alla fine, anche quando questi diventano piccoli.
 
@@ -316,17 +316,12 @@ La tabella è suddivisa in cinque parti:
 \item La quarta parte riporta i tempi relativi all'esecuzione delle fasi di marginalizzazione e scattering su GPGPU, comprensivi dell'overhead dovuto ai trasferimenti in memoria.
 \end{itemize}
 
-Come ci si aspettava si hanno risultati migliori al crescere delle dimensioni medie del separatore, tuttavia il tempo trascorso per il trasferimento dei dati tra host e device ci permette di raggiungere uno speedup positivo solo con i benchmark più impegnativi% in cui la dimensione media delle tabelle dei separatori è maggiore di 35000
-.  In particolare dai test notiamo come l'esecuzione su GPGPU sulle reti Munin1, Barley, Link e Water porta rispettivamente ad uno speedup di $1.796$, $1.351$, $1.316$ e $1.086$.  % risulta vantaggiosa, portando uno speedup di $1.44$. %  anche se non di molto.
-
-% cpu + gpu per migliorare
+Come ci si aspettava si hanno risultati migliori al crescere delle dimensioni medie del separatore, tuttavia il tempo trascorso per il trasferimento dei dati tra host e device ci permette di raggiungere risultati equiparabili alla versione sequenziale solo con i benchmark più impegnativi in cui la dimensione media delle tabelle dei separatori è maggiore di 35000. Dai test notiamo che solo l'esecuzione sulla rete Munin1 risulta vantaggiosa, portando uno speedup di $1.44$. %  anche se non di molto.
 
 %Come si può notare il tempo totale di esecuzione dell'algoritmo peggiora per le reti di medio-piccola dimensione. Al contrario la rete più grande, Munin1, porta ad uno speedup di $1.44$.
-In seguito abbiamo analizzato le prestazioni delle singole fasi (illustrate dalle Figure \ref{graficoMildew}, \ref{graficoDiabetes}, \ref{graficoBarley}, \ref{graficoMunin4}, \ref{graficoWater}, \ref{graficoMunin1}, \ref{graficoLink}) per capire quanta parallelizzazione è possibile ottenere senza considerare l'overhead dovuto ai trasferimenti in memoria.
-Nella fase di marginalizzazione il nostro algoritmo si comporta bene in tutte le situazioni, portando lo speedup da un minimo di $2.018$ ad un massimo di $12.6$.
-Lo scattering invece registra prestazioni migliori, ottenendo valori compresi tra $6$ e $16.6$.
-
-Si noti inoltre come l'esecuzione su GPGPU comprenda comunque l'esecuzione di alcuni calcoli su CPU quando la dimensione della tabella risulta essere inferiore alla soglia di parallelizzazione descritta nella Sezione \ref{sogliaparallelizzazione}.
+Quindi siamo passati ad analizzare le prestazioni delle singole fasi (illustrate dalle Figure \ref{graficoMildew}, \ref{graficoDiabetes}, \ref{graficoBarley}, \ref{graficoMunin4}, \ref{graficoWater}, \ref{graficoMunin1}, \ref{graficoLink}) per capire quanta parallelizzazione è possibile ottenere senza considerare l'overhead dovuto ai trasferimenti in memoria.
+Nella fase di marginalizzazione il nostro algoritmo si comporta bene in tutte le situazioni, portando lo speedup da un minimo di $2.085$ ad un massimo di $15.75$.
+Lo scattering invece è un po' più limitato, ottenendo valori compresi tra $1.029$ e $7.910$.
 
 Le cause dei modesti risultati ottenuti sono a nostro avviso varie:
 \begin{itemize}
@@ -351,7 +346,6 @@ A tal proposito è opportuno specificare che:
 \item le specifiche tecniche delle macchine, riportate in Tabella \ref{tab:hw} sono notevolmente differenti sia per quanto riguarda la CPU che per quanto riguarda la GPU, rendendo molto difficile un confronto.
 \item %Su questi valori abbiamo ottenuto dei risultati simili anche se si nota che ci sono alcune reti che vanno meglio e altre che vanno peggio, questo probabilmente è dovuto anche al fatto che 
 se confrontiamo le caratteristiche dei junction tree, esse sono leggermente diverse e ciò e dovuto al metodo (non specificato nell'articolo) utilizzato per la trasformazione della rete bayesiana in junction tree.
-\item nell'articolo \cite{zheng2011belief} non è chiaro come siano state misurate le prestazoni e in particolare come sia stato considerato l'overhead dovuto ai trasferimenti in memoria. % Tuttavia analizzando i risultati ottenuti è probabile che le misurazioni non tengano in considerazione dei tempi di trasferimento.
 \end{itemize}
 
 
@@ -412,9 +406,9 @@ se confrontiamo le caratteristiche dei junction tree, esse sono leggermente dive
 \hline
 \textbf{BP on CPU} & 101 &	275 &	935	&	366 &	152	&	5976 &	1122 \\
 \hline
-\textbf{BP on GPU} & 132 &	780 &	692	&		688 &	140	&	3329 &	853 \\
+\textbf{BP on GPU} & 693 &	1211 &	978	&		1340 &	318	&	4151 &	1243 \\
 \hline
-\textbf{Speedup} & 0,765 &	0,353 &	1,351	&	0,532 &	1,086	&	1,796 &	1,316 \\
+\textbf{Speedup} & 0,146 &	0,227 &	0,956	&	0,273 &	0,478	&	1,440 &	0,903 \\
 %\midrule
 %\midrule
 \multicolumn{8}{l}{ }	\\	
@@ -432,216 +426,13 @@ se confrontiamo le caratteristiche dei junction tree, esse sono leggermente dive
 
 \multicolumn{8}{l}{\textbf{CUDA (senza trasferimenti in memoria)}} \\
 \hline
-\textbf{marg. on GPU} &	5 &	45 &	30 &	36 &	23 &		447	& 120 \\
-\hline
-\textbf{scatt. on GPU} &	5 &	30 &	36 &	28 &	5	&	295 &	48 \\
-\hline
-\textbf{Speedup marg.} & 8,000 &	2,018 &	12,600 &	4,361 &	2,730	&	5,195 &	4,100 \\
-\hline
-\textbf{Speedup scatt.} & 11,800 &	6,000 &	14,194 &		8,429 &	16,600 &		10,860 &	14,417 \\
-%\midrule
-\multicolumn{8}{l}{ }	\\
-\multicolumn{8}{l}{ }	\\								
-
-\multicolumn{8}{l}{\textbf{CUDA (con trasferimenti in memoria)}} \\
-\hline
-\textbf{marg. on GPU} &	39 &	303	& 279 &	214 &	47 &		1458 &	331 \\
-\hline
-\textbf{scatt. on GPU} &	83	& 441 &	402	& 394 &	99 &		1852 &	534 \\
-\hline
-\textbf{Speedup marg.} & 1,026 & 0,323	  & 1,355	 & 0,734	 & 1,340	& 1,593	 & 1,487 \\
-\hline
-\textbf{Speedup scatt.} & 0.711 & 0,408 & 1,271	 & 0,599 & 0,838	& 1,730	 & 1,296	 \\
-%\bottomrule
-\end{tabular}
-\caption{Statistiche del junction tree (JT) relativi alle reti del dataset, performance della belief propagation (BP) in relazione alle dimensioni delle tabelle dei potenziali delle cricche (CPT) e del separatore (SPT).}
-\label{tab:tempi}
-\end{table}
-
-\begin{figure}[p]
-\centering
-\includegraphics[scale=0.8]{Mildew.png}
-\caption{Rete Mildew - tempi misurati in ms.\\Confronto tra CPU e GPGPU (senza considerare i trasferimenti in memoria)} 
-\label{graficoMildew}
-\end{figure}
-
-\begin{figure}[p]
-\centering
-\includegraphics[scale=0.8]{Diabetes.png}
-\caption{Rete Diabetes - tempi misurati in ms.\\Confronto tra CPU e GPGPU (senza considerare i trasferimenti in memoria)} 
-\label{graficoDiabetes}
-\end{figure}
-
-\begin{figure}[p]
-\centering
-\includegraphics[scale=0.8]{Barley.png}
-\caption{Rete Barley - tempi misurati in ms.\\Confronto tra CPU e GPGPU (senza considerare i trasferimenti in memoria)} 
-\label{graficoBarley}
-\end{figure}
-
-\begin{figure}[p]
-\centering
-\includegraphics[scale=0.8]{Munin4.png}
-\caption{Rete Munin4 - tempi misurati in ms.\\Confronto tra CPU e GPGPU (senza considerare i trasferimenti in memoria)} 
-\label{graficoMunin4}
-\end{figure}
-
-\begin{figure}[p]
-\centering
-\includegraphics[scale=0.8]{Water.png}
-\caption{Rete Water - tempi misurati in ms.\\Confronto tra CPU e GPGPU (senza considerare i trasferimenti in memoria)} 
-\label{graficoWater}
-\end{figure}
-
-\begin{figure}[p]
-\centering
-\includegraphics[scale=0.8]{Munin1.png}
-\caption{Rete Munin1 - tempi misurati in ms.\\Confronto tra CPU e GPGPU (senza considerare i trasferimenti in memoria)} 
-\label{graficoMunin1}
-\end{figure}
-
-\begin{figure}[p]
-\centering
-\includegraphics[scale=0.8]{Link.png}
-\caption{Rete Link - tempi misurati in ms.\\Confronto tra CPU e GPGPU (senza considerare i trasferimenti in memoria)} 
-\label{graficoLink}
-\end{figure}
-
-
-%%%
-
-
-
-\begin{figure}[p]
-\centering
-\includegraphics[scale=0.8]{MildewTOT.png}
-\caption{Rete Mildew - tempi misurati in ms.\\Confronto tra CPU e GPGPU (tempo totale, inclusi i trasferimenti in memoria)} 
-\label{graficoMildew}
-\end{figure}
-
-\begin{figure}[p]
-\centering
-\includegraphics[scale=0.8]{DiabetesTOT.png}
-\caption{Rete Diabetes - tempi misurati in ms.\\Confronto tra CPU e GPGPU (tempo totale, inclusi i trasferimenti in memoria)} 
-\label{graficoDiabetes}
-\end{figure}
-
-\begin{figure}[p]
-\centering
-\includegraphics[scale=0.8]{BarleyTOT.png}
-\caption{Rete Barley - tempi misurati in ms.\\Confronto tra CPU e GPGPU (tempo totale, inclusi i trasferimenti in memoria)} 
-\label{graficoBarley}
-\end{figure}
-
-\begin{figure}[p]
-\centering
-\includegraphics[scale=0.8]{Munin4TOT.png}
-\caption{Rete Munin4 - tempi misurati in ms.\\Confronto tra CPU e GPGPU (tempo totale, inclusi i trasferimenti in memoria)} 
-\label{graficoMunin4}
-\end{figure}
-
-\begin{figure}[p]
-\centering
-\includegraphics[scale=0.8]{WaterTOT.png}
-\caption{Rete Water - tempi misurati in ms.\\Confronto tra CPU e GPGPU (tempo totale, inclusi i trasferimenti in memoria)} 
-\label{graficoWater}
-\end{figure}
-
-\begin{figure}[p]
-\centering
-\includegraphics[scale=0.8]{Munin1TOT.png}
-\caption{Rete Munin1 - tempi misurati in ms.\\Confronto tra CPU e GPGPU (tempo totale, inclusi i trasferimenti in memoria)} 
-\label{graficoMunin1}
-\end{figure}
-
-\begin{figure}[p]
-\centering
-\includegraphics[scale=0.8]{LinkTOT.png}
-\caption{Rete Link - tempi misurati in ms.\\Confronto tra CPU e GPGPU (tempo totale, inclusi i trasferimenti in memoria)} 
-\label{graficoLink}
-\end{figure}
-
-\printbibliography
-
-\end{document}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-% la vecchia tabella dei tempi!!!!
-\begin{table}
-\small
-\centering
-\begin{tabular}{ l | r | r | r | r | r | r | r }
-%\toprule
-\textbf{Dataset} & \textbf{Mildew} & \textbf{Diabetes} & \textbf{Barley} & \textbf{Munin4} & \textbf{Water} & \textbf{Munin1} & \textbf{Link} \\
-  \hline
-\textbf{\# JT nodes} & 29 & 337 & 36 &  877 & 21 & 162 & 586 \\
-  \hline
-\textbf{Max CPT size} & 1249280 & 84480 & 7257600  & 448000 & 589824 & 38400000 & 2097152 \\
-\hline
-\textbf{Min CPT size} & 336 &	495 &	216 &		4	& 9	&	4	& 4 \\
-
-\hline
-\textbf{Avg CPT size} & 117257 &	29157 &	476133 &	10102 &	144205	&	516887 &	40928 \\
-  \hline
-\textbf{Max SPT size} & 62464	& 5280 &	907200 &		56000 &	147456 &		2400000 &	262144 \\
-\hline
-\textbf{Min SPT size} & 72	& 16 &	7	&	2 &	3	&	2 &	3 \\
-\hline
-\textbf{Avg SPT size}  & 3950 &	1698	& 38237	&	1376	& 28527 &		58691 &	4418 \\
- \\
-%\midrule
-%\midrule
-\multicolumn{8}{l}{ }	\\
-\multicolumn{8}{l}{ }	\\								
-
-\multicolumn{8}{l}{ \textbf{Rilevamenti tempo esecuzione Belief Propagation [ms]:}}	\\		
-\hline
-\textbf{BP on CPU} & 101 &	275 &	935	&	366 &	152	&	5976 &	1122 \\
-\hline
-\textbf{BP on GPU} & 693 &	1211 &	978	&		1340 &	318	&	4151 &	1243 \\
-\hline
-\textbf{Speedup} & 0,146 &	0,227 &	0,956	&	0,273 &	0,478	&	1,440 &	0,903 \\
-%\midrule
-%\midrule
-\multicolumn{8}{l}{ }	\\	
-\multicolumn{8}{l}{ }	\\								
-
-\multicolumn{8}{l}{\textbf{Rilevamenti fasi dettagliate [ms]:}} \\
-\multicolumn{8}{l}{ }	\\								
-\multicolumn{8}{l}{\textbf{Sequenziale:}} \\
-\hline
-\textbf{marg. on CPU} &	40 & 	98 &	378 &		157 &	63	&	2322 &	492 \\
-\hline
-\textbf{scatt. on CPU} &	59 &	180 &	511	 &		236 &	83 &		3204 &	692 \\
-%\midrule
-\multicolumn{8}{l}{ }	\\								
-
-\multicolumn{8}{l}{\textbf{CUDA (senza trasferimenti in memoria)}} \\
-\hline
 \textbf{marg. on GPU} &	5 &	47 &	32 &	45 &	4 &		213	& 43 \\
 \hline
 \textbf{scatt. on GPU} &	20 &	175 &	66 &	230 &	14	&	433 &	168 \\
 \hline
-\textbf{Speedup marg.} & 8,000 &	2,085 &	11,813 &	3,489 &	15,750	&	11,991 &	11,442 \\
+\textbf{Speedup marg.} & 8 &	2,085 &	11,813 &	3,489 &	15,75	&	11,991 &	11,442 \\
 \hline
-\textbf{Speedup scatt.} & 2,950 &	1,029 &	7,742 &		1,026 &	5,929 &		7,910 &	4,120 \\
+\textbf{Speedup scatt.} & 2,95 &	1,029 &	7,742 &		1,026 &	5,929 &		7,910 &	4,120 \\
 %\midrule
 \multicolumn{8}{l}{ }	\\
 \multicolumn{8}{l}{ }	\\								
@@ -709,3 +500,7 @@ se confrontiamo le caratteristiche dei junction tree, esse sono leggermente dive
 \caption{Rete Link - tempi misurati in ms.\\Confronto tra CPU e GPGPU (senza considerare i trasferimenti in memoria)} 
 \label{graficoLink}
 \end{figure}
+
+\printbibliography
+
+\end{document}
