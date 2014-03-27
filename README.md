@@ -10,7 +10,7 @@ Il programma prevede una fase di preprocessing dove si ha:
 
 - costruzione delle index mapping table per velocizzare la ricerca degli elementi durante gli aggiornamenti delle tabelle
 
-Le reti di benchmark utilizzate possono essere trovate [qui]:http://bndg.cs.aau.dk/html/bayesian_networks.html.
+Le reti di benchmark utilizzate possono essere trovate [qui](http://bndg.cs.aau.dk/html/bayesian_networks.html).
  
 
 ## COMPILAZIONE:
@@ -63,4 +63,4 @@ Un esempio di configurazione di lancio è:
 
 	./BeliefPropagation ./RetiEsempio/Munin1.net ./RetiEsempio/Munin1.num
 	
-> # ENJOY
+> # ENJOY!!! :D
