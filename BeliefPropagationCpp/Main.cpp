@@ -244,6 +244,26 @@ int main(int argc, char* argv[])
 		std::cout << "-----------------------------------------\n";
 #endif
 
+		/*
+		std::string file = "dot_file.dot";
+		std::ofstream f(file, std::ios::app); //apre il file in modalità append, lasciando intatto quello che c'è e scrivendo alla fine
+		if(!f) {
+			std::cout << "Errore nell'apertura del file!";
+			std::string s;
+			std::cin >> s;
+		}
+
+		f << jt->getDOT() << std::endl;
+
+		f.close(); //chiudo il file
+		*/
+
+		jt->checkRunningIntersectionProperty();
+		
+
+		// mi fermo prima di applicare la BP perché voglio controllare la correttezza del junction tree.
+		exit(0);
+
 		// BELIEF PROPAGATION (finalmente!!!)
 		// DEBUG
 		std::cout << "\nBELIEF PROPAGATION..." << std::endl;

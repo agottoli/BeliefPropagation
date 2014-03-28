@@ -1,4 +1,5 @@
 #include "JunctionTree.h"
+#include <string>
 
 /**
  * Implementa i metodi per il junction tree.
@@ -202,5 +203,140 @@ void JunctionTree::getStatistics()
 	std::cout << "Massima dimensione separatori: " << maxSepSize << "\n";
 	std::cout << "Media dimensione separatori:   " << sumSepSize / links->size() << "\n";
 	std::cout << "Minima dimensione separatori:  " << minSepSize << "\n";
+
+}
+
+
+bool JunctionTree::checkRunningIntersectionProperty()
+{
+	bool result = true;
+	JTClique** cliques_array = new JTClique*[cliques->size()];
+	std::size_t index = 0;
+	for (std::unordered_set<JTClique*>::iterator clique_it = cliques->begin(); clique_it != cliques->end(); clique_it++) {
+		cliques_array[index++] = *clique_it;
+	}
+
+	// per ogni coppia di nodi
+	// devo trovare il path e controllare che le variabili che hanno in comune
+	// siano presenti in ogni separatore del path
+	for (std::size_t i = 0; i < cliques->size(); i++) {
+		for (std::size_t j = i + 1; j < cliques->size(); j++) {
+
+			std::cout << std::endl << std::endl << "Analizzo le cricche: " << cliques_array[i]->toString() << " e " << cliques_array[j]->toString() << ":" << std::endl;
+
+			// calcolo le variabili condivise tra le cricche
+			std::unordered_set<Variable*>* i_vars = cliques_array[i]->getVars();
+			std::unordered_set<Variable*>* j_vars = cliques_array[j]->getVars();
+
+			std::unordered_set<Variable*>* common_vars = new std::unordered_set<Variable*>();
+			
+			for (std::unordered_set<Variable*>::iterator i_var_it = i_vars->begin(); i_var_it != i_vars->end(); i_var_it++) {
+				// controllo quali variabili della cricca i sono in comune con la cricca j
+				if (j_vars->find(*i_var_it) != j_vars->end()) {
+					// la variabile è in comune
+					common_vars->insert(*i_var_it);
+				}
+			}
+
+			std::cout << "Ci sono " << common_vars->size() << " variabili in comune." << std::endl;
+
+			// bene, adesso ho l'insieme delle variabili condivise
+			// se ce ne sono calcolo i path che devono esserci per forza, poi controllo la running intersection property
+			
+
+			if (common_vars->size() > 0) {
+
+				std::cout << "Le variabili condivise sono: " << std::endl;
+				for (std::unordered_set<Variable*>::iterator common_var_it = common_vars->begin(); common_var_it != common_vars->end(); common_var_it++) {
+					std::cout << (*common_var_it)->toString() << std::endl;
+				}
+
+
+				std::vector<Separator*>* path = findPath(cliques_array[i], cliques_array[j], cliques->size());
+				//std::cout << "Path tra " << cliques_array[i]->toString() << " e " << cliques_array[j]->toString() << ":" << std::endl;
+				std::cout << "il path è composto da ";
+				int nEl = 0;
+				for (std::size_t i = 0; i < path->size(); i++) {
+					//std::cout << path->at(i)->toString() << std::endl;
+					nEl++;
+				}
+				std::cout << nEl << " hop." << std::endl;
+
+				// bene, qua ho il path dei separatori che vanno da un nodo all'altro
+				
+				// mi basta controllare che le variabili in comune tra i nodi
+				// siano tutti presenti nei vari separatori
+			
+				for (std::vector<Separator*>::iterator sep_it = path->begin(); sep_it != path->end(); sep_it++) {
+					// per ogni separatore...
+					std::cout << "analizzo separatore " << (*sep_it)->toString() << ":" << std::endl;
+					for (std::unordered_set<Variable*>::iterator var_it = common_vars->begin(); var_it != common_vars->end(); var_it++) {
+						// controllo che ogni variabile in comune sia presente anche nei separatori del path
+						if (!(*sep_it)->getVars()->exists(*var_it)) {
+							// la variabile NON esiste quindi è cannato
+							result = false;
+							std::cout << (*var_it)->toString() << " MANCANTE" << std::endl;
+							std::string ss;
+							std::cin >> ss;
+						} else {
+							// la variabile è presente
+							std::cout << (*var_it)->toString() << " PRESENTE" << std::endl;
+						}
+					}
+				}
+
+
+				delete(path);
+			}
+
+			delete(common_vars);
+		}
+	}
+
+	return result;
+}
+
+bool findPathSup(JTClique* father, JTClique* node, JTClique* dst, std::vector<Separator*>* path) {
+
+	for (std::unordered_map<JTClique*, Separator*>::iterator links_it = node->getLinks()->begin(); links_it != node->getLinks()->end(); links_it++) {
+		// se ho il link che mi porta indietro lo salto
+		if (father != (*links_it).first) {
+			path->push_back((*links_it).second);
+
+			if ((*links_it).first == dst) {
+				// ho trovato il path completo
+				return true;
+			}
+
+			if (findPathSup(node, (*links_it).first, dst, path))
+				return true;
+
+			path->pop_back(); // così cancello la scelta visto che non va a buon fine
+		}
+	}
+
+	return false;
+}
+
+std::vector<Separator*>* JunctionTree::findPath(JTClique* src, JTClique* dst, std::size_t nCliques)
+{
+	std::vector<Separator*>* path = new std::vector<Separator*>(); // la dimensione l'ho messa a caso
+	// il primo approccio che mi viene in mente è il backtracking
+	for (std::unordered_map<JTClique*, Separator*>::iterator links_it = src->getLinks()->begin(); links_it != src->getLinks()->end(); links_it++) {
+		path->push_back((*links_it).second);
+
+		if ((*links_it).first == dst) {
+			// ho trovato il path completo
+			return path;
+		}
+
+		if (findPathSup(src, (*links_it).first, dst, path))
+			return path;
+
+		path->pop_back(); // così cancello la scelta visto che non va a buon fine
+	}
+
+	// se arrivo qua significa che non c'è un path, quindi non deve accadere
+	return path; // restituisco lo stesso path ma sarà vuoto!!!
 
 }

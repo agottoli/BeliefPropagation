@@ -82,6 +82,9 @@ bool unicoAlbero() {
 
 void getStatistics();
 
+	bool checkRunningIntersectionProperty();
+	std::vector<Separator*>* findPath(JTClique* src, JTClique* dst, std::size_t nCliques);
+
 private:
 	// getDOT private recursive
 	std::string getDOT2(JTClique*, JTClique*);
