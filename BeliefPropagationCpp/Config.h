@@ -27,7 +27,7 @@
 /////////////////////////////////////////////////////////////////
 #ifndef TEMPO_COMPLESSIVO // da girare 
 // permette di prendere i tempi relativi alle sole operazioni sulle tabelle
-#define TEMPO_COMPLESSIVO TRUE
+#define TEMPO_COMPLESSIVO FALSE
 // se impostato a TRUE  -> misura tutto il metodo della belief propagation dall'inizio alla fine contando anche le chiamate ricorsive dell'esplorazione dell'albero
 // se impostato a FALSE -> attiva la possibilità di misurare le varie fasi dell'algoritmo (con o senza trasferimenti...)
 #endif

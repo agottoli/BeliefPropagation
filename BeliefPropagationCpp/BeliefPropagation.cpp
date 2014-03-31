@@ -309,7 +309,7 @@ std::cout << "\n-------------------------------\nModalità scelta:\n";
 	std::cout << "utilizzando la cpu per tabelle fino a " << SIZE_MAX_CPU_MARGINALIZATION << " elementi per MARGINALIZZAZIONE e fino a " << SIZE_MAX_CPU_SCATTERING << " elementi per SCATTERING.\n";
 #endif
 
-#if CONSIDERA_TRASFERIMENTI_MEMORIA
+#if TEMPO_COMPLESSIVO || CONSIDERA_TRASFERIMENTI_MEMORIA
 	std::cout << "misurazione dei tempi COMPRESI i trasferimenti in memoria\n";
 #else
 	std::cout << "misurazione dei tempi SENZA i trasferimenti in memoria\n";

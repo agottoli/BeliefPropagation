@@ -29,6 +29,8 @@ class JTClique
 	// cricche alle quali è collegata la cricca con anche i separatori associati all'arco
 	std::unordered_map<JTClique*, Separator*> links;
 
+	bool visited; // solo per debug e controllare che sia un albero
+
 public:
 	JTClique(std::unordered_set<Variable*>*);
 	~JTClique(void);
@@ -54,6 +56,16 @@ public:
 
 	// rappresentazione della stringa
 	std::string toString();
+
+	void setVisited() { // solo per debug e controllare che sia un albero
+		visited = true;
+	}
+	void setNotVisited() { // solo per debug e controllare che sia un albero
+		visited = false;
+	}
+	bool isVisited() { // solo per debug e controllare che sia un albero
+		return visited;
+	}
 };
 
 #endif /* JTCLIQUE_H */

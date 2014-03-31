@@ -1,5 +1,6 @@
 #include "JunctionTree.h"
 #include <string>
+#include <sstream>
 
 /**
  * Implementa i metodi per il junction tree.
@@ -57,7 +58,7 @@ std::string JunctionTree::getDOT()
 	for (JTClique* r : *roots) {
 		// partendo dalla root per ogni link che ha scrive i nodi collegati a lei
 		for (std::unordered_map<JTClique*, Separator*>::iterator I = r->getLinks()->begin(); I != r->getLinks()->end(); ++I) {
-			s.append("\t\"").append(r->toString()).append("\" -> \"").append((*I).first->toString()).append("\";\n");
+			s.append("\t\"").append(r->toString()).append("\" -> \"").append((*I).first->toString()).append("\" [label=\"").append((*I).second->getVars()->toString()).append("\"];\n");
 			// e chiama ricorsivamente per fare la stessa cosa su ogni figlio (in questo caso devo stare attento a non riscrivere il noo padre)
 			s.append(getDOT2((*I).first, r));
 		}
@@ -73,7 +74,7 @@ std::string JunctionTree::getDOT2(JTClique* cricca, JTClique* padre)
 	// per ogni collegamento controllo che il figlio della variabile non sia il padre della variabile (altrimenti non finisce più)
 	for (std::unordered_map<JTClique*, Separator*>::iterator I = cricca->getLinks()->begin(); I != cricca->getLinks()->end(); ++I) {
 		if ((*I).first != padre) {
-			s.append("\t\"").append(cricca->toString()).append("\" -> \"").append((*I).first->toString()).append("\";\n");
+			s.append("\t\"").append(cricca->toString()).append("\" -> \"").append((*I).first->toString()).append("\" [label=\"").append((*I).second->getVars()->toString()).append("\"];\n");
 			s.append(getDOT2((*I).first, cricca));
 		}
 	}
@@ -209,6 +210,7 @@ void JunctionTree::getStatistics()
 
 bool JunctionTree::checkRunningIntersectionProperty()
 {
+	std::string debug_print = "";
 	bool result = true;
 	JTClique** cliques_array = new JTClique*[cliques->size()];
 	std::size_t index = 0;
@@ -222,7 +224,7 @@ bool JunctionTree::checkRunningIntersectionProperty()
 	for (std::size_t i = 0; i < cliques->size(); i++) {
 		for (std::size_t j = i + 1; j < cliques->size(); j++) {
 
-			std::cout << std::endl << std::endl << "Analizzo le cricche: " << cliques_array[i]->toString() << " e " << cliques_array[j]->toString() << ":" << std::endl;
+			debug_print.append("\n\nAnalizzo le cricche: ").append(cliques_array[i]->toString()).append(" e ").append(cliques_array[j]->toString()).append(":\n");
 
 			// calcolo le variabili condivise tra le cricche
 			std::unordered_set<Variable*>* i_vars = cliques_array[i]->getVars();
@@ -238,7 +240,9 @@ bool JunctionTree::checkRunningIntersectionProperty()
 				}
 			}
 
-			std::cout << "Ci sono " << common_vars->size() << " variabili in comune." << std::endl;
+			std::stringstream sizeSS;
+			sizeSS << common_vars->size();
+			debug_print.append("Ci sono ").append(sizeSS.str()).append(" variabili in comune.\n");
 
 			// bene, adesso ho l'insieme delle variabili condivise
 			// se ce ne sono calcolo i path che devono esserci per forza, poi controllo la running intersection property
@@ -246,21 +250,23 @@ bool JunctionTree::checkRunningIntersectionProperty()
 
 			if (common_vars->size() > 0) {
 
-				std::cout << "Le variabili condivise sono: " << std::endl;
+				debug_print.append("Le variabili condivise sono: \n");
 				for (std::unordered_set<Variable*>::iterator common_var_it = common_vars->begin(); common_var_it != common_vars->end(); common_var_it++) {
-					std::cout << (*common_var_it)->toString() << std::endl;
+					debug_print.append((*common_var_it)->toString()).append("\n");
 				}
 
 
 				std::vector<Separator*>* path = findPath(cliques_array[i], cliques_array[j], cliques->size());
 				//std::cout << "Path tra " << cliques_array[i]->toString() << " e " << cliques_array[j]->toString() << ":" << std::endl;
-				std::cout << "il path è composto da ";
+				debug_print.append("il path è composto da ");
 				int nEl = 0;
 				for (std::size_t i = 0; i < path->size(); i++) {
 					//std::cout << path->at(i)->toString() << std::endl;
 					nEl++;
 				}
-				std::cout << nEl << " hop." << std::endl;
+				sizeSS.clear();
+				sizeSS << nEl;
+				debug_print.append(sizeSS.str()).append(" hop.\n");
 
 				// bene, qua ho il path dei separatori che vanno da un nodo all'altro
 				
@@ -269,18 +275,19 @@ bool JunctionTree::checkRunningIntersectionProperty()
 			
 				for (std::vector<Separator*>::iterator sep_it = path->begin(); sep_it != path->end(); sep_it++) {
 					// per ogni separatore...
-					std::cout << "analizzo separatore " << (*sep_it)->toString() << ":" << std::endl;
+					debug_print.append("analizzo separatore ").append((*sep_it)->toString()).append(":\n");
 					for (std::unordered_set<Variable*>::iterator var_it = common_vars->begin(); var_it != common_vars->end(); var_it++) {
 						// controllo che ogni variabile in comune sia presente anche nei separatori del path
 						if (!(*sep_it)->getVars()->exists(*var_it)) {
 							// la variabile NON esiste quindi è cannato
 							result = false;
-							std::cout << (*var_it)->toString() << " MANCANTE" << std::endl;
-							std::string ss;
-							std::cin >> ss;
+							debug_print.append((*var_it)->toString()).append(" MANCANTE\n");
+							std::cout << "Running intersection property non soddisfatta!!!\n";
+							//std::string ss;
+							//std::cin >> ss;
 						} else {
 							// la variabile è presente
-							std::cout << (*var_it)->toString() << " PRESENTE" << std::endl;
+							debug_print.append((*var_it)->toString()).append(" PRESENTE\n");
 						}
 					}
 				}
@@ -293,10 +300,12 @@ bool JunctionTree::checkRunningIntersectionProperty()
 		}
 	}
 
+	//std::cout << debug_print;
+
 	return result;
 }
 
-bool findPathSup(JTClique* father, JTClique* node, JTClique* dst, std::vector<Separator*>* path) {
+bool JunctionTree::findPathSup(JTClique* father, JTClique* node, JTClique* dst, std::vector<Separator*>* path) {
 
 	for (std::unordered_map<JTClique*, Separator*>::iterator links_it = node->getLinks()->begin(); links_it != node->getLinks()->end(); links_it++) {
 		// se ho il link che mi porta indietro lo salto
@@ -320,7 +329,7 @@ bool findPathSup(JTClique* father, JTClique* node, JTClique* dst, std::vector<Se
 
 std::vector<Separator*>* JunctionTree::findPath(JTClique* src, JTClique* dst, std::size_t nCliques)
 {
-	std::vector<Separator*>* path = new std::vector<Separator*>(); // la dimensione l'ho messa a caso
+	std::vector<Separator*>* path = new std::vector<Separator*>();
 	// il primo approccio che mi viene in mente è il backtracking
 	for (std::unordered_map<JTClique*, Separator*>::iterator links_it = src->getLinks()->begin(); links_it != src->getLinks()->end(); links_it++) {
 		path->push_back((*links_it).second);
@@ -337,6 +346,72 @@ std::vector<Separator*>* JunctionTree::findPath(JTClique* src, JTClique* dst, st
 	}
 
 	// se arrivo qua significa che non c'è un path, quindi non deve accadere
-	return path; // restituisco lo stesso path ma sarà vuoto!!!
+	return path; // restituisco lo stesso path ma sarà vuoto!!! controllo con size = 0
 
+}
+bool JunctionTree::isATreeWithDFSSupport(JTClique* padre, JTClique* node) {
+	node->setVisited();
+
+	bool result = true;
+	for (std::unordered_map<JTClique*, Separator*>::iterator links_it = node->getLinks()->begin(); links_it != node->getLinks()->end(); links_it++) {
+		if ((*links_it).first != padre) {
+			if ((*links_it).first->isVisited()) {
+				//result = false;
+				return false;
+			}
+
+			if (!isATreeWithDFSSupport(node, (*links_it).first)) {
+				//result = false;
+				return false;
+			}
+		}
+	}
+	return result;
+}
+
+bool JunctionTree::isATreeWithDFS() {
+	bool result = true;
+	
+	// metto tutti i nodi come non visitati
+	for (JTClique* node : *cliques) {
+		node->setNotVisited();
+	}
+
+	for (JTClique* r : *roots) {
+		r->setVisited();
+		for (std::unordered_map<JTClique*, Separator*>::iterator links_it = r->getLinks()->begin(); links_it != r->getLinks()->end(); links_it++) {
+			if ((*links_it).first->isVisited()) {
+				//result = false;
+				return false;
+			}
+
+			if (!isATreeWithDFSSupport(r, (*links_it).first)) {
+				//result = false;
+				return false;
+			}
+		}
+	}
+
+	return result;
+}
+
+void JunctionTree::aggiungiUnArcoACaso() {
+	int i = 0;
+
+	JTClique* c1;
+	JTClique* c2;
+	for (std::unordered_set<JTClique*>::iterator it = cliques->begin(); it != cliques->end(); it++, i++) {
+		if (i == 20)
+			c1 = *it;
+		
+		if (i == 29)
+			c2 = *it;
+	}
+
+	Separator* sep = new Separator(c1, c2, new VecMap(0));
+
+	// devo aggiungerlo a links
+	links->insert(sep);
+	// e chiamare sul separatore il metodo sceltoPerMST
+	sep->sceltoPerMST();
 }

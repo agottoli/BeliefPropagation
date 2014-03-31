@@ -244,9 +244,22 @@ int main(int argc, char* argv[])
 		std::cout << "-----------------------------------------\n";
 #endif
 
+		// DEBUG INIZIO
+		// PROVO AD AGGIUNGERE UN ARCO A CAZZO per verificare se il metodo di ricerca cicli funziona
+		//jt->aggiungiUnArcoACaso();
+
+		std::cout << "Controllo se il junction tree è veramente un albero...";
+		if (jt->isATreeWithDFS())
+			std::cout << "OK.\n";
+		else {
+			std::cout << "FAIL.\n";
+			exit(1);
+		}
+
+		// Provo a scrivere il file dot per rappresentare il junction tree
 		/*
 		std::string file = "dot_file.dot";
-		std::ofstream f(file, std::ios::app); //apre il file in modalità append, lasciando intatto quello che c'è e scrivendo alla fine
+		std::ofstream f(file, std::ios::out); //std::ios::app); //apre il file in modalità append, lasciando intatto quello che c'è e scrivendo alla fine
 		if(!f) {
 			std::cout << "Errore nell'apertura del file!";
 			std::string s;
@@ -257,12 +270,19 @@ int main(int argc, char* argv[])
 
 		f.close(); //chiudo il file
 		*/
-
-		jt->checkRunningIntersectionProperty();
+				
+		std::cout << "Controllo se rispetta la running intersection property... ";
+		if (jt->checkRunningIntersectionProperty()) {
+			std::cout << "RISPETTATA.\n";
+		} else {
+			std::cout << "NON RISPETTATA.\n";
+			exit(1);
+		}
+		// DEBUG FINE
 		
 
 		// mi fermo prima di applicare la BP perché voglio controllare la correttezza del junction tree.
-		exit(0);
+		//exit(0);
 
 		// BELIEF PROPAGATION (finalmente!!!)
 		// DEBUG

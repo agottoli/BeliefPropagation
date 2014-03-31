@@ -83,7 +83,11 @@ bool unicoAlbero() {
 void getStatistics();
 
 	bool checkRunningIntersectionProperty();
+	bool findPathSup(JTClique* father, JTClique* node, JTClique* dst, std::vector<Separator*>* path);
 	std::vector<Separator*>* findPath(JTClique* src, JTClique* dst, std::size_t nCliques);
+	bool isATreeWithDFSSupport(JTClique* padre, JTClique* node);
+	bool isATreeWithDFS();
+	void aggiungiUnArcoACaso();
 
 private:
 	// getDOT private recursive
