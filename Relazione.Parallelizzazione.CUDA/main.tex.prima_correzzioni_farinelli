@@ -54,8 +54,8 @@ Per il momento è sufficiente sapere che si tratta di un algoritmo \emph{message
 
 Ogni nodo del junction tree è una cricca massimale delle variabili della rete. Gli archi sono chiamati separatori e nella nostra implementazione vengono individuati tramite l'algoritmo di \emph{kruskal} calcolando l'albero di copertura massimo. Il peso di ogni arco è dato dal numero di variabili che hanno in comune le cricche che collega e l'algoritmo cerca l'albero di peso massimo per rispettare la proprietà di \emph{running intersection}.
 
-Dopo questa fase di trasformazione l'algoritmo associa la tabella di probabilità condizionale di ogni variabile della rete ad una cricca che contiene tutte le variabili che compaiono nella tabella. Moltiplicando tra loro le tabelle associate alla stessa cricca si ottiene una tabella che identifica la tabella dei potenziali per le variabili della cricca e ogni loro configurazione. Queste tabelle vengono identificate come $\psi_i$. Anche i separatori hanno la loro tabella formata da tutte le configurazioni che possono assumere le variabili in esso contenuto, e inizialmente vengono inizializzate a 1. Queste tabelle le identificheremo come $\phi_{ij}$.
-I messaggi che vengono passati tra due nodi sono le informazioni necessarie per aggiornare queste tabelle.
+Dopo questa fase di trasformazione l'algoritmo associa la tabella di probabilità condizionale di ogni variabile della rete ad una cricca che contiene tutte le variabili che compaiono nella tabella. Moltiplicando tra loro le tabelle associate alla stessa cricca si ottiene una tabella che identifica la tabella dei potenziali per le variabili della cricca e ogni loro configurazione. Queste tabelle vengono identificate come $\psi$. Anche i separatori hanno la loro tabella formata da tutte le configurazioni che possono assumere le variabili in esso contenuto, e inizialmente vengono inizializzate a 1. Queste tabelle le identificheremo come $\phi$.
+I messaggi che vengono passati tra due nodi sono proprio le informazioni necessarie per aggiornare queste tabelle.
 Le due diverse tabelle da aggiornare compongono le due fasi che abbiamo deciso di parallelizzare.
 
 Supponiamo di aggiornare la tabella di $\psi_2$ partendo dalla tabella del suo vicino $\psi_1$.
@@ -70,20 +70,17 @@ L'aggiornamento della tabella $\psi_2$ viene chiamata \emph{scattering} e si ott
 \psi_2^* = \psi_2 \frac{\phi_{1-2}^*}{\phi_{1-2}}
 \]
 
-Queste operazioni si prestano abbastanza bene ad essere parallelizzate, in quanto il prodotto del numero di stati che possono assumere le variabili all'interno della stessa cricca o separatore (dimensione della tabella delle probabilità) può raggiungere dimensioni elevate.
+Queste operazioni si prestano abbastanza bene ad ad essere parallelizzate, in quanto il prodotto del numero di stati che possono assumere le variabili all'interno della stessa cricca può raggiungere dimensioni elevate.
 % Proprio su queste due fasi abbiamo concentrato il nostro tentativo di parallelizzazione perché possono raggiungere dimensioni elevate, cioè il prodotto del numero di stati che possono assumere le variabili dentro la stessa cricca.
-Seguendo l'articolo~\cite{zheng2011belief} abbiamo deciso di parallelizzare 
-entrambe le fasi e %siccome ogni elemento della tabella della cricca è associato ad un unico elemento della tabella del separatore 
-abbiamo sviluppato approcci differenti conforme le dimensioni delle tabelle e il numero di elementi della tabella della cricca associati allo stesso elemento della tabella del separatore.
-%sulla dimensione della tabella del separatore, dato che ogni elemento della cricca è associato ad una sola configurazione del separatore.
+Seguendo l'articolo~\cite{zheng2011belief} abbiamo deciso di parallelizzare sulla dimensione del separatore, dato che ogni elemento della cricca è associato ad una sola configurazione del separatore.
 
 Dato che gli elementi non sono ordinati per favorire queste operazioni si è resa necessaria una fase di preprocessing, che viene applicata in entrambe le versioni (sequenziale e parallela). % che viene applicata sia nella versione sequenziale sia in quella parallela.
-Questa fase consiste nel creare in ogni separatore delle tabelle degli indici associati alle tabelle dei potenziali delle cricche collegate dal separatore stesso.
+Questa fase consiste nel creare in ogni separatore delle tabelle degli indici associate alle tabelle dei potenziali delle cricche collegate dal separatore stesso.
 Le tabelle degli indici sono state costruite %in maniera opportuna 
 in modo da sfruttare la \emph{coalescenza della memoria}, ossia permettendo a thread aventi id adiacenti di accedere ad indirizzi di memoria adiacenti. Pertanto gli indici dei valori che vengono sommati sono posizionati sempre ad una distanza pari alla dimensione del separatore.
 
 In fase di inizializzazione viene scelta la scheda avente maggior capacità computazionale.\\
-Si noti che solo le schede dotate di capacità computazionale maggiore o uguale a {\tt 2.0} (cioè a partire dalla generazione Fermi) supportano efficientemente il tipo di dato {\tt double}, garantendo prestazioni molto maggiori rispetto alle architetture precedenti, e risultano la metà rispetto a quelle ottenibili con i valori in singola precisione. 
+Si noti che solo le schede dotate di capacità computazionale maggiore o uguale a {\tt 2.0} (cioè a partire dalla generazione Fermi) supportano efficientemente il tipo di dato {\tt double}, garantendo prestazioni che sono solo la metà rispetto a quelle ottenibili con i valori in singola precisione. 
 
 Prima di lanciare ogni kernel viene invocata la funzione {\tt cudaDeviceSynchronize()}, in modo da evitare conflitti con eventuali altri utilizzatori della macchina.\\
 Inoltre a seguito di ogni funzione CUDA viene invocata la funzione {\tt cudaGetLastError()} per rilevare eventuali errori.
@@ -95,10 +92,8 @@ Di seguito analizzeremo le scelte progettuali effettuate supponendo di invocare 
 
 L'input della procedura è rappresentato da:
 \begin{itemize}
-\item $\psi_1$: la matrice che rappresenta la tabella dei potenziali. \`E composta da valori {\tt double} ed ha dimensione $n \cdot m$, dove $n$ è la dimensione del separatore e la dimensione dell'output che otterremo sommando i valori oppurtuni e che sarà $\phi_{1-2}^*$, mentre $m$ e il numero di elementi associati allo stesso elemento del separatore e che devono essere sommati. Questa matrice è rappresentata come un array di elementi.
-\item tabellaIndici di $\psi_1$: una matrice di valori {\tt unsigned int}, anch'essa di dimensione $n \cdot m$ e rappresentata come un array di elementi. Questa tabella si rende necessaria per non dover ricercare in $\psi_1$ gli elementi da sommare tra loro, e quindi contiene in ogni cella l’indice della tabella dei potenziali del valore di interesse. 
-%\item tabellaIndici di $\psi_1$: una matrice di valori {\tt unsigned int}, di dimensione $\mbox{nextpow2(}n\mbox{)} \cdot \mbox{nextpow2(}m\mbox{)}$ e rappresentata come un array di elementi. Questa tabella si rende necessaria per non dover ricercare in $\psi_1$ gli elementi da sommare tra loro, e quindi contiene in ogni cella l’indice della tabella dei potenziali del valore di interesse. Se $n$ e $m$ non sono entrambi potenze di 2, ci saranno degli indici che non corrispondono a nessun elemento e verranno identificati con il valore \texttt{SIZE\_MAX}. 
-%Per questioni di efficienza si rende necessario avere potenze di 2 come dimensioni.
+\item $\psi_1$: la matrice che rappresenta la tabella dei potenziali. \`E composta da valori {\tt double} ed ha dimensione $n \cdot m$, dove $n$ è la dimensione del separatore, cioè la dimensione dell'output che otterremo sommando i valori oppurtuni e che sarà $\phi_{1-2}^*$. Essa è rappresentata come un array di elementi.
+\item tabellaIndici di $\psi_1$: una matrice di valori {\tt unsigned int}, anch’essa di dimensione $n \cdot m$ e rappresentata come un array di elementi. Questa tabella si rende necessaria per non dover ricercare in $\psi_1$ gli elementi sa sommare tra loro, e quindi contiene in ogni cella l’indice della tabella dei potenziali del valore di interesse.
 \end{itemize}
 
 Un generico elemento in posizione $(i, j)$, dove $i \in [0...m]$ e $j \in [0...n]$,
@@ -107,7 +102,7 @@ Un generico elemento in posizione $(i, j)$, dove $i \in [0...m]$ e $j \in [0...n
 $\psi_1$[ tabellaIndici[ $i \cdot n + j$ ] ]\\
 %Siccome le dimensioni di $n$ non sono sempre potenze di 2 e il nostro metodo lavora bene su tali valori si è deciso di costruire comunque tabelle degli indici di tali dimensioni e riempire le posizioni aggiunte con il valore speciale SIZE_MAX e se quindi si trova un valore maggiore della dimensione della tabella $\psi_1$ semplicemente si assegna 0 per non rovinare la sommatoria.
 Fanno eccezione gli indici aventi come valore {\tt SIZE\_MAX}. Questi ultimi vengono utilizzati per indicare che in quella posizione non esiste alcun dato da elaborare. \\
-Il loro utilizzo sarà più chiaro quando illustreremo le procedure per calcolare la riduzione su GPGPU, per il momento è sufficiente sapere che, per motivi legati all’efficienza, la tabella degli indici in input è formata da entrambi $n$ e $m$  potenza di $2$. Pertanto, nel caso in cui i dati effettivi non siano una potenza di $2$, la tabella sarà dimensionata moltiplicando tra loro le potenze di $2$ successive di $n$ e $m$. Il valore {\tt SIZE\_MAX} servirà per contraddistinguere gli elementi in eccesso, che non verranno presi in esame durante i calcoli.
+Il loro utilizzo sarà più chiaro quando illustreremo le procedure per calcolare la riduzione su GPGPU, per il momento è sufficiente sapere che, per motivi legati all’efficienza, entrambe le tabelle in input e l’array di output hanno una dimensione che è potenza di $2$. Pertanto, nel caso in cui i dati effettivi non siano una potenza di $2$, le tabelle saranno dimensionate secondo la potenza di $2$ successiva e il valore {\tt SIZE\_MAX} servirà per contraddistinguere i dati in eccesso, che non verranno presi in esame durante i calcoli.
 
 L'output della procedura è un array $result$ di dimensione $n$ contenente in ogni cella $j \in [0...n]$: %la somma delle celle 
 \begin{equation}
@@ -165,8 +160,7 @@ Quando il numero di elementi da elaborare è pari a $n$ i valori vengono scritti
 \subsubsection{Fase 2}
 La seconda fase si occupa di elaborare i risultati parziali ottenuti dai blocchi nella prima fase, restituendo il risultato finale. 
 Seguendo un meccanismo analogo a quello descritto per la prima fase, ogni blocco di thread (di dimensione {\tt blockDim}) legge dalla \emph{memoria globale} un numero doppio di valori rispetto alla sua dimensione. 
-Ad ogni iterazione gli elementi vengono letti da ogni thread come nella fase precedente. 
-%Ad ogni iterazione ogni thread legge un valore presente nella prima metà degli elementi (corrispondente al proprio {\tt threadId}) e un valore nella seconda metà. In questo modo viene sfruttata la \emph{coalescenza della memoria} in quanto thread aventi id adiacenti accedono ad indirizzi di memoria adiacenti. Inoltre così facendo non si ha \emph{divergenza}, in quanto tutte le thread attive in un blocco hanno id consecutivi e vengono evitati i conflitti tra gli accessi ai banchi di \emph{memoria condivisa}.
+Ad ogni iterazione ogni thread legge un valore presente nella prima metà degli elementi (corrispondente al proprio {\tt threadId}) e un valore nella seconda metà. In questo modo viene sfruttata la \emph{coalescenza della memoria} in quanto thread aventi id adiacenti accedono ad indirizzi di memoria adiacenti. Inoltre così facendo non si ha \emph{divergenza}, in quanto tutte le thread attive in un blocco hanno id consecutivi e vengono evitati i conflitti tra gli accessi ai banchi di \emph{memoria condivisa}.
 
 Ogni thread legge quindi due valori, posti a distanza {\tt blockDim}, e ne scrive la somma in una cella di un array allocato nella \emph{memoria condivisa}. In questo caso non è necessario appoggiarsi alla tabellaIndici, in quanto i risultati scritti dalla prima fase sono già ordinati correttamente.
 Analogamente a quanto descritto nella fase 1, una volta caricate le somme parziali nella \emph{memoria condivisa} il kernel entra in un ciclo il quale dimezza ad ogni iterazione gli elementi da elaborare e le corrispondenti threads, fino ad ottenere n elementi risultanti. 
@@ -208,7 +202,7 @@ In entrambi gli approcci il numero di threads per blocco viene calcolato prima d
 \item Se $n \cdot m$, che rappresenta il numero totale di elementi da elaborare, è maggiore o uguale a maxThreads$ \cdot 2$ (in seguito spiegheremo come viene inizializzato maxThreads) il numero di thread allocate è pari a maxThreads.
 \item Altrimenti sarà la potenza di $2$ successiva a $(n+1)/2$.
 \end{itemize}
-Il valore maxThreads che rappresenta il numero massimo di threads istanziate nello stesso blocco è stato trovato tramite ripetuti test empirici. Abbiamo implementato una procedura che esegue $100$ iterazioni consecutive del kernel, per aumentare la precisione di rilevamento, e ne calcola il tempo medio. La procedura è stata poi eseguita all’interno di $2$ cicli annidati. Il primo itera su tutte le dimensioni (potenze di $2$) delle tabelle in input presenti nei benchmark di riferimento. Il secondo itera su tutte le configurazioni di maxThreads ammesse. Infine per ogni configurazione di input è stato registrato il valore di maxThreads che garantiva prestazioni migliori. 
+Il valore maxThreads ottimale è stato trovato tramite ripetuti test empirici. Abbiamo implementato una procedura che esegue $100$ iterazioni consecutive del kernel, per aumentare la precisione di rilevamento, e ne calcola il tempo medio. La procedura è stata poi eseguita all’interno di $2$ cicli annidati. Il primo itera su tutte le dimensioni (potenze di $2$) delle tabelle in input presenti nei benchmark di riferimento. Il secondo itera su tutte le configurazioni di maxThreads ammesse. Infine per ogni configurazione di input è stata registrato il valore di maxThreads che garantiva prestazioni migliori. 
 Il valore di maxThreads che quasi sempre portava a prestazioni migliori è $512$, pertanto abbiamo scelto di lasciare fisso questo parametro.
 
 \subsubsection{Scelta tra i due approcci}
@@ -225,13 +219,13 @@ Tuttavia essendo limitata a $64$KB non è possibile memorizzarvi all’interno p
 L'input della procedura è rappresentato da:
 \begin{itemize}
 \item $\psi_2$: la matrice che rappresenta la tabella dei potenziali. \`E composta da valori {\tt double}, ha dimensione $n \cdot m$ ed è rappresentata come un array di elementi.
-\item tabellaIndici $\psi_2$: una matrice di valori {\tt unsigned int}, anch’essa di dimensione $n \cdot m$ e rappresentata come un array di elementi. Analogamente a quanto descritto per la marginalizzazione, contiene in ogni cella l’indice della matrice $\psi_2$ del valore di interesse.
+\item tabellaIndici $\psi_2$: una matrice di valori {\tt unsigned int}, anch’essa di dimensione $n \cdot m$ e rappresentata come un array di elementi. Analogamente a quanto descritto per la marginalizzazione, contiene in ogni cella l’indice della matrice psi del valore di interesse.
 
 Un generico elemento in posizione $(i, j)$, dove $i \in [0...m]$ e $j \in [0...n]$,
 è pertanto identificato da: 
 
 $\psi_2$[ tabellaIndici[ $i \cdot n + j$ ] ]\\
-Anche in questo caso per elaborare i dati più efficientemente la tabella degli indici viene dimensionata moltiplicando tra loro le potenze di $2$ successive di $n$ e $m$, e viene utilizzata la costante {\tt SIZE\_MAX} nella tabellaIndici per contraddistinguere i dati in eccesso, che non verranno presi in esame durante i calcoli.
+Anche in questo caso per elaborare i dati più efficientemente le tabelle sono dimensionate secondo potenze di 2, e viene utilizzata la costante {\tt SIZE\_MAX} nella tabellaIndici per contraddistinguere i dati in eccesso, che non verranno presi in esame durante i calcoli.
 
 \item $\phi^{*}$: è un array di valori {\tt double}, di dimensione $n$
 \item $\phi$: è un array di valori {\tt double}, di dimensione $n$
@@ -316,14 +310,14 @@ Sono state fatte diverse misurazioni per analizzare l'impatto della nostra imple
 La tabella è suddivisa in cinque parti:
 \begin{itemize}
 \item Nella prima parte vengono riportate le caratteristiche delle reti in esame.
-\item La seconda parte riporta i tempi totali di esecuzione dell'algoritmo sia per la versione sequenziale che per quella parallela, considerando quindi l'overhead dovuto ai trasferimenti in memoria e al lancio di nuovi kernel.
+\item La seconda parte riporta i tempi totali di esecuzione dell'algoritmo, considerando quindi l'overhead dovuto ai trasferimenti in memoria e al lancio di nuovi kernel.
 \item La terza parte riporta i tempi relativi all'esecuzione delle fasi di marginalizzazione e scattering su CPU.
 \item La quarta parte riporta i tempi relativi all'esecuzione delle fasi di marginalizzazione e scattering su GPGPU, senza però contare l'overhead dovuto ai trasferimenti in memoria.
 \item La quarta parte riporta i tempi relativi all'esecuzione delle fasi di marginalizzazione e scattering su GPGPU, comprensivi dell'overhead dovuto ai trasferimenti in memoria.
 \end{itemize}
 
 Come ci si aspettava si hanno risultati migliori al crescere delle dimensioni medie del separatore, tuttavia il tempo trascorso per il trasferimento dei dati tra host e device ci permette di raggiungere uno speedup positivo solo con i benchmark più impegnativi% in cui la dimensione media delle tabelle dei separatori è maggiore di 35000
-.  In particolare dai test notiamo come l'esecuzione su GPGPU sulle reti Munin1, Barley, Link e Water porti rispettivamente ad uno speedup di $1.796$, $1.351$, $1.316$ e $1.086$.  % risulta vantaggiosa, portando uno speedup di $1.44$. %  anche se non di molto.
+.  In particolare dai test notiamo come l'esecuzione su GPGPU sulle reti Munin1, Barley, Link e Water porta rispettivamente ad uno speedup di $1.796$, $1.351$, $1.316$ e $1.086$.  % risulta vantaggiosa, portando uno speedup di $1.44$. %  anche se non di molto.
 
 % cpu + gpu per migliorare
 
@@ -414,7 +408,7 @@ se confrontiamo le caratteristiche dei junction tree, esse sono leggermente dive
 \multicolumn{8}{l}{ }	\\
 \multicolumn{8}{l}{ }	\\								
 
-\multicolumn{8}{l}{ \textbf{Rilevamenti tempo esecuzione Belief Propagation (con trasferimenti di memoria) [ms]:}}	\\		
+\multicolumn{8}{l}{ \textbf{Rilevamenti tempo esecuzione Belief Propagation [ms]:}}	\\		
 \hline
 \textbf{BP on CPU} & 101 &	275 &	935	&	366 &	152	&	5976 &	1122 \\
 \hline
@@ -460,7 +454,7 @@ se confrontiamo le caratteristiche dei junction tree, esse sono leggermente dive
 \textbf{Speedup scatt.} & 0.711 & 0,408 & 1,271	 & 0,599 & 0,838	& 1,730	 & 1,296	 \\
 %\bottomrule
 \end{tabular}
-\caption{Statistiche del junction tree (JT) relativi alle reti del dataset, performance della belief propagation (BP) in relazione alle dimensioni delle tabelle dei potenziali delle cricche (CPT) e del separatore (SPT).} % e calcolando sempre su CPU le tabelle di dimensione minore di 5000.}
+\caption{Statistiche del junction tree (JT) relativi alle reti del dataset, performance della belief propagation (BP) in relazione alle dimensioni delle tabelle dei potenziali delle cricche (CPT) e del separatore (SPT).}
 \label{tab:tempi}
 \end{table}
 

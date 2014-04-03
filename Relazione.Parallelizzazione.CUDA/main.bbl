@@ -1,0 +1,50 @@
+% $ biblatex auxiliary file $
+% $ biblatex version 2.3 $
+% Do not modify the above lines!
+%
+% This is an auxiliary file used by the 'biblatex' package.
+% This file may safely be deleted. It will be recreated as
+% required.
+%
+\begingroup
+\makeatletter
+\@ifundefined{ver@biblatex.sty}
+  {\@latex@error
+     {Missing 'biblatex' package}
+     {The bibliography requires the 'biblatex' package.}
+      \aftergroup\endinput}
+  {}
+\endgroup
+
+\entry{zheng2011belief}{inproceedings}{}
+  \name{author}{3}{}{%
+    {{}%
+     {Zheng}{Z.}%
+     {Lu}{L.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Mengshoel}{M.}%
+     {Ole~J}{O.~J.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Chong}{C.}%
+     {Jike}{J.}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{ZLMOJCJ1}
+  \strng{fullhash}{ZLMOJCJ1}
+  \field{sortinit}{Z}
+  \field{booktitle}{Proc. of the 27th Conference on Uncertainty in Artificial
+  Intelligence (UAI-11)}
+  \field{title}{Belief propagation by message passing in junction trees:
+  Computing each message faster using gpu parallelization}
+  \field{year}{2011}
+\endentry
+
+\lossort
+\endlossort
+
+\endinput
