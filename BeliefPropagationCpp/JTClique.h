@@ -21,6 +21,8 @@ class VecMap;
 
 class JTClique
 {
+	size_t id;
+
 	// variabili che compongono la cricca
 	std::unordered_set<Variable*>* vars;
 	// potenziale associata alla cricca
@@ -65,6 +67,10 @@ public:
 	}
 	bool isVisited() { // solo per debug e controllare che sia un albero
 		return visited;
+	}
+
+	size_t getId() {
+		return id;
 	}
 };
 

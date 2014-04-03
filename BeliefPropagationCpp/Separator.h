@@ -54,7 +54,7 @@ public:
 	VecMap* getVars();
 
 	// restituisce il numero di variabili in comune tra le due cricche (serve per pesare il separatore in kruskal)
-	std::size_t size();
+	std::size_t nVars();
 
 	// rappresentazione del separatore
 	std::string toString();

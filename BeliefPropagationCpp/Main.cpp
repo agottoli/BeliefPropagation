@@ -248,11 +248,11 @@ int main(int argc, char* argv[])
 		// PROVO AD AGGIUNGERE UN ARCO A CAZZO per verificare se il metodo di ricerca cicli funziona
 		//jt->aggiungiUnArcoACaso();
 
-		std::cout << "Controllo se il junction tree è veramente un albero...";
+		std::cout << "Controllo se il junction tree è veramente un albero... ";
 		if (jt->isATreeWithDFS())
-			std::cout << "OK.\n";
+			std::cout << "OK, è un albero :).\n";
 		else {
-			std::cout << "FAIL.\n";
+			std::cout << "FAIL, presenta dei cicli :(.\n";
 			exit(1);
 		}
 

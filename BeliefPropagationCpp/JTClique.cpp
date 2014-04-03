@@ -4,6 +4,8 @@
 //#include "Separator.h";
 #include "Variable.h"
 #include "VecMap.h"
+#include "Config.h"
+#include "string"
 
 /**
  * Implementa i metodi per le cricche del junction tree.
@@ -15,6 +17,10 @@ JTClique::JTClique(std::unordered_set<Variable*>* vs)
 {
 	vars = vs;
 	psi = NULL;
+	id = ++(Config::nChicche);
+	//std::cout << "costruita cricca " << id << std::endl;
+	//std::string s;
+	//std::cin >> s;
 }
 
 

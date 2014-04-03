@@ -18,9 +18,17 @@
  */
 Separator::Separator(JTClique* s, JTClique* o, VecMap* v)
 {
-	soggetto = s;
-	oggetto = o;
+	if (s->getId() < o->getId()) {
+		soggetto = s;
+		oggetto = o;
+	} else {
+		soggetto = o;
+		oggetto = s;
+	}
 	vars = v;
+
+	// DEBUG
+	//std::cout << "separatore: " << soggetto->getId() << "--" << oggetto->getId() << std::endl;
 }
 
 
@@ -63,7 +71,7 @@ VecMap* Separator::getVars()
 	return vars;
 }
 
-std::size_t Separator::size()
+std::size_t Separator::nVars()
 {
 	return vars->size();
 }

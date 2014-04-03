@@ -149,6 +149,9 @@ namespace Config {
 	//static bool indexingSumOnRow = false;
 
 	static int numIndexing = 0;
+
+	// id per le cricche
+	static size_t nChicche = 0;
 };
 
 #endif 

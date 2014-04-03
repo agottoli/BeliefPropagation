@@ -566,7 +566,11 @@ JunctionTree* BayesianNetwork::kruskal(std::priority_queue<Separator*, std::vect
 	JTClique* findSetOgg;
 	// estraggo dalla coda i separatori (= link) in ordine per creare l'albero... 
 	while (!coda->empty()) {
+
 		elemento = coda->top();
+		// DEBUG
+		//std::cout << "scelgo l'arco: " << elemento->getSoggetto()->getId() << "--" << elemento->getOggetto()->getId() << " di peso " << elemento->nVars() << std::endl;
+		//
 		coda->pop();
 
 		//std::cout << "estratto separatore: " << elemento->toString() << '\n';

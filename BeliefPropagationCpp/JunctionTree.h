@@ -87,7 +87,7 @@ void getStatistics();
 	std::vector<Separator*>* findPath(JTClique* src, JTClique* dst, std::size_t nCliques);
 	bool isATreeWithDFSSupport(JTClique* padre, JTClique* node);
 	bool isATreeWithDFS();
-	void aggiungiUnArcoACaso();
+	//void aggiungiUnArcoACaso();
 
 private:
 	// getDOT private recursive

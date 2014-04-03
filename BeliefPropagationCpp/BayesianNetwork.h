@@ -32,7 +32,18 @@ class MyComparatorSeparator
 public:
 	bool operator() (Separator* s1, Separator* s2) {
 		// siccome la coda di priorità prende per primi quelli con elemento maggiore e a me interessa prendere prima quelli con numero minore devo mettere maggiore!!!
-		return s1->size() < s2->size();
+		//return s1->size() < s2->size();
+		if (s1->nVars() != s2->nVars())
+			return s1->nVars() < s2->nVars();
+
+		//std::cout << "i separatori hanno stesso peso!!!\n";
+		
+		// se hanno stesso peso scelgo per ordinamento scelto da me
+		if (s1->getSoggetto()->getId() != s2->getSoggetto()->getId())
+			return s1->getSoggetto()->getId() > s2->getSoggetto()->getId();
+
+		return s1->getOggetto()->getId() > s2->getOggetto()->getId();
+		
 	}
 };
 

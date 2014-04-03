@@ -395,6 +395,7 @@ bool JunctionTree::isATreeWithDFS() {
 	return result;
 }
 
+/*
 void JunctionTree::aggiungiUnArcoACaso() {
 	int i = 0;
 
@@ -415,3 +416,5 @@ void JunctionTree::aggiungiUnArcoACaso() {
 	// e chiamare sul separatore il metodo sceltoPerMST
 	sep->sceltoPerMST();
 }
+*/
+
