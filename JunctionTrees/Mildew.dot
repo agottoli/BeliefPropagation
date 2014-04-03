@@ -1,0 +1,34 @@
+digraph {
+	nodesep="1.5"; ranksep=2;
+	node [shape=plaintext];
+	edge [color=gray];
+	"{ dm_2, mikro_2, meldug_3, dm_1, lai_2, }" -> "{ lai_2, meldug_3, lai_3, dm_2, }" [label="{lai_2,	meldug_3,	dm_2,	}"];
+	"{ lai_2, meldug_3, lai_3, dm_2, }" -> "{ dm_2, lai_4, meldug_3, mikro_3, lai_3, }" [label="{meldug_3,	lai_3,	dm_2,	}"];
+	"{ dm_2, lai_4, meldug_3, mikro_3, lai_3, }" -> "{ lai_4, foto_3, lai_3, mikro_3, dm_2, }" [label="{dm_2,	lai_4,	mikro_3,	lai_3,	}"];
+	"{ lai_4, foto_3, lai_3, mikro_3, dm_2, }" -> "{ temp_3, foto_3, mikro_3, lai_3, }" [label="{foto_3,	mikro_3,	lai_3,	}"];
+	"{ temp_3, foto_3, mikro_3, lai_3, }" -> "{ straaling_3, foto_3, lai_3, temp_3, }" [label="{foto_3,	lai_3,	temp_3,	}"];
+	"{ temp_3, foto_3, mikro_3, lai_3, }" -> "{ nedboer_3, mikro_3, lai_3, temp_3, }" [label="{mikro_3,	lai_3,	temp_3,	}"];
+	"{ lai_4, foto_3, lai_3, mikro_3, dm_2, }" -> "{ foto_3, lai_4, dm_3, dm_2, }" [label="{foto_3,	lai_4,	dm_2,	}"];
+	"{ foto_3, lai_4, dm_3, dm_2, }" -> "{ foto_4, lai_4, dm_3, }" [label="{lai_4,	dm_3,	}"];
+	"{ foto_4, lai_4, dm_3, }" -> "{ foto_4, temp_4, lai_4, straaling_4, }" [label="{foto_4,	lai_4,	}"];
+	"{ foto_4, lai_4, dm_3, }" -> "{ dm_4, foto_4, dm_3, }" [label="{foto_4,	dm_3,	}"];
+	"{ dm_4, foto_4, dm_3, }" -> "{ udbytte, dm_4, }" [label="{dm_4,	}"];
+	"{ dm_2, lai_4, meldug_3, mikro_3, lai_3, }" -> "{ meldug_4, lai_4, lai_3, mikro_3, meldug_3, }" [label="{lai_4,	lai_3,	mikro_3,	meldug_3,	}"];
+	"{ meldug_4, lai_4, lai_3, mikro_3, meldug_3, }" -> "{ middel_3, meldug_4, mikro_3, meldug_3, }" [label="{meldug_4,	mikro_3,	meldug_3,	}"];
+	"{ dm_2, mikro_2, meldug_3, dm_1, lai_2, }" -> "{ meldug_3, meldug_2, lai_2, dm_1, mikro_2, }" [label="{mikro_2,	meldug_3,	dm_1,	lai_2,	}"];
+	"{ meldug_3, meldug_2, lai_2, dm_1, mikro_2, }" -> "{ middel_2, meldug_3, meldug_2, mikro_2, }" [label="{meldug_3,	meldug_2,	mikro_2,	}"];
+	"{ meldug_3, meldug_2, lai_2, dm_1, mikro_2, }" -> "{ lai_1, lai_2, dm_1, meldug_2, }" [label="{lai_2,	dm_1,	meldug_2,	}"];
+	"{ lai_1, lai_2, dm_1, meldug_2, }" -> "{ temp_1, lai_1, meldug_2, dm_1, }" [label="{lai_1,	dm_1,	meldug_2,	}"];
+	"{ temp_1, lai_1, meldug_2, dm_1, }" -> "{ mikro_1, meldug_2, lai_1, temp_1, }" [label="{meldug_2,	lai_1,	temp_1,	}"];
+	"{ mikro_1, meldug_2, lai_1, temp_1, }" -> "{ meldug_1, lai_1, meldug_2, mikro_1, }" [label="{mikro_1,	meldug_2,	lai_1,	}"];
+	"{ meldug_1, lai_1, meldug_2, mikro_1, }" -> "{ middel_1, meldug_2, mikro_1, meldug_1, }" [label="{meldug_1,	meldug_2,	mikro_1,	}"];
+	"{ meldug_1, lai_1, meldug_2, mikro_1, }" -> "{ lai_0, lai_1, meldug_1, }" [label="{lai_1,	meldug_1,	}"];
+	"{ mikro_1, meldug_2, lai_1, temp_1, }" -> "{ temp_1, nedboer_1, mikro_1, lai_1, }" [label="{mikro_1,	lai_1,	temp_1,	}"];
+	"{ temp_1, lai_1, meldug_2, dm_1, }" -> "{ foto_1, dm_1, lai_1, temp_1, }" [label="{dm_1,	lai_1,	temp_1,	}"];
+	"{ foto_1, dm_1, lai_1, temp_1, }" -> "{ straaling_1, foto_1, lai_1, temp_1, }" [label="{foto_1,	lai_1,	temp_1,	}"];
+	"{ dm_2, mikro_2, meldug_3, dm_1, lai_2, }" -> "{ foto_2, dm_2, mikro_2, lai_2, dm_1, }" [label="{dm_2,	mikro_2,	dm_1,	lai_2,	}"];
+	"{ foto_2, dm_2, mikro_2, lai_2, dm_1, }" -> "{ temp_2, foto_2, mikro_2, lai_2, }" [label="{foto_2,	mikro_2,	lai_2,	}"];
+	"{ temp_2, foto_2, mikro_2, lai_2, }" -> "{ temp_2, nedboer_2, mikro_2, lai_2, }" [label="{temp_2,	mikro_2,	lai_2,	}"];
+	"{ temp_2, foto_2, mikro_2, lai_2, }" -> "{ temp_2, straaling_2, foto_2, lai_2, }" [label="{temp_2,	foto_2,	lai_2,	}"];
+}
+

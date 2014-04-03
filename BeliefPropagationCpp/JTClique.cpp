@@ -5,7 +5,7 @@
 #include "Variable.h"
 #include "VecMap.h"
 #include "Config.h"
-#include "string"
+//#include "string"
 
 /**
  * Implementa i metodi per le cricche del junction tree.

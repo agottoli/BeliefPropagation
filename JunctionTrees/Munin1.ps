@@ -1,0 +1,4944 @@
+%!PS-Adobe-3.0
+%%Creator: graphviz version 2.34.0 (20130907.0111)
+%%Title: %3
+%%Pages: (atend)
+%%BoundingBox: (atend)
+%%EndComments
+save
+%%BeginProlog
+/DotDict 200 dict def
+DotDict begin
+
+/setupLatin1 {
+mark
+/EncodingVector 256 array def
+ EncodingVector 0
+
+ISOLatin1Encoding 0 255 getinterval putinterval
+EncodingVector 45 /hyphen put
+
+% Set up ISO Latin 1 character encoding
+/starnetISO {
+        dup dup findfont dup length dict begin
+        { 1 index /FID ne { def }{ pop pop } ifelse
+        } forall
+        /Encoding EncodingVector def
+        currentdict end definefont
+} def
+/Times-Roman starnetISO def
+/Times-Italic starnetISO def
+/Times-Bold starnetISO def
+/Times-BoldItalic starnetISO def
+/Helvetica starnetISO def
+/Helvetica-Oblique starnetISO def
+/Helvetica-Bold starnetISO def
+/Helvetica-BoldOblique starnetISO def
+/Courier starnetISO def
+/Courier-Oblique starnetISO def
+/Courier-Bold starnetISO def
+/Courier-BoldOblique starnetISO def
+cleartomark
+} bind def
+
+%%BeginResource: procset graphviz 0 0
+/coord-font-family /Times-Roman def
+/default-font-family /Times-Roman def
+/coordfont coord-font-family findfont 8 scalefont def
+
+/InvScaleFactor 1.0 def
+/set_scale {
+       dup 1 exch div /InvScaleFactor exch def
+       scale
+} bind def
+
+% styles
+/solid { [] 0 setdash } bind def
+/dashed { [9 InvScaleFactor mul dup ] 0 setdash } bind def
+/dotted { [1 InvScaleFactor mul 6 InvScaleFactor mul] 0 setdash } bind def
+/invis {/fill {newpath} def /stroke {newpath} def /show {pop newpath} def} bind def
+/bold { 2 setlinewidth } bind def
+/filled { } bind def
+/unfilled { } bind def
+/rounded { } bind def
+/diagonals { } bind def
+/tapered { } bind def
+
+% hooks for setting color 
+/nodecolor { sethsbcolor } bind def
+/edgecolor { sethsbcolor } bind def
+/graphcolor { sethsbcolor } bind def
+/nopcolor {pop pop pop} bind def
+
+/beginpage {	% i j npages
+	/npages exch def
+	/j exch def
+	/i exch def
+	/str 10 string def
+	npages 1 gt {
+		gsave
+			coordfont setfont
+			0 0 moveto
+			(\() show i str cvs show (,) show j str cvs show (\)) show
+		grestore
+	} if
+} bind def
+
+/set_font {
+	findfont exch
+	scalefont setfont
+} def
+
+% draw text fitted to its expected width
+/alignedtext {			% width text
+	/text exch def
+	/width exch def
+	gsave
+		width 0 gt {
+			[] 0 setdash
+			text stringwidth pop width exch sub text length div 0 text ashow
+		} if
+	grestore
+} def
+
+/boxprim {				% xcorner ycorner xsize ysize
+		4 2 roll
+		moveto
+		2 copy
+		exch 0 rlineto
+		0 exch rlineto
+		pop neg 0 rlineto
+		closepath
+} bind def
+
+/ellipse_path {
+	/ry exch def
+	/rx exch def
+	/y exch def
+	/x exch def
+	matrix currentmatrix
+	newpath
+	x y translate
+	rx ry scale
+	0 0 1 0 360 arc
+	setmatrix
+} bind def
+
+/endpage { showpage } bind def
+/showpage { } def
+
+/layercolorseq
+	[	% layer color sequence - darkest to lightest
+		[0 0 0]
+		[.2 .8 .8]
+		[.4 .8 .8]
+		[.6 .8 .8]
+		[.8 .8 .8]
+	]
+def
+
+/layerlen layercolorseq length def
+
+/setlayer {/maxlayer exch def /curlayer exch def
+	layercolorseq curlayer 1 sub layerlen mod get
+	aload pop sethsbcolor
+	/nodecolor {nopcolor} def
+	/edgecolor {nopcolor} def
+	/graphcolor {nopcolor} def
+} bind def
+
+/onlayer { curlayer ne {invis} if } def
+
+/onlayers {
+	/myupper exch def
+	/mylower exch def
+	curlayer mylower lt
+	curlayer myupper gt
+	or
+	{invis} if
+} def
+
+/curlayer 0 def
+
+%%EndResource
+%%EndProlog
+%%BeginSetup
+14 default-font-family set_font
+1 setmiterlimit
+% /arrowlength 10 def
+% /arrowwidth 5 def
+
+% make sure pdfmark is harmless for PS-interpreters other than Distiller
+/pdfmark where {pop} {userdict /pdfmark /cleartomark load put} ifelse
+% make '<<' and '>>' safe on PS Level 1 devices
+/languagelevel where {pop languagelevel}{1} ifelse
+2 lt {
+    userdict (<<) cvn ([) cvn load put
+    userdict (>>) cvn ([) cvn load put
+} if
+
+%%EndSetup
+setupLatin1
+%%Page: 1 1
+%%PageBoundingBox: 36 36 22704 2432
+%%PageOrientation: Portrait
+0 0 1 beginpage
+gsave
+36 36 22668 2396 boxprim clip newpath
+1 1 set_scale 0 rotate 40 40 translate
+% { R_LNLBE_MED_SEV, R_LNLW_MED_TIME, R_LNLBE_MED_TIME, R_LNLBE_MED_PATHO, DIFFN_M_SEV_DIST, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, DIFFN_TIME, R_DIFFN_LNLW_APB_DENERV, DIFFN_PATHO, R_DIFFN_LNLW_APB_MUSIZE, R_APB_DE_REGEN, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+17523 2366.3 moveto 1780 ({ R_LNLBE_MED_SEV, R_LNLW_MED_TIME, R_LNLBE_MED_TIME, R_LNLBE_MED_PATHO, DIFFN_M_SEV_DIST, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, DIFFN_TIME, R_DIFFN_LNLW_APB_DENERV, DIFFN_PATHO, R_DIFFN_LNLW_APB_MUSIZE, R_APB_DE_REGEN, }) alignedtext
+grestore
+% { R_DIFFN_LNLW_APB_DE_REGEN, DIFFN_M_SEV_DIST, R_LNLBE_MED_TIME, R_LNLBE_MED_PATHO, R_LNLW_MED_TIME, R_LNLBE_MED_SEV, R_APB_DE_REGEN, DIFFN_TIME, DIFFN_PATHO, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+11307.5 2170.3 moveto 1591 ({ R_DIFFN_LNLW_APB_DE_REGEN, DIFFN_M_SEV_DIST, R_LNLBE_MED_TIME, R_LNLBE_MED_PATHO, R_LNLW_MED_TIME, R_LNLBE_MED_SEV, R_APB_DE_REGEN, DIFFN_TIME, DIFFN_PATHO, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, }) alignedtext
+grestore
+% { R_LNLBE_MED_SEV, R_LNLW_MED_TIME, R_LNLBE_MED_TIME, R_LNLBE_MED_PATHO, DIFFN_M_SEV_DIST, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, DIFFN_TIME, R_DIFFN_LNLW_APB_DENERV, DIFFN_PATHO, R_DIFFN_LNLW_APB_MUSIZE, R_APB_DE_REGEN, }->{ R_DIFFN_LNLW_APB_DE_REGEN, DIFFN_M_SEV_DIST, R_LNLBE_MED_TIME, R_LNLBE_MED_PATHO, R_LNLW_MED_TIME, R_LNLBE_MED_SEV, R_APB_DE_REGEN, DIFFN_TIME, DIFFN_PATHO, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 17859.94 2352 moveto
+16667.92 2315.35 13867.5 2229.25 12666.32 2192.32 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 12666.31 2188.82 moveto
+12656.21 2192.01 lineto
+12666.1 2195.81 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 12666.31 2188.82 moveto
+12656.21 2192.01 lineto
+12666.1 2195.81 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+15448 2268.3 moveto 1477 ({DIFFN_M_SEV_DIST,	R_LNLBE_MED_TIME,	R_LNLBE_MED_PATHO,	R_LNLW_MED_TIME,	R_LNLBE_MED_SEV,	R_APB_DE_REGEN,	DIFFN_TIME,	DIFFN_PATHO,	R_LNLW_MED_SEV,	R_LNLW_MED_PATHO,	}) alignedtext
+grestore
+% { R_LNLW_APB_DENERV, R_LNLW_MED_SEV, DIFFN_M_SEV_DIST, R_LNLW_MED_TIME, R_LNLW_MED_PATHO, R_DIFFN_LNLW_APB_DENERV, DIFFN_TIME, DIFFN_PATHO, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+17082 2170.3 moveto 1158 ({ R_LNLW_APB_DENERV, R_LNLW_MED_SEV, DIFFN_M_SEV_DIST, R_LNLW_MED_TIME, R_LNLW_MED_PATHO, R_DIFFN_LNLW_APB_DENERV, DIFFN_TIME, DIFFN_PATHO, }) alignedtext
+grestore
+% { R_LNLBE_MED_SEV, R_LNLW_MED_TIME, R_LNLBE_MED_TIME, R_LNLBE_MED_PATHO, DIFFN_M_SEV_DIST, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, DIFFN_TIME, R_DIFFN_LNLW_APB_DENERV, DIFFN_PATHO, R_DIFFN_LNLW_APB_MUSIZE, R_APB_DE_REGEN, }->{ R_LNLW_APB_DENERV, R_LNLW_MED_SEV, DIFFN_M_SEV_DIST, R_LNLW_MED_TIME, R_LNLW_MED_PATHO, R_DIFFN_LNLW_APB_DENERV, DIFFN_TIME, DIFFN_PATHO, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 18241.12 2351.99 moveto
+18136.52 2338.71 18001.13 2316.26 17885 2280 curveto
+17817.06 2258.79 17743.22 2221.04 17699.58 2197.05 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 17701.19 2193.94 moveto
+17690.74 2192.15 lineto
+17697.79 2200.06 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 17701.19 2193.94 moveto
+17690.74 2192.15 lineto
+17697.79 2200.06 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+17885 2268.3 moveto 1057 ({R_LNLW_MED_SEV,	DIFFN_M_SEV_DIST,	R_LNLW_MED_TIME,	R_LNLW_MED_PATHO,	R_DIFFN_LNLW_APB_DENERV,	DIFFN_TIME,	DIFFN_PATHO,	}) alignedtext
+grestore
+% { R_DIFFN_LNLW_APB_DENERV, R_LNLBE_MED_SEV, R_LNL_DIFFN_APB_DENERV, R_LNLBE_MED_TIME, R_LNLBE_MED_PATHO, DIFFN_M_SEV_DIST, R_LNLW_MED_SEV, DIFFN_PATHO, R_LNLW_MED_PATHO, R_DIFFN_LNLW_APB_MUSIZE, R_APB_DE_REGEN, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+18364 2170.3 moveto 1744 ({ R_DIFFN_LNLW_APB_DENERV, R_LNLBE_MED_SEV, R_LNL_DIFFN_APB_DENERV, R_LNLBE_MED_TIME, R_LNLBE_MED_PATHO, DIFFN_M_SEV_DIST, R_LNLW_MED_SEV, DIFFN_PATHO, R_LNLW_MED_PATHO, R_DIFFN_LNLW_APB_MUSIZE, R_APB_DE_REGEN, }) alignedtext
+grestore
+% { R_LNLBE_MED_SEV, R_LNLW_MED_TIME, R_LNLBE_MED_TIME, R_LNLBE_MED_PATHO, DIFFN_M_SEV_DIST, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, DIFFN_TIME, R_DIFFN_LNLW_APB_DENERV, DIFFN_PATHO, R_DIFFN_LNLW_APB_MUSIZE, R_APB_DE_REGEN, }->{ R_DIFFN_LNLW_APB_DENERV, R_LNLBE_MED_SEV, R_LNL_DIFFN_APB_DENERV, R_LNLBE_MED_TIME, R_LNLBE_MED_PATHO, DIFFN_M_SEV_DIST, R_LNLW_MED_SEV, DIFFN_PATHO, R_LNLW_MED_PATHO, R_DIFFN_LNLW_APB_MUSIZE, R_APB_DE_REGEN, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 18574.92 2351.97 moveto
+18685.95 2338.09 18835.94 2314.99 18965 2280 curveto
+19046.31 2257.95 19136.84 2220 19189.98 2196.26 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 19191.44 2199.44 moveto
+19199.13 2192.15 lineto
+19188.58 2193.06 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 19191.44 2199.44 moveto
+19199.13 2192.15 lineto
+19188.58 2193.06 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+19011 2268.3 moveto 1687 ({R_DIFFN_LNLW_APB_DENERV,	R_LNLBE_MED_SEV,	R_LNLBE_MED_TIME,	R_LNLBE_MED_PATHO,	DIFFN_M_SEV_DIST,	R_LNLW_MED_SEV,	DIFFN_PATHO,	R_LNLW_MED_PATHO,	R_DIFFN_LNLW_APB_MUSIZE,	R_APB_DE_REGEN,	}) alignedtext
+grestore
+% { DIFFN_PATHO, R_LNLW_APB_MUSIZE, R_LNLW_MED_SEV, DIFFN_M_SEV_DIST, R_LNLW_MED_TIME, R_LNLW_MED_PATHO, R_DIFFN_LNLW_APB_MUSIZE, DIFFN_TIME, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+20870.5 2170.3 moveto 1149 ({ DIFFN_PATHO, R_LNLW_APB_MUSIZE, R_LNLW_MED_SEV, DIFFN_M_SEV_DIST, R_LNLW_MED_TIME, R_LNLW_MED_PATHO, R_DIFFN_LNLW_APB_MUSIZE, DIFFN_TIME, }) alignedtext
+grestore
+% { R_LNLBE_MED_SEV, R_LNLW_MED_TIME, R_LNLBE_MED_TIME, R_LNLBE_MED_PATHO, DIFFN_M_SEV_DIST, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, DIFFN_TIME, R_DIFFN_LNLW_APB_DENERV, DIFFN_PATHO, R_DIFFN_LNLW_APB_MUSIZE, R_APB_DE_REGEN, }->{ DIFFN_PATHO, R_LNLW_APB_MUSIZE, R_LNLW_MED_SEV, DIFFN_M_SEV_DIST, R_LNLW_MED_TIME, R_LNLW_MED_PATHO, R_DIFFN_LNLW_APB_MUSIZE, DIFFN_TIME, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 19311.32 2356.61 moveto
+19740 2345.03 20259.75 2322.76 20725 2280 curveto
+20945.13 2259.77 21200.75 2218.13 21340.48 2193.81 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 21341.5 2197.18 moveto
+21350.75 2192.02 lineto
+21340.29 2190.29 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 21341.5 2197.18 moveto
+21350.75 2192.02 lineto
+21340.29 2190.29 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+20864 2268.3 moveto 1057 ({DIFFN_PATHO,	R_LNLW_MED_SEV,	DIFFN_M_SEV_DIST,	R_LNLW_MED_TIME,	R_LNLW_MED_PATHO,	R_DIFFN_LNLW_APB_MUSIZE,	DIFFN_TIME,	}) alignedtext
+grestore
+% { R_LNLBE_APB_MUDENS, R_LNLW_MED_TIME, R_LNLBE_MED_SEV, R_LNLBE_MED_PATHO, R_LNLBE_MED_TIME, DIFFN_M_SEV_DIST, DIFFN_TIME, DIFFN_PATHO, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+3256.5 1974.3 moveto 1401 ({ R_LNLBE_APB_MUDENS, R_LNLW_MED_TIME, R_LNLBE_MED_SEV, R_LNLBE_MED_PATHO, R_LNLBE_MED_TIME, DIFFN_M_SEV_DIST, DIFFN_TIME, DIFFN_PATHO, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, }) alignedtext
+grestore
+% { R_DIFFN_LNLW_APB_DE_REGEN, DIFFN_M_SEV_DIST, R_LNLBE_MED_TIME, R_LNLBE_MED_PATHO, R_LNLW_MED_TIME, R_LNLBE_MED_SEV, R_APB_DE_REGEN, DIFFN_TIME, DIFFN_PATHO, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, }->{ R_LNLBE_APB_MUDENS, R_LNLW_MED_TIME, R_LNLBE_MED_SEV, R_LNLBE_MED_PATHO, R_LNLBE_MED_TIME, DIFFN_M_SEV_DIST, DIFFN_TIME, DIFFN_PATHO, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 11389.02 2156 moveto
+9847.28 2119.28 6221.38 2032.93 4675.55 1996.11 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 4675.44 1992.61 moveto
+4665.36 1995.87 lineto
+4675.28 1999.61 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 4675.44 1992.61 moveto
+4665.36 1995.87 lineto
+4675.28 1999.61 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+8275 2072.3 moveto 1327 ({R_LNLW_MED_TIME,	R_LNLBE_MED_SEV,	R_LNLBE_MED_PATHO,	R_LNLBE_MED_TIME,	DIFFN_M_SEV_DIST,	DIFFN_TIME,	DIFFN_PATHO,	R_LNLW_MED_SEV,	R_LNLW_MED_PATHO,	}) alignedtext
+grestore
+% { R_LNLW_APB_DE_REGEN, R_LNLW_MED_SEV, DIFFN_M_SEV_DIST, R_LNLW_MED_TIME, R_LNLW_MED_PATHO, R_DIFFN_LNLW_APB_DE_REGEN, DIFFN_PATHO, DIFFN_TIME, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+10896.5 1974.3 moveto 1191 ({ R_LNLW_APB_DE_REGEN, R_LNLW_MED_SEV, DIFFN_M_SEV_DIST, R_LNLW_MED_TIME, R_LNLW_MED_PATHO, R_DIFFN_LNLW_APB_DE_REGEN, DIFFN_PATHO, DIFFN_TIME, }) alignedtext
+grestore
+% { R_DIFFN_LNLW_APB_DE_REGEN, DIFFN_M_SEV_DIST, R_LNLBE_MED_TIME, R_LNLBE_MED_PATHO, R_LNLW_MED_TIME, R_LNLBE_MED_SEV, R_APB_DE_REGEN, DIFFN_TIME, DIFFN_PATHO, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, }->{ R_LNLW_APB_DE_REGEN, R_LNLW_MED_SEV, DIFFN_M_SEV_DIST, R_LNLW_MED_TIME, R_LNLW_MED_PATHO, R_DIFFN_LNLW_APB_DE_REGEN, DIFFN_PATHO, DIFFN_TIME, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 11704.47 2155.96 moveto
+11605.84 2143.04 11519.1 2121.07 11487 2084 curveto
+11468.68 2062.85 11474.1 2029.37 11481.39 2005.92 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 11484.78 2006.83 moveto
+11484.68 1996.24 lineto
+11478.15 2004.58 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 11484.78 2006.83 moveto
+11484.68 1996.24 lineto
+11478.15 2004.58 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+11487 2072.3 moveto 1087 ({R_LNLW_MED_SEV,	DIFFN_M_SEV_DIST,	R_LNLW_MED_TIME,	R_LNLW_MED_PATHO,	R_DIFFN_LNLW_APB_DE_REGEN,	DIFFN_PATHO,	DIFFN_TIME,	}) alignedtext
+grestore
+% { R_LNLBE_APB_DE_REGEN, R_LNLBE_MED_SEV, R_LNLBE_MED_TIME, R_LNLBE_MED_PATHO, R_DIFFN_LNLW_APB_DE_REGEN, R_APB_DE_REGEN, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+12211.5 1974.3 moveto 1005 ({ R_LNLBE_APB_DE_REGEN, R_LNLBE_MED_SEV, R_LNLBE_MED_TIME, R_LNLBE_MED_PATHO, R_DIFFN_LNLW_APB_DE_REGEN, R_APB_DE_REGEN, }) alignedtext
+grestore
+% { R_DIFFN_LNLW_APB_DE_REGEN, DIFFN_M_SEV_DIST, R_LNLBE_MED_TIME, R_LNLBE_MED_PATHO, R_LNLW_MED_TIME, R_LNLBE_MED_SEV, R_APB_DE_REGEN, DIFFN_TIME, DIFFN_PATHO, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, }->{ R_LNLBE_APB_DE_REGEN, R_LNLBE_MED_SEV, R_LNLBE_MED_TIME, R_LNLBE_MED_PATHO, R_DIFFN_LNLW_APB_DE_REGEN, R_APB_DE_REGEN, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 12347.89 2155.97 moveto
+12430.14 2143.3 12520.38 2121.47 12597 2084 curveto
+12636.21 2064.83 12672.09 2028.63 12693.5 2004.17 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 12696.34 2006.23 moveto
+12700.19 1996.36 lineto
+12691.02 2001.67 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 12696.34 2006.23 moveto
+12700.19 1996.36 lineto
+12691.02 2001.67 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+12623 2072.3 moveto 877 ({R_LNLBE_MED_SEV,	R_LNLBE_MED_TIME,	R_LNLBE_MED_PATHO,	R_DIFFN_LNLW_APB_DE_REGEN,	R_APB_DE_REGEN,	}) alignedtext
+grestore
+% { DIFFN_PATHO, R_LNLW_APB_MUDENS, R_LNLW_MED_SEV, DIFFN_M_SEV_DIST, R_LNLW_MED_TIME, R_LNLW_MED_PATHO, R_LNLBE_APB_MUDENS, DIFFN_TIME, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+794 1778.3 moveto 1118 ({ DIFFN_PATHO, R_LNLW_APB_MUDENS, R_LNLW_MED_SEV, DIFFN_M_SEV_DIST, R_LNLW_MED_TIME, R_LNLW_MED_PATHO, R_LNLBE_APB_MUDENS, DIFFN_TIME, }) alignedtext
+grestore
+% { R_LNLBE_APB_MUDENS, R_LNLW_MED_TIME, R_LNLBE_MED_SEV, R_LNLBE_MED_PATHO, R_LNLBE_MED_TIME, DIFFN_M_SEV_DIST, DIFFN_TIME, DIFFN_PATHO, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, }->{ DIFFN_PATHO, R_LNLW_APB_MUDENS, R_LNLW_MED_SEV, DIFFN_M_SEV_DIST, R_LNLW_MED_TIME, R_LNLW_MED_PATHO, R_LNLBE_APB_MUDENS, DIFFN_TIME, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 3515.14 1959.99 moveto
+3181.73 1945.52 2713.2 1921.68 2303 1888 curveto
+2015.77 1864.42 1681.01 1824.5 1495.42 1801.27 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 1495.69 1797.78 moveto
+1485.33 1800.01 lineto
+1494.82 1804.73 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 1495.69 1797.78 moveto
+1485.33 1800.01 lineto
+1494.82 1804.73 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+2303 1876.3 moveto 1027 ({DIFFN_PATHO,	R_LNLW_MED_SEV,	DIFFN_M_SEV_DIST,	R_LNLW_MED_TIME,	R_LNLW_MED_PATHO,	R_LNLBE_APB_MUDENS,	DIFFN_TIME,	}) alignedtext
+grestore
+% { DIFFN_TIME, R_DIFFN_LNLW_APB_NEUR_ACT, R_LNLW_MED_SEV, R_LNLBE_MED_TIME, DIFFN_M_SEV_DIST, R_LNLW_MED_TIME, R_LNLBE_MED_SEV, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+2585.5 1778.3 moveto 1041 ({ DIFFN_TIME, R_DIFFN_LNLW_APB_NEUR_ACT, R_LNLW_MED_SEV, R_LNLBE_MED_TIME, DIFFN_M_SEV_DIST, R_LNLW_MED_TIME, R_LNLBE_MED_SEV, }) alignedtext
+grestore
+% { R_LNLBE_APB_MUDENS, R_LNLW_MED_TIME, R_LNLBE_MED_SEV, R_LNLBE_MED_PATHO, R_LNLBE_MED_TIME, DIFFN_M_SEV_DIST, DIFFN_TIME, DIFFN_PATHO, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, }->{ DIFFN_TIME, R_DIFFN_LNLW_APB_NEUR_ACT, R_LNLW_MED_SEV, R_LNLBE_MED_TIME, DIFFN_M_SEV_DIST, R_LNLW_MED_TIME, R_LNLBE_MED_SEV, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 3807.32 1959.98 moveto
+3695.9 1945.58 3540.62 1921.84 3407 1888 curveto
+3317.3 1865.28 3216.38 1827.45 3157.15 1803.94 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 3158.24 1800.61 moveto
+3147.66 1800.15 lineto
+3155.65 1807.11 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 3158.24 1800.61 moveto
+3147.66 1800.15 lineto
+3155.65 1807.11 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+3407 1876.3 moveto 877 ({DIFFN_TIME,	R_LNLW_MED_SEV,	R_LNLBE_MED_TIME,	DIFFN_M_SEV_DIST,	R_LNLW_MED_TIME,	R_LNLBE_MED_SEV,	}) alignedtext
+grestore
+% { R_LNLBE_MED_SEV, R_LNLW_MED_PATHO, DIFFN_S_SEV_DIST, DIFFN_PATHO, DIFFN_TIME, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, DIFFN_M_SEV_DIST, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+4020.5 1778.3 moveto 1079 ({ R_LNLBE_MED_SEV, R_LNLW_MED_PATHO, DIFFN_S_SEV_DIST, DIFFN_PATHO, DIFFN_TIME, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, DIFFN_M_SEV_DIST, }) alignedtext
+grestore
+% { R_LNLBE_APB_MUDENS, R_LNLW_MED_TIME, R_LNLBE_MED_SEV, R_LNLBE_MED_PATHO, R_LNLBE_MED_TIME, DIFFN_M_SEV_DIST, DIFFN_TIME, DIFFN_PATHO, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, }->{ R_LNLBE_MED_SEV, R_LNLW_MED_PATHO, DIFFN_S_SEV_DIST, DIFFN_PATHO, DIFFN_TIME, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, DIFFN_M_SEV_DIST, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 4039.57 1959.99 moveto
+4111.98 1944.19 4219.65 1918.55 4311 1888 curveto
+4384.15 1863.54 4466.04 1827.19 4515.27 1804.31 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 4516.8 1807.47 moveto
+4524.38 1800.06 lineto
+4513.83 1801.12 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 4516.8 1807.47 moveto
+4524.38 1800.06 lineto
+4513.83 1801.12 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+4353 1876.3 moveto 1027 ({R_LNLBE_MED_SEV,	R_LNLW_MED_PATHO,	DIFFN_PATHO,	DIFFN_TIME,	R_LNLBE_MED_PATHO,	R_LNLW_MED_SEV,	DIFFN_M_SEV_DIST,	}) alignedtext
+grestore
+% { DIFFN_M_SEV_DIST, R_DIFFN_APB_MUDENS, DIFFN_TIME, DIFFN_PATHO, R_LNLW_APB_MUDENS, R_LNLBE_APB_MUDENS, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+718.5 1582.3 moveto 847 ({ DIFFN_M_SEV_DIST, R_DIFFN_APB_MUDENS, DIFFN_TIME, DIFFN_PATHO, R_LNLW_APB_MUDENS, R_LNLBE_APB_MUDENS, }) alignedtext
+grestore
+% { DIFFN_PATHO, R_LNLW_APB_MUDENS, R_LNLW_MED_SEV, DIFFN_M_SEV_DIST, R_LNLW_MED_TIME, R_LNLW_MED_PATHO, R_LNLBE_APB_MUDENS, DIFFN_TIME, }->{ DIFFN_M_SEV_DIST, R_DIFFN_APB_MUDENS, DIFFN_TIME, DIFFN_PATHO, R_LNLW_APB_MUDENS, R_LNLBE_APB_MUDENS, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 1334.28 1763.78 moveto
+1296.58 1729.13 1211.47 1650.87 1168.24 1611.13 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 1170.41 1608.37 moveto
+1160.68 1604.18 lineto
+1165.68 1613.52 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 1170.41 1608.37 moveto
+1160.68 1604.18 lineto
+1165.68 1613.52 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+1254 1680.3 moveto 727 ({DIFFN_M_SEV_DIST,	DIFFN_TIME,	DIFFN_PATHO,	R_LNLW_APB_MUDENS,	R_LNLBE_APB_MUDENS,	}) alignedtext
+grestore
+% { R_DIFFN_LNLW_APB_MUDENS, R_DIFFN_APB_MUDENS, R_LNLW_APB_MUDENS, R_LNLBE_APB_MUDENS, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+778.5 1386.3 moveto 727 ({ R_DIFFN_LNLW_APB_MUDENS, R_DIFFN_APB_MUDENS, R_LNLW_APB_MUDENS, R_LNLBE_APB_MUDENS, }) alignedtext
+grestore
+% { DIFFN_M_SEV_DIST, R_DIFFN_APB_MUDENS, DIFFN_TIME, DIFFN_PATHO, R_LNLW_APB_MUDENS, R_LNLBE_APB_MUDENS, }->{ R_DIFFN_LNLW_APB_MUDENS, R_DIFFN_APB_MUDENS, R_LNLW_APB_MUDENS, R_LNLBE_APB_MUDENS, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 1142 1567.78 moveto
+1142 1534.06 1142 1459.06 1142 1418.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 1145.5 1418.18 moveto
+1142 1408.18 lineto
+1138.5 1418.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 1145.5 1418.18 moveto
+1142 1408.18 lineto
+1138.5 1418.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+1142 1484.3 moveto 547 ({R_DIFFN_APB_MUDENS,	R_LNLW_APB_MUDENS,	R_LNLBE_APB_MUDENS,	}) alignedtext
+grestore
+% { R_LNLBE_APB_MUDENS, R_LNLT1_LP_BE_APB_MUDENS, R_DIFFN_LNLW_APB_MUDENS, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+835.5 1190.3 moveto 613 ({ R_LNLBE_APB_MUDENS, R_LNLT1_LP_BE_APB_MUDENS, R_DIFFN_LNLW_APB_MUDENS, }) alignedtext
+grestore
+% { R_DIFFN_LNLW_APB_MUDENS, R_DIFFN_APB_MUDENS, R_LNLW_APB_MUDENS, R_LNLBE_APB_MUDENS, }->{ R_LNLBE_APB_MUDENS, R_LNLT1_LP_BE_APB_MUDENS, R_DIFFN_LNLW_APB_MUDENS, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 1142 1371.78 moveto
+1142 1338.06 1142 1263.06 1142 1222.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 1145.5 1222.18 moveto
+1142 1212.18 lineto
+1138.5 1222.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 1145.5 1222.18 moveto
+1142 1212.18 lineto
+1138.5 1222.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+1142 1288.3 moveto 427 ({R_LNLBE_APB_MUDENS,	R_DIFFN_LNLW_APB_MUDENS,	}) alignedtext
+grestore
+% { R_LNL_DIFFN_APB_MUDENS, R_LNLT1_LP_BE_APB_MUDENS, R_DIFFN_LNLW_APB_MUDENS, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+359 994.3 moveto 644 ({ R_LNL_DIFFN_APB_MUDENS, R_LNLT1_LP_BE_APB_MUDENS, R_DIFFN_LNLW_APB_MUDENS, }) alignedtext
+grestore
+% { R_LNLBE_APB_MUDENS, R_LNLT1_LP_BE_APB_MUDENS, R_DIFFN_LNLW_APB_MUDENS, }->{ R_LNL_DIFFN_APB_MUDENS, R_LNLT1_LP_BE_APB_MUDENS, R_DIFFN_LNLW_APB_MUDENS, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 956.91 1175.92 moveto
+891.1 1163.33 819.02 1141.56 761 1104 curveto
+730.77 1084.43 707.51 1049.32 694.05 1025.12 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 697.03 1023.28 moveto
+689.22 1016.13 lineto
+690.87 1026.59 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 697.03 1023.28 moveto
+689.22 1016.13 lineto
+690.87 1026.59 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+761 1092.3 moveto 487 ({R_LNLT1_LP_BE_APB_MUDENS,	R_DIFFN_LNLW_APB_MUDENS,	}) alignedtext
+grestore
+% { R_LNLT1_LP_APB_MUDENS, R_LNLT1_LP_BE_APB_MUDENS, R_LNLBE_APB_MUDENS, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+1127 994.3 moveto 592 ({ R_LNLT1_LP_APB_MUDENS, R_LNLT1_LP_BE_APB_MUDENS, R_LNLBE_APB_MUDENS, }) alignedtext
+grestore
+% { R_LNLBE_APB_MUDENS, R_LNLT1_LP_BE_APB_MUDENS, R_DIFFN_LNLW_APB_MUDENS, }->{ R_LNLT1_LP_APB_MUDENS, R_LNLT1_LP_BE_APB_MUDENS, R_LNLBE_APB_MUDENS, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 1166.94 1175.78 moveto
+1217.66 1140.77 1332.85 1061.24 1389.82 1021.91 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 1391.88 1024.74 moveto
+1398.12 1016.18 lineto
+1387.9 1018.98 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 1391.88 1024.74 moveto
+1398.12 1016.18 lineto
+1387.9 1018.98 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+1291 1092.3 moveto 427 ({R_LNLT1_LP_BE_APB_MUDENS,	R_LNLBE_APB_MUDENS,	}) alignedtext
+grestore
+% { R_APB_MUDENS, R_LNL_DIFFN_APB_MUDENS, R_MUSCLE_APB_MUDENS, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+424 798.3 moveto 514 ({ R_APB_MUDENS, R_LNL_DIFFN_APB_MUDENS, R_MUSCLE_APB_MUDENS, }) alignedtext
+grestore
+% { R_LNL_DIFFN_APB_MUDENS, R_LNLT1_LP_BE_APB_MUDENS, R_DIFFN_LNLW_APB_MUDENS, }->{ R_APB_MUDENS, R_LNL_DIFFN_APB_MUDENS, R_MUSCLE_APB_MUDENS, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 681 979.78 moveto
+681 946.06 681 871.06 681 830.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 684.5 830.18 moveto
+681 820.18 lineto
+677.5 830.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 684.5 830.18 moveto
+681 820.18 lineto
+677.5 830.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+681 896.3 moveto 217 ({R_LNL_DIFFN_APB_MUDENS,	}) alignedtext
+grestore
+% { R_MYAS_APB_MUDENS, R_MUSCLE_APB_MUDENS, R_MYOP_MYDY_APB_MUDENS, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+7.5 602.3 moveto 577 ({ R_MYAS_APB_MUDENS, R_MUSCLE_APB_MUDENS, R_MYOP_MYDY_APB_MUDENS, }) alignedtext
+grestore
+% { R_APB_MUDENS, R_LNL_DIFFN_APB_MUDENS, R_MUSCLE_APB_MUDENS, }->{ R_MYAS_APB_MUDENS, R_MUSCLE_APB_MUDENS, R_MYOP_MYDY_APB_MUDENS, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 647.17 783.95 moveto
+577.08 748.64 416.12 667.53 338.88 628.61 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 340.39 625.45 moveto
+329.89 624.08 lineto
+337.24 631.7 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 340.39 625.45 moveto
+329.89 624.08 lineto
+337.24 631.7 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+501 700.3 moveto 217 ({R_MUSCLE_APB_MUDENS,	}) alignedtext
+grestore
+% { R_APB_SF_DENSITY, R_APB_MUDENS, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+708.5 602.3 moveto 277 ({ R_APB_SF_DENSITY, R_APB_MUDENS, }) alignedtext
+grestore
+% { R_APB_MUDENS, R_LNL_DIFFN_APB_MUDENS, R_MUSCLE_APB_MUDENS, }->{ R_APB_SF_DENSITY, R_APB_MUDENS, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 695.73 783.78 moveto
+725.2 749.34 791.52 671.84 825.71 631.88 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 828.46 634.05 moveto
+832.3 624.18 lineto
+823.14 629.5 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 828.46 634.05 moveto
+832.3 624.18 lineto
+823.14 629.5 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+769 700.3 moveto 157 ({R_APB_MUDENS,	}) alignedtext
+grestore
+% { R_MYOP_APB_MUDENS, R_MYOP_MYDY_APB_MUDENS, R_MYDY_APB_MUDENS, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+15 406.3 moveto 562 ({ R_MYOP_APB_MUDENS, R_MYOP_MYDY_APB_MUDENS, R_MYDY_APB_MUDENS, }) alignedtext
+grestore
+% { R_MYAS_APB_MUDENS, R_MUSCLE_APB_MUDENS, R_MYOP_MYDY_APB_MUDENS, }->{ R_MYOP_APB_MUDENS, R_MYOP_MYDY_APB_MUDENS, R_MYDY_APB_MUDENS, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 296 587.78 moveto
+296 554.06 296 479.06 296 438.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 299.5 438.18 moveto
+296 428.18 lineto
+292.5 438.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 299.5 438.18 moveto
+296 428.18 lineto
+292.5 438.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+296 504.3 moveto 247 ({R_MYOP_MYDY_APB_MUDENS,	}) alignedtext
+grestore
+% { R_LNLLP_APB_MUDENS, R_LNLT1_LP_APB_MUDENS, R_LNLT1_APB_MUDENS, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+1152 798.3 moveto 542 ({ R_LNLLP_APB_MUDENS, R_LNLT1_LP_APB_MUDENS, R_LNLT1_APB_MUDENS, }) alignedtext
+grestore
+% { R_LNLT1_LP_APB_MUDENS, R_LNLT1_LP_BE_APB_MUDENS, R_LNLBE_APB_MUDENS, }->{ R_LNLLP_APB_MUDENS, R_LNLT1_LP_APB_MUDENS, R_LNLT1_APB_MUDENS, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 1423 979.78 moveto
+1423 946.06 1423 871.06 1423 830.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 1426.5 830.18 moveto
+1423 820.18 lineto
+1419.5 830.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 1426.5 830.18 moveto
+1423 820.18 lineto
+1419.5 830.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+1423 896.3 moveto 217 ({R_LNLT1_LP_APB_MUDENS,	}) alignedtext
+grestore
+% { R_LNLW_APB_NEUR_ACT, R_LNLW_MED_SEV, DIFFN_M_SEV_DIST, R_LNLW_MED_TIME, R_DIFFN_LNLW_APB_NEUR_ACT, DIFFN_TIME, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+1690 1582.3 moveto 934 ({ R_LNLW_APB_NEUR_ACT, R_LNLW_MED_SEV, DIFFN_M_SEV_DIST, R_LNLW_MED_TIME, R_DIFFN_LNLW_APB_NEUR_ACT, DIFFN_TIME, }) alignedtext
+grestore
+% { DIFFN_TIME, R_DIFFN_LNLW_APB_NEUR_ACT, R_LNLW_MED_SEV, R_LNLBE_MED_TIME, DIFFN_M_SEV_DIST, R_LNLW_MED_TIME, R_LNLBE_MED_SEV, }->{ R_LNLW_APB_NEUR_ACT, R_LNLW_MED_SEV, DIFFN_M_SEV_DIST, R_LNLW_MED_TIME, R_DIFFN_LNLW_APB_NEUR_ACT, DIFFN_TIME, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 2787.74 1764 moveto
+2599.16 1750.48 2380.28 1727.77 2292 1692 curveto
+2247.36 1673.91 2205.09 1636.59 2180.1 1611.67 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 2182.43 1609.04 moveto
+2172.92 1604.37 lineto
+2177.44 1613.95 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 2182.43 1609.04 moveto
+2172.92 1604.37 lineto
+2177.44 1613.95 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+2292 1680.3 moveto 787 ({R_LNLW_MED_SEV,	DIFFN_M_SEV_DIST,	R_LNLW_MED_TIME,	R_DIFFN_LNLW_APB_NEUR_ACT,	DIFFN_TIME,	}) alignedtext
+grestore
+% { R_LNLBE_APB_NEUR_ACT, R_LNLBE_MED_SEV, R_LNLBE_MED_TIME, R_DIFFN_LNLW_APB_NEUR_ACT, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+2748 1582.3 moveto 716 ({ R_LNLBE_APB_NEUR_ACT, R_LNLBE_MED_SEV, R_LNLBE_MED_TIME, R_DIFFN_LNLW_APB_NEUR_ACT, }) alignedtext
+grestore
+% { DIFFN_TIME, R_DIFFN_LNLW_APB_NEUR_ACT, R_LNLW_MED_SEV, R_LNLBE_MED_TIME, DIFFN_M_SEV_DIST, R_LNLW_MED_TIME, R_LNLBE_MED_SEV, }->{ R_LNLBE_APB_NEUR_ACT, R_LNLBE_MED_SEV, R_LNLBE_MED_TIME, R_DIFFN_LNLW_APB_NEUR_ACT, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 3106 1763.78 moveto
+3106 1730.06 3106 1655.06 3106 1614.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 3109.5 1614.18 moveto
+3106 1604.18 lineto
+3102.5 1614.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 3109.5 1614.18 moveto
+3106 1604.18 lineto
+3102.5 1614.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+3106 1680.3 moveto 547 ({R_LNLBE_MED_SEV,	R_LNLBE_MED_TIME,	R_DIFFN_LNLW_APB_NEUR_ACT,	}) alignedtext
+grestore
+% { R_DIFFN_APB_NEUR_ACT, DIFFN_M_SEV_DIST, DIFFN_TIME, R_DIFFN_LNLW_APB_NEUR_ACT, R_LNLW_APB_NEUR_ACT, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+1685 1386.3 moveto 836 ({ R_DIFFN_APB_NEUR_ACT, DIFFN_M_SEV_DIST, DIFFN_TIME, R_DIFFN_LNLW_APB_NEUR_ACT, R_LNLW_APB_NEUR_ACT, }) alignedtext
+grestore
+% { R_LNLW_APB_NEUR_ACT, R_LNLW_MED_SEV, DIFFN_M_SEV_DIST, R_LNLW_MED_TIME, R_DIFFN_LNLW_APB_NEUR_ACT, DIFFN_TIME, }->{ R_DIFFN_APB_NEUR_ACT, DIFFN_M_SEV_DIST, DIFFN_TIME, R_DIFFN_LNLW_APB_NEUR_ACT, R_LNLW_APB_NEUR_ACT, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 2152.21 1567.78 moveto
+2142.78 1533.92 2121.77 1458.42 2110.49 1417.91 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 2113.83 1416.87 moveto
+2107.78 1408.18 lineto
+2107.09 1418.75 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 2113.83 1416.87 moveto
+2107.78 1408.18 lineto
+2107.09 1418.75 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+2132 1484.3 moveto 667 ({DIFFN_M_SEV_DIST,	DIFFN_TIME,	R_DIFFN_LNLW_APB_NEUR_ACT,	R_LNLW_APB_NEUR_ACT,	}) alignedtext
+grestore
+% { R_LNLT1_LP_BE_APB_NEUR_ACT, R_DIFFN_LNLW_APB_NEUR_ACT, R_LNLBE_APB_NEUR_ACT, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+2645.5 1386.3 moveto 661 ({ R_LNLT1_LP_BE_APB_NEUR_ACT, R_DIFFN_LNLW_APB_NEUR_ACT, R_LNLBE_APB_NEUR_ACT, }) alignedtext
+grestore
+% { R_LNLBE_APB_NEUR_ACT, R_LNLBE_MED_SEV, R_LNLBE_MED_TIME, R_DIFFN_LNLW_APB_NEUR_ACT, }->{ R_LNLT1_LP_BE_APB_NEUR_ACT, R_DIFFN_LNLW_APB_NEUR_ACT, R_LNLBE_APB_NEUR_ACT, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 3094.46 1567.78 moveto
+3071.53 1533.56 3020.1 1456.81 2993.18 1416.63 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 2995.99 1414.54 moveto
+2987.51 1408.18 lineto
+2990.17 1418.43 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 2995.99 1414.54 moveto
+2987.51 1408.18 lineto
+2990.17 1418.43 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+3045 1484.3 moveto 457 ({R_DIFFN_LNLW_APB_NEUR_ACT,	R_LNLBE_APB_NEUR_ACT,	}) alignedtext
+grestore
+% { R_APB_NEUR_ACT, R_LNLT1_LP_BE_APB_NEUR_ACT, R_DIFFN_LNLW_APB_NEUR_ACT, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+1922 1190.3 moveto 610 ({ R_APB_NEUR_ACT, R_LNLT1_LP_BE_APB_NEUR_ACT, R_DIFFN_LNLW_APB_NEUR_ACT, }) alignedtext
+grestore
+% { R_LNLT1_LP_BE_APB_NEUR_ACT, R_DIFFN_LNLW_APB_NEUR_ACT, R_LNLBE_APB_NEUR_ACT, }->{ R_APB_NEUR_ACT, R_LNLT1_LP_BE_APB_NEUR_ACT, R_DIFFN_LNLW_APB_NEUR_ACT, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 2818.16 1372 moveto
+2715.24 1358.4 2578.84 1335.61 2462 1300 curveto
+2391.02 1278.37 2313.24 1240.62 2267.35 1216.76 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 2268.82 1213.58 moveto
+2258.34 1212.04 lineto
+2265.57 1219.78 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 2268.82 1213.58 moveto
+2258.34 1212.04 lineto
+2265.57 1219.78 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+2462 1288.3 moveto 487 ({R_LNLT1_LP_BE_APB_NEUR_ACT,	R_DIFFN_LNLW_APB_NEUR_ACT,	}) alignedtext
+grestore
+% { R_LNLT1_LP_APB_NEUR_ACT, R_LNLT1_LP_BE_APB_NEUR_ACT, R_LNLBE_APB_NEUR_ACT, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+2656.5 1190.3 moveto 639 ({ R_LNLT1_LP_APB_NEUR_ACT, R_LNLT1_LP_BE_APB_NEUR_ACT, R_LNLBE_APB_NEUR_ACT, }) alignedtext
+grestore
+% { R_LNLT1_LP_BE_APB_NEUR_ACT, R_DIFFN_LNLW_APB_NEUR_ACT, R_LNLBE_APB_NEUR_ACT, }->{ R_LNLT1_LP_APB_NEUR_ACT, R_LNLT1_LP_BE_APB_NEUR_ACT, R_LNLBE_APB_NEUR_ACT, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 2976 1371.78 moveto
+2976 1338.06 2976 1263.06 2976 1222.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 2979.5 1222.18 moveto
+2976 1212.18 lineto
+2972.5 1222.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 2979.5 1222.18 moveto
+2976 1212.18 lineto
+2972.5 1222.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+2976 1288.3 moveto 457 ({R_LNLT1_LP_BE_APB_NEUR_ACT,	R_LNLBE_APB_NEUR_ACT,	}) alignedtext
+grestore
+% { R_APB_SPONT_NEUR_DISCH, R_APB_NEUR_ACT, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+2052 994.3 moveto 350 ({ R_APB_SPONT_NEUR_DISCH, R_APB_NEUR_ACT, }) alignedtext
+grestore
+% { R_APB_NEUR_ACT, R_LNLT1_LP_BE_APB_NEUR_ACT, R_DIFFN_LNLW_APB_NEUR_ACT, }->{ R_APB_SPONT_NEUR_DISCH, R_APB_NEUR_ACT, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 2227 1175.78 moveto
+2227 1142.06 2227 1067.06 2227 1026.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 2230.5 1026.18 moveto
+2227 1016.18 lineto
+2223.5 1026.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 2230.5 1026.18 moveto
+2227 1016.18 lineto
+2223.5 1026.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+2227 1092.3 moveto 157 ({R_APB_NEUR_ACT,	}) alignedtext
+grestore
+% { R_LNLLP_APB_NEUR_ACT, R_LNLT1_LP_APB_NEUR_ACT, R_LNLT1_APB_NEUR_ACT, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+2679.5 994.3 moveto 589 ({ R_LNLLP_APB_NEUR_ACT, R_LNLT1_LP_APB_NEUR_ACT, R_LNLT1_APB_NEUR_ACT, }) alignedtext
+grestore
+% { R_LNLT1_LP_APB_NEUR_ACT, R_LNLT1_LP_BE_APB_NEUR_ACT, R_LNLBE_APB_NEUR_ACT, }->{ R_LNLLP_APB_NEUR_ACT, R_LNLT1_LP_APB_NEUR_ACT, R_LNLT1_APB_NEUR_ACT, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 2975.82 1175.78 moveto
+2975.47 1142.06 2974.7 1067.06 2974.28 1026.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 2977.78 1026.14 moveto
+2974.18 1016.18 lineto
+2970.78 1026.21 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 2977.78 1026.14 moveto
+2974.18 1016.18 lineto
+2970.78 1026.21 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+2976 1092.3 moveto 247 ({R_LNLT1_LP_APB_NEUR_ACT,	}) alignedtext
+grestore
+% { DIFFN_M_SEV_PROX, DIFFN_TIME, DIFFN_S_SEV_DIST, DIFFN_PATHO, DIFFN_M_SEV_DIST, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+4243 1582.3 moveto 634 ({ DIFFN_M_SEV_PROX, DIFFN_TIME, DIFFN_S_SEV_DIST, DIFFN_PATHO, DIFFN_M_SEV_DIST, }) alignedtext
+grestore
+% { R_LNLBE_MED_SEV, R_LNLW_MED_PATHO, DIFFN_S_SEV_DIST, DIFFN_PATHO, DIFFN_TIME, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, DIFFN_M_SEV_DIST, }->{ DIFFN_M_SEV_PROX, DIFFN_TIME, DIFFN_S_SEV_DIST, DIFFN_PATHO, DIFFN_M_SEV_DIST, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 4560 1763.78 moveto
+4560 1730.06 4560 1655.06 4560 1614.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 4563.5 1614.18 moveto
+4560 1604.18 lineto
+4556.5 1614.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 4563.5 1614.18 moveto
+4560 1604.18 lineto
+4556.5 1614.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+4560 1680.3 moveto 547 ({DIFFN_TIME,	DIFFN_S_SEV_DIST,	DIFFN_PATHO,	DIFFN_M_SEV_DIST,	}) alignedtext
+grestore
+% { R_DIFFN_MEDD2_DISP, R_LNLBE_MED_SEV, DIFFN_S_SEV_DIST, R_LNLW_MED_PATHO, R_DIFFN_MEDD2_BLOCK, DIFFN_PATHO, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, R_MEDD2_SALOSS, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+6629.5 1582.3 moveto 1313 ({ R_DIFFN_MEDD2_DISP, R_LNLBE_MED_SEV, DIFFN_S_SEV_DIST, R_LNLW_MED_PATHO, R_DIFFN_MEDD2_BLOCK, DIFFN_PATHO, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, R_MEDD2_SALOSS, }) alignedtext
+grestore
+% { R_LNLBE_MED_SEV, R_LNLW_MED_PATHO, DIFFN_S_SEV_DIST, DIFFN_PATHO, DIFFN_TIME, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, DIFFN_M_SEV_DIST, }->{ R_DIFFN_MEDD2_DISP, R_LNLBE_MED_SEV, DIFFN_S_SEV_DIST, R_LNLW_MED_PATHO, R_DIFFN_MEDD2_BLOCK, DIFFN_PATHO, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, R_MEDD2_SALOSS, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 4798.93 1764 moveto
+5311.9 1727.49 6514.35 1641.92 7036.58 1604.75 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 7037.16 1608.22 moveto
+7046.89 1604.02 lineto
+7036.66 1601.24 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 7037.16 1608.22 moveto
+7046.89 1604.02 lineto
+7036.66 1601.24 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+6005 1680.3 moveto 937 ({R_LNLBE_MED_SEV,	R_LNLW_MED_PATHO,	DIFFN_S_SEV_DIST,	DIFFN_PATHO,	R_LNLBE_MED_PATHO,	R_LNLW_MED_SEV,	}) alignedtext
+grestore
+% { DIFFN_DUMMY_3, DIFFN_S_SEV_DIST, DIFFN_PATHO, DIFFN_TIME, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+3430.5 1386.3 moveto 469 ({ DIFFN_DUMMY_3, DIFFN_S_SEV_DIST, DIFFN_PATHO, DIFFN_TIME, }) alignedtext
+grestore
+% { DIFFN_M_SEV_PROX, DIFFN_TIME, DIFFN_S_SEV_DIST, DIFFN_PATHO, DIFFN_M_SEV_DIST, }->{ DIFFN_DUMMY_3, DIFFN_S_SEV_DIST, DIFFN_PATHO, DIFFN_TIME, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 4338.79 1567.97 moveto
+4214.48 1554.98 4057.38 1532.84 3921 1496 curveto
+3843.45 1475.05 3757.98 1436.67 3708.03 1412.57 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 3709.35 1409.32 moveto
+3698.82 1408.09 lineto
+3706.29 1415.61 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 3709.35 1409.32 moveto
+3698.82 1408.09 lineto
+3706.29 1415.61 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+3921 1484.3 moveto 367 ({DIFFN_S_SEV_DIST,	DIFFN_PATHO,	DIFFN_TIME,	}) alignedtext
+grestore
+% { DIFFN_TIME, DIFFN_DUMMY_2, DIFFN_M_SEV_DIST, DIFFN_PATHO, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+4023.5 1386.3 moveto 473 ({ DIFFN_TIME, DIFFN_DUMMY_2, DIFFN_M_SEV_DIST, DIFFN_PATHO, }) alignedtext
+grestore
+% { DIFFN_M_SEV_PROX, DIFFN_TIME, DIFFN_S_SEV_DIST, DIFFN_PATHO, DIFFN_M_SEV_DIST, }->{ DIFFN_TIME, DIFFN_DUMMY_2, DIFFN_M_SEV_DIST, DIFFN_PATHO, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 4482.08 1567.95 moveto
+4434.11 1554.5 4373.5 1531.88 4329 1496 curveto
+4302.73 1474.82 4283.02 1440.9 4271.53 1417.37 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 4274.68 1415.85 moveto
+4267.25 1408.29 lineto
+4268.35 1418.83 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 4274.68 1415.85 moveto
+4267.25 1408.29 lineto
+4268.35 1418.83 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+4329 1484.3 moveto 397 ({DIFFN_TIME,	DIFFN_M_SEV_DIST,	DIFFN_PATHO,	}) alignedtext
+grestore
+% { DIFFN_DUMMY_1, DIFFN_M_SEV_PROX, DIFFN_PATHO, DIFFN_TIME, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+4621 1386.3 moveto 480 ({ DIFFN_DUMMY_1, DIFFN_M_SEV_PROX, DIFFN_PATHO, DIFFN_TIME, }) alignedtext
+grestore
+% { DIFFN_M_SEV_PROX, DIFFN_TIME, DIFFN_S_SEV_DIST, DIFFN_PATHO, DIFFN_M_SEV_DIST, }->{ DIFFN_DUMMY_1, DIFFN_M_SEV_PROX, DIFFN_PATHO, DIFFN_TIME, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 4606.44 1567.89 moveto
+4646.08 1552.21 4703.7 1526.77 4749 1496 curveto
+4783.52 1472.56 4817.7 1438.52 4839.05 1415.62 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 4841.85 1417.74 moveto
+4846.05 1408.01 lineto
+4836.7 1413 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 4841.85 1417.74 moveto
+4846.05 1408.01 lineto
+4836.7 1413 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+4770 1484.3 moveto 397 ({DIFFN_M_SEV_PROX,	DIFFN_PATHO,	DIFFN_TIME,	}) alignedtext
+grestore
+% { DIFFN_DISTR, DIFFN_M_SEV_PROX, DIFFN_M_SEV_DIST, DIFFN_S_SEV_DIST, DIFFN_MOT_SEV, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+5225.5 1386.3 moveto 659 ({ DIFFN_DISTR, DIFFN_M_SEV_PROX, DIFFN_M_SEV_DIST, DIFFN_S_SEV_DIST, DIFFN_MOT_SEV, }) alignedtext
+grestore
+% { DIFFN_M_SEV_PROX, DIFFN_TIME, DIFFN_S_SEV_DIST, DIFFN_PATHO, DIFFN_M_SEV_DIST, }->{ DIFFN_DISTR, DIFFN_M_SEV_PROX, DIFFN_M_SEV_DIST, DIFFN_S_SEV_DIST, DIFFN_MOT_SEV, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 4728.68 1568 moveto
+4857.09 1553.44 5037.78 1529.5 5194 1496 curveto
+5301.73 1472.9 5424.36 1434.61 5495.39 1411.2 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 5496.67 1414.47 moveto
+5505.06 1408 lineto
+5494.47 1407.82 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 5496.67 1414.47 moveto
+5505.06 1408 lineto
+5494.47 1407.82 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+5254 1484.3 moveto 487 ({DIFFN_M_SEV_PROX,	DIFFN_S_SEV_DIST,	DIFFN_M_SEV_DIST,	}) alignedtext
+grestore
+% { DIFFN_S_SEV_DIST, DIFFN_SENS_SEV, DIFFN_DISTR, DIFFN_MOT_SEV, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+3598 1190.3 moveto 496 ({ DIFFN_S_SEV_DIST, DIFFN_SENS_SEV, DIFFN_DISTR, DIFFN_MOT_SEV, }) alignedtext
+grestore
+% { DIFFN_DISTR, DIFFN_M_SEV_PROX, DIFFN_M_SEV_DIST, DIFFN_S_SEV_DIST, DIFFN_MOT_SEV, }->{ DIFFN_S_SEV_DIST, DIFFN_SENS_SEV, DIFFN_DISTR, DIFFN_MOT_SEV, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 5217.74 1372.28 moveto
+4899.5 1355.3 4445.76 1327.64 4270 1300 curveto
+4141.14 1279.74 3994.03 1239.3 3911.36 1214.95 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 3912.19 1211.54 moveto
+3901.61 1212.06 lineto
+3910.2 1218.26 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 3912.19 1211.54 moveto
+3901.61 1212.06 lineto
+3910.2 1218.26 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+4270 1288.3 moveto 427 ({DIFFN_S_SEV_DIST,	DIFFN_DISTR,	DIFFN_MOT_SEV,	}) alignedtext
+grestore
+% { DIFFN_SEV, DIFFN_MOT_SEV, DIFFN_SENS_SEV, DIFFN_TYPE, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+3392.5 994.3 moveto 435 ({ DIFFN_SEV, DIFFN_MOT_SEV, DIFFN_SENS_SEV, DIFFN_TYPE, }) alignedtext
+grestore
+% { DIFFN_S_SEV_DIST, DIFFN_SENS_SEV, DIFFN_DISTR, DIFFN_MOT_SEV, }->{ DIFFN_SEV, DIFFN_MOT_SEV, DIFFN_SENS_SEV, DIFFN_TYPE, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 3825.06 1175.78 moveto
+3782.72 1140.98 3686.9 1062.22 3638.75 1022.64 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 3640.84 1019.82 moveto
+3630.9 1016.18 lineto
+3636.4 1025.23 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 3640.84 1019.82 moveto
+3630.9 1016.18 lineto
+3636.4 1025.23 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+3736 1092.3 moveto 307 ({DIFFN_SENS_SEV,	DIFFN_MOT_SEV,	}) alignedtext
+grestore
+% { R_DIFFN_MEDD2_BLOCK, R_MEDD2_DISP_WD, R_LNLW_MED_PATHO, R_LNLBE_MED_SEV, R_MEDD2_SALOSS, R_DIFFN_MEDD2_DISP, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+6013 1386.3 moveto 1214 ({ R_DIFFN_MEDD2_BLOCK, R_MEDD2_DISP_WD, R_LNLW_MED_PATHO, R_LNLBE_MED_SEV, R_MEDD2_SALOSS, R_DIFFN_MEDD2_DISP, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, }) alignedtext
+grestore
+% { R_DIFFN_MEDD2_DISP, R_LNLBE_MED_SEV, DIFFN_S_SEV_DIST, R_LNLW_MED_PATHO, R_DIFFN_MEDD2_BLOCK, DIFFN_PATHO, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, R_MEDD2_SALOSS, }->{ R_DIFFN_MEDD2_BLOCK, R_MEDD2_DISP_WD, R_LNLW_MED_PATHO, R_LNLBE_MED_SEV, R_MEDD2_SALOSS, R_DIFFN_MEDD2_DISP, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 7038.11 1568 moveto
+6857.84 1553.04 6640.54 1528.56 6612 1496 curveto
+6593.44 1474.83 6600.11 1441.13 6608.36 1417.64 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 6611.65 1418.86 moveto
+6611.93 1408.26 lineto
+6605.1 1416.37 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 6611.65 1418.86 moveto
+6611.93 1408.26 lineto
+6605.1 1416.37 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+6612 1484.3 moveto 1207 ({R_DIFFN_MEDD2_BLOCK,	R_LNLW_MED_PATHO,	R_LNLBE_MED_SEV,	R_MEDD2_SALOSS,	R_DIFFN_MEDD2_DISP,	R_LNLBE_MED_PATHO,	R_LNLW_MED_SEV,	}) alignedtext
+grestore
+% { R_DIFFN_LNLW_MEDD2_SALOSS, R_MEDD2_SALOSS, R_LNLW_MED_PATHO, R_LNLBE_MED_SEV, DIFFN_S_SEV_DIST, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, DIFFN_PATHO, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+7353.5 1386.3 moveto 1209 ({ R_DIFFN_LNLW_MEDD2_SALOSS, R_MEDD2_SALOSS, R_LNLW_MED_PATHO, R_LNLBE_MED_SEV, DIFFN_S_SEV_DIST, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, DIFFN_PATHO, }) alignedtext
+grestore
+% { R_DIFFN_MEDD2_DISP, R_LNLBE_MED_SEV, DIFFN_S_SEV_DIST, R_LNLW_MED_PATHO, R_DIFFN_MEDD2_BLOCK, DIFFN_PATHO, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, R_MEDD2_SALOSS, }->{ R_DIFFN_LNLW_MEDD2_SALOSS, R_MEDD2_SALOSS, R_LNLW_MED_PATHO, R_LNLBE_MED_SEV, DIFFN_S_SEV_DIST, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, DIFFN_PATHO, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 7460.75 1567.97 moveto
+7597.86 1552.6 7776.17 1527.57 7842 1496 curveto
+7881.39 1477.11 7917.07 1440.52 7938.15 1415.92 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 7940.98 1417.99 moveto
+7944.73 1408.08 lineto
+7935.62 1413.49 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 7940.98 1417.99 moveto
+7944.73 1408.08 lineto
+7935.62 1413.49 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+7868 1484.3 moveto 1087 ({R_MEDD2_SALOSS,	R_LNLW_MED_PATHO,	R_LNLBE_MED_SEV,	DIFFN_S_SEV_DIST,	R_LNLBE_MED_PATHO,	R_LNLW_MED_SEV,	DIFFN_PATHO,	}) alignedtext
+grestore
+% { DIFFN_PATHO, R_DIFFN_MEDD2_DIFSLOW, R_LNLW_MED_PATHO, DIFFN_S_SEV_DIST, R_LNLBE_MED_SEV, R_MEDD2_SALOSS, R_LNLW_MED_SEV, R_LNLBE_MED_PATHO, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+9485.5 1386.3 moveto 1171 ({ DIFFN_PATHO, R_DIFFN_MEDD2_DIFSLOW, R_LNLW_MED_PATHO, DIFFN_S_SEV_DIST, R_LNLBE_MED_SEV, R_MEDD2_SALOSS, R_LNLW_MED_SEV, R_LNLBE_MED_PATHO, }) alignedtext
+grestore
+% { R_DIFFN_MEDD2_DISP, R_LNLBE_MED_SEV, DIFFN_S_SEV_DIST, R_LNLW_MED_PATHO, R_DIFFN_MEDD2_BLOCK, DIFFN_PATHO, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, R_MEDD2_SALOSS, }->{ DIFFN_PATHO, R_DIFFN_MEDD2_DIFSLOW, R_LNLW_MED_PATHO, DIFFN_S_SEV_DIST, R_LNLBE_MED_SEV, R_MEDD2_SALOSS, R_LNLW_MED_SEV, R_LNLBE_MED_PATHO, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 7708 1567.98 moveto
+8051.34 1552.9 8548.3 1528.27 8982 1496 curveto
+9310.4 1471.56 9693.46 1432.07 9906.52 1409.12 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 9906.97 1412.59 moveto
+9916.54 1408.04 lineto
+9906.22 1405.63 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 9906.97 1412.59 moveto
+9916.54 1408.04 lineto
+9906.22 1405.63 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+9161 1484.3 moveto 1087 ({DIFFN_PATHO,	R_LNLW_MED_PATHO,	DIFFN_S_SEV_DIST,	R_LNLBE_MED_SEV,	R_MEDD2_SALOSS,	R_LNLW_MED_SEV,	R_LNLBE_MED_PATHO,	}) alignedtext
+grestore
+% { R_LNLW_MEDD2_DISP_WD, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, R_DIFFN_MEDD2_DISP, R_MEDD2_DISP_WD, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+4318 1190.3 moveto 796 ({ R_LNLW_MEDD2_DISP_WD, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, R_DIFFN_MEDD2_DISP, R_MEDD2_DISP_WD, }) alignedtext
+grestore
+% { R_DIFFN_MEDD2_BLOCK, R_MEDD2_DISP_WD, R_LNLW_MED_PATHO, R_LNLBE_MED_SEV, R_MEDD2_SALOSS, R_DIFFN_MEDD2_DISP, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, }->{ R_LNLW_MEDD2_DISP_WD, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, R_DIFFN_MEDD2_DISP, R_MEDD2_DISP_WD, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 6200.36 1372 moveto
+5837.89 1355.77 5342.54 1329.48 5147 1300 curveto
+5015.51 1280.17 4865.33 1239.33 4781.48 1214.83 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 4782.42 1211.46 moveto
+4771.84 1212 lineto
+4780.45 1218.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 4782.42 1211.46 moveto
+4771.84 1212 lineto
+4780.45 1218.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+5147 1288.3 moveto 667 ({R_LNLW_MED_SEV,	R_LNLW_MED_PATHO,	R_DIFFN_MEDD2_DISP,	R_MEDD2_DISP_WD,	}) alignedtext
+grestore
+% { R_MEDD2_DISP_EW, R_DIFFN_MEDD2_DISP, R_LNLBE_MED_PATHO, R_LNLBE_MED_SEV, R_MEDD2_DISP_WD, R_DIFFN_MEDD2_BLOCK, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+5327 1190.3 moveto 928 ({ R_MEDD2_DISP_EW, R_DIFFN_MEDD2_DISP, R_LNLBE_MED_PATHO, R_LNLBE_MED_SEV, R_MEDD2_DISP_WD, R_DIFFN_MEDD2_BLOCK, }) alignedtext
+grestore
+% { R_DIFFN_MEDD2_BLOCK, R_MEDD2_DISP_WD, R_LNLW_MED_PATHO, R_LNLBE_MED_SEV, R_MEDD2_SALOSS, R_DIFFN_MEDD2_DISP, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, }->{ R_MEDD2_DISP_EW, R_DIFFN_MEDD2_DISP, R_LNLBE_MED_PATHO, R_LNLBE_MED_SEV, R_MEDD2_DISP_WD, R_DIFFN_MEDD2_BLOCK, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 6209.91 1371.99 moveto
+6063.47 1359.47 5919.68 1337.73 5859 1300 curveto
+5829.98 1281.96 5810.95 1246.44 5800.59 1221.73 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 5803.75 1220.21 moveto
+5796.79 1212.21 lineto
+5797.24 1222.8 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 5803.75 1220.21 moveto
+5796.79 1212.21 lineto
+5797.24 1222.8 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+5859 1288.3 moveto 847 ({R_DIFFN_MEDD2_DISP,	R_LNLBE_MED_PATHO,	R_LNLBE_MED_SEV,	R_MEDD2_DISP_WD,	R_DIFFN_MEDD2_BLOCK,	}) alignedtext
+grestore
+% { R_LNLW_MED_SEV, R_LNLW_MEDD2_BLOCK_WD, R_LNLW_MED_PATHO, R_DIFFN_MEDD2_BLOCK, R_MEDD2_DISP_WD, R_MEDD2_SALOSS, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+6379.5 1190.3 moveto 961 ({ R_LNLW_MED_SEV, R_LNLW_MEDD2_BLOCK_WD, R_LNLW_MED_PATHO, R_DIFFN_MEDD2_BLOCK, R_MEDD2_DISP_WD, R_MEDD2_SALOSS, }) alignedtext
+grestore
+% { R_DIFFN_MEDD2_BLOCK, R_MEDD2_DISP_WD, R_LNLW_MED_PATHO, R_LNLBE_MED_SEV, R_MEDD2_SALOSS, R_DIFFN_MEDD2_DISP, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, }->{ R_LNLW_MED_SEV, R_LNLW_MEDD2_BLOCK_WD, R_LNLW_MED_PATHO, R_DIFFN_MEDD2_BLOCK, R_MEDD2_DISP_WD, R_MEDD2_SALOSS, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 6641.3 1371.78 moveto
+6684.35 1336.98 6781.79 1258.22 6830.76 1218.64 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 6833.17 1221.19 moveto
+6838.75 1212.18 lineto
+6828.77 1215.74 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 6833.17 1221.19 moveto
+6838.75 1212.18 lineto
+6828.77 1215.74 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+6748 1288.3 moveto 817 ({R_LNLW_MED_SEV,	R_LNLW_MED_PATHO,	R_DIFFN_MEDD2_BLOCK,	R_MEDD2_DISP_WD,	R_MEDD2_SALOSS,	}) alignedtext
+grestore
+% { R_DIFFN_LNLW_MEDD2_DISP_WD, R_LNLW_MEDD2_DISP_WD, R_DIFFN_MEDD2_DISP, R_MEDD2_DISP_WD, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+3951.5 994.3 moveto 739 ({ R_DIFFN_LNLW_MEDD2_DISP_WD, R_LNLW_MEDD2_DISP_WD, R_DIFFN_MEDD2_DISP, R_MEDD2_DISP_WD, }) alignedtext
+grestore
+% { R_LNLW_MEDD2_DISP_WD, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, R_DIFFN_MEDD2_DISP, R_MEDD2_DISP_WD, }->{ R_DIFFN_LNLW_MEDD2_DISP_WD, R_LNLW_MEDD2_DISP_WD, R_DIFFN_MEDD2_DISP, R_MEDD2_DISP_WD, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 4681.29 1175.95 moveto
+4609.38 1140.64 4444.24 1059.53 4365 1020.61 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 4366.29 1017.34 moveto
+4355.77 1016.08 lineto
+4363.2 1023.63 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 4366.29 1017.34 moveto
+4355.77 1016.08 lineto
+4363.2 1023.63 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+4531 1092.3 moveto 547 ({R_LNLW_MEDD2_DISP_WD,	R_DIFFN_MEDD2_DISP,	R_MEDD2_DISP_WD,	}) alignedtext
+grestore
+% { R_LNLBE_MEDD2_BLOCK_EW, R_LNLBE_MED_SEV, R_LNLBE_MED_PATHO, R_DIFFN_MEDD2_BLOCK, R_MEDD2_DISP_WD, R_MEDD2_DISP_EW, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+4814.5 994.3 moveto 977 ({ R_LNLBE_MEDD2_BLOCK_EW, R_LNLBE_MED_SEV, R_LNLBE_MED_PATHO, R_DIFFN_MEDD2_BLOCK, R_MEDD2_DISP_WD, R_MEDD2_DISP_EW, }) alignedtext
+grestore
+% { R_MEDD2_DISP_EW, R_DIFFN_MEDD2_DISP, R_LNLBE_MED_PATHO, R_LNLBE_MED_SEV, R_MEDD2_DISP_WD, R_DIFFN_MEDD2_BLOCK, }->{ R_LNLBE_MEDD2_BLOCK_EW, R_LNLBE_MED_SEV, R_LNLBE_MED_PATHO, R_DIFFN_MEDD2_BLOCK, R_MEDD2_DISP_WD, R_MEDD2_DISP_EW, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 5651.36 1176 moveto
+5545.72 1160.91 5411.34 1136.26 5366 1104 curveto
+5339.02 1084.8 5321.55 1050.1 5312.01 1025.86 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 5315.17 1024.34 moveto
+5308.39 1016.19 lineto
+5308.61 1026.79 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 5315.17 1024.34 moveto
+5308.39 1016.19 lineto
+5308.61 1026.79 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+5366 1092.3 moveto 817 ({R_MEDD2_DISP_EW,	R_LNLBE_MED_PATHO,	R_LNLBE_MED_SEV,	R_MEDD2_DISP_WD,	R_DIFFN_MEDD2_BLOCK,	}) alignedtext
+grestore
+% { R_LNLBE_MED_PATHO, R_LNLBE_MEDD2_DISP_EW, R_LNLBE_MED_SEV, R_MEDD2_DISP_EW, R_DIFFN_MEDD2_DISP, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+5916 994.3 moveto 804 ({ R_LNLBE_MED_PATHO, R_LNLBE_MEDD2_DISP_EW, R_LNLBE_MED_SEV, R_MEDD2_DISP_EW, R_DIFFN_MEDD2_DISP, }) alignedtext
+grestore
+% { R_MEDD2_DISP_EW, R_DIFFN_MEDD2_DISP, R_LNLBE_MED_PATHO, R_LNLBE_MED_SEV, R_MEDD2_DISP_WD, R_DIFFN_MEDD2_BLOCK, }->{ R_LNLBE_MED_PATHO, R_LNLBE_MEDD2_DISP_EW, R_LNLBE_MED_SEV, R_MEDD2_DISP_EW, R_DIFFN_MEDD2_DISP, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 5971.14 1175.98 moveto
+6046.87 1163.45 6133.94 1141.72 6206 1104 curveto
+6243.76 1084.23 6278.05 1048.19 6298.47 1023.92 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 6301.19 1026.12 moveto
+6304.85 1016.18 lineto
+6295.79 1021.67 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 6301.19 1026.12 moveto
+6304.85 1016.18 lineto
+6295.79 1021.67 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+6231 1092.3 moveto 667 ({R_LNLBE_MED_PATHO,	R_LNLBE_MED_SEV,	R_MEDD2_DISP_EW,	R_DIFFN_MEDD2_DISP,	}) alignedtext
+grestore
+% { R_MEDD2_BLOCK_EW, R_DIFFN_MEDD2_BLOCK, R_MEDD2_DISP_WD, R_LNLBE_MEDD2_BLOCK_EW, R_MEDD2_DISP_EW, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+4887 798.3 moveto 832 ({ R_MEDD2_BLOCK_EW, R_DIFFN_MEDD2_BLOCK, R_MEDD2_DISP_WD, R_LNLBE_MEDD2_BLOCK_EW, R_MEDD2_DISP_EW, }) alignedtext
+grestore
+% { R_LNLBE_MEDD2_BLOCK_EW, R_LNLBE_MED_SEV, R_LNLBE_MED_PATHO, R_DIFFN_MEDD2_BLOCK, R_MEDD2_DISP_WD, R_MEDD2_DISP_EW, }->{ R_MEDD2_BLOCK_EW, R_DIFFN_MEDD2_BLOCK, R_MEDD2_DISP_WD, R_LNLBE_MEDD2_BLOCK_EW, R_MEDD2_DISP_EW, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 5303 979.78 moveto
+5303 946.06 5303 871.06 5303 830.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 5306.5 830.18 moveto
+5303 820.18 lineto
+5299.5 830.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 5306.5 830.18 moveto
+5303 820.18 lineto
+5299.5 830.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+5303 896.3 moveto 727 ({R_DIFFN_MEDD2_BLOCK,	R_MEDD2_DISP_WD,	R_LNLBE_MEDD2_BLOCK_EW,	R_MEDD2_DISP_EW,	}) alignedtext
+grestore
+% { R_MEDD2_DISP_EWD, R_MEDD2_DISP_WD, R_MEDD2_DISP_EW, R_MEDD2_BLOCK_EW, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+5002.5 602.3 moveto 601 ({ R_MEDD2_DISP_EWD, R_MEDD2_DISP_WD, R_MEDD2_DISP_EW, R_MEDD2_BLOCK_EW, }) alignedtext
+grestore
+% { R_MEDD2_BLOCK_EW, R_DIFFN_MEDD2_BLOCK, R_MEDD2_DISP_WD, R_LNLBE_MEDD2_BLOCK_EW, R_MEDD2_DISP_EW, }->{ R_MEDD2_DISP_EWD, R_MEDD2_DISP_WD, R_MEDD2_DISP_EW, R_MEDD2_BLOCK_EW, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 5303 783.78 moveto
+5303 750.06 5303 675.06 5303 634.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 5306.5 634.18 moveto
+5303 624.18 lineto
+5299.5 634.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 5306.5 634.18 moveto
+5303 624.18 lineto
+5299.5 634.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+5303 700.3 moveto 487 ({R_MEDD2_DISP_WD,	R_MEDD2_DISP_EW,	R_MEDD2_BLOCK_EW,	}) alignedtext
+grestore
+% { R_MEDD2_AMPR_EW, R_MEDD2_DISP_EWD, R_MEDD2_BLOCK_EW, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+5068.5 406.3 moveto 469 ({ R_MEDD2_AMPR_EW, R_MEDD2_DISP_EWD, R_MEDD2_BLOCK_EW, }) alignedtext
+grestore
+% { R_MEDD2_DISP_EWD, R_MEDD2_DISP_WD, R_MEDD2_DISP_EW, R_MEDD2_BLOCK_EW, }->{ R_MEDD2_AMPR_EW, R_MEDD2_DISP_EWD, R_MEDD2_BLOCK_EW, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 5303 587.78 moveto
+5303 554.06 5303 479.06 5303 438.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 5306.5 438.18 moveto
+5303 428.18 lineto
+5299.5 438.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 5306.5 438.18 moveto
+5303 428.18 lineto
+5299.5 438.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+5303 504.3 moveto 367 ({R_MEDD2_DISP_EWD,	R_MEDD2_BLOCK_EW,	}) alignedtext
+grestore
+% { R_DIFFN_MEDD2_BLOCK, R_MEDD2_DISP_WD, R_MEDD2_BLOCK_WD, R_LNLW_MEDD2_BLOCK_WD, R_MEDD2_SALOSS, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+6844.5 994.3 moveto 825 ({ R_DIFFN_MEDD2_BLOCK, R_MEDD2_DISP_WD, R_MEDD2_BLOCK_WD, R_LNLW_MEDD2_BLOCK_WD, R_MEDD2_SALOSS, }) alignedtext
+grestore
+% { R_LNLW_MED_SEV, R_LNLW_MEDD2_BLOCK_WD, R_LNLW_MED_PATHO, R_DIFFN_MEDD2_BLOCK, R_MEDD2_DISP_WD, R_MEDD2_SALOSS, }->{ R_DIFFN_MEDD2_BLOCK, R_MEDD2_DISP_WD, R_MEDD2_BLOCK_WD, R_LNLW_MEDD2_BLOCK_WD, R_MEDD2_SALOSS, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 6894.88 1175.95 moveto
+6967.16 1140.64 7133.14 1059.53 7212.78 1020.61 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 7214.61 1023.61 moveto
+7222.05 1016.08 lineto
+7211.53 1017.32 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 7214.61 1023.61 moveto
+7222.05 1016.08 lineto
+7211.53 1017.32 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+7071 1092.3 moveto 727 ({R_DIFFN_MEDD2_BLOCK,	R_MEDD2_DISP_WD,	R_LNLW_MEDD2_BLOCK_WD,	R_MEDD2_SALOSS,	}) alignedtext
+grestore
+% { R_MEDD2_EFFAXLOSS, R_MEDD2_BLOCK_WD, R_MEDD2_DISP_WD, R_MEDD2_SALOSS, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+6954.5 798.3 moveto 605 ({ R_MEDD2_EFFAXLOSS, R_MEDD2_BLOCK_WD, R_MEDD2_DISP_WD, R_MEDD2_SALOSS, }) alignedtext
+grestore
+% { R_DIFFN_MEDD2_BLOCK, R_MEDD2_DISP_WD, R_MEDD2_BLOCK_WD, R_LNLW_MEDD2_BLOCK_WD, R_MEDD2_SALOSS, }->{ R_MEDD2_EFFAXLOSS, R_MEDD2_BLOCK_WD, R_MEDD2_DISP_WD, R_MEDD2_SALOSS, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 7257 979.78 moveto
+7257 946.06 7257 871.06 7257 830.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 7260.5 830.18 moveto
+7257 820.18 lineto
+7253.5 830.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 7260.5 830.18 moveto
+7257 820.18 lineto
+7253.5 830.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+7257 896.3 moveto 487 ({R_MEDD2_BLOCK_WD,	R_MEDD2_DISP_WD,	R_MEDD2_SALOSS,	}) alignedtext
+grestore
+% { R_MEDD2_ALLAMP_WD, R_MEDD2_DISP_WD, R_MEDD2_EFFAXLOSS, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+7016 602.3 moveto 482 ({ R_MEDD2_ALLAMP_WD, R_MEDD2_DISP_WD, R_MEDD2_EFFAXLOSS, }) alignedtext
+grestore
+% { R_MEDD2_EFFAXLOSS, R_MEDD2_BLOCK_WD, R_MEDD2_DISP_WD, R_MEDD2_SALOSS, }->{ R_MEDD2_ALLAMP_WD, R_MEDD2_DISP_WD, R_MEDD2_EFFAXLOSS, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 7257 783.78 moveto
+7257 750.06 7257 675.06 7257 634.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 7260.5 634.18 moveto
+7257 624.18 lineto
+7253.5 634.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 7260.5 634.18 moveto
+7257 624.18 lineto
+7253.5 634.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+7257 700.3 moveto 337 ({R_MEDD2_DISP_WD,	R_MEDD2_EFFAXLOSS,	}) alignedtext
+grestore
+% { R_MEDD2_AMP_WD, R_MEDD2_ALLAMP_WD, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+7095.5 406.3 moveto 323 ({ R_MEDD2_AMP_WD, R_MEDD2_ALLAMP_WD, }) alignedtext
+grestore
+% { R_MEDD2_ALLAMP_WD, R_MEDD2_DISP_WD, R_MEDD2_EFFAXLOSS, }->{ R_MEDD2_AMP_WD, R_MEDD2_ALLAMP_WD, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 7257 587.78 moveto
+7257 554.06 7257 479.06 7257 438.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 7260.5 438.18 moveto
+7257 428.18 lineto
+7253.5 438.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 7260.5 438.18 moveto
+7257 428.18 lineto
+7253.5 438.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+7257 504.3 moveto 187 ({R_MEDD2_ALLAMP_WD,	}) alignedtext
+grestore
+% { R_LNLW_MEDD2_SALOSS_WD, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, DIFFN_S_SEV_DIST, R_DIFFN_LNLW_MEDD2_SALOSS, DIFFN_PATHO, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+7464.5 1190.3 moveto 987 ({ R_LNLW_MEDD2_SALOSS_WD, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, DIFFN_S_SEV_DIST, R_DIFFN_LNLW_MEDD2_SALOSS, DIFFN_PATHO, }) alignedtext
+grestore
+% { R_DIFFN_LNLW_MEDD2_SALOSS, R_MEDD2_SALOSS, R_LNLW_MED_PATHO, R_LNLBE_MED_SEV, DIFFN_S_SEV_DIST, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, DIFFN_PATHO, }->{ R_LNLW_MEDD2_SALOSS_WD, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, DIFFN_S_SEV_DIST, R_DIFFN_LNLW_MEDD2_SALOSS, DIFFN_PATHO, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 7958 1371.78 moveto
+7958 1338.06 7958 1263.06 7958 1222.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 7961.5 1222.18 moveto
+7958 1212.18 lineto
+7954.5 1222.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 7961.5 1222.18 moveto
+7958 1212.18 lineto
+7954.5 1222.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+7958 1288.3 moveto 847 ({R_LNLW_MED_SEV,	R_LNLW_MED_PATHO,	DIFFN_S_SEV_DIST,	R_DIFFN_LNLW_MEDD2_SALOSS,	DIFFN_PATHO,	}) alignedtext
+grestore
+% { R_LNLBE_MED_SEV, R_LNLBE_MEDD2_SALOSS_EW, R_LNLBE_MED_PATHO, R_MEDD2_SALOSS, R_DIFFN_LNLW_MEDD2_SALOSS, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+8575.5 1190.3 moveto 889 ({ R_LNLBE_MED_SEV, R_LNLBE_MEDD2_SALOSS_EW, R_LNLBE_MED_PATHO, R_MEDD2_SALOSS, R_DIFFN_LNLW_MEDD2_SALOSS, }) alignedtext
+grestore
+% { R_DIFFN_LNLW_MEDD2_SALOSS, R_MEDD2_SALOSS, R_LNLW_MED_PATHO, R_LNLBE_MED_SEV, DIFFN_S_SEV_DIST, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, DIFFN_PATHO, }->{ R_LNLBE_MED_SEV, R_LNLBE_MEDD2_SALOSS_EW, R_LNLBE_MED_PATHO, R_MEDD2_SALOSS, R_DIFFN_LNLW_MEDD2_SALOSS, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 8250.07 1371.99 moveto
+8461.07 1357.3 8726.72 1333.19 8832 1300 curveto
+8891 1281.4 8952.28 1242.97 8988.23 1218.12 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 8990.63 1220.72 moveto
+8996.81 1212.12 lineto
+8986.61 1214.99 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 8990.63 1220.72 moveto
+8996.81 1212.12 lineto
+8986.61 1214.99 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+8871 1288.3 moveto 727 ({R_LNLBE_MED_SEV,	R_LNLBE_MED_PATHO,	R_MEDD2_SALOSS,	R_DIFFN_LNLW_MEDD2_SALOSS,	}) alignedtext
+grestore
+% { R_LNLW_MEDD2_SALOSS_WD, R_DIFFN_MEDD2_SALOSS, DIFFN_S_SEV_DIST, DIFFN_PATHO, R_DIFFN_LNLW_MEDD2_SALOSS, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+7794 994.3 moveto 874 ({ R_LNLW_MEDD2_SALOSS_WD, R_DIFFN_MEDD2_SALOSS, DIFFN_S_SEV_DIST, DIFFN_PATHO, R_DIFFN_LNLW_MEDD2_SALOSS, }) alignedtext
+grestore
+% { R_LNLW_MEDD2_SALOSS_WD, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, DIFFN_S_SEV_DIST, R_DIFFN_LNLW_MEDD2_SALOSS, DIFFN_PATHO, }->{ R_LNLW_MEDD2_SALOSS_WD, R_DIFFN_MEDD2_SALOSS, DIFFN_S_SEV_DIST, DIFFN_PATHO, R_DIFFN_LNLW_MEDD2_SALOSS, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 7982.23 1175.78 moveto
+8031.4 1140.84 8142.96 1061.57 8198.42 1022.15 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 8200.7 1024.82 moveto
+8206.83 1016.18 lineto
+8196.65 1019.12 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 8200.7 1024.82 moveto
+8206.83 1016.18 lineto
+8196.65 1019.12 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+8103 1092.3 moveto 757 ({R_LNLW_MEDD2_SALOSS_WD,	DIFFN_S_SEV_DIST,	DIFFN_PATHO,	R_DIFFN_LNLW_MEDD2_SALOSS,	}) alignedtext
+grestore
+% { R_MEDD2_SALOSS, R_MEDD2_DIFSLOW_WD, R_DIFFN_MEDD2_DIFSLOW, R_LNLW_MED_PATHO, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+9588.5 1190.3 moveto 965 ({ R_MEDD2_SALOSS, R_MEDD2_DIFSLOW_WD, R_DIFFN_MEDD2_DIFSLOW, R_LNLW_MED_PATHO, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, }) alignedtext
+grestore
+% { DIFFN_PATHO, R_DIFFN_MEDD2_DIFSLOW, R_LNLW_MED_PATHO, DIFFN_S_SEV_DIST, R_LNLBE_MED_SEV, R_MEDD2_SALOSS, R_LNLW_MED_SEV, R_LNLBE_MED_PATHO, }->{ R_MEDD2_SALOSS, R_MEDD2_DIFSLOW_WD, R_DIFFN_MEDD2_DIFSLOW, R_LNLW_MED_PATHO, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 10067.21 1371.71 moveto
+10063.49 1353.86 10058.1 1325.14 10056 1300 curveto
+10053.77 1273.31 10058.91 1243.06 10063.77 1221.91 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 10067.21 1222.57 moveto
+10066.18 1212.03 lineto
+10060.41 1220.92 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 10067.21 1222.57 moveto
+10066.18 1212.03 lineto
+10060.41 1220.92 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+10056 1288.3 moveto 877 ({R_MEDD2_SALOSS,	R_DIFFN_MEDD2_DIFSLOW,	R_LNLW_MED_PATHO,	R_LNLBE_MED_PATHO,	R_LNLW_MED_SEV,	}) alignedtext
+grestore
+% { R_MEDD2_SALOSS, R_MEDD2_LSLOW_EW, R_LNLBE_MED_PATHO, R_LNLBE_MED_SEV, R_DIFFN_MEDD2_DIFSLOW, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+10678 1190.3 moveto 796 ({ R_MEDD2_SALOSS, R_MEDD2_LSLOW_EW, R_LNLBE_MED_PATHO, R_LNLBE_MED_SEV, R_DIFFN_MEDD2_DIFSLOW, }) alignedtext
+grestore
+% { DIFFN_PATHO, R_DIFFN_MEDD2_DIFSLOW, R_LNLW_MED_PATHO, DIFFN_S_SEV_DIST, R_LNLBE_MED_SEV, R_MEDD2_SALOSS, R_LNLW_MED_SEV, R_LNLBE_MED_PATHO, }->{ R_MEDD2_SALOSS, R_MEDD2_LSLOW_EW, R_LNLBE_MED_PATHO, R_LNLBE_MED_SEV, R_DIFFN_MEDD2_DIFSLOW, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 10476.8 1371.99 moveto
+10666.86 1359.23 10870.08 1337.3 10956 1300 curveto
+10997.24 1282.1 11034.46 1244.64 11056.15 1219.66 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 11058.83 1221.91 moveto
+11062.64 1212.02 lineto
+11053.5 1217.38 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 11058.83 1221.91 moveto
+11062.64 1212.02 lineto
+11053.5 1217.38 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+10983 1288.3 moveto 697 ({R_MEDD2_SALOSS,	R_LNLBE_MED_PATHO,	R_LNLBE_MED_SEV,	R_DIFFN_MEDD2_DIFSLOW,	}) alignedtext
+grestore
+% { R_MEDD2_DIFSLOW_WD, R_MEDD2_SALOSS, R_MEDD2_LSLOW_WD, R_LNLW_MED_PATHO, R_LNLW_MED_SEV, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+8792.5 994.3 moveto 773 ({ R_MEDD2_DIFSLOW_WD, R_MEDD2_SALOSS, R_MEDD2_LSLOW_WD, R_LNLW_MED_PATHO, R_LNLW_MED_SEV, }) alignedtext
+grestore
+% { R_MEDD2_SALOSS, R_MEDD2_DIFSLOW_WD, R_DIFFN_MEDD2_DIFSLOW, R_LNLW_MED_PATHO, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, }->{ R_MEDD2_DIFSLOW_WD, R_MEDD2_SALOSS, R_MEDD2_LSLOW_WD, R_LNLW_MED_PATHO, R_LNLW_MED_SEV, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 9751.48 1175.99 moveto
+9632.23 1163.43 9496.97 1141.67 9378 1104 curveto
+9316.29 1084.46 9251.08 1046.22 9212.77 1021.68 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 9214.38 1018.55 moveto
+9204.09 1016.06 lineto
+9210.58 1024.43 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 9214.38 1018.55 moveto
+9204.09 1016.06 lineto
+9210.58 1024.43 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+9378 1092.3 moveto 667 ({R_MEDD2_DIFSLOW_WD,	R_MEDD2_SALOSS,	R_LNLW_MED_PATHO,	R_LNLW_MED_SEV,	}) alignedtext
+grestore
+% { R_LNLBE_MEDD2_DIFSLOW_WD, R_LNLBE_MED_PATHO, R_MEDD2_DIFSLOW_WD, R_DIFFN_MEDD2_DIFSLOW, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+9690 994.3 moveto 764 ({ R_LNLBE_MEDD2_DIFSLOW_WD, R_LNLBE_MED_PATHO, R_MEDD2_DIFSLOW_WD, R_DIFFN_MEDD2_DIFSLOW, }) alignedtext
+grestore
+% { R_MEDD2_SALOSS, R_MEDD2_DIFSLOW_WD, R_DIFFN_MEDD2_DIFSLOW, R_LNLW_MED_PATHO, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, }->{ R_LNLBE_MEDD2_DIFSLOW_WD, R_LNLBE_MED_PATHO, R_MEDD2_DIFSLOW_WD, R_DIFFN_MEDD2_DIFSLOW, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 10071.09 1175.78 moveto
+10071.26 1142.06 10071.65 1067.06 10071.86 1026.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 10075.36 1026.2 moveto
+10071.91 1016.18 lineto
+10068.36 1026.16 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 10075.36 1026.2 moveto
+10071.91 1016.18 lineto
+10068.36 1026.16 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+10072 1092.3 moveto 577 ({R_LNLBE_MED_PATHO,	R_MEDD2_DIFSLOW_WD,	R_DIFFN_MEDD2_DIFSLOW,	}) alignedtext
+grestore
+% { R_MEDD2_DSLOW_WD, R_MEDD2_SALOSS, R_MEDD2_DIFSLOW_WD, R_MEDD2_LSLOW_WD, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+8248 798.3 moveto 640 ({ R_MEDD2_DSLOW_WD, R_MEDD2_SALOSS, R_MEDD2_DIFSLOW_WD, R_MEDD2_LSLOW_WD, }) alignedtext
+grestore
+% { R_MEDD2_DIFSLOW_WD, R_MEDD2_SALOSS, R_MEDD2_LSLOW_WD, R_LNLW_MED_PATHO, R_LNLW_MED_SEV, }->{ R_MEDD2_DSLOW_WD, R_MEDD2_SALOSS, R_MEDD2_DIFSLOW_WD, R_MEDD2_LSLOW_WD, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 8981.11 979.96 moveto
+8894.55 967.42 8793.48 945.67 8708 908 curveto
+8663.15 888.23 8619.24 851.69 8592.88 827.36 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 8594.98 824.52 moveto
+8585.29 820.23 lineto
+8590.19 829.62 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 8594.98 824.52 moveto
+8585.29 820.23 lineto
+8590.19 829.62 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+8708 896.3 moveto 517 ({R_MEDD2_SALOSS,	R_MEDD2_DIFSLOW_WD,	R_MEDD2_LSLOW_WD,	}) alignedtext
+grestore
+% { R_LNLW_MEDD2_LD_WD, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, R_MEDD2_LSLOW_WD, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+9012.5 798.3 moveto 643 ({ R_LNLW_MEDD2_LD_WD, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, R_MEDD2_LSLOW_WD, }) alignedtext
+grestore
+% { R_MEDD2_DIFSLOW_WD, R_MEDD2_SALOSS, R_MEDD2_LSLOW_WD, R_LNLW_MED_PATHO, R_LNLW_MED_SEV, }->{ R_LNLW_MEDD2_LD_WD, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, R_MEDD2_LSLOW_WD, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 9192.76 979.78 moveto
+9220.22 945.41 9281.94 868.16 9313.92 828.13 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 9316.77 830.17 moveto
+9320.28 820.18 lineto
+9311.3 825.81 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 9316.77 830.17 moveto
+9320.28 820.18 lineto
+9311.3 825.81 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+9262 896.3 moveto 517 ({R_LNLW_MED_SEV,	R_LNLW_MED_PATHO,	R_MEDD2_LSLOW_WD,	}) alignedtext
+grestore
+% { R_MEDD2_ALLCV_WD, R_MEDD2_LSLOW_WD, R_MEDD2_DSLOW_WD, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+8322.5 602.3 moveto 491 ({ R_MEDD2_ALLCV_WD, R_MEDD2_LSLOW_WD, R_MEDD2_DSLOW_WD, }) alignedtext
+grestore
+% { R_MEDD2_DSLOW_WD, R_MEDD2_SALOSS, R_MEDD2_DIFSLOW_WD, R_MEDD2_LSLOW_WD, }->{ R_MEDD2_ALLCV_WD, R_MEDD2_LSLOW_WD, R_MEDD2_DSLOW_WD, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 8568 783.78 moveto
+8568 750.06 8568 675.06 8568 634.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 8571.5 634.18 moveto
+8568 624.18 lineto
+8564.5 634.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 8571.5 634.18 moveto
+8568 624.18 lineto
+8564.5 634.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+8568 700.3 moveto 367 ({R_MEDD2_LSLOW_WD,	R_MEDD2_DSLOW_WD,	}) alignedtext
+grestore
+% { R_MEDD2_CV_WD, R_MEDD2_ALLCV_WD, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+8417 406.3 moveto 302 ({ R_MEDD2_CV_WD, R_MEDD2_ALLCV_WD, }) alignedtext
+grestore
+% { R_MEDD2_ALLCV_WD, R_MEDD2_LSLOW_WD, R_MEDD2_DSLOW_WD, }->{ R_MEDD2_CV_WD, R_MEDD2_ALLCV_WD, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 8568 587.78 moveto
+8568 554.06 8568 479.06 8568 438.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 8571.5 438.18 moveto
+8568 428.18 lineto
+8564.5 438.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 8571.5 438.18 moveto
+8568 428.18 lineto
+8564.5 438.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+8568 504.3 moveto 187 ({R_MEDD2_ALLCV_WD,	}) alignedtext
+grestore
+% { R_MEDD2_RD_WD, R_MEDD2_LSLOW_WD, R_LNLW_MED_PATHO, R_LNLW_MEDD2_LD_WD, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+9015.5 602.3 moveto 637 ({ R_MEDD2_RD_WD, R_MEDD2_LSLOW_WD, R_LNLW_MED_PATHO, R_LNLW_MEDD2_LD_WD, }) alignedtext
+grestore
+% { R_LNLW_MEDD2_LD_WD, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, R_MEDD2_LSLOW_WD, }->{ R_MEDD2_RD_WD, R_MEDD2_LSLOW_WD, R_LNLW_MED_PATHO, R_LNLW_MEDD2_LD_WD, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 9334 783.78 moveto
+9334 750.06 9334 675.06 9334 634.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 9337.5 634.18 moveto
+9334 624.18 lineto
+9330.5 634.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 9337.5 634.18 moveto
+9334 624.18 lineto
+9330.5 634.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+9334 700.3 moveto 577 ({R_LNLW_MEDD2_LD_WD,	R_LNLW_MED_PATHO,	R_MEDD2_LSLOW_WD,	}) alignedtext
+grestore
+% { R_MEDD2_LSLOW_WD, R_MEDD2_LD_WD, R_LNLW_MEDD2_LD_WD, R_MEDD2_RD_WD, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+8936.5 406.3 moveto 607 ({ R_MEDD2_LSLOW_WD, R_MEDD2_LD_WD, R_LNLW_MEDD2_LD_WD, R_MEDD2_RD_WD, }) alignedtext
+grestore
+% { R_MEDD2_RD_WD, R_MEDD2_LSLOW_WD, R_LNLW_MED_PATHO, R_LNLW_MEDD2_LD_WD, }->{ R_MEDD2_LSLOW_WD, R_MEDD2_LD_WD, R_LNLW_MEDD2_LD_WD, R_MEDD2_RD_WD, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 9313.43 587.85 moveto
+9295.19 571.41 9269.43 544.87 9256 516 curveto
+9244.56 491.4 9240.98 460.39 9240.01 438.47 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 9243.5 438.1 moveto
+9239.72 428.21 lineto
+9236.5 438.3 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 9243.5 438.1 moveto
+9239.72 428.21 lineto
+9236.5 438.3 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+9256 504.3 moveto 517 ({R_MEDD2_RD_WD,	R_MEDD2_LSLOW_WD,	R_LNLW_MEDD2_LD_WD,	}) alignedtext
+grestore
+% { R_LNLW_MEDD2_RD_WD, R_LNLW_MED_PATHO, R_MEDD2_RD_WD, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+9668 406.3 moveto 480 ({ R_LNLW_MEDD2_RD_WD, R_LNLW_MED_PATHO, R_MEDD2_RD_WD, }) alignedtext
+grestore
+% { R_MEDD2_RD_WD, R_MEDD2_LSLOW_WD, R_LNLW_MED_PATHO, R_LNLW_MEDD2_LD_WD, }->{ R_LNLW_MEDD2_RD_WD, R_LNLW_MED_PATHO, R_MEDD2_RD_WD, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 9555.31 588 moveto
+9634.45 575.41 9722.24 553.63 9796 516 curveto
+9833.97 496.63 9868.21 460.49 9888.56 436.08 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 9891.3 438.26 moveto
+9894.91 428.3 lineto
+9885.88 433.83 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 9891.3 438.26 moveto
+9894.91 428.3 lineto
+9885.88 433.83 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+9821 504.3 moveto 337 ({R_LNLW_MED_PATHO,	R_MEDD2_RD_WD,	}) alignedtext
+grestore
+% { R_LNLBE_MEDD2_LD_EW, R_LNLBE_MED_SEV, R_LNLBE_MED_PATHO, R_MEDD2_LSLOW_EW, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+10578 994.3 moveto 652 ({ R_LNLBE_MEDD2_LD_EW, R_LNLBE_MED_SEV, R_LNLBE_MED_PATHO, R_MEDD2_LSLOW_EW, }) alignedtext
+grestore
+% { R_MEDD2_SALOSS, R_MEDD2_LSLOW_EW, R_LNLBE_MED_PATHO, R_LNLBE_MED_SEV, R_DIFFN_MEDD2_DIFSLOW, }->{ R_LNLBE_MEDD2_LD_EW, R_LNLBE_MED_SEV, R_LNLBE_MED_PATHO, R_MEDD2_LSLOW_EW, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 11060.74 1175.78 moveto
+11030.2 1141.34 10961.49 1063.84 10926.06 1023.88 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 10928.48 1021.34 moveto
+10919.23 1016.18 lineto
+10923.24 1025.98 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 10928.48 1021.34 moveto
+10919.23 1016.18 lineto
+10923.24 1025.98 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+10996 1092.3 moveto 517 ({R_LNLBE_MED_SEV,	R_LNLBE_MED_PATHO,	R_MEDD2_LSLOW_EW,	}) alignedtext
+grestore
+% { R_MEDD2_SALOSS, R_MEDD2_LSLOW_EW, R_MEDD2_DIFSLOW_EW, R_DIFFN_MEDD2_DIFSLOW, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+11354.5 994.3 moveto 667 ({ R_MEDD2_SALOSS, R_MEDD2_LSLOW_EW, R_MEDD2_DIFSLOW_EW, R_DIFFN_MEDD2_DIFSLOW, }) alignedtext
+grestore
+% { R_MEDD2_SALOSS, R_MEDD2_LSLOW_EW, R_LNLBE_MED_PATHO, R_LNLBE_MED_SEV, R_DIFFN_MEDD2_DIFSLOW, }->{ R_MEDD2_SALOSS, R_MEDD2_LSLOW_EW, R_MEDD2_DIFSLOW_EW, R_DIFFN_MEDD2_DIFSLOW, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 11257.2 1175.98 moveto
+11344.59 1163.33 11449.43 1141.5 11538 1104 curveto
+11585.42 1083.92 11632.9 1047.2 11661.36 1022.95 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 11663.94 1025.35 moveto
+11669.22 1016.16 lineto
+11659.37 1020.05 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 11663.94 1025.35 moveto
+11669.22 1016.16 lineto
+11659.37 1020.05 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+11570 1092.3 moveto 547 ({R_MEDD2_SALOSS,	R_MEDD2_LSLOW_EW,	R_DIFFN_MEDD2_DIFSLOW,	}) alignedtext
+grestore
+% { R_MEDD2_RD_EW, R_MEDD2_LSLOW_EW, R_LNLBE_MED_PATHO, R_LNLBE_MEDD2_LD_EW, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+10584 798.3 moveto 640 ({ R_MEDD2_RD_EW, R_MEDD2_LSLOW_EW, R_LNLBE_MED_PATHO, R_LNLBE_MEDD2_LD_EW, }) alignedtext
+grestore
+% { R_LNLBE_MEDD2_LD_EW, R_LNLBE_MED_SEV, R_LNLBE_MED_PATHO, R_MEDD2_LSLOW_EW, }->{ R_MEDD2_RD_EW, R_MEDD2_LSLOW_EW, R_LNLBE_MED_PATHO, R_LNLBE_MEDD2_LD_EW, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 10904 979.78 moveto
+10904 946.06 10904 871.06 10904 830.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 10907.5 830.18 moveto
+10904 820.18 lineto
+10900.5 830.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 10907.5 830.18 moveto
+10904 820.18 lineto
+10900.5 830.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+10904 896.3 moveto 547 ({R_MEDD2_LSLOW_EW,	R_LNLBE_MED_PATHO,	R_LNLBE_MEDD2_LD_EW,	}) alignedtext
+grestore
+% { R_MEDD2_LD_EW, R_LNLBE_MEDD2_LD_EW, R_MEDD2_LSLOW_EW, R_MEDD2_RD_EW, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+10013.5 602.3 moveto 605 ({ R_MEDD2_LD_EW, R_LNLBE_MEDD2_LD_EW, R_MEDD2_LSLOW_EW, R_MEDD2_RD_EW, }) alignedtext
+grestore
+% { R_MEDD2_RD_EW, R_MEDD2_LSLOW_EW, R_LNLBE_MED_PATHO, R_LNLBE_MEDD2_LD_EW, }->{ R_MEDD2_LD_EW, R_LNLBE_MEDD2_LD_EW, R_MEDD2_LSLOW_EW, R_MEDD2_RD_EW, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 10732.76 783.97 moveto
+10609.07 769.24 10454.42 745.08 10399 712 curveto
+10367.51 693.2 10343.3 657.67 10329.36 633.18 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 10332.42 631.47 moveto
+10324.53 624.4 lineto
+10326.28 634.85 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 10332.42 631.47 moveto
+10324.53 624.4 lineto
+10326.28 634.85 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+10399 700.3 moveto 517 ({R_MEDD2_RD_EW,	R_MEDD2_LSLOW_EW,	R_LNLBE_MEDD2_LD_EW,	}) alignedtext
+grestore
+% { R_MEDD2_RD_EW, R_LNLBE_MEDD2_RD_EW, R_LNLBE_MED_PATHO, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+10743 602.3 moveto 484 ({ R_MEDD2_RD_EW, R_LNLBE_MEDD2_RD_EW, R_LNLBE_MED_PATHO, }) alignedtext
+grestore
+% { R_MEDD2_RD_EW, R_MEDD2_LSLOW_EW, R_LNLBE_MED_PATHO, R_LNLBE_MEDD2_LD_EW, }->{ R_MEDD2_RD_EW, R_LNLBE_MEDD2_RD_EW, R_LNLBE_MED_PATHO, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 10911.19 783.78 moveto
+10925.36 749.85 10956.99 674.1 10973.87 633.65 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 10977.2 634.75 moveto
+10977.83 624.18 lineto
+10970.75 632.06 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 10977.2 634.75 moveto
+10977.83 624.18 lineto
+10970.75 632.06 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+10947 700.3 moveto 337 ({R_MEDD2_RD_EW,	R_LNLBE_MED_PATHO,	}) alignedtext
+grestore
+% { R_MEDD2_DSLOW_EW, R_MEDD2_SALOSS, R_MEDD2_DIFSLOW_EW, R_MEDD2_LSLOW_EW, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+11359 798.3 moveto 636 ({ R_MEDD2_DSLOW_EW, R_MEDD2_SALOSS, R_MEDD2_DIFSLOW_EW, R_MEDD2_LSLOW_EW, }) alignedtext
+grestore
+% { R_MEDD2_SALOSS, R_MEDD2_LSLOW_EW, R_MEDD2_DIFSLOW_EW, R_DIFFN_MEDD2_DIFSLOW, }->{ R_MEDD2_DSLOW_EW, R_MEDD2_SALOSS, R_MEDD2_DIFSLOW_EW, R_MEDD2_LSLOW_EW, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 11679.52 979.79 moveto
+11671.38 962.23 11659.66 933.95 11655 908 curveto
+11650.19 881.22 11658.04 850.81 11665.66 829.63 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 11669.03 830.63 moveto
+11669.33 820.04 lineto
+11662.49 828.13 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 11669.03 830.63 moveto
+11669.33 820.04 lineto
+11662.49 828.13 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+11655 896.3 moveto 517 ({R_MEDD2_SALOSS,	R_MEDD2_DIFSLOW_EW,	R_MEDD2_LSLOW_EW,	}) alignedtext
+grestore
+% { R_MEDD2_ALLCV_EW, R_MEDD2_LSLOW_EW, R_MEDD2_DSLOW_EW, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+11433.5 602.3 moveto 487 ({ R_MEDD2_ALLCV_EW, R_MEDD2_LSLOW_EW, R_MEDD2_DSLOW_EW, }) alignedtext
+grestore
+% { R_MEDD2_DSLOW_EW, R_MEDD2_SALOSS, R_MEDD2_DIFSLOW_EW, R_MEDD2_LSLOW_EW, }->{ R_MEDD2_ALLCV_EW, R_MEDD2_LSLOW_EW, R_MEDD2_DSLOW_EW, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 11677 783.78 moveto
+11677 750.06 11677 675.06 11677 634.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 11680.5 634.18 moveto
+11677 624.18 lineto
+11673.5 634.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 11680.5 634.18 moveto
+11677 624.18 lineto
+11673.5 634.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+11677 700.3 moveto 367 ({R_MEDD2_LSLOW_EW,	R_MEDD2_DSLOW_EW,	}) alignedtext
+grestore
+% { R_MEDD2_CV_EW, R_MEDD2_ALLCV_EW, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+11527.5 406.3 moveto 299 ({ R_MEDD2_CV_EW, R_MEDD2_ALLCV_EW, }) alignedtext
+grestore
+% { R_MEDD2_ALLCV_EW, R_MEDD2_LSLOW_EW, R_MEDD2_DSLOW_EW, }->{ R_MEDD2_CV_EW, R_MEDD2_ALLCV_EW, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 11677 587.78 moveto
+11677 554.06 11677 479.06 11677 438.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 11680.5 438.18 moveto
+11677 428.18 lineto
+11673.5 438.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 11680.5 438.18 moveto
+11677 428.18 lineto
+11673.5 438.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+11677 504.3 moveto 187 ({R_MEDD2_ALLCV_EW,	}) alignedtext
+grestore
+% { DIFFN_M_SEV_DIST, R_DIFFN_APB_DE_REGEN, DIFFN_TIME, DIFFN_PATHO, R_DIFFN_LNLW_APB_DE_REGEN, R_LNLW_APB_DE_REGEN, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+11025 1778.3 moveto 934 ({ DIFFN_M_SEV_DIST, R_DIFFN_APB_DE_REGEN, DIFFN_TIME, DIFFN_PATHO, R_DIFFN_LNLW_APB_DE_REGEN, R_LNLW_APB_DE_REGEN, }) alignedtext
+grestore
+% { R_LNLW_APB_DE_REGEN, R_LNLW_MED_SEV, DIFFN_M_SEV_DIST, R_LNLW_MED_TIME, R_LNLW_MED_PATHO, R_DIFFN_LNLW_APB_DE_REGEN, DIFFN_PATHO, DIFFN_TIME, }->{ DIFFN_M_SEV_DIST, R_DIFFN_APB_DE_REGEN, DIFFN_TIME, DIFFN_PATHO, R_DIFFN_LNLW_APB_DE_REGEN, R_LNLW_APB_DE_REGEN, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 11492 1959.78 moveto
+11492 1926.06 11492 1851.06 11492 1810.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 11495.5 1810.18 moveto
+11492 1800.18 lineto
+11488.5 1810.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 11495.5 1810.18 moveto
+11492 1800.18 lineto
+11488.5 1810.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+11492 1876.3 moveto 787 ({DIFFN_M_SEV_DIST,	DIFFN_TIME,	DIFFN_PATHO,	R_DIFFN_LNLW_APB_DE_REGEN,	R_LNLW_APB_DE_REGEN,	}) alignedtext
+grestore
+% { R_LNL_DIFFN_APB_DE_REGEN, R_DIFFN_LNLW_APB_DE_REGEN, R_APB_DE_REGEN, R_LNLBE_APB_DE_REGEN, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+12328.5 1778.3 moveto 771 ({ R_LNL_DIFFN_APB_DE_REGEN, R_DIFFN_LNLW_APB_DE_REGEN, R_APB_DE_REGEN, R_LNLBE_APB_DE_REGEN, }) alignedtext
+grestore
+% { R_LNLBE_APB_DE_REGEN, R_LNLBE_MED_SEV, R_LNLBE_MED_TIME, R_LNLBE_MED_PATHO, R_DIFFN_LNLW_APB_DE_REGEN, R_APB_DE_REGEN, }->{ R_LNL_DIFFN_APB_DE_REGEN, R_DIFFN_LNLW_APB_DE_REGEN, R_APB_DE_REGEN, R_LNLBE_APB_DE_REGEN, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 12714 1959.78 moveto
+12714 1926.06 12714 1851.06 12714 1810.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 12717.5 1810.18 moveto
+12714 1800.18 lineto
+12710.5 1810.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 12717.5 1810.18 moveto
+12714 1800.18 lineto
+12710.5 1810.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+12714 1876.3 moveto 607 ({R_DIFFN_LNLW_APB_DE_REGEN,	R_APB_DE_REGEN,	R_LNLBE_APB_DE_REGEN,	}) alignedtext
+grestore
+% { R_DIFFN_LNLW_APB_DE_REGEN, R_LNLT1_LP_BE_APB_DE_REGEN, R_LNLBE_APB_DE_REGEN, R_LNL_DIFFN_APB_DE_REGEN, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+11841.5 1582.3 moveto 869 ({ R_DIFFN_LNLW_APB_DE_REGEN, R_LNLT1_LP_BE_APB_DE_REGEN, R_LNLBE_APB_DE_REGEN, R_LNL_DIFFN_APB_DE_REGEN, }) alignedtext
+grestore
+% { R_LNL_DIFFN_APB_DE_REGEN, R_DIFFN_LNLW_APB_DE_REGEN, R_APB_DE_REGEN, R_LNLBE_APB_DE_REGEN, }->{ R_DIFFN_LNLW_APB_DE_REGEN, R_LNLT1_LP_BE_APB_DE_REGEN, R_LNLBE_APB_DE_REGEN, R_LNL_DIFFN_APB_DE_REGEN, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 12504.15 1763.98 moveto
+12405.3 1751.16 12302.43 1729.17 12272 1692 curveto
+12254.28 1670.36 12259.22 1636.98 12266.03 1613.68 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 12269.39 1614.67 moveto
+12269.11 1604.07 lineto
+12262.73 1612.53 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 12269.39 1614.67 moveto
+12269.11 1604.07 lineto
+12262.73 1612.53 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+12272 1680.3 moveto 697 ({R_LNL_DIFFN_APB_DE_REGEN,	R_DIFFN_LNLW_APB_DE_REGEN,	R_LNLBE_APB_DE_REGEN,	}) alignedtext
+grestore
+% { R_MYOP_MYDY_APB_DE_REGEN, R_APB_DE_REGEN, R_LNL_DIFFN_APB_DE_REGEN, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+12835 1582.3 moveto 590 ({ R_MYOP_MYDY_APB_DE_REGEN, R_APB_DE_REGEN, R_LNL_DIFFN_APB_DE_REGEN, }) alignedtext
+grestore
+% { R_LNL_DIFFN_APB_DE_REGEN, R_DIFFN_LNLW_APB_DE_REGEN, R_APB_DE_REGEN, R_LNLBE_APB_DE_REGEN, }->{ R_MYOP_MYDY_APB_DE_REGEN, R_APB_DE_REGEN, R_LNL_DIFFN_APB_DE_REGEN, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 12793.6 1764 moveto
+12851.8 1749.66 12931.51 1726 12996 1692 curveto
+13037.7 1670.02 13079.46 1634.67 13105.01 1611.14 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 13107.48 1613.63 moveto
+13112.4 1604.25 lineto
+13102.7 1608.51 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 13107.48 1613.63 moveto
+13112.4 1604.25 lineto
+13102.7 1608.51 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+13020 1680.3 moveto 397 ({R_APB_DE_REGEN,	R_LNL_DIFFN_APB_DE_REGEN,	}) alignedtext
+grestore
+% { R_LNLT1_LP_APB_DE_REGEN, R_LNLT1_LP_BE_APB_DE_REGEN, R_LNLBE_APB_DE_REGEN, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+11959 1386.3 moveto 634 ({ R_LNLT1_LP_APB_DE_REGEN, R_LNLT1_LP_BE_APB_DE_REGEN, R_LNLBE_APB_DE_REGEN, }) alignedtext
+grestore
+% { R_DIFFN_LNLW_APB_DE_REGEN, R_LNLT1_LP_BE_APB_DE_REGEN, R_LNLBE_APB_DE_REGEN, R_LNL_DIFFN_APB_DE_REGEN, }->{ R_LNLT1_LP_APB_DE_REGEN, R_LNLT1_LP_BE_APB_DE_REGEN, R_LNLBE_APB_DE_REGEN, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 12276 1567.78 moveto
+12276 1534.06 12276 1459.06 12276 1418.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 12279.5 1418.18 moveto
+12276 1408.18 lineto
+12272.5 1418.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 12279.5 1418.18 moveto
+12276 1408.18 lineto
+12272.5 1418.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+12276 1484.3 moveto 457 ({R_LNLT1_LP_BE_APB_DE_REGEN,	R_LNLBE_APB_DE_REGEN,	}) alignedtext
+grestore
+% { R_LNLT1_APB_DE_REGEN, R_LNLLP_APB_DE_REGEN, R_LNLT1_LP_APB_DE_REGEN, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+11983.5 1190.3 moveto 585 ({ R_LNLT1_APB_DE_REGEN, R_LNLLP_APB_DE_REGEN, R_LNLT1_LP_APB_DE_REGEN, }) alignedtext
+grestore
+% { R_LNLT1_LP_APB_DE_REGEN, R_LNLT1_LP_BE_APB_DE_REGEN, R_LNLBE_APB_DE_REGEN, }->{ R_LNLT1_APB_DE_REGEN, R_LNLLP_APB_DE_REGEN, R_LNLT1_LP_APB_DE_REGEN, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 12276 1371.78 moveto
+12276 1338.06 12276 1263.06 12276 1222.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 12279.5 1222.18 moveto
+12276 1212.18 lineto
+12272.5 1222.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 12279.5 1222.18 moveto
+12276 1212.18 lineto
+12272.5 1222.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+12276 1288.3 moveto 247 ({R_LNLT1_LP_APB_DE_REGEN,	}) alignedtext
+grestore
+% { R_MYOP_MYDY_APB_DE_REGEN, R_MYOP_APB_DE_REGEN, R_MYDY_APB_DE_REGEN, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+12827.5 1386.3 moveto 605 ({ R_MYOP_MYDY_APB_DE_REGEN, R_MYOP_APB_DE_REGEN, R_MYDY_APB_DE_REGEN, }) alignedtext
+grestore
+% { R_MYOP_MYDY_APB_DE_REGEN, R_APB_DE_REGEN, R_LNL_DIFFN_APB_DE_REGEN, }->{ R_MYOP_MYDY_APB_DE_REGEN, R_MYOP_APB_DE_REGEN, R_MYDY_APB_DE_REGEN, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 13130 1567.78 moveto
+13130 1534.06 13130 1459.06 13130 1418.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 13133.5 1418.18 moveto
+13130 1408.18 lineto
+13126.5 1418.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 13133.5 1418.18 moveto
+13130 1408.18 lineto
+13126.5 1418.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+13130 1484.3 moveto 247 ({R_MYOP_MYDY_APB_DE_REGEN,	}) alignedtext
+grestore
+% { R_DIFFN_APB_DENERV, DIFFN_M_SEV_DIST, DIFFN_TIME, DIFFN_PATHO, R_DIFFN_LNLW_APB_DENERV, R_LNLW_APB_DENERV, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+17218.5 1974.3 moveto 885 ({ R_DIFFN_APB_DENERV, DIFFN_M_SEV_DIST, DIFFN_TIME, DIFFN_PATHO, R_DIFFN_LNLW_APB_DENERV, R_LNLW_APB_DENERV, }) alignedtext
+grestore
+% { R_LNLW_APB_DENERV, R_LNLW_MED_SEV, DIFFN_M_SEV_DIST, R_LNLW_MED_TIME, R_LNLW_MED_PATHO, R_DIFFN_LNLW_APB_DENERV, DIFFN_TIME, DIFFN_PATHO, }->{ R_DIFFN_APB_DENERV, DIFFN_M_SEV_DIST, DIFFN_TIME, DIFFN_PATHO, R_DIFFN_LNLW_APB_DENERV, R_LNLW_APB_DENERV, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 17661 2155.78 moveto
+17661 2122.06 17661 2047.06 17661 2006.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 17664.5 2006.18 moveto
+17661 1996.18 lineto
+17657.5 2006.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 17664.5 2006.18 moveto
+17661 1996.18 lineto
+17657.5 2006.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+17661 2072.3 moveto 757 ({DIFFN_M_SEV_DIST,	DIFFN_TIME,	DIFFN_PATHO,	R_DIFFN_LNLW_APB_DENERV,	R_LNLW_APB_DENERV,	}) alignedtext
+grestore
+% { R_DIFFN_LNLW_APB_MUSIZE, DIFFN_PATHO, R_APB_MUSIZE, DIFFN_M_SEV_DIST, R_LNLBE_MED_TIME, R_LNLBE_MED_PATHO, R_LNLBE_MED_SEV, R_LNL_DIFFN_APB_DENERV, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, R_APB_DE_REGEN, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+18321 1974.3 moveto 1644 ({ R_DIFFN_LNLW_APB_MUSIZE, DIFFN_PATHO, R_APB_MUSIZE, DIFFN_M_SEV_DIST, R_LNLBE_MED_TIME, R_LNLBE_MED_PATHO, R_LNLBE_MED_SEV, R_LNL_DIFFN_APB_DENERV, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, R_APB_DE_REGEN, }) alignedtext
+grestore
+% { R_DIFFN_LNLW_APB_DENERV, R_LNLBE_MED_SEV, R_LNL_DIFFN_APB_DENERV, R_LNLBE_MED_TIME, R_LNLBE_MED_PATHO, DIFFN_M_SEV_DIST, R_LNLW_MED_SEV, DIFFN_PATHO, R_LNLW_MED_PATHO, R_DIFFN_LNLW_APB_MUSIZE, R_APB_DE_REGEN, }->{ R_DIFFN_LNLW_APB_MUSIZE, DIFFN_PATHO, R_APB_MUSIZE, DIFFN_M_SEV_DIST, R_LNLBE_MED_TIME, R_LNLBE_MED_PATHO, R_LNLBE_MED_SEV, R_LNL_DIFFN_APB_DENERV, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, R_APB_DE_REGEN, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 19198.98 2155.85 moveto
+19171.88 2141.05 19137.12 2116.86 19121 2084 curveto
+19108.71 2058.95 19118.34 2027.25 19128.44 2005.27 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 19131.63 2006.73 moveto
+19132.89 1996.21 lineto
+19125.35 2003.64 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 19131.63 2006.73 moveto
+19132.89 1996.21 lineto
+19125.35 2003.64 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+19121 2072.3 moveto 1657 ({R_LNLBE_MED_SEV,	R_LNL_DIFFN_APB_DENERV,	R_LNLBE_MED_TIME,	R_LNLBE_MED_PATHO,	DIFFN_M_SEV_DIST,	R_LNLW_MED_SEV,	DIFFN_PATHO,	R_LNLW_MED_PATHO,	R_DIFFN_LNLW_APB_MUSIZE,	R_APB_DE_REGEN,	}) alignedtext
+grestore
+% { R_LNLBE_MED_TIME, R_LNLBE_MED_PATHO, R_LNLBE_APB_DENERV, R_LNLBE_MED_SEV, R_LNL_DIFFN_APB_DENERV, R_DIFFN_LNLW_APB_DENERV, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+20394.5 1974.3 moveto 1037 ({ R_LNLBE_MED_TIME, R_LNLBE_MED_PATHO, R_LNLBE_APB_DENERV, R_LNLBE_MED_SEV, R_LNL_DIFFN_APB_DENERV, R_DIFFN_LNLW_APB_DENERV, }) alignedtext
+grestore
+% { R_DIFFN_LNLW_APB_DENERV, R_LNLBE_MED_SEV, R_LNL_DIFFN_APB_DENERV, R_LNLBE_MED_TIME, R_LNLBE_MED_PATHO, DIFFN_M_SEV_DIST, R_LNLW_MED_SEV, DIFFN_PATHO, R_LNLW_MED_PATHO, R_DIFFN_LNLW_APB_MUSIZE, R_APB_DE_REGEN, }->{ R_LNLBE_MED_TIME, R_LNLBE_MED_PATHO, R_LNLBE_APB_DENERV, R_LNLBE_MED_SEV, R_LNL_DIFFN_APB_DENERV, R_DIFFN_LNLW_APB_DENERV, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 19909.4 2156 moveto
+20294.52 2142.5 20717.42 2119.83 20801 2084 curveto
+20840.62 2067.02 20874.88 2029.59 20894.74 2004.32 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 20897.6 2006.34 moveto
+20900.91 1996.27 lineto
+20892.05 2002.08 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 20897.6 2006.34 moveto
+20900.91 1996.27 lineto
+20892.05 2002.08 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+20827 2072.3 moveto 937 ({R_LNLBE_MED_TIME,	R_LNLBE_MED_PATHO,	R_LNLBE_MED_SEV,	R_LNL_DIFFN_APB_DENERV,	R_DIFFN_LNLW_APB_DENERV,	}) alignedtext
+grestore
+% { R_LNLBE_MED_PATHO, DIFFN_M_SEV_DIST, R_APB_MUSIZE, DIFFN_PATHO, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, R_APB_MULOSS, R_LNLBE_MED_SEV, R_LNL_DIFFN_APB_DENERV, R_APB_DE_REGEN, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+18061 1778.3 moveto 1408 ({ R_LNLBE_MED_PATHO, DIFFN_M_SEV_DIST, R_APB_MUSIZE, DIFFN_PATHO, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, R_APB_MULOSS, R_LNLBE_MED_SEV, R_LNL_DIFFN_APB_DENERV, R_APB_DE_REGEN, }) alignedtext
+grestore
+% { R_DIFFN_LNLW_APB_MUSIZE, DIFFN_PATHO, R_APB_MUSIZE, DIFFN_M_SEV_DIST, R_LNLBE_MED_TIME, R_LNLBE_MED_PATHO, R_LNLBE_MED_SEV, R_LNL_DIFFN_APB_DENERV, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, R_APB_DE_REGEN, }->{ R_LNLBE_MED_PATHO, DIFFN_M_SEV_DIST, R_APB_MUSIZE, DIFFN_PATHO, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, R_APB_MULOSS, R_LNLBE_MED_SEV, R_LNL_DIFFN_APB_DENERV, R_APB_DE_REGEN, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 18970.34 1959.99 moveto
+18875.82 1946.72 18772.1 1924.28 18743 1888 curveto
+18725.08 1865.65 18736.63 1832.26 18748.71 1809.15 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 18751.87 1810.69 moveto
+18753.66 1800.25 lineto
+18745.75 1807.29 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 18751.87 1810.69 moveto
+18753.66 1800.25 lineto
+18745.75 1807.29 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+18743 1876.3 moveto 1417 ({R_LNLBE_MED_PATHO,	DIFFN_M_SEV_DIST,	R_APB_MUSIZE,	DIFFN_PATHO,	R_LNLW_MED_SEV,	R_LNLW_MED_PATHO,	R_LNLBE_MED_SEV,	R_LNL_DIFFN_APB_DENERV,	R_APB_DE_REGEN,	}) alignedtext
+grestore
+% { R_LNLBE_APB_MUSIZE, R_LNLBE_MED_SEV, R_LNLBE_MED_TIME, R_LNLBE_MED_PATHO, R_DIFFN_LNLW_APB_MUSIZE, R_APB_MUSIZE, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+19824 1778.3 moveto 942 ({ R_LNLBE_APB_MUSIZE, R_LNLBE_MED_SEV, R_LNLBE_MED_TIME, R_LNLBE_MED_PATHO, R_DIFFN_LNLW_APB_MUSIZE, R_APB_MUSIZE, }) alignedtext
+grestore
+% { R_DIFFN_LNLW_APB_MUSIZE, DIFFN_PATHO, R_APB_MUSIZE, DIFFN_M_SEV_DIST, R_LNLBE_MED_TIME, R_LNLBE_MED_PATHO, R_LNLBE_MED_SEV, R_LNL_DIFFN_APB_DENERV, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, R_APB_DE_REGEN, }->{ R_LNLBE_APB_MUSIZE, R_LNLBE_MED_SEV, R_LNLBE_MED_TIME, R_LNLBE_MED_PATHO, R_DIFFN_LNLW_APB_MUSIZE, R_APB_MUSIZE, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 19727.27 1960 moveto
+19916.11 1947.42 20098.53 1925.65 20183 1888 curveto
+20222.37 1870.45 20256.69 1833.17 20276.64 1808.1 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 20279.47 1810.15 moveto
+20282.83 1800.1 lineto
+20273.94 1805.86 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 20279.47 1810.15 moveto
+20282.83 1800.1 lineto
+20273.94 1805.86 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+20209 1876.3 moveto 817 ({R_LNLBE_MED_SEV,	R_LNLBE_MED_TIME,	R_LNLBE_MED_PATHO,	R_DIFFN_LNLW_APB_MUSIZE,	R_APB_MUSIZE,	}) alignedtext
+grestore
+% { R_APB_MALOSS, R_LNLBE_MED_SEV, R_LNLW_MED_PATHO, R_APB_MULOSS, DIFFN_PATHO, R_APB_MUSIZE, DIFFN_M_SEV_DIST, R_LNLW_MED_SEV, R_LNLBE_MED_PATHO, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+16513 1582.3 moveto 1196 ({ R_APB_MALOSS, R_LNLBE_MED_SEV, R_LNLW_MED_PATHO, R_APB_MULOSS, DIFFN_PATHO, R_APB_MUSIZE, DIFFN_M_SEV_DIST, R_LNLW_MED_SEV, R_LNLBE_MED_PATHO, }) alignedtext
+grestore
+% { R_LNLBE_MED_PATHO, DIFFN_M_SEV_DIST, R_APB_MUSIZE, DIFFN_PATHO, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, R_APB_MULOSS, R_LNLBE_MED_SEV, R_LNL_DIFFN_APB_DENERV, R_APB_DE_REGEN, }->{ R_APB_MALOSS, R_LNLBE_MED_SEV, R_LNLW_MED_PATHO, R_APB_MULOSS, DIFFN_PATHO, R_APB_MUSIZE, DIFFN_M_SEV_DIST, R_LNLW_MED_SEV, R_LNLBE_MED_PATHO, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 18364.84 1763.98 moveto
+18138.88 1751 17851.74 1728.85 17598 1692 curveto
+17450.64 1670.6 17281.24 1630.5 17186.08 1606.52 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 17186.81 1603.1 moveto
+17176.26 1604.04 lineto
+17185.09 1609.89 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 17186.81 1603.1 moveto
+17176.26 1604.04 lineto
+17185.09 1609.89 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+17598 1680.3 moveto 1177 ({R_LNLBE_MED_SEV,	R_LNLW_MED_PATHO,	R_APB_MULOSS,	DIFFN_PATHO,	R_APB_MUSIZE,	DIFFN_M_SEV_DIST,	R_LNLW_MED_SEV,	R_LNLBE_MED_PATHO,	}) alignedtext
+grestore
+% { R_LNL_DIFFN_APB_DENERV, R_APB_MULOSS, R_APB_MUSIZE, R_APB_DE_REGEN, R_APB_EFFMUS, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+18500 1582.3 moveto 686 ({ R_LNL_DIFFN_APB_DENERV, R_APB_MULOSS, R_APB_MUSIZE, R_APB_DE_REGEN, R_APB_EFFMUS, }) alignedtext
+grestore
+% { R_LNLBE_MED_PATHO, DIFFN_M_SEV_DIST, R_APB_MUSIZE, DIFFN_PATHO, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, R_APB_MULOSS, R_LNLBE_MED_SEV, R_LNL_DIFFN_APB_DENERV, R_APB_DE_REGEN, }->{ R_LNL_DIFFN_APB_DENERV, R_APB_MULOSS, R_APB_MUSIZE, R_APB_DE_REGEN, R_APB_EFFMUS, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 18771.92 1763.78 moveto
+18785.57 1729.85 18816.02 1654.1 18832.28 1613.65 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 18835.61 1614.76 moveto
+18836.09 1604.18 lineto
+18829.12 1612.15 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 18835.61 1614.76 moveto
+18836.09 1604.18 lineto
+18829.12 1612.15 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+18807 1680.3 moveto 607 ({R_LNL_DIFFN_APB_DENERV,	R_APB_MULOSS,	R_APB_MUSIZE,	R_APB_DE_REGEN,	}) alignedtext
+grestore
+% { R_DIFFN_MED_BLOCK, DIFFN_M_SEV_DIST, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, DIFFN_PATHO, R_APB_MULOSS, R_LNLW_MED_PATHO, R_LNLBE_MED_SEV, R_APB_MALOSS, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+14930.5 1386.3 moveto 1243 ({ R_DIFFN_MED_BLOCK, DIFFN_M_SEV_DIST, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, DIFFN_PATHO, R_APB_MULOSS, R_LNLW_MED_PATHO, R_LNLBE_MED_SEV, R_APB_MALOSS, }) alignedtext
+grestore
+% { R_APB_MALOSS, R_LNLBE_MED_SEV, R_LNLW_MED_PATHO, R_APB_MULOSS, DIFFN_PATHO, R_APB_MUSIZE, DIFFN_M_SEV_DIST, R_LNLW_MED_SEV, R_LNLBE_MED_PATHO, }->{ R_DIFFN_MED_BLOCK, DIFFN_M_SEV_DIST, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, DIFFN_PATHO, R_APB_MULOSS, R_LNLW_MED_PATHO, R_LNLBE_MED_SEV, R_APB_MALOSS, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 16504.64 1570.33 moveto
+16303.53 1557.76 16079.4 1535.4 15877 1496 curveto
+15777.63 1476.66 15666.24 1436.41 15603.07 1411.75 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 15604.32 1408.48 moveto
+15593.73 1408.08 lineto
+15601.76 1414.99 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 15604.32 1408.48 moveto
+15593.73 1408.08 lineto
+15601.76 1414.99 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+15877 1484.3 moveto 1207 ({R_APB_MALOSS,	R_LNLBE_MED_SEV,	R_LNLW_MED_PATHO,	R_APB_MULOSS,	DIFFN_PATHO,	DIFFN_M_SEV_DIST,	R_LNLW_MED_SEV,	R_LNLBE_MED_PATHO,	}) alignedtext
+grestore
+% { R_APB_MUSIZE, R_APB_MUSCLE_VOL, R_APB_MALOSS, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+16913 1386.3 moveto 396 ({ R_APB_MUSIZE, R_APB_MUSCLE_VOL, R_APB_MALOSS, }) alignedtext
+grestore
+% { R_APB_MALOSS, R_LNLBE_MED_SEV, R_LNLW_MED_PATHO, R_APB_MULOSS, DIFFN_PATHO, R_APB_MUSIZE, DIFFN_M_SEV_DIST, R_LNLW_MED_SEV, R_LNLBE_MED_PATHO, }->{ R_APB_MUSIZE, R_APB_MUSCLE_VOL, R_APB_MALOSS, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 17111 1567.78 moveto
+17111 1534.06 17111 1459.06 17111 1418.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 17114.5 1418.18 moveto
+17111 1408.18 lineto
+17107.5 1418.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 17114.5 1418.18 moveto
+17111 1408.18 lineto
+17107.5 1418.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+17111 1484.3 moveto 247 ({R_APB_MUSIZE,	R_APB_MALOSS,	}) alignedtext
+grestore
+% { R_LNLBE_MED_BLOCK, R_LNLBE_MED_SEV, R_LNLBE_MED_PATHO, R_DIFFN_MED_BLOCK, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+13084 1190.3 moveto 636 ({ R_LNLBE_MED_BLOCK, R_LNLBE_MED_SEV, R_LNLBE_MED_PATHO, R_DIFFN_MED_BLOCK, }) alignedtext
+grestore
+% { R_DIFFN_MED_BLOCK, DIFFN_M_SEV_DIST, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, DIFFN_PATHO, R_APB_MULOSS, R_LNLW_MED_PATHO, R_LNLBE_MED_SEV, R_APB_MALOSS, }->{ R_LNLBE_MED_BLOCK, R_LNLBE_MED_SEV, R_LNLBE_MED_PATHO, R_DIFFN_MED_BLOCK, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 15284.94 1371.99 moveto
+15041.41 1355.82 14671.75 1329.62 14351 1300 curveto
+14067.97 1273.86 13738.33 1235.63 13551.5 1213.24 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 13551.68 1209.73 moveto
+13541.33 1212.02 lineto
+13550.85 1216.68 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 13551.68 1209.73 moveto
+13541.33 1212.02 lineto
+13550.85 1216.68 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+14351 1288.3 moveto 517 ({R_LNLBE_MED_SEV,	R_LNLBE_MED_PATHO,	R_DIFFN_MED_BLOCK,	}) alignedtext
+grestore
+% { R_LNLBE_MED_PATHO, DIFFN_M_SEV_DIST, R_LNLW_MED_SEV, R_DIFFN_LNLW_APB_MALOSS, R_APB_MALOSS, R_LNLW_MED_PATHO, R_LNLBE_MED_SEV, DIFFN_PATHO, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+14036.5 1190.3 moveto 1181 ({ R_LNLBE_MED_PATHO, DIFFN_M_SEV_DIST, R_LNLW_MED_SEV, R_DIFFN_LNLW_APB_MALOSS, R_APB_MALOSS, R_LNLW_MED_PATHO, R_LNLBE_MED_SEV, DIFFN_PATHO, }) alignedtext
+grestore
+% { R_DIFFN_MED_BLOCK, DIFFN_M_SEV_DIST, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, DIFFN_PATHO, R_APB_MULOSS, R_LNLW_MED_PATHO, R_LNLBE_MED_SEV, R_APB_MALOSS, }->{ R_LNLBE_MED_PATHO, DIFFN_M_SEV_DIST, R_LNLW_MED_SEV, R_DIFFN_LNLW_APB_MALOSS, R_APB_MALOSS, R_LNLW_MED_PATHO, R_LNLBE_MED_SEV, DIFFN_PATHO, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 15383.92 1371.99 moveto
+15261.93 1357.77 15093.47 1334.25 14948 1300 curveto
+14852.11 1277.42 14743.82 1239.26 14680.71 1215.68 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 14681.57 1212.27 moveto
+14670.98 1212.03 lineto
+14679.11 1218.82 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 14681.57 1212.27 moveto
+14670.98 1212.03 lineto
+14679.11 1218.82 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+14948 1288.3 moveto 1057 ({R_LNLBE_MED_PATHO,	DIFFN_M_SEV_DIST,	R_LNLW_MED_SEV,	R_APB_MALOSS,	R_LNLW_MED_PATHO,	R_LNLBE_MED_SEV,	DIFFN_PATHO,	}) alignedtext
+grestore
+% { R_MED_BLOCK_WA, R_DIFFN_MED_BLOCK, R_APB_MALOSS, R_APB_MULOSS, R_LNLW_MED_PATHO, R_LNLW_MED_SEV, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+15943.5 1190.3 moveto 841 ({ R_MED_BLOCK_WA, R_DIFFN_MED_BLOCK, R_APB_MALOSS, R_APB_MULOSS, R_LNLW_MED_PATHO, R_LNLW_MED_SEV, }) alignedtext
+grestore
+% { R_DIFFN_MED_BLOCK, DIFFN_M_SEV_DIST, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, DIFFN_PATHO, R_APB_MULOSS, R_LNLW_MED_PATHO, R_LNLBE_MED_SEV, R_APB_MALOSS, }->{ R_MED_BLOCK_WA, R_DIFFN_MED_BLOCK, R_APB_MALOSS, R_APB_MULOSS, R_LNLW_MED_PATHO, R_LNLW_MED_SEV, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 15665.83 1371.94 moveto
+15763.63 1356.33 15908.04 1330.97 16032 1300 curveto
+16129.77 1275.57 16240.98 1238.44 16306.67 1215.5 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 16308.14 1218.7 moveto
+16316.42 1212.09 lineto
+16305.83 1212.09 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 16308.14 1218.7 moveto
+16316.42 1212.09 lineto
+16305.83 1212.09 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+16088 1288.3 moveto 757 ({R_DIFFN_MED_BLOCK,	R_APB_MALOSS,	R_APB_MULOSS,	R_LNLW_MED_PATHO,	R_LNLW_MED_SEV,	}) alignedtext
+grestore
+% { R_MED_BLOCK_EW, R_DIFFN_MED_BLOCK, R_LNLBE_MED_BLOCK, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+12202.5 994.3 moveto 475 ({ R_MED_BLOCK_EW, R_DIFFN_MED_BLOCK, R_LNLBE_MED_BLOCK, }) alignedtext
+grestore
+% { R_LNLBE_MED_BLOCK, R_LNLBE_MED_SEV, R_LNLBE_MED_PATHO, R_DIFFN_MED_BLOCK, }->{ R_MED_BLOCK_EW, R_DIFFN_MED_BLOCK, R_LNLBE_MED_BLOCK, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 13293.29 1175.95 moveto
+13189.41 1159.23 13028.58 1132.19 12890 1104 curveto
+12758.53 1077.26 12606.8 1040.65 12517.38 1018.47 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 12518.14 1015.06 moveto
+12507.59 1016.04 lineto
+12516.45 1021.85 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 12518.14 1015.06 moveto
+12507.59 1016.04 lineto
+12516.45 1021.85 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+12890 1092.3 moveto 367 ({R_DIFFN_MED_BLOCK,	R_LNLBE_MED_BLOCK,	}) alignedtext
+grestore
+% { R_MED_AMPR_EW, R_MED_BLOCK_EW, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+12141 798.3 moveto 288 ({ R_MED_AMPR_EW, R_MED_BLOCK_EW, }) alignedtext
+grestore
+% { R_MED_BLOCK_EW, R_DIFFN_MED_BLOCK, R_LNLBE_MED_BLOCK, }->{ R_MED_AMPR_EW, R_MED_BLOCK_EW, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 12426.24 979.78 moveto
+12398.78 945.41 12337.06 868.16 12305.08 828.13 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 12307.7 825.81 moveto
+12298.72 820.18 lineto
+12302.23 830.17 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 12307.7 825.81 moveto
+12298.72 820.18 lineto
+12302.23 830.17 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+12368 896.3 moveto 157 ({R_MED_BLOCK_EW,	}) alignedtext
+grestore
+% { R_LNLW_APB_MALOSS, R_LNLW_MED_SEV, R_DIFFN_LNLW_APB_MALOSS, DIFFN_M_SEV_DIST, R_LNLW_MED_PATHO, DIFFN_PATHO, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+12828 994.3 moveto 928 ({ R_LNLW_APB_MALOSS, R_LNLW_MED_SEV, R_DIFFN_LNLW_APB_MALOSS, DIFFN_M_SEV_DIST, R_LNLW_MED_PATHO, DIFFN_PATHO, }) alignedtext
+grestore
+% { R_LNLBE_MED_PATHO, DIFFN_M_SEV_DIST, R_LNLW_MED_SEV, R_DIFFN_LNLW_APB_MALOSS, R_APB_MALOSS, R_LNLW_MED_PATHO, R_LNLBE_MED_SEV, DIFFN_PATHO, }->{ R_LNLW_APB_MALOSS, R_LNLW_MED_SEV, R_DIFFN_LNLW_APB_MALOSS, DIFFN_M_SEV_DIST, R_LNLW_MED_PATHO, DIFFN_PATHO, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 14301.78 1176 moveto
+14041.62 1160.5 13698.7 1135.28 13563 1104 curveto
+13479.92 1084.85 13388.44 1045.23 13335.85 1020.51 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 13337.03 1017.2 moveto
+13326.49 1016.08 lineto
+13334.03 1023.52 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 13337.03 1017.2 moveto
+13326.49 1016.08 lineto
+13334.03 1023.52 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+13563 1092.3 moveto 847 ({R_LNLW_MED_SEV,	R_DIFFN_LNLW_APB_MALOSS,	DIFFN_M_SEV_DIST,	R_LNLW_MED_PATHO,	DIFFN_PATHO,	}) alignedtext
+grestore
+% { DIFFN_PATHO, R_DIFFN_MED_DIFSLOW, R_LNLW_MED_SEV, DIFFN_M_SEV_DIST, R_LNLBE_MED_PATHO, R_LNLW_MED_PATHO, R_LNLBE_MED_SEV, R_APB_MALOSS, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+13893.5 994.3 moveto 1143 ({ DIFFN_PATHO, R_DIFFN_MED_DIFSLOW, R_LNLW_MED_SEV, DIFFN_M_SEV_DIST, R_LNLBE_MED_PATHO, R_LNLW_MED_PATHO, R_LNLBE_MED_SEV, R_APB_MALOSS, }) alignedtext
+grestore
+% { R_LNLBE_MED_PATHO, DIFFN_M_SEV_DIST, R_LNLW_MED_SEV, R_DIFFN_LNLW_APB_MALOSS, R_APB_MALOSS, R_LNLW_MED_PATHO, R_LNLBE_MED_SEV, DIFFN_PATHO, }->{ DIFFN_PATHO, R_DIFFN_MED_DIFSLOW, R_LNLW_MED_SEV, DIFFN_M_SEV_DIST, R_LNLBE_MED_PATHO, R_LNLW_MED_PATHO, R_LNLBE_MED_SEV, R_APB_MALOSS, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 14548.86 1175.99 moveto
+14509.92 1163.15 14466.28 1141.13 14443 1104 curveto
+14428.02 1080.11 14438.45 1047.76 14449.47 1025.31 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 14452.63 1026.83 moveto
+14454.16 1016.35 lineto
+14446.43 1023.58 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 14452.63 1026.83 moveto
+14454.16 1016.35 lineto
+14446.43 1023.58 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+14443 1092.3 moveto 1057 ({DIFFN_PATHO,	R_LNLW_MED_SEV,	DIFFN_M_SEV_DIST,	R_LNLBE_MED_PATHO,	R_LNLW_MED_PATHO,	R_LNLBE_MED_SEV,	R_APB_MALOSS,	}) alignedtext
+grestore
+% { R_LNLT1_LP_BE_APB_MALOSS, R_APB_MALOSS, R_DIFFN_LNLW_APB_MALOSS, R_LNLBE_MED_PATHO, R_LNLBE_MED_SEV, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+15205 994.3 moveto 860 ({ R_LNLT1_LP_BE_APB_MALOSS, R_APB_MALOSS, R_DIFFN_LNLW_APB_MALOSS, R_LNLBE_MED_PATHO, R_LNLBE_MED_SEV, }) alignedtext
+grestore
+% { R_LNLBE_MED_PATHO, DIFFN_M_SEV_DIST, R_LNLW_MED_SEV, R_DIFFN_LNLW_APB_MALOSS, R_APB_MALOSS, R_LNLW_MED_PATHO, R_LNLBE_MED_SEV, DIFFN_PATHO, }->{ R_LNLT1_LP_BE_APB_MALOSS, R_APB_MALOSS, R_DIFFN_LNLW_APB_MALOSS, R_LNLBE_MED_PATHO, R_LNLBE_MED_SEV, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 15062.25 1175.98 moveto
+15247.7 1163.38 15440.22 1141.57 15523 1104 curveto
+15562.25 1086.19 15596.61 1048.98 15616.59 1023.99 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 15619.41 1026.06 moveto
+15622.8 1016.03 lineto
+15613.89 1021.76 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 15619.41 1026.06 moveto
+15622.8 1016.03 lineto
+15613.89 1021.76 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+15549 1092.3 moveto 727 ({R_APB_MALOSS,	R_DIFFN_LNLW_APB_MALOSS,	R_LNLBE_MED_PATHO,	R_LNLBE_MED_SEV,	}) alignedtext
+grestore
+% { R_DIFFN_APB_MALOSS, DIFFN_M_SEV_DIST, R_DIFFN_LNLW_APB_MALOSS, DIFFN_PATHO, R_LNLW_APB_MALOSS, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+12553 798.3 moveto 800 ({ R_DIFFN_APB_MALOSS, DIFFN_M_SEV_DIST, R_DIFFN_LNLW_APB_MALOSS, DIFFN_PATHO, R_LNLW_APB_MALOSS, }) alignedtext
+grestore
+% { R_LNLW_APB_MALOSS, R_LNLW_MED_SEV, R_DIFFN_LNLW_APB_MALOSS, DIFFN_M_SEV_DIST, R_LNLW_MED_PATHO, DIFFN_PATHO, }->{ R_DIFFN_APB_MALOSS, DIFFN_M_SEV_DIST, R_DIFFN_LNLW_APB_MALOSS, DIFFN_PATHO, R_LNLW_APB_MALOSS, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 13254.3 979.86 moveto
+13217.6 962.8 13160.56 935.3 13113 908 curveto
+13067.56 881.92 13017.4 848.13 12985.57 826.03 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 12987.3 822.97 moveto
+12977.1 820.12 lineto
+12983.3 828.71 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 12987.3 822.97 moveto
+12977.1 820.12 lineto
+12983.3 828.71 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+13113 896.3 moveto 697 ({DIFFN_M_SEV_DIST,	R_DIFFN_LNLW_APB_MALOSS,	DIFFN_PATHO,	R_LNLW_APB_MALOSS,	}) alignedtext
+grestore
+% { R_DIFFN_MED_DIFSLOW, R_MED_DIFSLOW_WA, R_LNLW_MED_PATHO, R_APB_MALOSS, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+13477 798.3 moveto 916 ({ R_DIFFN_MED_DIFSLOW, R_MED_DIFSLOW_WA, R_LNLW_MED_PATHO, R_APB_MALOSS, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, }) alignedtext
+grestore
+% { DIFFN_PATHO, R_DIFFN_MED_DIFSLOW, R_LNLW_MED_SEV, DIFFN_M_SEV_DIST, R_LNLBE_MED_PATHO, R_LNLW_MED_PATHO, R_LNLBE_MED_SEV, R_APB_MALOSS, }->{ R_DIFFN_MED_DIFSLOW, R_MED_DIFSLOW_WA, R_LNLW_MED_PATHO, R_APB_MALOSS, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 14158.24 979.98 moveto
+14056.49 967.43 13960.95 945.69 13929 908 curveto
+13910.9 886.65 13916.63 853.21 13924.14 829.82 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 13927.52 830.77 moveto
+13927.52 820.17 lineto
+13920.91 828.45 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 13927.52 830.77 moveto
+13927.52 820.17 lineto
+13920.91 828.45 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+13929 896.3 moveto 817 ({R_DIFFN_MED_DIFSLOW,	R_LNLW_MED_PATHO,	R_APB_MALOSS,	R_LNLBE_MED_PATHO,	R_LNLW_MED_SEV,	}) alignedtext
+grestore
+% { R_DIFFN_MED_DIFSLOW, R_MED_RDLDCV_EW, R_APB_MALOSS, R_LNLBE_MED_PATHO, R_LNLBE_MED_SEV, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+14517 798.3 moveto 756 ({ R_DIFFN_MED_DIFSLOW, R_MED_RDLDCV_EW, R_APB_MALOSS, R_LNLBE_MED_PATHO, R_LNLBE_MED_SEV, }) alignedtext
+grestore
+% { DIFFN_PATHO, R_DIFFN_MED_DIFSLOW, R_LNLW_MED_SEV, DIFFN_M_SEV_DIST, R_LNLBE_MED_PATHO, R_LNLW_MED_PATHO, R_LNLBE_MED_SEV, R_APB_MALOSS, }->{ R_DIFFN_MED_DIFSLOW, R_MED_RDLDCV_EW, R_APB_MALOSS, R_LNLBE_MED_PATHO, R_LNLBE_MED_SEV, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 14562.79 979.96 moveto
+14625.48 966.38 14707.16 943.63 14773 908 curveto
+14812.25 886.76 14850.01 851.15 14872.87 827.37 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 14875.42 829.77 moveto
+14879.74 820.1 lineto
+14870.33 824.96 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 14875.42 829.77 moveto
+14879.74 820.1 lineto
+14870.33 824.96 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+14796 896.3 moveto 637 ({R_DIFFN_MED_DIFSLOW,	R_APB_MALOSS,	R_LNLBE_MED_PATHO,	R_LNLBE_MED_SEV,	}) alignedtext
+grestore
+% { R_LNLW_MED_SEV, R_MED_RDLDDEL, R_LNLW_MED_PATHO, R_APB_MALOSS, R_MED_DIFSLOW_WA, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+12376.5 602.3 moveto 709 ({ R_LNLW_MED_SEV, R_MED_RDLDDEL, R_LNLW_MED_PATHO, R_APB_MALOSS, R_MED_DIFSLOW_WA, }) alignedtext
+grestore
+% { R_DIFFN_MED_DIFSLOW, R_MED_DIFSLOW_WA, R_LNLW_MED_PATHO, R_APB_MALOSS, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, }->{ R_LNLW_MED_SEV, R_MED_RDLDDEL, R_LNLW_MED_PATHO, R_APB_MALOSS, R_MED_DIFSLOW_WA, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 13636.73 783.99 moveto
+13400.93 768.58 13091.86 743.5 12970 712 curveto
+12896.31 692.95 12816.46 653.71 12770.23 628.97 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 12771.63 625.75 moveto
+12761.17 624.07 lineto
+12768.31 631.9 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 12771.63 625.75 moveto
+12761.17 624.07 lineto
+12768.31 631.9 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+12970 700.3 moveto 637 ({R_LNLW_MED_SEV,	R_LNLW_MED_PATHO,	R_APB_MALOSS,	R_MED_DIFSLOW_WA,	}) alignedtext
+grestore
+% { R_LNLBE_MED_DIFSLOW, R_LNLBE_MED_PATHO, R_MED_DIFSLOW_WA, R_DIFFN_MED_DIFSLOW, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+13210 602.3 moveto 684 ({ R_LNLBE_MED_DIFSLOW, R_LNLBE_MED_PATHO, R_MED_DIFSLOW_WA, R_DIFFN_MED_DIFSLOW, }) alignedtext
+grestore
+% { R_DIFFN_MED_DIFSLOW, R_MED_DIFSLOW_WA, R_LNLW_MED_PATHO, R_APB_MALOSS, R_LNLBE_MED_PATHO, R_LNLW_MED_SEV, }->{ R_LNLBE_MED_DIFSLOW, R_LNLBE_MED_PATHO, R_MED_DIFSLOW_WA, R_DIFFN_MED_DIFSLOW, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 13842.12 783.96 moveto
+13784.59 770.53 13710.91 747.93 13653 712 curveto
+13619.12 690.98 13588.67 656.03 13570.27 632.28 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 13572.88 629.94 moveto
+13564.05 624.08 lineto
+13567.3 634.17 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 13572.88 629.94 moveto
+13564.05 624.08 lineto
+13567.3 634.17 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+13653 700.3 moveto 547 ({R_LNLBE_MED_PATHO,	R_MED_DIFSLOW_WA,	R_DIFFN_MED_DIFSLOW,	}) alignedtext
+grestore
+% { R_MED_DCV_WA, R_APB_MALOSS, R_MED_DIFSLOW_WA, R_MED_RDLDDEL, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+12190 406.3 moveto 538 ({ R_MED_DCV_WA, R_APB_MALOSS, R_MED_DIFSLOW_WA, R_MED_RDLDDEL, }) alignedtext
+grestore
+% { R_LNLW_MED_SEV, R_MED_RDLDDEL, R_LNLW_MED_PATHO, R_APB_MALOSS, R_MED_DIFSLOW_WA, }->{ R_MED_DCV_WA, R_APB_MALOSS, R_MED_DIFSLOW_WA, R_MED_RDLDDEL, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 12620.15 587.99 moveto
+12573.19 575.44 12521.46 553.68 12487 516 curveto
+12467.65 494.85 12461.41 461.82 12459.53 438.46 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 12463.01 437.95 moveto
+12458.93 428.17 lineto
+12456.02 438.36 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 12463.01 437.95 moveto
+12458.93 428.17 lineto
+12456.02 438.36 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+12487 504.3 moveto 487 ({R_APB_MALOSS,	R_MED_DIFSLOW_WA,	R_MED_RDLDDEL,	}) alignedtext
+grestore
+% { R_MED_LD_WA, R_LNLW_MED_SEV, R_MED_RDLDDEL, R_LNLW_MED_PATHO, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+12852.5 406.3 moveto 547 ({ R_MED_LD_WA, R_LNLW_MED_SEV, R_MED_RDLDDEL, R_LNLW_MED_PATHO, }) alignedtext
+grestore
+% { R_LNLW_MED_SEV, R_MED_RDLDDEL, R_LNLW_MED_PATHO, R_APB_MALOSS, R_MED_DIFSLOW_WA, }->{ R_MED_LD_WA, R_LNLW_MED_SEV, R_MED_RDLDDEL, R_LNLW_MED_PATHO, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 12804.78 587.99 moveto
+12859.87 573.49 12935.88 549.63 12997 516 curveto
+13037.18 493.89 13077.15 458.8 13101.71 435.35 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 13104.37 437.64 moveto
+13109.13 428.17 lineto
+13099.51 432.61 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 13104.37 437.64 moveto
+13109.13 428.17 lineto
+13099.51 432.61 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+13021 504.3 moveto 487 ({R_LNLW_MED_SEV,	R_MED_RDLDDEL,	R_LNLW_MED_PATHO,	}) alignedtext
+grestore
+% { R_MED_ALLDEL_WA, R_MED_RDLDDEL, R_MED_DCV_WA, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+12253 210.3 moveto 412 ({ R_MED_ALLDEL_WA, R_MED_RDLDDEL, R_MED_DCV_WA, }) alignedtext
+grestore
+% { R_MED_DCV_WA, R_APB_MALOSS, R_MED_DIFSLOW_WA, R_MED_RDLDDEL, }->{ R_MED_ALLDEL_WA, R_MED_RDLDDEL, R_MED_DCV_WA, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 12459 391.78 moveto
+12459 358.06 12459 283.06 12459 242.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 12462.5 242.18 moveto
+12459 232.18 lineto
+12455.5 242.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 12462.5 242.18 moveto
+12459 232.18 lineto
+12455.5 242.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+12459 308.3 moveto 307 ({R_MED_RDLDDEL,	R_MED_DCV_WA,	}) alignedtext
+grestore
+% { R_MED_LAT_WA, R_MED_ALLDEL_WA, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+12317.5 14.3 moveto 283 ({ R_MED_LAT_WA, R_MED_ALLDEL_WA, }) alignedtext
+grestore
+% { R_MED_ALLDEL_WA, R_MED_RDLDDEL, R_MED_DCV_WA, }->{ R_MED_LAT_WA, R_MED_ALLDEL_WA, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 12459 195.78 moveto
+12459 162.06 12459 87.06 12459 46.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 12462.5 46.18 moveto
+12459 36.18 lineto
+12455.5 46.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 12462.5 46.18 moveto
+12459 36.18 lineto
+12455.5 46.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+12459 112.3 moveto 187 ({R_MED_ALLDEL_WA,	}) alignedtext
+grestore
+% { R_MED_RD_WA, R_LNLW_MED_PATHO, R_MED_RDLDDEL, R_MED_LD_WA, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+12864 210.3 moveto 524 ({ R_MED_RD_WA, R_LNLW_MED_PATHO, R_MED_RDLDDEL, R_MED_LD_WA, }) alignedtext
+grestore
+% { R_MED_LD_WA, R_LNLW_MED_SEV, R_MED_RDLDDEL, R_LNLW_MED_PATHO, }->{ R_MED_RD_WA, R_LNLW_MED_PATHO, R_MED_RDLDDEL, R_MED_LD_WA, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 13126 391.78 moveto
+13126 358.06 13126 283.06 13126 242.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 13129.5 242.18 moveto
+13126 232.18 lineto
+13122.5 242.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 13129.5 242.18 moveto
+13126 232.18 lineto
+13122.5 242.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+13126 308.3 moveto 457 ({R_MED_LD_WA,	R_MED_RDLDDEL,	R_LNLW_MED_PATHO,	}) alignedtext
+grestore
+% { R_MED_LD_EW, R_LNLBE_MED_SEV, R_LNLBE_MED_PATHO, R_MED_RDLDCV_EW, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+14018 602.3 moveto 576 ({ R_MED_LD_EW, R_LNLBE_MED_SEV, R_LNLBE_MED_PATHO, R_MED_RDLDCV_EW, }) alignedtext
+grestore
+% { R_DIFFN_MED_DIFSLOW, R_MED_RDLDCV_EW, R_APB_MALOSS, R_LNLBE_MED_PATHO, R_LNLBE_MED_SEV, }->{ R_MED_LD_EW, R_LNLBE_MED_SEV, R_LNLBE_MED_PATHO, R_MED_RDLDCV_EW, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 14707.74 783.98 moveto
+14623.71 771.42 14525.03 749.65 14442 712 curveto
+14398.18 692.13 14355.58 655.61 14330.07 631.31 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 14332.34 628.64 moveto
+14322.72 624.2 lineto
+14327.47 633.67 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 14332.34 628.64 moveto
+14322.72 624.2 lineto
+14327.47 633.67 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+14442 700.3 moveto 487 ({R_LNLBE_MED_SEV,	R_LNLBE_MED_PATHO,	R_MED_RDLDCV_EW,	}) alignedtext
+grestore
+% { R_MED_DIFSLOW_EW, R_DIFFN_MED_DIFSLOW, R_MED_RDLDCV_EW, R_APB_MALOSS, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+14718 602.3 moveto 610 ({ R_MED_DIFSLOW_EW, R_DIFFN_MED_DIFSLOW, R_MED_RDLDCV_EW, R_APB_MALOSS, }) alignedtext
+grestore
+% { R_DIFFN_MED_DIFSLOW, R_MED_RDLDCV_EW, R_APB_MALOSS, R_LNLBE_MED_PATHO, R_LNLBE_MED_SEV, }->{ R_MED_DIFSLOW_EW, R_DIFFN_MED_DIFSLOW, R_MED_RDLDCV_EW, R_APB_MALOSS, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 14906.36 783.78 moveto
+14928.94 749.56 14979.58 672.81 15006.09 632.63 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 15009.08 634.45 moveto
+15011.67 624.18 lineto
+15003.24 630.6 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 15009.08 634.45 moveto
+15011.67 624.18 lineto
+15003.24 630.6 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+14963 700.3 moveto 457 ({R_DIFFN_MED_DIFSLOW,	R_MED_RDLDCV_EW,	R_APB_MALOSS,	}) alignedtext
+grestore
+% { R_MED_RD_EW, R_LNLBE_MED_PATHO, R_MED_RDLDCV_EW, R_MED_LD_EW, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+14032.5 406.3 moveto 547 ({ R_MED_RD_EW, R_LNLBE_MED_PATHO, R_MED_RDLDCV_EW, R_MED_LD_EW, }) alignedtext
+grestore
+% { R_MED_LD_EW, R_LNLBE_MED_SEV, R_LNLBE_MED_PATHO, R_MED_RDLDCV_EW, }->{ R_MED_RD_EW, R_LNLBE_MED_PATHO, R_MED_RDLDCV_EW, R_MED_LD_EW, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 14306 587.78 moveto
+14306 554.06 14306 479.06 14306 438.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 14309.5 438.18 moveto
+14306 428.18 lineto
+14302.5 438.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 14309.5 438.18 moveto
+14306 428.18 lineto
+14302.5 438.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+14306 504.3 moveto 457 ({R_LNLBE_MED_PATHO,	R_MED_RDLDCV_EW,	R_MED_LD_EW,	}) alignedtext
+grestore
+% { R_MED_DIFSLOW_EW, R_MED_DCV_EW, R_APB_MALOSS, R_MED_RDLDCV_EW, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+14744 406.3 moveto 558 ({ R_MED_DIFSLOW_EW, R_MED_DCV_EW, R_APB_MALOSS, R_MED_RDLDCV_EW, }) alignedtext
+grestore
+% { R_MED_DIFSLOW_EW, R_DIFFN_MED_DIFSLOW, R_MED_RDLDCV_EW, R_APB_MALOSS, }->{ R_MED_DIFSLOW_EW, R_MED_DCV_EW, R_APB_MALOSS, R_MED_RDLDCV_EW, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 15023 587.78 moveto
+15023 554.06 15023 479.06 15023 438.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 15026.5 438.18 moveto
+15023 428.18 lineto
+15019.5 438.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 15026.5 438.18 moveto
+15023 428.18 lineto
+15019.5 438.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+15023 504.3 moveto 457 ({R_MED_DIFSLOW_EW,	R_MED_RDLDCV_EW,	R_APB_MALOSS,	}) alignedtext
+grestore
+% { R_MED_ALLCV_EW, R_MED_DCV_EW, R_MED_RDLDCV_EW, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+14811 210.3 moveto 424 ({ R_MED_ALLCV_EW, R_MED_DCV_EW, R_MED_RDLDCV_EW, }) alignedtext
+grestore
+% { R_MED_DIFSLOW_EW, R_MED_DCV_EW, R_APB_MALOSS, R_MED_RDLDCV_EW, }->{ R_MED_ALLCV_EW, R_MED_DCV_EW, R_MED_RDLDCV_EW, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 15023 391.78 moveto
+15023 358.06 15023 283.06 15023 242.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 15026.5 242.18 moveto
+15023 232.18 lineto
+15019.5 242.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 15026.5 242.18 moveto
+15023 232.18 lineto
+15019.5 242.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+15023 308.3 moveto 307 ({R_MED_DCV_EW,	R_MED_RDLDCV_EW,	}) alignedtext
+grestore
+% { R_MED_CV_EW, R_MED_ALLCV_EW, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+14890 14.3 moveto 266 ({ R_MED_CV_EW, R_MED_ALLCV_EW, }) alignedtext
+grestore
+% { R_MED_ALLCV_EW, R_MED_DCV_EW, R_MED_RDLDCV_EW, }->{ R_MED_CV_EW, R_MED_ALLCV_EW, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 15023 195.78 moveto
+15023 162.06 15023 87.06 15023 46.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 15026.5 46.18 moveto
+15023 36.18 lineto
+15019.5 46.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 15026.5 46.18 moveto
+15023 36.18 lineto
+15019.5 46.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+15023 112.3 moveto 157 ({R_MED_ALLCV_EW,	}) alignedtext
+grestore
+% { R_LNLBE_APB_MALOSS, R_LNLBE_MED_SEV, R_LNLBE_MED_PATHO, R_LNLT1_LP_BE_APB_MALOSS, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+15397 798.3 moveto 700 ({ R_LNLBE_APB_MALOSS, R_LNLBE_MED_SEV, R_LNLBE_MED_PATHO, R_LNLT1_LP_BE_APB_MALOSS, }) alignedtext
+grestore
+% { R_LNLT1_LP_BE_APB_MALOSS, R_APB_MALOSS, R_DIFFN_LNLW_APB_MALOSS, R_LNLBE_MED_PATHO, R_LNLBE_MED_SEV, }->{ R_LNLBE_APB_MALOSS, R_LNLBE_MED_SEV, R_LNLBE_MED_PATHO, R_LNLT1_LP_BE_APB_MALOSS, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 15644.94 979.78 moveto
+15664.66 945.63 15708.82 869.13 15732.06 828.89 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 15735.11 830.59 moveto
+15737.08 820.18 lineto
+15729.05 827.09 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 15735.11 830.59 moveto
+15737.08 820.18 lineto
+15729.05 827.09 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+15695 896.3 moveto 577 ({R_LNLBE_MED_SEV,	R_LNLBE_MED_PATHO,	R_LNLT1_LP_BE_APB_MALOSS,	}) alignedtext
+grestore
+% { R_LNLT1_LP_APB_MALOSS, R_LNLBE_APB_MALOSS, R_LNLT1_LP_BE_APB_MALOSS, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+15452.5 602.3 moveto 589 ({ R_LNLT1_LP_APB_MALOSS, R_LNLBE_APB_MALOSS, R_LNLT1_LP_BE_APB_MALOSS, }) alignedtext
+grestore
+% { R_LNLBE_APB_MALOSS, R_LNLBE_MED_SEV, R_LNLBE_MED_PATHO, R_LNLT1_LP_BE_APB_MALOSS, }->{ R_LNLT1_LP_APB_MALOSS, R_LNLBE_APB_MALOSS, R_LNLT1_LP_BE_APB_MALOSS, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 15744.75 783.92 moveto
+15742.27 763.15 15738.78 727.03 15740 696 curveto
+15740.82 675.22 15742.7 651.78 15744.31 634.17 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 15747.81 634.32 moveto
+15745.26 624.04 lineto
+15740.84 633.67 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 15747.81 634.32 moveto
+15745.26 624.04 lineto
+15740.84 633.67 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+15740 700.3 moveto 427 ({R_LNLBE_APB_MALOSS,	R_LNLT1_LP_BE_APB_MALOSS,	}) alignedtext
+grestore
+% { R_LNLLP_APB_MALOSS, R_LNLT1_LP_APB_MALOSS, R_LNLT1_APB_MALOSS, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+15477 406.3 moveto 540 ({ R_LNLLP_APB_MALOSS, R_LNLT1_LP_APB_MALOSS, R_LNLT1_APB_MALOSS, }) alignedtext
+grestore
+% { R_LNLT1_LP_APB_MALOSS, R_LNLBE_APB_MALOSS, R_LNLT1_LP_BE_APB_MALOSS, }->{ R_LNLLP_APB_MALOSS, R_LNLT1_LP_APB_MALOSS, R_LNLT1_APB_MALOSS, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 15747 587.78 moveto
+15747 554.06 15747 479.06 15747 438.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 15750.5 438.18 moveto
+15747 428.18 lineto
+15743.5 438.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 15750.5 438.18 moveto
+15747 428.18 lineto
+15743.5 438.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+15747 504.3 moveto 217 ({R_LNLT1_LP_APB_MALOSS,	}) alignedtext
+grestore
+% { R_LNLW_MED_BLOCK, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, R_MED_BLOCK_WA, R_DIFFN_MED_BLOCK, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+16189.5 994.3 moveto 765 ({ R_LNLW_MED_BLOCK, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, R_MED_BLOCK_WA, R_DIFFN_MED_BLOCK, }) alignedtext
+grestore
+% { R_MED_BLOCK_WA, R_DIFFN_MED_BLOCK, R_APB_MALOSS, R_APB_MULOSS, R_LNLW_MED_PATHO, R_LNLW_MED_SEV, }->{ R_LNLW_MED_BLOCK, R_LNLW_MED_SEV, R_LNLW_MED_PATHO, R_MED_BLOCK_WA, R_DIFFN_MED_BLOCK, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 16382.46 1175.78 moveto
+16419.62 1141.13 16503.52 1062.87 16546.13 1023.13 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 16548.66 1025.56 moveto
+16553.58 1016.18 lineto
+16543.88 1020.44 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 16548.66 1025.56 moveto
+16553.58 1016.18 lineto
+16543.88 1020.44 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+16475 1092.3 moveto 667 ({R_LNLW_MED_SEV,	R_LNLW_MED_PATHO,	R_MED_BLOCK_WA,	R_DIFFN_MED_BLOCK,	}) alignedtext
+grestore
+% { R_APB_MUSIZE, R_APB_DE_REGEN, R_APB_EFFMUS, R_APB_NMT, R_LNL_DIFFN_APB_DENERV, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+17584 1386.3 moveto 660 ({ R_APB_MUSIZE, R_APB_DE_REGEN, R_APB_EFFMUS, R_APB_NMT, R_LNL_DIFFN_APB_DENERV, }) alignedtext
+grestore
+% { R_LNL_DIFFN_APB_DENERV, R_APB_MULOSS, R_APB_MUSIZE, R_APB_DE_REGEN, R_APB_EFFMUS, }->{ R_APB_MUSIZE, R_APB_DE_REGEN, R_APB_EFFMUS, R_APB_NMT, R_LNL_DIFFN_APB_DENERV, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 18665.83 1567.97 moveto
+18541.86 1553.97 18372.99 1530.73 18227 1496 curveto
+18133.18 1473.68 18027.49 1435.34 17966.05 1411.69 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 17967.17 1408.37 moveto
+17956.58 1408.02 lineto
+17964.64 1414.89 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 17967.17 1408.37 moveto
+17956.58 1408.02 lineto
+17964.64 1414.89 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+18227 1484.3 moveto 607 ({R_APB_MUSIZE,	R_APB_DE_REGEN,	R_APB_EFFMUS,	R_LNL_DIFFN_APB_DENERV,	}) alignedtext
+grestore
+% { R_APB_QUAN_MUPPOLY, R_APB_DE_REGEN, R_APB_EFFMUS, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+18663 1386.3 moveto 436 ({ R_APB_QUAN_MUPPOLY, R_APB_DE_REGEN, R_APB_EFFMUS, }) alignedtext
+grestore
+% { R_LNL_DIFFN_APB_DENERV, R_APB_MULOSS, R_APB_MUSIZE, R_APB_DE_REGEN, R_APB_EFFMUS, }->{ R_APB_QUAN_MUPPOLY, R_APB_DE_REGEN, R_APB_EFFMUS, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 18846.37 1567.78 moveto
+18852.99 1533.99 18867.73 1458.74 18875.68 1418.17 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 18879.15 1418.66 moveto
+18877.64 1408.18 lineto
+18872.28 1417.32 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 18879.15 1418.66 moveto
+18877.64 1408.18 lineto
+18872.28 1417.32 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+18864 1484.3 moveto 277 ({R_APB_DE_REGEN,	R_APB_EFFMUS,	}) alignedtext
+grestore
+% { R_APB_MULOSS, R_APB_ALLAMP_WA, R_APB_EFFMUS, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+19290 1386.3 moveto 394 ({ R_APB_MULOSS, R_APB_ALLAMP_WA, R_APB_EFFMUS, }) alignedtext
+grestore
+% { R_LNL_DIFFN_APB_DENERV, R_APB_MULOSS, R_APB_MUSIZE, R_APB_DE_REGEN, R_APB_EFFMUS, }->{ R_APB_MULOSS, R_APB_ALLAMP_WA, R_APB_EFFMUS, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 18908.95 1567.99 moveto
+18974.81 1550.75 19078.8 1522.88 19168 1496 curveto
+19259.47 1468.44 19364.52 1433.15 19428.3 1411.31 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 19429.47 1414.61 moveto
+19437.79 1408.06 lineto
+19427.2 1407.99 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 19429.47 1414.61 moveto
+19437.79 1408.06 lineto
+19427.2 1407.99 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+19212 1484.3 moveto 277 ({R_APB_MULOSS,	R_APB_EFFMUS,	}) alignedtext
+grestore
+% { R_DE_REGEN_APB_NMT, R_APB_DE_REGEN, R_APB_NMT, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+17148.5 1190.3 moveto 409 ({ R_DE_REGEN_APB_NMT, R_APB_DE_REGEN, R_APB_NMT, }) alignedtext
+grestore
+% { R_APB_MUSIZE, R_APB_DE_REGEN, R_APB_EFFMUS, R_APB_NMT, R_LNL_DIFFN_APB_DENERV, }->{ R_DE_REGEN_APB_NMT, R_APB_DE_REGEN, R_APB_NMT, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 17859.48 1371.94 moveto
+17804.04 1354.44 17715.76 1326.15 17640 1300 curveto
+17558.69 1271.93 17465.27 1237.3 17407.68 1215.68 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 17408.64 1212.31 moveto
+17398.05 1212.06 lineto
+17406.18 1218.86 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 17408.64 1212.31 moveto
+17398.05 1212.06 lineto
+17406.18 1218.86 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+17640 1288.3 moveto 247 ({R_APB_DE_REGEN,	R_APB_NMT,	}) alignedtext
+grestore
+% { R_APB_NMT, R_NMT_APB_DENERV, R_LNL_DIFFN_APB_DENERV, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+17685.5 1190.3 moveto 457 ({ R_APB_NMT, R_NMT_APB_DENERV, R_LNL_DIFFN_APB_DENERV, }) alignedtext
+grestore
+% { R_APB_MUSIZE, R_APB_DE_REGEN, R_APB_EFFMUS, R_APB_NMT, R_LNL_DIFFN_APB_DENERV, }->{ R_APB_NMT, R_NMT_APB_DENERV, R_LNL_DIFFN_APB_DENERV, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 17914 1371.78 moveto
+17914 1338.06 17914 1263.06 17914 1222.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 17917.5 1222.18 moveto
+17914 1212.18 lineto
+17910.5 1222.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 17917.5 1222.18 moveto
+17914 1212.18 lineto
+17910.5 1222.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+17914 1288.3 moveto 337 ({R_APB_NMT,	R_LNL_DIFFN_APB_DENERV,	}) alignedtext
+grestore
+% { R_MYAS_APB_NMT, R_APB_NMT, R_DE_REGEN_APB_NMT, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+17090.5 994.3 moveto 415 ({ R_MYAS_APB_NMT, R_APB_NMT, R_DE_REGEN_APB_NMT, }) alignedtext
+grestore
+% { R_DE_REGEN_APB_NMT, R_APB_DE_REGEN, R_APB_NMT, }->{ R_MYAS_APB_NMT, R_APB_NMT, R_DE_REGEN_APB_NMT, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 17348.12 1175.78 moveto
+17338.52 1141.92 17317.11 1066.42 17305.63 1025.91 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 17308.96 1024.84 moveto
+17302.87 1016.18 lineto
+17302.23 1026.75 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 17308.96 1024.84 moveto
+17302.87 1016.18 lineto
+17302.23 1026.75 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+17328 1092.3 moveto 307 ({R_APB_NMT,	R_DE_REGEN_APB_NMT,	}) alignedtext
+grestore
+% { R_APB_NMT, R_APB_SF_JITTER, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+16973.5 798.3 moveto 237 ({ R_APB_NMT, R_APB_SF_JITTER, }) alignedtext
+grestore
+% { R_MYAS_APB_NMT, R_APB_NMT, R_DE_REGEN_APB_NMT, }->{ R_APB_NMT, R_APB_SF_JITTER, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 17279.72 979.78 moveto
+17242.92 945.13 17159.82 866.87 17117.62 827.13 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 17119.92 824.49 moveto
+17110.24 820.18 lineto
+17115.12 829.58 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 17119.92 824.49 moveto
+17110.24 820.18 lineto
+17115.12 829.58 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+17202 896.3 moveto 127 ({R_APB_NMT,	}) alignedtext
+grestore
+% { R_APB_REPSTIM_DECR, R_APB_NMT, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+16166 602.3 moveto 272 ({ R_APB_REPSTIM_DECR, R_APB_NMT, }) alignedtext
+grestore
+% { R_APB_NMT, R_APB_SF_JITTER, }->{ R_APB_REPSTIM_DECR, R_APB_NMT, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 17020.53 783.94 moveto
+16946.17 766.14 16826.36 737.35 16723 712 curveto
+16603.01 682.57 16463.97 647.75 16379.54 626.53 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 16380.32 623.12 moveto
+16369.77 624.07 lineto
+16378.62 629.91 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 16380.32 623.12 moveto
+16369.77 624.07 lineto
+16378.62 629.91 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+16723 700.3 moveto 127 ({R_APB_NMT,	}) alignedtext
+grestore
+% { R_APB_MUPINSTAB, R_APB_NMT, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+16562.5 602.3 moveto 247 ({ R_APB_MUPINSTAB, R_APB_NMT, }) alignedtext
+grestore
+% { R_APB_NMT, R_APB_SF_JITTER, }->{ R_APB_MUPINSTAB, R_APB_NMT, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 17056.33 783.95 moveto
+16982.41 748.64 16812.67 667.53 16731.22 628.61 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 16732.27 625.23 moveto
+16721.74 624.08 lineto
+16729.25 631.55 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 16732.27 625.23 moveto
+16721.74 624.08 lineto
+16729.25 631.55 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+16902 700.3 moveto 127 ({R_APB_NMT,	}) alignedtext
+grestore
+% { R_APB_NMT, R_APB_REPSTIM_POST_DECR, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+16934 602.3 moveto 316 ({ R_APB_NMT, R_APB_REPSTIM_POST_DECR, }) alignedtext
+grestore
+% { R_APB_NMT, R_APB_SF_JITTER, }->{ R_APB_NMT, R_APB_REPSTIM_POST_DECR, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 17092 783.78 moveto
+17092 750.06 17092 675.06 17092 634.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 17095.5 634.18 moveto
+17092 624.18 lineto
+17088.5 634.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 17095.5 634.18 moveto
+17092 624.18 lineto
+17088.5 634.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+17092 700.3 moveto 127 ({R_APB_NMT,	}) alignedtext
+grestore
+% { R_APB_NMT, R_APB_REPSTIM_FACILI, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+17374 602.3 moveto 280 ({ R_APB_NMT, R_APB_REPSTIM_FACILI, }) alignedtext
+grestore
+% { R_APB_NMT, R_APB_SF_JITTER, }->{ R_APB_NMT, R_APB_REPSTIM_FACILI, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 17129.08 783.95 moveto
+17206.06 748.56 17383.06 667.2 17467.51 628.37 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 17469.23 631.43 moveto
+17476.85 624.08 lineto
+17466.31 625.07 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 17469.23 631.43 moveto
+17476.85 624.08 lineto
+17466.31 625.07 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+17316 700.3 moveto 127 ({R_APB_NMT,	}) alignedtext
+grestore
+% { R_MUSCLE_APB_DENERV, R_NMT_APB_DENERV, R_LNL_DIFFN_APB_DENERV, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+17641 994.3 moveto 546 ({ R_MUSCLE_APB_DENERV, R_NMT_APB_DENERV, R_LNL_DIFFN_APB_DENERV, }) alignedtext
+grestore
+% { R_APB_NMT, R_NMT_APB_DENERV, R_LNL_DIFFN_APB_DENERV, }->{ R_MUSCLE_APB_DENERV, R_NMT_APB_DENERV, R_LNL_DIFFN_APB_DENERV, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 17914 1175.78 moveto
+17914 1142.06 17914 1067.06 17914 1026.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 17917.5 1026.18 moveto
+17914 1016.18 lineto
+17910.5 1026.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 17917.5 1026.18 moveto
+17914 1016.18 lineto
+17910.5 1026.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+17914 1092.3 moveto 397 ({R_NMT_APB_DENERV,	R_LNL_DIFFN_APB_DENERV,	}) alignedtext
+grestore
+% { R_APB_DENERV, R_MUSCLE_APB_DENERV, R_LNL_DIFFN_APB_DENERV, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+17600 798.3 moveto 508 ({ R_APB_DENERV, R_MUSCLE_APB_DENERV, R_LNL_DIFFN_APB_DENERV, }) alignedtext
+grestore
+% { R_MUSCLE_APB_DENERV, R_NMT_APB_DENERV, R_LNL_DIFFN_APB_DENERV, }->{ R_APB_DENERV, R_MUSCLE_APB_DENERV, R_LNL_DIFFN_APB_DENERV, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 17908.68 979.78 moveto
+17898.2 945.92 17874.85 870.42 17862.32 829.91 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 17865.61 828.7 moveto
+17859.31 820.18 lineto
+17858.92 830.77 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 17865.61 828.7 moveto
+17859.31 820.18 lineto
+17858.92 830.77 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+17886 896.3 moveto 427 ({R_MUSCLE_APB_DENERV,	R_LNL_DIFFN_APB_DENERV,	}) alignedtext
+grestore
+% { R_MYOP_MYDY_APB_DENERV, R_MUSCLE_APB_DENERV, R_NMT_APB_DENERV, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+18232.5 798.3 moveto 561 ({ R_MYOP_MYDY_APB_DENERV, R_MUSCLE_APB_DENERV, R_NMT_APB_DENERV, }) alignedtext
+grestore
+% { R_MUSCLE_APB_DENERV, R_NMT_APB_DENERV, R_LNL_DIFFN_APB_DENERV, }->{ R_MYOP_MYDY_APB_DENERV, R_MUSCLE_APB_DENERV, R_NMT_APB_DENERV, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 18054.14 979.97 moveto
+18138.95 966.69 18248.1 944.25 18340 908 curveto
+18393.25 886.99 18448.8 850.19 18482.15 826.21 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 18484.51 828.82 moveto
+18490.54 820.11 lineto
+18480.39 823.16 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 18484.51 828.82 moveto
+18490.54 820.11 lineto
+18480.39 823.16 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+18376 896.3 moveto 397 ({R_MUSCLE_APB_DENERV,	R_NMT_APB_DENERV,	}) alignedtext
+grestore
+% { R_APB_SPONT_DENERV_ACT, R_APB_DENERV, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+17778.5 602.3 moveto 337 ({ R_APB_SPONT_DENERV_ACT, R_APB_DENERV, }) alignedtext
+grestore
+% { R_APB_DENERV, R_MUSCLE_APB_DENERV, R_LNL_DIFFN_APB_DENERV, }->{ R_APB_SPONT_DENERV_ACT, R_APB_DENERV, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 17862.25 783.78 moveto
+17878.56 749.77 17914.99 673.78 17934.35 633.4 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 17937.6 634.71 moveto
+17938.77 624.18 lineto
+17931.29 631.68 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 17937.6 634.71 moveto
+17938.77 624.18 lineto
+17931.29 631.68 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+17904 700.3 moveto 157 ({R_APB_DENERV,	}) alignedtext
+grestore
+% { R_APB_SPONT_HF_DISCH, R_APB_DENERV, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+17573.5 406.3 moveto 313 ({ R_APB_SPONT_HF_DISCH, R_APB_DENERV, }) alignedtext
+grestore
+% { R_APB_SPONT_DENERV_ACT, R_APB_DENERV, }->{ R_APB_SPONT_HF_DISCH, R_APB_DENERV, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 17927.74 587.78 moveto
+17888.9 553.05 17801.08 474.54 17756.71 434.88 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 17759 432.23 moveto
+17749.21 428.18 lineto
+17754.34 437.45 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 17759 432.23 moveto
+17749.21 428.18 lineto
+17754.34 437.45 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+17846 504.3 moveto 157 ({R_APB_DENERV,	}) alignedtext
+grestore
+% { R_APB_SPONT_INS_ACT, R_APB_DENERV, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+18011 406.3 moveto 304 ({ R_APB_SPONT_INS_ACT, R_APB_DENERV, }) alignedtext
+grestore
+% { R_APB_SPONT_DENERV_ACT, R_APB_DENERV, }->{ R_APB_SPONT_INS_ACT, R_APB_DENERV, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 17966.17 587.78 moveto
+18004.84 553.05 18092.25 474.54 18136.41 434.88 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 18138.77 437.46 moveto
+18143.87 428.18 lineto
+18134.1 432.26 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 18138.77 437.46 moveto
+18143.87 428.18 lineto
+18134.1 432.26 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+18062 504.3 moveto 157 ({R_APB_DENERV,	}) alignedtext
+grestore
+% { R_MYOP_APB_DENERV, R_MYOP_MYDY_APB_DENERV, R_MYDY_APB_DENERV, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+18240 602.3 moveto 556 ({ R_MYOP_APB_DENERV, R_MYOP_MYDY_APB_DENERV, R_MYDY_APB_DENERV, }) alignedtext
+grestore
+% { R_MYOP_MYDY_APB_DENERV, R_MUSCLE_APB_DENERV, R_NMT_APB_DENERV, }->{ R_MYOP_APB_DENERV, R_MYOP_MYDY_APB_DENERV, R_MYDY_APB_DENERV, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 18513.44 783.78 moveto
+18514.31 750.06 18516.25 675.06 18517.29 634.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 18520.8 634.26 moveto
+18517.56 624.18 lineto
+18513.8 634.08 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 18520.8 634.26 moveto
+18517.56 624.18 lineto
+18513.8 634.08 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+18516 700.3 moveto 247 ({R_MYOP_MYDY_APB_DENERV,	}) alignedtext
+grestore
+% { R_APB_QUAL_MUPPOLY, R_APB_QUAN_MUPPOLY, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+18268.5 1190.3 moveto 363 ({ R_APB_QUAL_MUPPOLY, R_APB_QUAN_MUPPOLY, }) alignedtext
+grestore
+% { R_APB_QUAN_MUPPOLY, R_APB_DE_REGEN, R_APB_EFFMUS, }->{ R_APB_QUAL_MUPPOLY, R_APB_QUAN_MUPPOLY, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 18838.72 1371.84 moveto
+18795.94 1354.32 18728.03 1326.07 18670 1300 curveto
+18608.19 1272.23 18537.64 1238.13 18493.46 1216.47 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 18494.96 1213.31 moveto
+18484.44 1212.05 lineto
+18491.88 1219.59 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 18494.96 1213.31 moveto
+18484.44 1212.05 lineto
+18491.88 1219.59 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+18670 1288.3 moveto 187 ({R_APB_QUAN_MUPPOLY,	}) alignedtext
+grestore
+% { R_APB_MVA_AMP, R_APB_EFFMUS, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+18756 1190.3 moveto 260 ({ R_APB_MVA_AMP, R_APB_EFFMUS, }) alignedtext
+grestore
+% { R_APB_QUAN_MUPPOLY, R_APB_DE_REGEN, R_APB_EFFMUS, }->{ R_APB_MVA_AMP, R_APB_EFFMUS, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 18881.44 1371.78 moveto
+18882.31 1338.06 18884.25 1263.06 18885.29 1222.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 18888.8 1222.26 moveto
+18885.56 1212.18 lineto
+18881.8 1222.08 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 18888.8 1222.26 moveto
+18885.56 1212.18 lineto
+18881.8 1222.08 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+18884 1288.3 moveto 157 ({R_APB_EFFMUS,	}) alignedtext
+grestore
+% { R_APB_MUPSATEL, R_APB_DE_REGEN, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+19140 1190.3 moveto 282 ({ R_APB_MUPSATEL, R_APB_DE_REGEN, }) alignedtext
+grestore
+% { R_APB_QUAN_MUPPOLY, R_APB_DE_REGEN, R_APB_EFFMUS, }->{ R_APB_MUPSATEL, R_APB_DE_REGEN, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 18917.27 1371.92 moveto
+18955 1354.11 19015.74 1325.31 19068 1300 curveto
+19126.94 1271.45 19194.74 1237.9 19237.72 1216.55 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 19239.37 1219.64 moveto
+19246.76 1212.06 lineto
+19236.25 1213.37 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 19239.37 1219.64 moveto
+19246.76 1212.06 lineto
+19236.25 1213.37 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+19098 1288.3 moveto 157 ({R_APB_DE_REGEN,	}) alignedtext
+grestore
+% { R_APB_MUPAMP, R_APB_EFFMUS, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+18413.5 994.3 moveto 251 ({ R_APB_MUPAMP, R_APB_EFFMUS, }) alignedtext
+grestore
+% { R_APB_MVA_AMP, R_APB_EFFMUS, }->{ R_APB_MUPAMP, R_APB_EFFMUS, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 18853.16 1175.97 moveto
+18819.34 1158.33 18765.19 1129.77 18719 1104 curveto
+18669.19 1076.22 18612.47 1042.83 18576.24 1021.29 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 18577.87 1018.18 moveto
+18567.49 1016.07 lineto
+18574.29 1024.2 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 18577.87 1018.18 moveto
+18567.49 1016.07 lineto
+18574.29 1024.2 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+18719 1092.3 moveto 157 ({R_APB_EFFMUS,	}) alignedtext
+grestore
+% { R_APB_EFFMUS, R_APB_TA_CONCL, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+18788.5 994.3 moveto 265 ({ R_APB_EFFMUS, R_APB_TA_CONCL, }) alignedtext
+grestore
+% { R_APB_MVA_AMP, R_APB_EFFMUS, }->{ R_APB_EFFMUS, R_APB_TA_CONCL, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 18889.11 1175.78 moveto
+18895.2 1141.99 18908.78 1066.74 18916.1 1026.17 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 18919.57 1026.64 moveto
+18917.9 1016.18 lineto
+18912.68 1025.4 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 18919.57 1026.64 moveto
+18917.9 1016.18 lineto
+18912.68 1025.4 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+18905 1092.3 moveto 157 ({R_APB_EFFMUS,	}) alignedtext
+grestore
+% { R_APB_EFFMUS, R_APB_MUPDUR, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+19178 994.3 moveto 250 ({ R_APB_EFFMUS, R_APB_MUPDUR, }) alignedtext
+grestore
+% { R_APB_MVA_AMP, R_APB_EFFMUS, }->{ R_APB_EFFMUS, R_APB_MUPDUR, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 18926.29 1175.94 moveto
+18967.41 1158.39 19032.98 1130.01 19089 1104 curveto
+19148.8 1076.24 19217.05 1042.37 19260.07 1020.74 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 19261.76 1023.81 moveto
+19269.12 1016.18 lineto
+19258.61 1017.55 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 19261.76 1023.81 moveto
+19269.12 1016.18 lineto
+19258.61 1017.55 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+19119 1092.3 moveto 157 ({R_APB_EFFMUS,	}) alignedtext
+grestore
+% { R_APB_QUAN_MUPAMP, R_APB_MUPAMP, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+18918 798.3 moveto 304 ({ R_APB_QUAN_MUPAMP, R_APB_MUPAMP, }) alignedtext
+grestore
+% { R_APB_MUPAMP, R_APB_EFFMUS, }->{ R_APB_QUAN_MUPAMP, R_APB_MUPAMP, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 18671 979.98 moveto
+18747.61 966.85 18844.55 944.57 18925 908 curveto
+18970.58 887.28 19016.22 851.06 19043.79 827.05 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 19046.22 829.56 moveto
+19051.4 820.32 lineto
+19041.59 824.32 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 19046.22 829.56 moveto
+19051.4 820.32 lineto
+19041.59 824.32 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+18956 896.3 moveto 157 ({R_APB_MUPAMP,	}) alignedtext
+grestore
+% { R_APB_MUPAMP, R_APB_QUAL_MUPAMP, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+18920 602.3 moveto 302 ({ R_APB_MUPAMP, R_APB_QUAL_MUPAMP, }) alignedtext
+grestore
+% { R_APB_QUAN_MUPAMP, R_APB_MUPAMP, }->{ R_APB_MUPAMP, R_APB_QUAL_MUPAMP, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 19070.09 783.78 moveto
+19070.26 750.06 19070.65 675.06 19070.86 634.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 19074.36 634.2 moveto
+19070.91 624.18 lineto
+19067.36 634.16 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 19074.36 634.2 moveto
+19070.91 624.18 lineto
+19067.36 634.16 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+19071 700.3 moveto 157 ({R_APB_MUPAMP,	}) alignedtext
+grestore
+% { R_APB_QUAL_MUPDUR, R_APB_MUPDUR, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+19346.5 798.3 moveto 301 ({ R_APB_QUAL_MUPDUR, R_APB_MUPDUR, }) alignedtext
+grestore
+% { R_APB_EFFMUS, R_APB_MUPDUR, }->{ R_APB_QUAL_MUPDUR, R_APB_MUPDUR, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 19320.22 979.78 moveto
+19354.73 945.27 19432.48 867.52 19472.37 827.63 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 19475.23 829.72 moveto
+19479.82 820.18 lineto
+19470.28 824.77 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 19475.23 829.72 moveto
+19479.82 820.18 lineto
+19470.28 824.77 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+19406 896.3 moveto 157 ({R_APB_MUPDUR,	}) alignedtext
+grestore
+% { R_APB_QUAN_MUPDUR, R_APB_MUPDUR, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+19346 602.3 moveto 302 ({ R_APB_QUAN_MUPDUR, R_APB_MUPDUR, }) alignedtext
+grestore
+% { R_APB_QUAL_MUPDUR, R_APB_MUPDUR, }->{ R_APB_QUAN_MUPDUR, R_APB_MUPDUR, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 19497 783.78 moveto
+19497 750.06 19497 675.06 19497 634.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 19500.5 634.18 moveto
+19497 624.18 lineto
+19493.5 634.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 19500.5 634.18 moveto
+19497 624.18 lineto
+19493.5 634.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+19497 700.3 moveto 157 ({R_APB_MUPDUR,	}) alignedtext
+grestore
+% { R_APB_VOL_ACT, R_APB_ALLAMP_WA, R_APB_MULOSS, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+19547 1190.3 moveto 404 ({ R_APB_VOL_ACT, R_APB_ALLAMP_WA, R_APB_MULOSS, }) alignedtext
+grestore
+% { R_APB_MULOSS, R_APB_ALLAMP_WA, R_APB_EFFMUS, }->{ R_APB_VOL_ACT, R_APB_ALLAMP_WA, R_APB_MULOSS, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 19510.25 1371.78 moveto
+19557.44 1336.84 19664.5 1257.57 19717.74 1218.15 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 19719.85 1220.94 moveto
+19725.8 1212.18 lineto
+19715.68 1215.32 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 19719.85 1220.94 moveto
+19725.8 1212.18 lineto
+19715.68 1215.32 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+19626 1288.3 moveto 307 ({R_APB_ALLAMP_WA,	R_APB_MULOSS,	}) alignedtext
+grestore
+% { R_APB_FORCE, R_APB_VOL_ACT, R_APB_ALLAMP_WA, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+19552 994.3 moveto 394 ({ R_APB_FORCE, R_APB_VOL_ACT, R_APB_ALLAMP_WA, }) alignedtext
+grestore
+% { R_APB_VOL_ACT, R_APB_ALLAMP_WA, R_APB_MULOSS, }->{ R_APB_FORCE, R_APB_VOL_ACT, R_APB_ALLAMP_WA, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 19749 1175.78 moveto
+19749 1142.06 19749 1067.06 19749 1026.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 19752.5 1026.18 moveto
+19749 1016.18 lineto
+19745.5 1026.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 19752.5 1026.18 moveto
+19749 1016.18 lineto
+19745.5 1026.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+19749 1092.3 moveto 307 ({R_APB_VOL_ACT,	R_APB_ALLAMP_WA,	}) alignedtext
+grestore
+% { R_APB_MVA_RECRUIT, R_APB_MULOSS, R_APB_VOL_ACT, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+20070.5 994.3 moveto 417 ({ R_APB_MVA_RECRUIT, R_APB_MULOSS, R_APB_VOL_ACT, }) alignedtext
+grestore
+% { R_APB_VOL_ACT, R_APB_ALLAMP_WA, R_APB_MULOSS, }->{ R_APB_MVA_RECRUIT, R_APB_MULOSS, R_APB_VOL_ACT, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 19834.47 1175.96 moveto
+19903 1160.94 20000.95 1136.4 20083 1104 curveto
+20141.5 1080.9 20204.93 1044.67 20243.32 1021.38 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 20245.35 1024.24 moveto
+20252.05 1016.04 lineto
+20241.7 1018.27 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 20245.35 1024.24 moveto
+20252.05 1016.04 lineto
+20241.7 1018.27 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+20117 1092.3 moveto 277 ({R_APB_VOL_ACT,	R_APB_MULOSS,	}) alignedtext
+grestore
+% { R_APB_ALLAMP_WA, R_APB_REPSTIM_CMAPAMP, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+19771.5 798.3 moveto 361 ({ R_APB_ALLAMP_WA, R_APB_REPSTIM_CMAPAMP, }) alignedtext
+grestore
+% { R_APB_FORCE, R_APB_VOL_ACT, R_APB_ALLAMP_WA, }->{ R_APB_ALLAMP_WA, R_APB_REPSTIM_CMAPAMP, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 19767.01 979.78 moveto
+19803.28 945.13 19885.17 866.87 19926.75 827.13 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 19929.21 829.62 moveto
+19934.03 820.18 lineto
+19924.38 824.56 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 19929.21 829.62 moveto
+19934.03 820.18 lineto
+19924.38 824.56 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+19857 896.3 moveto 187 ({R_APB_ALLAMP_WA,	}) alignedtext
+grestore
+% { R_MED_AMP_WA, R_APB_ALLAMP_WA, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+19808.5 602.3 moveto 287 ({ R_MED_AMP_WA, R_APB_ALLAMP_WA, }) alignedtext
+grestore
+% { R_APB_ALLAMP_WA, R_APB_REPSTIM_CMAPAMP, }->{ R_MED_AMP_WA, R_APB_ALLAMP_WA, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 19952 783.78 moveto
+19952 750.06 19952 675.06 19952 634.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 19955.5 634.18 moveto
+19952 624.18 lineto
+19948.5 634.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 19955.5 634.18 moveto
+19952 624.18 lineto
+19948.5 634.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+19952 700.3 moveto 187 ({R_APB_ALLAMP_WA,	}) alignedtext
+grestore
+% { R_LNL_DIFFN_APB_MUSIZE, R_DIFFN_LNLW_APB_MUSIZE, R_APB_MUSIZE, R_LNLBE_APB_MUSIZE, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+19951.5 1582.3 moveto 687 ({ R_LNL_DIFFN_APB_MUSIZE, R_DIFFN_LNLW_APB_MUSIZE, R_APB_MUSIZE, R_LNLBE_APB_MUSIZE, }) alignedtext
+grestore
+% { R_LNLBE_APB_MUSIZE, R_LNLBE_MED_SEV, R_LNLBE_MED_TIME, R_LNLBE_MED_PATHO, R_DIFFN_LNLW_APB_MUSIZE, R_APB_MUSIZE, }->{ R_LNL_DIFFN_APB_MUSIZE, R_DIFFN_LNLW_APB_MUSIZE, R_APB_MUSIZE, R_LNLBE_APB_MUSIZE, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 20295 1763.78 moveto
+20295 1730.06 20295 1655.06 20295 1614.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 20298.5 1614.18 moveto
+20295 1604.18 lineto
+20291.5 1614.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 20298.5 1614.18 moveto
+20295 1604.18 lineto
+20291.5 1614.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+20295 1680.3 moveto 547 ({R_DIFFN_LNLW_APB_MUSIZE,	R_APB_MUSIZE,	R_LNLBE_APB_MUSIZE,	}) alignedtext
+grestore
+% { R_DIFFN_LNLW_APB_MUSIZE, R_LNLT1_LP_BE_APB_MUSIZE, R_LNLBE_APB_MUSIZE, R_LNL_DIFFN_APB_MUSIZE, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+19869.5 1386.3 moveto 785 ({ R_DIFFN_LNLW_APB_MUSIZE, R_LNLT1_LP_BE_APB_MUSIZE, R_LNLBE_APB_MUSIZE, R_LNL_DIFFN_APB_MUSIZE, }) alignedtext
+grestore
+% { R_LNL_DIFFN_APB_MUSIZE, R_DIFFN_LNLW_APB_MUSIZE, R_APB_MUSIZE, R_LNLBE_APB_MUSIZE, }->{ R_DIFFN_LNLW_APB_MUSIZE, R_LNLT1_LP_BE_APB_MUSIZE, R_LNLBE_APB_MUSIZE, R_LNL_DIFFN_APB_MUSIZE, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 20289.08 1567.84 moveto
+20283.23 1550.09 20274.5 1521.45 20270 1496 curveto
+20265.39 1469.94 20263.44 1439.77 20262.61 1418.48 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 20266.1 1418.1 moveto
+20262.27 1408.23 lineto
+20259.1 1418.34 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 20266.1 1418.1 moveto
+20262.27 1408.23 lineto
+20259.1 1418.34 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+20270 1484.3 moveto 607 ({R_LNL_DIFFN_APB_MUSIZE,	R_DIFFN_LNLW_APB_MUSIZE,	R_LNLBE_APB_MUSIZE,	}) alignedtext
+grestore
+% { R_MYOP_MYDY_APB_MUSIZE, R_APB_MUSIZE, R_LNL_DIFFN_APB_MUSIZE, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+20778.5 1386.3 moveto 527 ({ R_MYOP_MYDY_APB_MUSIZE, R_APB_MUSIZE, R_LNL_DIFFN_APB_MUSIZE, }) alignedtext
+grestore
+% { R_LNL_DIFFN_APB_MUSIZE, R_DIFFN_LNLW_APB_MUSIZE, R_APB_MUSIZE, R_LNLBE_APB_MUSIZE, }->{ R_MYOP_MYDY_APB_MUSIZE, R_APB_MUSIZE, R_LNL_DIFFN_APB_MUSIZE, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 20611.37 1567.99 moveto
+20706.75 1555.11 20809.96 1533.16 20900 1496 curveto
+20946.17 1476.95 20991.09 1439.62 21017.65 1414.99 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 21020.08 1417.51 moveto
+21024.96 1408.1 lineto
+21015.28 1412.41 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 21020.08 1417.51 moveto
+21024.96 1408.1 lineto
+21015.28 1412.41 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+20931 1484.3 moveto 337 ({R_APB_MUSIZE,	R_LNL_DIFFN_APB_MUSIZE,	}) alignedtext
+grestore
+% { R_LNLT1_LP_APB_MUSIZE, R_LNLT1_LP_BE_APB_MUSIZE, R_LNLBE_APB_MUSIZE, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+20075.5 1190.3 moveto 571 ({ R_LNLT1_LP_APB_MUSIZE, R_LNLT1_LP_BE_APB_MUSIZE, R_LNLBE_APB_MUSIZE, }) alignedtext
+grestore
+% { R_DIFFN_LNLW_APB_MUSIZE, R_LNLT1_LP_BE_APB_MUSIZE, R_LNLBE_APB_MUSIZE, R_LNL_DIFFN_APB_MUSIZE, }->{ R_LNLT1_LP_APB_MUSIZE, R_LNLT1_LP_BE_APB_MUSIZE, R_LNLBE_APB_MUSIZE, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 20270.79 1371.78 moveto
+20288.18 1337.7 20327.09 1261.45 20347.66 1221.14 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 20350.81 1222.68 moveto
+20352.23 1212.18 lineto
+20344.57 1219.49 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 20350.81 1222.68 moveto
+20352.23 1212.18 lineto
+20344.57 1219.49 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+20315 1288.3 moveto 427 ({R_LNLT1_LP_BE_APB_MUSIZE,	R_LNLBE_APB_MUSIZE,	}) alignedtext
+grestore
+% { R_LNLLP_APB_MUSIZE, R_LNLT1_LP_APB_MUSIZE, R_LNLT1_APB_MUSIZE, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+20612 994.3 moveto 522 ({ R_LNLLP_APB_MUSIZE, R_LNLT1_LP_APB_MUSIZE, R_LNLT1_APB_MUSIZE, }) alignedtext
+grestore
+% { R_LNLT1_LP_APB_MUSIZE, R_LNLT1_LP_BE_APB_MUSIZE, R_LNLBE_APB_MUSIZE, }->{ R_LNLLP_APB_MUSIZE, R_LNLT1_LP_APB_MUSIZE, R_LNLT1_APB_MUSIZE, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 20405.99 1175.95 moveto
+20499.95 1140.35 20716.75 1058.21 20818.46 1019.67 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 20819.82 1022.89 moveto
+20827.93 1016.08 lineto
+20817.34 1016.35 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 20819.82 1022.89 moveto
+20827.93 1016.08 lineto
+20817.34 1016.35 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+20633 1092.3 moveto 217 ({R_LNLT1_LP_APB_MUSIZE,	}) alignedtext
+grestore
+% { R_MYOP_MYDY_APB_MUSIZE, R_MYDY_APB_MUSIZE, R_MYOP_APB_MUSIZE, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+20771 1190.3 moveto 542 ({ R_MYOP_MYDY_APB_MUSIZE, R_MYDY_APB_MUSIZE, R_MYOP_APB_MUSIZE, }) alignedtext
+grestore
+% { R_MYOP_MYDY_APB_MUSIZE, R_APB_MUSIZE, R_LNL_DIFFN_APB_MUSIZE, }->{ R_MYOP_MYDY_APB_MUSIZE, R_MYDY_APB_MUSIZE, R_MYOP_APB_MUSIZE, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 21042 1371.78 moveto
+21042 1338.06 21042 1263.06 21042 1222.43 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 21045.5 1222.18 moveto
+21042 1212.18 lineto
+21038.5 1222.18 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 21045.5 1222.18 moveto
+21042 1212.18 lineto
+21038.5 1222.18 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+21042 1288.3 moveto 247 ({R_MYOP_MYDY_APB_MUSIZE,	}) alignedtext
+grestore
+% { R_LNLT1_LP_BE_APB_DENERV, R_LNLBE_APB_DENERV, R_LNL_DIFFN_APB_DENERV, R_DIFFN_LNLW_APB_DENERV, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+21109.5 1778.3 moveto 803 ({ R_LNLT1_LP_BE_APB_DENERV, R_LNLBE_APB_DENERV, R_LNL_DIFFN_APB_DENERV, R_DIFFN_LNLW_APB_DENERV, }) alignedtext
+grestore
+% { R_LNLBE_MED_TIME, R_LNLBE_MED_PATHO, R_LNLBE_APB_DENERV, R_LNLBE_MED_SEV, R_LNL_DIFFN_APB_DENERV, R_DIFFN_LNLW_APB_DENERV, }->{ R_LNLT1_LP_BE_APB_DENERV, R_LNLBE_APB_DENERV, R_LNL_DIFFN_APB_DENERV, R_DIFFN_LNLW_APB_DENERV, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 20965.54 1959.95 moveto
+21075.74 1924.21 21330.55 1841.54 21448.72 1803.2 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 21449.93 1806.49 moveto
+21458.36 1800.08 lineto
+21447.77 1799.83 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 21449.93 1806.49 moveto
+21458.36 1800.08 lineto
+21447.77 1799.83 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+21230 1876.3 moveto 607 ({R_LNLBE_APB_DENERV,	R_LNL_DIFFN_APB_DENERV,	R_DIFFN_LNLW_APB_DENERV,	}) alignedtext
+grestore
+% { R_LNLT1_LP_APB_DENERV, R_LNLT1_LP_BE_APB_DENERV, R_LNLBE_APB_DENERV, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+21382.5 1582.3 moveto 585 ({ R_LNLT1_LP_APB_DENERV, R_LNLT1_LP_BE_APB_DENERV, R_LNLBE_APB_DENERV, }) alignedtext
+grestore
+% { R_LNLT1_LP_BE_APB_DENERV, R_LNLBE_APB_DENERV, R_LNL_DIFFN_APB_DENERV, R_DIFFN_LNLW_APB_DENERV, }->{ R_LNLT1_LP_APB_DENERV, R_LNLT1_LP_BE_APB_DENERV, R_LNLBE_APB_DENERV, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 21525.55 1763.78 moveto
+21554.67 1729.34 21620.19 1651.84 21653.97 1611.88 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 21656.7 1614.07 moveto
+21660.48 1604.18 lineto
+21651.35 1609.55 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 21656.7 1614.07 moveto
+21660.48 1604.18 lineto
+21651.35 1609.55 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+21598 1680.3 moveto 427 ({R_LNLT1_LP_BE_APB_DENERV,	R_LNLBE_APB_DENERV,	}) alignedtext
+grestore
+% { R_LNLLP_APB_DENERV, R_LNLT1_LP_APB_DENERV, R_LNLT1_APB_DENERV, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+21429.5 1386.3 moveto 535 ({ R_LNLLP_APB_DENERV, R_LNLT1_LP_APB_DENERV, R_LNLT1_APB_DENERV, }) alignedtext
+grestore
+% { R_LNLT1_LP_APB_DENERV, R_LNLT1_LP_BE_APB_DENERV, R_LNLBE_APB_DENERV, }->{ R_LNLLP_APB_DENERV, R_LNLT1_LP_APB_DENERV, R_LNLT1_APB_DENERV, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 21676.95 1567.78 moveto
+21680.78 1533.99 21689.32 1458.74 21693.92 1418.17 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 21697.4 1418.51 moveto
+21695.05 1408.18 lineto
+21690.45 1417.72 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 21697.4 1418.51 moveto
+21695.05 1408.18 lineto
+21690.45 1417.72 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+21687 1484.3 moveto 217 ({R_LNLT1_LP_APB_DENERV,	}) alignedtext
+grestore
+% { R_DIFFN_APB_MUSIZE, DIFFN_M_SEV_DIST, DIFFN_TIME, DIFFN_PATHO, R_LNLW_APB_MUSIZE, R_DIFFN_LNLW_APB_MUSIZE, }
+gsave
+0 0 0 nodecolor
+14 /Times-Roman set_font
+21555.5 1974.3 moveto 871 ({ R_DIFFN_APB_MUSIZE, DIFFN_M_SEV_DIST, DIFFN_TIME, DIFFN_PATHO, R_LNLW_APB_MUSIZE, R_DIFFN_LNLW_APB_MUSIZE, }) alignedtext
+grestore
+% { DIFFN_PATHO, R_LNLW_APB_MUSIZE, R_LNLW_MED_SEV, DIFFN_M_SEV_DIST, R_LNLW_MED_TIME, R_LNLW_MED_PATHO, R_DIFFN_LNLW_APB_MUSIZE, DIFFN_TIME, }->{ R_DIFFN_APB_MUSIZE, DIFFN_M_SEV_DIST, DIFFN_TIME, DIFFN_PATHO, R_LNLW_APB_MUSIZE, R_DIFFN_LNLW_APB_MUSIZE, }
+gsave
+1 setlinewidth
+0 0 0.75294 edgecolor
+newpath 21637.42 2155.99 moveto
+21715.02 2143.47 21803.41 2121.73 21877 2084 curveto
+21915.29 2064.37 21950.23 2028.29 21971.06 2003.97 curveto
+stroke
+0 0 0.75294 edgecolor
+newpath 21973.82 2006.13 moveto
+21977.57 1996.22 lineto
+21968.46 2001.63 lineto
+closepath fill
+1 setlinewidth
+solid
+0 0 0.75294 edgecolor
+newpath 21973.82 2006.13 moveto
+21977.57 1996.22 lineto
+21968.46 2001.63 lineto
+closepath stroke
+0 0 0 edgecolor
+14 /Times-Roman set_font
+21903 2072.3 moveto 757 ({DIFFN_M_SEV_DIST,	DIFFN_TIME,	DIFFN_PATHO,	R_LNLW_APB_MUSIZE,	R_DIFFN_LNLW_APB_MUSIZE,	}) alignedtext
+grestore
+endpage
+showpage
+grestore
+%%PageTrailer
+%%EndPage: 1
+%%Trailer
+%%Pages: 1
+%%BoundingBox: 36 36 22704 2432
+end
+restore
+%%EOF

@@ -257,7 +257,7 @@ int main(int argc, char* argv[])
 		}
 
 		// Provo a scrivere il file dot per rappresentare il junction tree
-		/*
+		/* * /
 		std::string file = "dot_file.dot";
 		std::ofstream f(file, std::ios::out); //std::ios::app); //apre il file in modalità append, lasciando intatto quello che c'è e scrivendo alla fine
 		if(!f) {
@@ -269,7 +269,7 @@ int main(int argc, char* argv[])
 		f << jt->getDOT() << std::endl;
 
 		f.close(); //chiudo il file
-		*/
+		/ * */
 				
 		std::cout << "Controllo se rispetta la running intersection property... ";
 		if (jt->checkRunningIntersectionProperty()) {

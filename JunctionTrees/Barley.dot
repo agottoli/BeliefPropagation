@@ -1,0 +1,41 @@
+digraph {
+	nodesep="1.5"; ranksep=2;
+	node [shape=plaintext];
+	edge [color=gray];
+	"{ ksort, srtsize, nprot, dgv1059, ntilg, dgv5980, sorttkv, aks_m2, }" -> "{ srtsize, keraks, ksort, dgv1059, dgv5980, ntilg, aks_m2, sorttkv, }" [label="{ksort,	srtsize,	dgv1059,	ntilg,	dgv5980,	sorttkv,	aks_m2,	}"];
+	"{ srtsize, keraks, ksort, dgv1059, dgv5980, ntilg, aks_m2, sorttkv, }" -> "{ keraks, srtsize, aks_vgt, ksort, ntilg, dgv5980, aks_m2, }" [label="{keraks,	srtsize,	ksort,	ntilg,	dgv5980,	aks_m2,	}"];
+	"{ keraks, srtsize, aks_vgt, ksort, ntilg, dgv5980, aks_m2, }" -> "{ spndx, ntilg, dgv5980, ksort, }" [label="{ntilg,	dgv5980,	ksort,	}"];
+	"{ keraks, srtsize, aks_vgt, ksort, ntilg, dgv5980, aks_m2, }" -> "{ udb, aks_m2, aks_vgt, }" [label="{aks_m2,	aks_vgt,	}"];
+	"{ keraks, srtsize, aks_vgt, ksort, ntilg, dgv5980, aks_m2, }" -> "{ s2528, keraks, aks_vgt, srtsize, }" [label="{keraks,	aks_vgt,	srtsize,	}"];
+	"{ s2528, keraks, aks_vgt, srtsize, }" -> "{ s2225, keraks, aks_vgt, srtsize, }" [label="{keraks,	aks_vgt,	srtsize,	}"];
+	"{ s2528, keraks, aks_vgt, srtsize, }" -> "{ slt22, keraks, aks_vgt, srtsize, }" [label="{keraks,	aks_vgt,	srtsize,	}"];
+	"{ srtsize, keraks, ksort, dgv1059, dgv5980, ntilg, aks_m2, sorttkv, }" -> "{ sorttkv, tkv, aks_m2, keraks, ntilg, }" [label="{sorttkv,	aks_m2,	keraks,	ntilg,	}"];
+	"{ ksort, srtsize, nprot, dgv1059, ntilg, dgv5980, sorttkv, aks_m2, }" -> "{ nprot, dgv5980, ntilg, dgv1059, saatid, sorttkv, aks_m2, }" [label="{nprot,	dgv5980,	ntilg,	dgv1059,	sorttkv,	aks_m2,	}"];
+	"{ nprot, dgv5980, ntilg, dgv1059, saatid, sorttkv, aks_m2, }" -> "{ sorttkv, saatid, dgv1059, aks_m2, ntilg, antplnt, }" [label="{sorttkv,	saatid,	dgv1059,	aks_m2,	ntilg,	}"];
+	"{ sorttkv, saatid, dgv1059, aks_m2, ntilg, antplnt, }" -> "{ saatid, antplnt, markgrm, }" [label="{saatid,	antplnt,	}"];
+	"{ saatid, antplnt, markgrm, }" -> "{ jordinf, markgrm, saatid, }" [label="{saatid,	markgrm,	}"];
+	"{ jordinf, markgrm, saatid, }" -> "{ partigerm, markgrm, jordinf, }" [label="{jordinf,	markgrm,	}"];
+	"{ jordinf, markgrm, saatid, }" -> "{ frspdag, saatid, jordinf, }" [label="{jordinf,	saatid,	}"];
+	"{ saatid, antplnt, markgrm, }" -> "{ saakern, antplnt, markgrm, }" [label="{antplnt,	markgrm,	}"];
+	"{ saakern, antplnt, markgrm, }" -> "{ tkvs, saakern, saamng, }" [label="{saakern,	}"];
+	"{ nprot, dgv5980, ntilg, dgv1059, saatid, sorttkv, aks_m2, }" -> "{ rokap, nprot, dgv5980, ntilg, dgv1059, saatid, }" [label="{nprot,	dgv5980,	ntilg,	dgv1059,	saatid,	}"];
+	"{ rokap, nprot, dgv5980, ntilg, dgv1059, saatid, }" -> "{ bgbyg, dgv1059, dgv5980, }" [label="{dgv1059,	dgv5980,	}"];
+	"{ rokap, nprot, dgv5980, ntilg, dgv1059, saatid, }" -> "{ ngodn, nprot, jordn, ntilg, rokap, saatid, }" [label="{rokap,	nprot,	ntilg,	saatid,	}"];
+	"{ ngodn, nprot, jordn, ntilg, rokap, saatid, }" -> "{ ngtilg, ntilg, jordn, ngodn, saatid, }" [label="{ntilg,	jordn,	ngodn,	saatid,	}"];
+	"{ ngtilg, ntilg, jordn, ngodn, saatid, }" -> "{ dg25, saatid, ngtilg, ngodn, }" [label="{saatid,	ngtilg,	ngodn,	}"];
+	"{ dg25, saatid, ngtilg, ngodn, }" -> "{ nplac, ngtilg, ngodn, dg25, }" [label="{ngtilg,	ngodn,	dg25,	}"];
+	"{ ngodn, nprot, jordn, ntilg, rokap, saatid, }" -> "{ jordtype, rokap, jordn, ngodn, }" [label="{rokap,	jordn,	ngodn,	}"];
+	"{ jordtype, rokap, jordn, ngodn, }" -> "{ ngodnt, ngodn, jordtype, nopt, jordn, }" [label="{jordtype,	jordn,	ngodn,	}"];
+	"{ ngodnt, ngodn, jordtype, nopt, jordn, }" -> "{ mod_nmin, ngodnt, forfrugt, jordtype, jordn, nopt, }" [label="{ngodnt,	jordtype,	nopt,	jordn,	}"];
+	"{ mod_nmin, ngodnt, forfrugt, jordtype, jordn, nopt, }" -> "{ exptgens, jordtype, forfrugt, nopt, ngodnt, mod_nmin, }" [label="{mod_nmin,	ngodnt,	forfrugt,	jordtype,	nopt,	}"];
+	"{ exptgens, jordtype, forfrugt, nopt, ngodnt, mod_nmin, }" -> "{ forfrugt, pesticid, exptgens, nopt, jordtype, }" [label="{forfrugt,	exptgens,	nopt,	jordtype,	}"];
+	"{ mod_nmin, ngodnt, forfrugt, jordtype, jordn, nopt, }" -> "{ mod_nmin, potnmin, jordtype, forfrugt, jordn, }" [label="{mod_nmin,	jordtype,	forfrugt,	jordn,	}"];
+	"{ mod_nmin, potnmin, jordtype, forfrugt, jordn, }" -> "{ nmin, jordtype, mod_nmin, potnmin, jordn, aar_mod, }" [label="{mod_nmin,	potnmin,	jordtype,	jordn,	}"];
+	"{ nmin, jordtype, mod_nmin, potnmin, jordn, aar_mod, }" -> "{ nedbarea, jordtype, nmin, aar_mod, }" [label="{jordtype,	nmin,	aar_mod,	}"];
+	"{ nedbarea, jordtype, nmin, aar_mod, }" -> "{ jordtype, komm, nedbarea, aar_mod, }" [label="{jordtype,	nedbarea,	aar_mod,	}"];
+	"{ ngodnt, ngodn, jordtype, nopt, jordn, }" -> "{ ngodnn, nopt, jordn, ngodn, ngodnt, }" [label="{ngodnt,	ngodn,	nopt,	jordn,	}"];
+	"{ ksort, srtsize, nprot, dgv1059, ntilg, dgv5980, sorttkv, aks_m2, }" -> "{ srtprot, sorttkv, dgv1059, nprot, ksort, srtsize, }" [label="{sorttkv,	dgv1059,	nprot,	ksort,	srtsize,	}"];
+	"{ srtprot, sorttkv, dgv1059, nprot, ksort, srtsize, }" -> "{ sort, srtprot, sorttkv, srtsize, }" [label="{srtprot,	sorttkv,	srtsize,	}"];
+	"{ srtprot, sorttkv, dgv1059, nprot, ksort, srtsize, }" -> "{ protein, nprot, dgv1059, srtprot, ksort, }" [label="{nprot,	dgv1059,	srtprot,	ksort,	}"];
+}
+
